@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity_UserRegister"
+
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/ic_launcher_foreground"
+        android:id="@+id/imageTopR" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/icon_back"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Register"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:id="@+id/titleR"
+        android:layout_below="@id/imageTopR"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/subTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleR"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="dga  csdjcnksj sasnajc csdcjckdscdsjek"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/subTitle"
+        android:layout_marginTop="10dp"
+        android:padding="30dp"
+        android:id="@+id/linearlayout_1"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:hint="Enter your full name"
+            android:paddingLeft="10dp"
+            android:textSize="16dp"
+            android:background="@drawable/button_sape"
+            android:backgroundTint="@color/white"
+            android:id="@+id/idFullName"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:hint="Enter your full name"
+            android:textSize="16dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_sape"
+            android:backgroundTint="@color/white"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:hint="Enter your number"
+            android:paddingLeft="10dp"
+            android:textSize="16dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_sape"
+            android:backgroundTint="@color/white"
+            />
+    </LinearLayout>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearlayout_1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:width="300dp"
+        android:backgroundTint="@color/teal_700"
+        android:background="@drawable/button_sape"
+        android:textStyle="bold"
+        android:text="Add user"/>
+
+
+
+
+</RelativeLayout>
