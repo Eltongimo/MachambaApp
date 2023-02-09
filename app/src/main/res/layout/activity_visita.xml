@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo"
+    tools:context=".Visita">
+
+
+    <ImageView
+        android:id="@+id/imageTopR"
+        android:layout_width="186dp"
+        android:layout_height="154dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/img_3" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/icon_back"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fazer uma visita de Campo"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:id="@+id/titleR"
+        android:layout_below="@id/imageTopR"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/subTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleR"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Clicque no botão com a opção desejada"
+        android:textSize="12sp" />
+
+
+    <Button
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/subTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/idFreeVisit"
+        android:width="300dp"
+        android:backgroundTint="@color/teal_200"
+        android:textStyle="bold"
+        app:cornerRadius="15sp"
+        android:text="Free Visit"/>
+
+    <Button
+        android:padding="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idFreeVisit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/idSelecionarCliente"
+        android:width="300dp"
+        android:backgroundTint="@color/teal_200"
+        android:textStyle="bold"
+        app:cornerRadius="15sp"
+        android:text="Selecionar Cliente"/>
+
+
+    <LinearLayout
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idSelecionarCliente"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:layout_below="@id/idSelecionarCliente"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Para recuperar senha "
+
+            />
+
+        <TextView
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/teal_200"
+            android:layout_below="@id/idSelecionarCliente"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Clik aqui "
+
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>

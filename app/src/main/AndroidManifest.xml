@@ -12,6 +12,9 @@
         android:theme="@style/Theme.MachambaApp"
         tools:targetApi="31">
         <activity
+            android:name=".Visita"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreen"
             android:exported="false" />
         <activity
