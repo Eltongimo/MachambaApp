@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_Login">
+    tools:context=".ActivityLogin">
 
 
     <ImageView
@@ -15,19 +15,13 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/img_3" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/icon_back"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to Machamba"
+        android:text="Bem-vindo a App Machamba"
         android:layout_marginTop="12dp"
-        android:textColor="@color/black"
+        android:fontFamily="@font/poppinssemibold"
+
         android:textSize="18dp"
         android:id="@+id/titleR"
         android:layout_below="@id/imageTopR"
@@ -35,12 +29,13 @@
 
     <TextView
         android:id="@+id/subTitle"
+        android:fontFamily="@font/poppinsregular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/titleR"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Enter your username end password to login"
+        android:text="Entre com as credenciais para fazer o login"
         android:textSize="12sp" />
 
       <LinearLayout
@@ -57,20 +52,24 @@
             android:drawableLeft="@drawable/baseline_person_24"
             android:layout_width="match_parent"
             android:layout_height="58dp"
-            android:hint="  Enter your username"
+            android:hint=" O nome do usuario"
             android:paddingLeft="10dp"
             android:textSize="16dp"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/poppinsregular"
             android:background="@drawable/button_sape"
             android:id="@+id/idFullName"
             />
 
         <EditText
-            android:drawableLeft="@drawable/baseline_phone_26"
+            android:drawableLeft="@drawable/baseline_key"
             android:layout_width="match_parent"
             android:layout_height="58dp"
-            android:hint="  Enter your password"
+            android:hint="  A senha do usuario"
             android:textSize="16dp"
             android:inputType="textPassword"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/poppinsregular"
             android:paddingLeft="10dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_sape"
@@ -80,7 +79,7 @@
 
 
     <Button
-        android:padding="16dp"
+        android:padding="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/linearlayout_1"
@@ -88,8 +87,10 @@
         android:layout_marginTop="40dp"
         android:id="@+id/idButtonlogar"
         android:width="300dp"
-        android:backgroundTint="@color/teal_200"
+        android:fontFamily="@font/poppinsbold"
+        android:textSize="16sp"
         android:textStyle="bold"
+        android:backgroundTint="@color/teal_200"
         app:cornerRadius="15sp"
         android:text="Logar"/>
 

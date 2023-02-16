@@ -2,11 +2,15 @@ package com.example.machambaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
-public class Activity_UserRegister extends AppCompatActivity {
+public class ActivityUserRegister extends AppCompatActivity {
+     Button addUser;
 
     String[] itemsDistrito = {"Monapo", "Moma", "Montepues"};
     String[] itemsPostoAdministrativo = {"p-Monapo", "p-Moma", "p-Montepues"};
@@ -22,6 +26,22 @@ public class Activity_UserRegister extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
+
+         addUser=(Button) findViewById(R.id.registerUser);
+
+
+         addUser.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+
+
+                 Intent intent=new Intent(ActivityUserRegister.this, ActivityChooseAction.class);
+                 startActivity(intent);
+             }
+         });
+
+
+
 
         autoCompleteDistrito = (AutoCompleteTextView) findViewById(R.id.auto_select);
         autoCompletePostoAdministrativo = (AutoCompleteTextView) findViewById(R.id.idPostoAdministrativo);

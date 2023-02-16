@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Activity_Login extends AppCompatActivity {
+public class ActivityLogin extends AppCompatActivity {
    private Button buttonLogar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class Activity_Login extends AppCompatActivity {
            buttonLogar.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
-                   Intent intent=new Intent(Activity_Login.this, ActivityChooseAction.class);
+                   Intent intent=new Intent(ActivityLogin.this, ActivityUserRegister.class);
                    startActivity(intent);
                }
            });

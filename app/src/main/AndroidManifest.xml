@@ -12,16 +12,34 @@
         android:theme="@style/Theme.MachambaApp"
         tools:targetApi="31">
         <activity
+            android:name=".ActivitySelectCultura"
+            android:exported="false" />
+        <activity
+            android:name=".ActivitySelectClient"
+            android:exported="false" />
+        <activity
+            android:name=".AddUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityListClient"
+            android:exported="false" />
+        <activity
+            android:name=".ActivitySelectVisit"
+            android:exported="false" />
+        <activity
+            android:name=".ActivitySelect"
+            android:exported="false" />
+        <activity
             android:name=".ActivityChooseAction"
             android:exported="false" />
         <activity
-            android:name=".Activity_UserRegister"
+            android:name=".ActivityUserRegister"
             android:exported="false" />
         <activity
-            android:name=".Activity_Login"
+            android:name=".ActivityLogin"
             android:exported="false" />
         <activity
-            android:name=".Activity_PageStart"
+            android:name=".ActivityPageStart"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +51,7 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.MachambaApp.NoActionBar"></activity>
+            android:theme="@style/Theme.MachambaApp.NoActionBar" />
     </application>
 
 </manifest>

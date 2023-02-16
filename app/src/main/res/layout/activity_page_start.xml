@@ -1,62 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_PageStart">
+    tools:context=".ActivityPageStart">
 
-
-    <ImageView
+    <RelativeLayout
+        android:paddingBottom="100dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/ic_launcher_foreground"
-        android:id="@+id/imageTop" />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/img_2"
-        android:id="@+id/image_2"
-        android:layout_below="@id/imageTop"
-        android:layout_centerHorizontal="true"/>
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_4" />
 
-    <TextView
-        android:textStyle="bold|normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text=" Welcome to Machamba App"
-        android:layout_marginTop="17dp"
-        android:textSize="18sp"
-        android:id="@+id/text_title"
-        android:layout_below="@id/image_2" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_2"
+            android:id="@+id/image_2"
+            android:layout_below="@id/imageTop"
+            android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_title"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:padding="20dp"
-        android:id="@+id/txt_3"
-        android:text="shsghsdcvs csdcsj asgdsa  sxh cksmdcnsdkccdcsc dddddddddddddddddddddddddeeeeeee ccconsajkcs cicskc ewduewhd cewcineci
-                          wednejwcjkcnkjecnkejcnejc xsnbchjcjhsdhcsdhchs cnsdcsjcsshcbs" />
+        <TextView
+            android:fontFamily="@font/poppinssemibold"
+            android:textStyle="bold|normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text=" Welcome to Machamba App"
+            android:layout_marginTop="17dp"
+            android:textSize="18sp"
+            android:id="@+id/text_title"
+            android:layout_below="@id/image_2" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:width="300dp"
-        android:id="@+id/button_start"
-        app:cornerRadius="15sp"
-        android:padding="15sp"
-        android:backgroundTint="@color/teal_200"
-        android:textStyle="bold"
-        android:text="let's start" />
+        <TextView
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/poppinsregular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_title"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="20dp"
+            android:id="@+id/txt_3"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:width="300dp"
+            android:id="@+id/button_start"
+            app:cornerRadius="15sp"
+            android:padding="12sp"
+            android:textSize="16dp"
+            android:fontFamily="@font/poppinsbold"
+            android:textStyle="bold"
+            android:backgroundTint="@color/teal_200"
+            android:text="let's start" />
+    </RelativeLayout>
 
-</RelativeLayout>
+</ScrollView>

@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityChooseAction">
+    tools:context=".ActivitySelect">
 
     <ImageView
 
+
+        android:id="@+id/seta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -15,13 +17,15 @@
         android:src="@drawable/direcao"
         />
 
+
     <ImageView
 
+        android:id="@+id/image1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
         android:src="@drawable/img_4" />
-
-
     <LinearLayout
 
         android:gravity="center"
@@ -34,14 +38,15 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:width="300dp"
-            android:id="@+id/IniciarVisita"
-            app:cornerRadius="15sp"
-            android:padding="12sp"
-            android:backgroundTint="@color/teal_200"
             android:fontFamily="@font/poppinsbold"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:text="Iniciar Visita de campo" />
+            android:id="@+id/idButtonVisitaLivre"
+            app:cornerRadius="15sp"
+            android:padding="12sp"
+            android:backgroundTint="@color/teal_200"
+
+            android:text="Visita Livre" />
 
         <Button
             android:layout_width="wrap_content"
@@ -49,14 +54,15 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
             android:width="300dp"
-            app:cornerRadius="15sp"
-            android:padding="12sp"
-            android:backgroundTint="@color/teal_200"
             android:fontFamily="@font/poppinsbold"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:id="@+id/viewClientes"
-            android:text="Clientes" />
+            android:id="@+id/idBottonSelectClient"
+            app:cornerRadius="15sp"
+            android:padding="12sp"
+            android:backgroundTint="@color/teal_200"
+
+            android:text="Selecionar Cliente" />
 
     </LinearLayout>
 

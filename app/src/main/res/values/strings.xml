@@ -14,5 +14,7 @@
     <string name="select_posto_administrativo">Posto administrativo</string>
     <string name="select_localidade">Localidade</string>
     <string name="select_comunidade">Comunidade</string>
+    <string name="select_etnia">Etnia</string>
+    <string name="select_cultura">Cultura</string>
 
 </resources>

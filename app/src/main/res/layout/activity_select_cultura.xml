@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivitySelectCultura">
+
+
+    <ImageView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_4" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selecione a cultura"
+            android:fontFamily="@font/poppinssemibold"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            android:paddingLeft="10dp"
+            android:paddingEnd="10dp"
+            android:id="@+id/textinputlayoutEtnia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            app:boxStrokeColor="@color/teal_200"
+            app:hintTextColor="@color/teal_200"
+            app:boxCornerRadiusTopEnd="23dp"
+            app:boxCornerRadiusTopStart="23dp"
+            app:boxCornerRadiusBottomEnd="23dp"
+            app:boxCornerRadiusBottomStart="23dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/select_cultura"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+            <AutoCompleteTextView
+                android:id="@+id/etnia_select"
+                android:inputType="none"
+                android:fontFamily="@font/poppinsregular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="300dp"
+            app:cornerRadius="15sp"
+            android:padding="12sp"
+            android:textSize="16dp"
+            android:fontFamily="@font/poppinsbold"
+            android:backgroundTint="@color/teal_200"
+            android:text="Proximo"
+            android:id="@+id/registerUser"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

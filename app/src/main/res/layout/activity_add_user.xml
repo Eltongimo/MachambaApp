@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddUserActivity">
+
+    <androidx.cardview.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:paddingBottom="200dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinssemibold"
+                android:text="Pequenos produtores"
+                android:textAlignment="center"
+                android:textSize="20dp" />
+
+
+            <RelativeLayout
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+
+                <ImageView
+                    android:id="@+id/imageAdd"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/user_line"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/baseline_person_pin_24">
+
+                </ImageView>
+
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="@drawable/list_sape"
+                    android:backgroundTint="@color/teal_200"
+                    android:src="@drawable/ic_menu_camera">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/idFullNameClient"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_sape"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/poppinsregular"
+                android:gravity="start|center_vertical"
+                android:hint="Nome do cliente"
+                android:padding="16dp"
+                android:paddingLeft="10dp" />
+
+            <EditText
+                android:id="@+id/idCampoNome3"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_sape"
+                android:drawableLeft="@drawable/baseline_phone_26"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/poppinsregular"
+                android:gravity="start|center_vertical"
+                android:hint="Numero e-mola"
+                android:inputType="phone"
+                android:padding="16dp"
+                android:paddingLeft="10dp" />
+
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/poppinssemibold"
+                android:gravity="center"
+                android:text="Selecione o Genero"
+                android:textSize="18dp" />
+
+            <CheckBox
+                android:id="@+id/idCheckBoxMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Masculino"
+                android:textSize="14dp" />
+
+            <CheckBox
+                android:id="@+id/idCheckBoxfeme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Femenino"
+                android:textSize="14dp" />
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/poppinssemibold"
+                android:gravity="center"
+                android:text="Selecione a Idade"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:gravity="center">
+
+                <NumberPicker
+                    android:id="@+id/picherOne"
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content"
+                    android:solidColor="@color/teal_200" />
+
+                <NumberPicker
+                    android:id="@+id/picherTwo"
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content"
+                    android:solidColor="@color/teal_200" />
+            </LinearLayout>
+
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/poppinssemibold"
+                android:gravity="center"
+                android:text="Selecione a Etinia"
+                android:textSize="18dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textinputlayoutEtnia"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:hint="@string/select_etnia"
+                app:boxCornerRadiusBottomEnd="23dp"
+                app:boxCornerRadiusBottomStart="23dp"
+                app:boxCornerRadiusTopEnd="23dp"
+                app:boxCornerRadiusTopStart="23dp"
+                app:boxStrokeColor="@color/teal_200"
+                app:hintTextColor="@color/teal_200">
+
+                <AutoCompleteTextView
+                    android:id="@+id/etnia_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsregular"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/poppinssemibold"
+                android:gravity="center"
+                android:text="Selecione a foto do Documento"
+                android:textSize="18dp" />
+
+
+            <ImageView
+                android:id="@+id/uploadImageDocument"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/baseline_insert_photo_24" />
+
+
+            <Button
+                android:layout_marginBottom="100dp"
+                android:id="@+id/registerUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="22dp"
+                android:width="300dp"
+                android:backgroundTint="@color/teal_200"
+                android:fontFamily="@font/poppinsbold"
+                android:gravity="center"
+                android:padding="12sp"
+                android:text="Registar usuario"
+                android:textSize="16dp"
+                app:cornerRadius="15sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</ScrollView>

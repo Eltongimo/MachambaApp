@@ -2,28 +2,36 @@ package com.example.machambaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Activity_PageStart extends AppCompatActivity {
+public class ActivityPageStart extends AppCompatActivity {
 
-    private Button button_start;
+    private Button buttonStart;
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_start);
 
-        button_start=(Button) findViewById(R.id.button_start);
+        buttonStart =(Button) findViewById(R.id.button_start);
 
-        button_start.setOnClickListener(new View.OnClickListener() {
+
+
+
+        buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent  intent=new Intent(Activity_PageStart.this,Activity_Login.class);
+                Intent  intent=new Intent(ActivityPageStart.this, ActivityLogin.class);
                 startActivity(intent);
             }
         });
+
+
     }
 }

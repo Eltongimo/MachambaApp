@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_UserRegister">
-
+    android:layout_marginBottom="27dp"
+    tools:context=".ActivityUserRegister">
 
 
     <RelativeLayout
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/img_4"
             android:id="@+id/imageTopR" />
 
         <ImageView
@@ -24,17 +24,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/icon_back"
+            android:src="@drawable/direcao"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User Register"
-            android:layout_marginTop="12dp"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold"
+            android:text="Registro do usuario"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="23dp"
             android:id="@+id/titleR"
             android:layout_below="@id/imageTopR"
             android:layout_centerHorizontal="true"/>
@@ -45,45 +44,47 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/titleR"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="dga  csdjcnksj sasnajc csdcjckdscdsjek"
-            android:textSize="12sp" />
+            android:fontFamily="@font/poppinsregular"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Faça o registro do usuário para poder acessar o sistema"
+            android:textSize="13sp" />
 
         <LinearLayout
+            android:id="@+id/linearlayout_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_below="@id/subTitle"
-            android:layout_marginTop="10dp"
-            android:padding="30dp"
-            android:id="@+id/linearlayout_1"
-            >
+            android:layout_marginTop="21dp"
+            android:orientation="vertical"
+            android:padding="30dp">
 
             <EditText
-                android:drawableLeft="@drawable/baseline_person_24"
-                android:layout_width="match_parent"
-                android:layout_height="58dp"
-                android:hint="  Enter your full name"
-                android:paddingLeft="10dp"
-                android:textSize="16dp"
-                android:background="@drawable/button_sape"
                 android:id="@+id/idFullName"
-                />
-
-            <EditText
-                android:drawableLeft="@drawable/baseline_phone_26"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
-                android:hint="  Enter your phone"
-                android:textSize="16dp"
-                android:inputType="phone"
-                android:paddingLeft="10dp"
-                android:layout_marginTop="15dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/poppinsregular"
                 android:background="@drawable/button_sape"
-                />
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:hint="  Nome Completo"
+                android:paddingLeft="10dp"
+                android:textSize="16dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:drawablePadding="10dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/poppinsregular"
+                android:background="@drawable/button_sape"
+                android:drawableLeft="@drawable/baseline_phone_26"
+                android:hint="  Numero do telemovel"
+                android:inputType="phone|number"
+                android:paddingLeft="10dp"
+                android:textSize="16dp" />
         </LinearLayout>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,16 +93,18 @@
             android:layout_below="@id/linearlayout_1"
             android:padding="30dp"
             android:id="@+id/linearlayout_2"
+            android:paddingBottom="40dp"
             >
             <TextView
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/linearlayout_1"
                 android:id="@+id/text_areas"
+                android:fontFamily="@font/poppinssemibold"
                 android:layout_gravity="center"
                 android:text="Selecione a Localização "
                 android:textSize="18dp"
                 android:padding="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/teal_700"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -110,6 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
+                app:boxStrokeColor="@color/teal_200"
+                app:hintTextColor="@color/teal_200"
                 app:boxCornerRadiusTopEnd="23dp"
                 app:boxCornerRadiusTopStart="23dp"
                 app:boxCornerRadiusBottomEnd="23dp"
@@ -117,9 +122,9 @@
                 android:hint="@string/select"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
                 <AutoCompleteTextView
-
                     android:id="@+id/auto_select"
                     android:inputType="none"
+                    android:fontFamily="@font/poppinsregular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -131,14 +136,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
+                app:boxStrokeColor="@color/teal_200"
+                app:hintTextColor="@color/teal_200"
+                app:boxCornerRadiusTopEnd="23dp"
+                app:boxCornerRadiusTopStart="23dp"
+                app:boxCornerRadiusBottomEnd="23dp"
+                app:boxCornerRadiusBottomStart="23dp"
                 android:hint="@string/select_posto_administrativo"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
+
                     android:id="@+id/idPostoAdministrativo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_sape"
+                    android:fontFamily="@font/poppinsregular"
                     android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -149,12 +161,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
+                app:boxStrokeColor="@color/teal_200"
+                app:hintTextColor="@color/teal_200"
+                app:boxCornerRadiusTopEnd="23dp"
+                app:boxCornerRadiusTopStart="23dp"
+                app:boxCornerRadiusBottomEnd="23dp"
+                app:boxCornerRadiusBottomStart="23dp"
                 android:hint="@string/select_localidade"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
                 <AutoCompleteTextView
                     android:id="@+id/idLocalidade"
-                    android:background="@drawable/button_sape"
                     android:inputType="none"
+                    android:fontFamily="@font/poppinsregular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -167,12 +185,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
+                app:boxStrokeColor="@color/teal_200"
+                app:hintTextColor="@color/teal_200"
+                app:boxCornerRadiusTopEnd="23dp"
+                app:boxCornerRadiusTopStart="23dp"
+                app:boxCornerRadiusBottomEnd="23dp"
+                app:boxCornerRadiusBottomStart="23dp"
                 android:hint="@string/select_comunidade"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
                 <AutoCompleteTextView
                     android:id="@+id/idComunidade"
-                    android:background="@drawable/button_sape"
                     android:inputType="none"
+                    android:fontFamily="@font/poppinsregular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
@@ -180,11 +204,8 @@
 
         </LinearLayout>
 
-
-
-
-
         <Button
+            android:layout_marginBottom="145dp"
             android:layout_below="@id/linearlayout_2"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
@@ -192,13 +213,12 @@
             android:layout_marginTop="37dp"
             android:width="300dp"
             app:cornerRadius="15sp"
-            android:padding="15sp"
+            android:padding="12sp"
+            android:textSize="16dp"
+            android:fontFamily="@font/poppinsbold"
             android:backgroundTint="@color/teal_200"
             android:text="Add user"
-            android:textStyle="bold" />
-
-
-
+            android:id="@+id/registerUser"/>
     </RelativeLayout>
 
 
