@@ -6,6 +6,7 @@ public class DB {
 
 
       static ArrayList<DataClassClient> listClient=new ArrayList<>();
+      static ArrayList<UserPl> listUsePl=new ArrayList<>();
 
 
     public static ArrayList<DataClassClient> getListClient() {
@@ -14,11 +15,15 @@ public class DB {
 
     public void addArrayListClient(String fullname, int image){
           listClient.add(new DataClassClient(fullname,image));
-          view();
+
     }
 
+    public void addArrayListUserPl(String fullname, String senha){
+        listUsePl.add(new UserPl(fullname, senha));
 
-    public void view(){
-        System.out.println(listClient.toString());
+    }
+
+    public static ArrayList<UserPl> getListUsePl() {
+        return listUsePl;
     }
 }

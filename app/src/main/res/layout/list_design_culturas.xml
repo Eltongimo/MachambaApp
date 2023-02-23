@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginEnd="12dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="30dp"
+    app:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="30dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/nomeClient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Milho"
+            android:textSize="18dp"
+            android:fontFamily="@font/poppinsregular"
+            android:layout_marginStart="10dp"
+            />
+
+        <LinearLayout
+            android:layout_marginEnd="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/baseline_mode_edit_outline_24"
+                android:layout_centerVertical="true"
+                android:id="@+id/idEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginStart="16dp"
+                android:src="@drawable/baseline_delete_forever_24"
+                android:id="@+id/idDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+</androidx.cardview.widget.CardView>

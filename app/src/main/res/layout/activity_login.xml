@@ -36,7 +36,7 @@
         android:layout_below="@id/titleR"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Entre com as credenciais para poder o logar"
+        android:text="Insira as credenciais para poder entar"
         android:textSize="12sp" />
 
       <LinearLayout
@@ -59,10 +59,11 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/poppinsregular"
             android:background="@drawable/button_sape"
-            android:id="@+id/idFullName"
+            android:id="@+id/idEditUserName"
             />
 
         <EditText
+            android:id="@+id/idEditPassword"
             android:drawableLeft="@drawable/baseline_key"
             android:layout_width="match_parent"
             android:layout_height="58dp"
@@ -75,6 +76,18 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/button_sape"
             />
+
+          <TextView
+              android:id="@+id/idAlert"
+              android:textSize="18dp"
+              android:textColor="#F44336"
+              android:textStyle="bold"
+              android:layout_marginStart="16dp"
+              android:layout_marginEnd="16dp"
+              android:layout_marginTop="10dp"
+              android:text=""
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

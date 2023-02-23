@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/img_4"
+    android:layout_height="match_parent"
+    tools:context=".ActivityCulturaAdmin">
+
+
+
+
+
+    <androidx.appcompat.widget.ActionMenuView
+        android:id="@+id/menuBar"
+        android:layout_width="match_parent"
+        android:background="@drawable/img"
+        android:backgroundTint="@color/cor_of_botton"
+        android:layout_alignParentTop="true"
+        android:layout_height="50dp">
+
+        <TextView
+            android:drawablePadding="12dp"
+            android:drawableLeft="@drawable/baseline_compost_24"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="23dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Culturas" />
+
+    </androidx.appcompat.widget.ActionMenuView>
+
+    <androidx.appcompat.widget.SearchView
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_sape"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/idSearch"
+        android:layout_below="@id/menuBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:iconifiedByDefault="false"
+        app:queryHint=" Buscar cultura"
+        android:focusable="false"
+
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/idRecyclerviewClient"
+        android:layout_below="@id/idSearch"
+        android:layout_marginTop="10dp"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/list_design_culturas">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/idfloat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/cor_of_botton"
+        android:src="@drawable/baseline_add_24"
+        app:tint="@color/white" />
+
+
+
+</RelativeLayout>

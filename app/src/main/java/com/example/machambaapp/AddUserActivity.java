@@ -110,19 +110,15 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
 
          // fim dialog
 
-//        txtIdade.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//           }
-//        });
-
-        txtIdade.setOnTouchListener(new View.OnTouchListener() {
+        txtIdade.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public void onClick(View view) {
                 DialogFragment  dialogFragment =new DialogView();
-                dialogFragment.show(getSupportFragmentManager(),"DataPicker"); return false;
+                dialogFragment.show(getSupportFragmentManager(),"DataPicker");
+
             }
         });
+
 
         buttonRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
