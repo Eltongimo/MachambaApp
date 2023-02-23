@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/fundo"
     android:layout_height="match_parent"
     tools:context=".AddUserActivity">
 
@@ -33,41 +34,60 @@
                 android:textSize="20dp" />
 
 
-            <RelativeLayout
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+           <androidx.cardview.widget.CardView
+               android:layout_gravity="center_horizontal"
+               android:layout_width="wrap_content"
+               app:cardCornerRadius="100dp"
+               android:layout_height="wrap_content">
+               <RelativeLayout
+                   android:layout_width="140dp"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center">
 
 
-                <ImageView
-                    android:id="@+id/imageAdd"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/user_line"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/baseline_person_pin_24">
+                   <ImageView
+                       android:id="@+id/imageAdd"
+                       android:layout_width="140dp"
+                       android:layout_height="140dp"
+                       android:scaleType="fitXY"
+                       android:src="@drawable/baseline_person_pin_24">
 
-                </ImageView>
+                   </ImageView>
 
+                   <ImageView
+                       android:layout_width="20dp"
+                       android:layout_height="20dp"
+                       android:layout_alignParentStart="true"
+                       android:layout_alignParentTop="true"
+                       android:layout_alignParentEnd="true"
+                       android:layout_marginStart="90dp"
+                       android:layout_marginTop="111dp"
+                       android:layout_marginEnd="30dp"
+                       android:layout_marginBottom="9dp"
+                       android:background="@drawable/list_sape"
+                       android:backgroundTint="@color/cor_of_botton"
+                       android:src="@drawable/ic_menu_camera">
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginBottom="1dp"
-                    android:background="@drawable/list_sape"
-                    android:backgroundTint="@color/teal_200"
-                    android:src="@drawable/ic_menu_camera">
+                   </ImageView>
 
-                </ImageView>
-
-            </RelativeLayout>
+               </RelativeLayout>
+           </androidx.cardview.widget.CardView>
 
             <EditText
                 android:id="@+id/idFullNameClient"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/button_sape"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/poppinsregular"
+                android:gravity="start|center_vertical"
+                android:hint="Nome do cliente"
+                android:padding="16dp"
+                android:paddingLeft="10dp" />
+            <EditText
+                android:id="@+id/idApelido"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
@@ -76,7 +96,7 @@
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/poppinsregular"
                 android:gravity="start|center_vertical"
-                android:hint="Nome do cliente"
+                android:hint="Apelido"
                 android:padding="16dp"
                 android:paddingLeft="10dp" />
 
@@ -90,23 +110,27 @@
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/poppinsregular"
                 android:gravity="start|center_vertical"
-                android:hint="Numero e-mola"
+                android:hint="Numero do telemovel"
                 android:inputType="phone"
                 android:padding="16dp"
                 android:paddingLeft="10dp" />
 
 
             <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:layout_centerHorizontal="true"
                 android:fontFamily="@font/poppinssemibold"
-                android:gravity="center"
-                android:text="Selecione o Genero"
-                android:textSize="18dp" />
+                android:layout_gravity="center"
+                android:text="Selecione o genero "
+                android:textSize="18dp"
+                android:padding="10dp"
+                android:textColor="@color/cor_of_botton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
             <CheckBox
+                android:textColorLink="@color/white"
                 android:id="@+id/idCheckBoxMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,44 +148,49 @@
                 android:textSize="14dp" />
 
             <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:layout_centerHorizontal="true"
                 android:fontFamily="@font/poppinssemibold"
-                android:gravity="center"
-                android:text="Selecione a Idade"
-                android:textSize="18dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:text="Selecione a idade "
+                android:textSize="18dp"
+                android:padding="10dp"
+                android:textColor="@color/cor_of_botton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:gravity="center">
+                />
 
-                <NumberPicker
-                    android:id="@+id/picherOne"
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
-                    android:solidColor="@color/teal_200" />
+            <EditText
+                android:textColorLink="@color/teal_200"
+                android:layout_gravity="center"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:id="@+id/idIdade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/poppinsregular"
+                android:gravity="center"
+                android:hint="Dia /  Mês / Ano "
+                android:paddingLeft="10dp" />
 
-                <NumberPicker
-                    android:id="@+id/picherTwo"
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
-                    android:solidColor="@color/teal_200" />
-            </LinearLayout>
+
+
 
 
             <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:layout_centerHorizontal="true"
                 android:fontFamily="@font/poppinssemibold"
-                android:gravity="center"
-                android:text="Selecione a Etinia"
-                android:textSize="18dp" />
+                android:layout_gravity="center"
+                android:text="Selecione a Etnia "
+                android:textSize="18dp"
+                android:padding="10dp"
+                android:textColor="@color/cor_of_botton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textinputlayoutEtnia"
@@ -186,14 +215,20 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="19dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/text_areas"
                 android:fontFamily="@font/poppinssemibold"
-                android:gravity="center"
-                android:text="Selecione a foto do Documento"
-                android:textSize="18dp" />
+                android:layout_gravity="center"
+                android:text="Selecione a foto do Documento "
+                android:textSize="18dp"
+                android:padding="10dp"
+                android:textColor="@color/cor_of_botton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
 
             <ImageView
@@ -212,11 +247,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="22dp"
                 android:width="300dp"
-                android:backgroundTint="@color/teal_200"
+                android:backgroundTint="@color/cor_of_botton"
                 android:fontFamily="@font/poppinsbold"
                 android:gravity="center"
                 android:padding="12sp"
-                android:text="Registar usuario"
+                android:text="Adicionar Cliente"
                 android:textSize="16dp"
                 app:cornerRadius="15sp" />
 

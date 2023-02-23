@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_marginTop="17dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/baseline_gpp_good_24"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="Sucesso"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/image"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/txt_2"
+        android:textSize="16dp"
+        android:text="Ação foi efetuada com sucesso "
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textTitle"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+    <Button
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/txt_2"
+        android:id="@+id/confirm_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:backgroundTint="@color/cor_of_botton"
+        android:fontFamily="@font/poppinsbold"
+        android:gravity="center"
+        android:text="ok"
+        android:textSize="16dp"
+        />
+
+
+</RelativeLayout>

@@ -8,17 +8,18 @@
 
 
     <ImageView
+        android:layout_marginTop="5dp"
         android:id="@+id/imageTopR"
         android:layout_width="186dp"
         android:layout_height="154dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/img_3" />
+        android:src="@drawable/img_5" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bem-vindo a App Machamba"
+        android:text="Bem-vindo a Assistência Tecnica"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/poppinssemibold"
 
@@ -35,7 +36,7 @@
         android:layout_below="@id/titleR"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Entre com as credenciais para fazer o login"
+        android:text="Entre com as credenciais para poder o logar"
         android:textSize="12sp" />
 
       <LinearLayout
@@ -90,9 +91,9 @@
         android:fontFamily="@font/poppinsbold"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:backgroundTint="@color/teal_200"
+        android:backgroundTint="@color/cor_of_botton"
         app:cornerRadius="15sp"
-        android:text="Logar"/>
+        android:text="Entrar"/>
 
 
     <LinearLayout
@@ -117,14 +118,12 @@
         <TextView
             android:textSize="12sp"
             android:layout_marginTop="4dp"
-            android:textColor="@color/teal_200"
+            android:textColor="@color/cor_of_botton"
             android:layout_below="@id/idButtonlogar"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" Clik aqui "
-
-            />
+            android:text=" pressione aqui " />
     </LinearLayout>
 
 

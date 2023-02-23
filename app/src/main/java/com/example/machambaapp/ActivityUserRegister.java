@@ -12,10 +12,10 @@ import android.widget.Button;
 public class ActivityUserRegister extends AppCompatActivity {
      Button addUser;
 
-    String[] itemsDistrito = {"Monapo", "Moma", "Montepues"};
-    String[] itemsPostoAdministrativo = {"p-Monapo", "p-Moma", "p-Montepues"};
-    String[] itemsLocalidade = {"L-Monapo", "L-Moma", "L-Montepues"};
-    String[] itemsComunidade = {"C-Monapo", "C-Moma", "C-Montepues"};
+    String[] itemsDistrito = {"Mecuf"};
+    String[] itemsPostoAdministrativo = {"Murrebue"};
+    String[] itemsLocalidade = {"L-Muitua"};
+    String[] itemsComunidade = {"Sicura B", "Muitua Sede", "Murripa","Singura A"};
     AutoCompleteTextView autoCompleteDistrito;
     AutoCompleteTextView autoCompletePostoAdministrativo;
     AutoCompleteTextView autoCompleteLocalidade;

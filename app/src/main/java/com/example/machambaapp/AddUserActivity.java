@@ -1,33 +1,43 @@
 package com.example.machambaapp;
 
+import static android.os.Build.VERSION.SDK_INT;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.storage.StorageManager;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.machambaapp.model.DB;
-import com.example.machambaapp.model.adapter.ClientAdapter;
+import com.example.machambaapp.model.DialogView;
 
-public class AddUserActivity extends AppCompatActivity {
+import java.text.DateFormat;
+import java.util.Calendar;
+
+public class AddUserActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     NumberPicker numberPickerOne;
     NumberPicker numberPickerTwo;
@@ -37,13 +47,18 @@ public class AddUserActivity extends AppCompatActivity {
     CheckBox checkBoxFeme;
     static Uri url;
     Button buttonRegisterUser;
+    Button ok;
     ImageView imageUserUpload;
     ImageView imageDocumentUpload;
     TextView textFullName;
+    EditText txtIdade;
+
+    Dialog dialog;
 
 
 
-    String[] itemsDistrito = {"Americano","Mocan"};
+
+    String[] listEtnia = {" Macua","Makonde","Mwani","Swahili","Sena","Shona","Ndau","Chuwabo","Nyungwe","Tsonga","Changana","Bitonga","Yaos","Outros"};
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,36 +70,64 @@ public class AddUserActivity extends AppCompatActivity {
         textFullName=(TextView) findViewById(R.id.idFullNameClient);
         imageDocumentUpload=(ImageView) findViewById(R.id.uploadImageDocument);
         buttonRegisterUser =(Button) findViewById(R.id.registerUser);
-        numberPickerOne=(NumberPicker) findViewById(R.id.picherOne);
-        numberPickerTwo=(NumberPicker) findViewById(R.id.picherTwo);
 
+        txtIdade=(EditText) findViewById(R.id.idIdade);
         checkBoxFeme=(CheckBox) findViewById(R.id.idCheckBoxfeme);
         checkBoxMale=(CheckBox) findViewById(R.id.idCheckBoxMale);
 
-        numberPickerOne.setMaxValue(9);
-        numberPickerOne.setMinValue(0);
-        numberPickerTwo.setMaxValue(9);
-        numberPickerTwo.setMinValue(0);
         etniaInput=(AutoCompleteTextView) findViewById(R.id.etnia_select);
-        adapterEtnia = new ArrayAdapter<String>(this, R.layout.list_item_etnia, itemsDistrito);
+        adapterEtnia = new ArrayAdapter<String>(this, R.layout.list_item_etnia, listEtnia);
         etniaInput.setAdapter(adapterEtnia);
 
 
 
+
+      /// dialog
+        dialog =new Dialog(AddUserActivity.this);
+        dialog.setContentView(R.layout.alert_view_dialog);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_alert));
+        }
+         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+         dialog.setCancelable(false);
+         dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+
+         ok=dialog.findViewById(R.id.confirm_ok);
+         ok.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 DB db=new DB();
+                 db.addArrayListClient(textFullName.getText().toString(),R.drawable.baseline_person_pin_24);
+
+                 Toast.makeText(AddUserActivity.this, "Usuario registado com Sucesso", Toast.LENGTH_SHORT).show();
+                 startActivity(new Intent(AddUserActivity.this,ActivityListClient.class));
+
+                 dialog.dismiss();
+             }
+         });
+
+
+
+         // fim dialog
+
+//        txtIdade.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//           }
+//        });
+
+        txtIdade.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                DialogFragment  dialogFragment =new DialogView();
+                dialogFragment.show(getSupportFragmentManager(),"DataPicker"); return false;
+            }
+        });
+
         buttonRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-               DB db=new DB();
-               db.addArrayListClient(textFullName.getText().toString(),R.drawable.baseline_person_pin_24);
-
-
-
-
-
-
-                Toast.makeText(AddUserActivity.this, "Usuario registado com Sucesso", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(AddUserActivity.this,ActivityListClient.class));
+                dialog.show();
             }
         });
 
@@ -164,5 +207,13 @@ public class AddUserActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        Calendar c=Calendar.getInstance();
+        c.set(Calendar.YEAR,i);
+        c.set(Calendar.MONTH,i1);
+        c.set(Calendar.DAY_OF_MONTH,i2);
+        String currentDate= DateFormat.getDateInstance().format(c.getTime());
+        txtIdade.setText(currentDate);
+    }
 }

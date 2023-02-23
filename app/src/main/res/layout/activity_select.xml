@@ -4,67 +4,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_4"
     tools:context=".ActivitySelect">
 
-    <ImageView
 
 
-        android:id="@+id/seta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/direcao"
-        />
-
-
-    <ImageView
-
-        android:id="@+id/image1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/img_4" />
-    <LinearLayout
-
-        android:gravity="center"
+    <GridLayout
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="29dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="250dp"
+        android:rowCount="3"
+        android:columnCount="2"
+        >
 
-        <Button
+        <androidx.cardview.widget.CardView
+            android:id="@+id/idCardVisita"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:width="300dp"
-            android:fontFamily="@font/poppinsbold"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:id="@+id/idButtonVisitaLivre"
-            app:cornerRadius="15sp"
-            android:padding="12sp"
-            android:backgroundTint="@color/teal_200"
+            app:cardElevation="8dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_gravity="fill"
+            android:layout_margin="8dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="8dp">
 
-            android:text="Visita Livre" />
+            <LinearLayout
 
-        <Button
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imaga"
+                    android:src="@drawable/baseline_help_center_24"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"/>
+
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="18dp"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="#8E8484"
+                    android:text="Visita Livre "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/idCardClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:width="300dp"
-            android:fontFamily="@font/poppinsbold"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:id="@+id/idBottonSelectClient"
-            app:cornerRadius="15sp"
-            android:padding="12sp"
-            android:backgroundTint="@color/teal_200"
+            app:cardElevation="8dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_gravity="fill"
+            android:layout_margin="8dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="8dp">
 
-            android:text="Selecionar Cliente" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+                <ImageView
+                    android:src="@drawable/baseline_groups_24"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"/>
+
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="18dp"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="#8E8484"
+                    android:text="Selecionar Cliente "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </GridLayout>
 
 
 </RelativeLayout>

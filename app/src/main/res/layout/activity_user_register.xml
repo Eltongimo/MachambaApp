@@ -12,11 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/img_4"
+            android:src="@drawable/img_5"
             android:id="@+id/imageTopR" />
 
         <ImageView
@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registro do usuario"
+            android:text="Adicionar usuario"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppinssemibold"
             android:textSize="23dp"
@@ -61,14 +61,26 @@
             android:padding="30dp">
 
             <EditText
-                android:id="@+id/idFullName"
+                android:id="@+id/idNome"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/poppinsregular"
                 android:background="@drawable/button_sape"
                 android:drawableLeft="@drawable/baseline_person_24"
-                android:hint="  Nome Completo"
+                android:hint="  Nome proprio "
+                android:paddingLeft="10dp"
+                android:textSize="16dp" />
+            <EditText
+                android:layout_marginTop="12dp"
+                android:id="@+id/idApelido"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/poppinsregular"
+                android:background="@drawable/button_sape"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:hint="  Apelido "
                 android:paddingLeft="10dp"
                 android:textSize="16dp" />
 
@@ -104,7 +116,7 @@
                 android:text="Selecione a Localização "
                 android:textSize="18dp"
                 android:padding="10dp"
-                android:textColor="@color/teal_700"
+                android:textColor="@color/cor_of_botton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -113,8 +125,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
-                app:boxStrokeColor="@color/teal_200"
-                app:hintTextColor="@color/teal_200"
+                app:boxStrokeColor="@color/cor_of_botton"
+                app:hintTextColor="@color/cor_of_botton"
                 app:boxCornerRadiusTopEnd="23dp"
                 app:boxCornerRadiusTopStart="23dp"
                 app:boxCornerRadiusBottomEnd="23dp"
@@ -129,6 +141,30 @@
                     android:layout_height="wrap_content"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/textinputlayout_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                app:boxStrokeColor="@color/cor_of_botton"
+                app:hintTextColor="@color/cor_of_botton"
+                app:boxCornerRadiusTopEnd="23dp"
+                app:boxCornerRadiusTopStart="23dp"
+                app:boxCornerRadiusBottomEnd="23dp"
+                app:boxCornerRadiusBottomStart="23dp"
+                android:hint="@string/select_localidade"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                <AutoCompleteTextView
+                    android:id="@+id/idLocalidade"
+                    android:inputType="none"
+                    android:fontFamily="@font/poppinsregular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
 
@@ -155,28 +191,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-
-                android:id="@+id/textinputlayout_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                app:boxStrokeColor="@color/teal_200"
-                app:hintTextColor="@color/teal_200"
-                app:boxCornerRadiusTopEnd="23dp"
-                app:boxCornerRadiusTopStart="23dp"
-                app:boxCornerRadiusBottomEnd="23dp"
-                app:boxCornerRadiusBottomStart="23dp"
-                android:hint="@string/select_localidade"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-                <AutoCompleteTextView
-                    android:id="@+id/idLocalidade"
-                    android:inputType="none"
-                    android:fontFamily="@font/poppinsregular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -185,8 +199,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
-                app:boxStrokeColor="@color/teal_200"
-                app:hintTextColor="@color/teal_200"
                 app:boxCornerRadiusTopEnd="23dp"
                 app:boxCornerRadiusTopStart="23dp"
                 app:boxCornerRadiusBottomEnd="23dp"
@@ -216,7 +228,7 @@
             android:padding="12sp"
             android:textSize="16dp"
             android:fontFamily="@font/poppinsbold"
-            android:backgroundTint="@color/teal_200"
+            android:backgroundTint="@color/cor_of_botton"
             android:text="Add user"
             android:id="@+id/registerUser"/>
     </RelativeLayout>

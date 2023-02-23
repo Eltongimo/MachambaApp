@@ -12,6 +12,7 @@
         android:theme="@style/Theme.MachambaApp"
         tools:targetApi="31">
         <activity
+
             android:name=".ActivitySelectCultura"
             android:exported="false" />
         <activity
@@ -27,8 +28,19 @@
             android:name=".ActivitySelectVisit"
             android:exported="false" />
         <activity
-            android:name=".ActivitySelect"
-            android:exported="false" />
+            android:name=".ActivitySelect"/>
+
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".ActivityChooseAction"
             android:exported="false" />
@@ -40,12 +52,8 @@
             android:exported="false" />
         <activity
             android:name=".ActivityPageStart"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"

@@ -4,58 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_4"
     tools:context=".ActivitySelectVisit">
 
 
-    <ImageView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/img_4" />
-
-    <LinearLayout
-         android:gravity="center"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/idCardOpcao"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:padding="30dp"
-        android:id="@+id/linearlayout_1"
-        >
+        app:cardElevation="8dp"
+        android:layout_margin="30dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="8dp">
 
+        <LinearLayout
 
-        <EditText
-            android:inputType="text"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:fontFamily="@font/poppinsregular"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:hint=" Nome da visita"
-            android:paddingLeft="10dp"
-            android:textSize="17dp"
-            android:background="@drawable/button_sape"
-            android:id="@+id/idFullName"
-            />
-        <Button
-            android:fontFamily="@font/poppinsbold"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:padding="12dp"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:id="@+id/idButtonlogar"
-            android:width="300dp"
-            android:backgroundTint="@color/teal_200"
-            app:cornerRadius="15sp"
-            android:text="Proximo"/>
-    </LinearLayout>
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/baseline_compost_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/poppinssemibold"
+                android:text="Proprietario da Machamba "
+                android:textColor="#8E8484"
+                android:textSize="18dp" />
+
+            <EditText
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:id="@+id/idFullNameClient"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_sape"
+                android:drawableLeft="@drawable/baseline_help_center_24"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/poppinsregular"
+                android:gravity="start|center_vertical"
+                android:hint="Nome do proprietario"
+                android:padding="16dp"
+                android:paddingLeft="10dp" />
+
+            <Button
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="100dp"
+                android:id="@+id/idSelectVisita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="22dp"
+                android:width="300dp"
+                android:backgroundTint="@color/cor_of_botton"
+                android:fontFamily="@font/poppinsbold"
+                android:gravity="center"
+                android:padding="12sp"
+                android:text="Proximo"
+                android:textSize="16dp"
+                app:cornerRadius="15sp" />
 
 
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 
