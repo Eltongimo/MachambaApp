@@ -8,11 +8,11 @@
 
 
     <ImageView
-        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
         android:id="@+id/imageTopR"
-        android:layout_width="186dp"
-        android:layout_height="154dp"
-        android:layout_alignParentLeft="true"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_alignParentTop="true"
         android:src="@drawable/img_5" />
 
@@ -79,7 +79,7 @@
 
           <TextView
               android:id="@+id/idAlert"
-              android:textSize="18dp"
+              android:textSize="12dp"
               android:textColor="#F44336"
               android:textStyle="bold"
               android:layout_marginStart="16dp"
@@ -136,7 +136,7 @@
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" pressione aqui " />
+            android:text=" clique aqui " />
     </LinearLayout>
 
 

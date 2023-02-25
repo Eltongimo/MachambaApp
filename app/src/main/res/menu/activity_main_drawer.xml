@@ -1,20 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
-    </group>
+
+                            <item android:title="Todas paginas">
+
+                            <menu>
+                                <group android:checkableBehavior="single"  >
+                                <item
+                                    android:id="@+id/nav_admin"
+                                    android:icon="@drawable/baseline_admin_panel_settings_24"
+                                    android:title="@string/menu_admin" />
+                                <item
+                                    android:id="@+id/nav_clientes"
+                                    android:icon="@drawable/baseline_groups_24"
+                                    android:title="@string/menu_clientes" />
+                                <item
+                                    android:id="@+id/nav_produtor_lider"
+                                    android:icon="@drawable/baseline_groups_24"
+                                    android:title="@string/menu_produtor_lider" />
+                                </group>
+
+                            </menu>
+
+                            </item>
+
+                           <item android:id="@+id/titleView2" android:title="Localização ">
+
+                               <menu>
+                                   <group android:checkableBehavior="single" >
+                                   <item
+                                       android:id="@+id/nav_distrito"
+                                       android:icon="@drawable/baseline_pin_drop_24"
+                                       android:title="@string/select_distrito" />
+                                   <item
+                                       android:id="@+id/nav_posto_administrativo"
+                                       android:icon="@drawable/baseline_pin_drop_24"
+                                       android:title="@string/select_posto_administrativo" />
+                                   <item
+                                       android:id="@+id/nav_localidade"
+                                       android:icon="@drawable/baseline_pin_drop_24"
+                                       android:title="@string/select_localidade" />
+                                   <item
+                                       android:id="@+id/nav_comunidade"
+                                       android:icon="@drawable/baseline_gpp_good_24"
+                                       android:title="@string/select_comunidade" />
+
+
+                                 </group>
+                               </menu>
+                           </item>
+
+                             <item android:id="@+id/titleView3" android:title="Culturas">
+
+                                 <menu>
+                                     <group android:checkableBehavior="single" >
+                                     <item
+                                         android:id="@+id/nav_cultura"
+                                         android:icon="@drawable/baseline_grass_24"
+                                         android:title="@string/select_cultura" />
+
+                                     </group>
+                                 </menu>
+
+
+                             </item>
+
+        <item android:id="@+id/titleView4" android:title="Etnias">
+
+            <menu>
+                <group android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/nav_etnia"
+                    android:icon="@drawable/baseline_gpp_good_24"
+                    android:title="@string/select_etnia" />
+                </group>
+            </menu>
+
+        </item>
+
+
 </menu>
+

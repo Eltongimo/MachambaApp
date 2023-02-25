@@ -39,8 +39,9 @@ import java.util.Calendar;
 
 public class AddUserActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    NumberPicker numberPickerOne;
-    NumberPicker numberPickerTwo;
+    NumberPicker numberPickerDia;
+    NumberPicker numberPickerMes;
+    NumberPicker numberPickerAno;
     AutoCompleteTextView etniaInput;
     ArrayAdapter<String> adapterEtnia;
     CheckBox checkBoxMale;
@@ -55,36 +56,30 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
 
     Dialog dialog;
 
-
-
-
     String[] listEtnia = {" Macua","Makonde","Mwani","Swahili","Sena","Shona","Ndau","Chuwabo","Nyungwe","Tsonga","Changana","Bitonga","Yaos","Outros"};
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
+        Calendar c=Calendar.getInstance();
+        getIdView();
 
+        numberPickerDia.setMinValue(1);
+        numberPickerDia.setMaxValue(31);
 
-        imageUserUpload =(ImageView) findViewById(R.id.imageAdd);
-        textFullName=(TextView) findViewById(R.id.idFullNameClient);
-        imageDocumentUpload=(ImageView) findViewById(R.id.uploadImageDocument);
-        buttonRegisterUser =(Button) findViewById(R.id.registerUser);
+        numberPickerMes.setMinValue(1);
+        numberPickerMes.setMaxValue(c.MONTH);
 
-        txtIdade=(EditText) findViewById(R.id.idIdade);
-        checkBoxFeme=(CheckBox) findViewById(R.id.idCheckBoxfeme);
-        checkBoxMale=(CheckBox) findViewById(R.id.idCheckBoxMale);
+        numberPickerAno.setMinValue(1900);
+        numberPickerAno.setMaxValue(c.YEAR);
 
-        etniaInput=(AutoCompleteTextView) findViewById(R.id.etnia_select);
-        adapterEtnia = new ArrayAdapter<String>(this, R.layout.list_item_etnia, listEtnia);
-        etniaInput.setAdapter(adapterEtnia);
-
-
-
-
-      /// dialog
+        /// dialog
         dialog =new Dialog(AddUserActivity.this);
         dialog.setContentView(R.layout.alert_view_dialog);
+
+
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
             dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_alert));
         }
@@ -200,6 +195,27 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
 
             }
         });
+
+    }
+
+    private void getIdView() {
+
+        imageUserUpload =(ImageView) findViewById(R.id.imageAdd);
+        textFullName=(TextView) findViewById(R.id.idFullNameClient);
+        imageDocumentUpload=(ImageView) findViewById(R.id.uploadImageDocument);
+        buttonRegisterUser =(Button) findViewById(R.id.registerUser);
+
+        //txtIdade=(EditText) findViewById(R.id.idIdade);
+        checkBoxFeme=(CheckBox) findViewById(R.id.idCheckBoxfeme);
+        checkBoxMale=(CheckBox) findViewById(R.id.idCheckBoxMale);
+
+        etniaInput=(AutoCompleteTextView) findViewById(R.id.etnia_select);
+        adapterEtnia = new ArrayAdapter<String>(this, R.layout.list_item_etnia, listEtnia);
+        etniaInput.setAdapter(adapterEtnia);
+
+        numberPickerAno=(NumberPicker) findViewById(R.id.ano);
+        numberPickerDia=(NumberPicker) findViewById(R.id.dia);
+        numberPickerMes=(NumberPicker) findViewById(R.id.mes);
 
     }
 

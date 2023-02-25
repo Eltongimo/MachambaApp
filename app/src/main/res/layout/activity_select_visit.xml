@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,83 +7,169 @@
     android:background="@drawable/img_4"
     tools:context=".ActivitySelectVisit">
 
+  <RelativeLayout
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/idCardOpcao"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardElevation="8dp"
-        android:layout_margin="30dp"
-        android:backgroundTint="@color/white"
-        app:cardCornerRadius="8dp">
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-        <LinearLayout
+      <androidx.cardview.widget.CardView
+          android:id="@+id/idCardOpcao"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:cardElevation="8dp"
+          android:layout_margin="15dp"
+          android:backgroundTint="@color/white"
+          app:cardCornerRadius="8dp">
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:gravity="center"
-            android:orientation="vertical">
+          <LinearLayout
+              android:paddingBottom="100dp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical|center_horizontal"
+              android:gravity="center"
+              android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/baseline_compost_24" />
+              <ImageView
+                  android:layout_marginTop="17dp"
+                  android:layout_width="70dp"
+                  android:layout_height="70dp"
+                  android:src="@drawable/baseline_compost_24" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/poppinssemibold"
-                android:text="Proprietario da Machamba "
-                android:textColor="#8E8484"
-                android:textSize="18dp" />
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginEnd="16dp"
+                  android:fontFamily="@font/poppinssemibold"
+                  android:text="Proprietario da Machamba "
+                  android:textColor="#8E8484"
+                  android:textSize="18dp" />
 
-            <EditText
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:id="@+id/idFullNameClient"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_sape"
-                android:drawableLeft="@drawable/baseline_help_center_24"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/poppinsregular"
-                android:gravity="start|center_vertical"
-                android:hint="Nome do proprietario"
-                android:padding="16dp"
-                android:paddingLeft="10dp" />
+              <EditText
+                  android:layout_marginEnd="16dp"
+                  android:layout_marginStart="16dp"
+                  android:id="@+id/idFullNameClient"
+                  android:layout_width="match_parent"
+                  android:layout_height="60dp"
+                  android:layout_marginTop="20dp"
+                  android:background="@drawable/button_sape"
+                  android:drawableLeft="@drawable/baseline_help_center_24"
+                  android:drawablePadding="10dp"
+                  android:fontFamily="@font/poppinsregular"
+                  android:gravity="start|center_vertical"
+                  android:hint="Nome do proprietario"
+                  android:padding="16dp"
+                  android:paddingLeft="10dp" />
 
-            <Button
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="100dp"
-                android:id="@+id/idSelectVisita"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="22dp"
-                android:width="300dp"
-                android:backgroundTint="@color/cor_of_botton"
-                android:fontFamily="@font/poppinsbold"
-                android:gravity="center"
-                android:padding="12sp"
-                android:text="Proximo"
-                android:textSize="16dp"
-                app:cornerRadius="15sp" />
+              <EditText
+                  android:id="@+id/idApelido"
+                  android:layout_width="match_parent"
+                  android:layout_height="60dp"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="20dp"
+                  android:layout_marginEnd="16dp"
+                  android:background="@drawable/button_sape"
+                  android:drawableLeft="@drawable/baseline_help_center_24"
+                  android:drawablePadding="10dp"
+                  android:fontFamily="@font/poppinsregular"
+                  android:gravity="start|center_vertical"
+                  android:hint="Apelido"
+                  android:padding="16dp"
+                  android:paddingLeft="10dp" />
+
+              <TextView
+                  android:layout_centerHorizontal="true"
+                  android:layout_below="@id/linearlayout_1"
+                  android:id="@+id/text_areas"
+                  android:fontFamily="@font/poppinssemibold"
+                  android:layout_gravity="center"
+                  android:text="Selecione a Localização "
+                  android:textSize="18dp"
+                  android:padding="10dp"
+                  android:textColor="@color/cor_of_botton"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  />
+              <com.google.android.material.textfield.TextInputLayout
+                  android:id="@+id/textinputlayout"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="11dp"
+                  app:boxStrokeColor="@color/cor_of_botton"
+                  app:hintTextColor="@color/cor_of_botton"
+                  app:boxCornerRadiusTopEnd="23dp"
+                  app:boxCornerRadiusTopStart="23dp"
+                  app:boxCornerRadiusBottomEnd="23dp"
+                  app:boxCornerRadiusBottomStart="23dp"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginEnd="16dp"
+                  android:hint="@string/select_distrito"
+                  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                  <AutoCompleteTextView
+                      android:id="@+id/auto_select"
+                      android:inputType="none"
+                      android:fontFamily="@font/poppinsregular"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"/>
+
+              </com.google.android.material.textfield.TextInputLayout>
+
+              <com.google.android.material.textfield.TextInputLayout
+                  android:layout_marginEnd="16dp"
+                  android:layout_marginStart="16dp"
+                  android:id="@+id/textinputlayout_3"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="11dp"
+                  app:boxStrokeColor="@color/cor_of_botton"
+                  app:hintTextColor="@color/cor_of_botton"
+                  app:boxCornerRadiusTopEnd="23dp"
+                  app:boxCornerRadiusTopStart="23dp"
+                  app:boxCornerRadiusBottomEnd="23dp"
+                  app:boxCornerRadiusBottomStart="23dp"
+                  android:hint="@string/select_localidade"
+                  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                  <AutoCompleteTextView
+                      android:id="@+id/idLocalidade"
+                      android:inputType="none"
+                      android:fontFamily="@font/poppinsregular"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"/>
+
+              </com.google.android.material.textfield.TextInputLayout>
+
+
+
+              <Button
+                  android:layout_marginStart="20dp"
+                  android:layout_marginEnd="20dp"
+                  android:layout_marginBottom="10dp"
+                  android:id="@+id/idSelectVisita"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center"
+                  android:layout_marginTop="22dp"
+                  android:width="300dp"
+                  android:backgroundTint="@color/cor_of_botton"
+                  android:fontFamily="@font/poppinsbold"
+                  android:gravity="center"
+
+                  android:padding="12sp"
+                  android:text="Proximo"
+                  android:textSize="16dp"
+                  app:cornerRadius="15sp" />
 
 
 
 
-        </LinearLayout>
+          </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
-
-
+      </androidx.cardview.widget.CardView>
 
 
 
 
-</RelativeLayout>
+  </RelativeLayout>
+
+
+</ScrollView>

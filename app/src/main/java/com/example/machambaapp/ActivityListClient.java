@@ -22,15 +22,15 @@ public class ActivityListClient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_client);
 
-          floatingActionButton=(FloatingActionButton) findViewById(idfloat);
+          floatingActionButton=(FloatingActionButton) findViewById(R.id.idfloatCliente);
           recyclerView = findViewById(R.id.idRecyclerviewClient);
 
 
           recyclerView.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                  Intent intent=new Intent(ActivityListClient.this, ActivitySelectCultura.class);
-                  startActivity(intent);
+//                  Intent intent=new Intent(ActivityListClient.this, ActivitySelectCultura.class);
+//                  startActivity(intent);
               }
           });
 

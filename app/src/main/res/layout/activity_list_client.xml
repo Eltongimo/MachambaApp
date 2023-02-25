@@ -16,7 +16,6 @@
        android:layout_alignParentStart="true"
        android:layout_alignParentEnd="true"
        android:layout_height="50dp">
-
    </androidx.appcompat.widget.ActionMenuView>
 
     <androidx.appcompat.widget.SearchView
@@ -31,10 +30,7 @@
         android:layout_height="wrap_content"
         app:iconifiedByDefault="false"
         app:queryHint=" Buscar cliente"
-         android:focusable="false"
-
-        />
-
+        android:focusable="false"/>
        <androidx.recyclerview.widget.RecyclerView
 
            android:id="@+id/idRecyclerviewClient"
@@ -49,7 +45,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/idfloat"
+        android:id="@+id/idfloatCliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

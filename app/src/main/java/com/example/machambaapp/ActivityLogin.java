@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.machambaapp.databinding.ActivityChooseActionBinding;
 import com.example.machambaapp.model.DB;
+import com.example.machambaapp.model.Privilegios;
 import com.example.machambaapp.model.UserAdmin;
 import com.example.machambaapp.model.UserPl;
 
@@ -40,14 +41,9 @@ public class ActivityLogin extends AppCompatActivity {
                        editTextUseName.setError("campo vazio");
                        textViewAlert.setText("Entrada invalido");
                    }else {
-                       if (verificationPasswordAndUserNameAdmin()) {
+                       if (verificationPasswordAndUserNameAdmin() || verificationPasswordAndUserNamePl()) {
                            Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
                            startActivity(intent);
-                       }{
-                           if(verificationPasswordAndUserNamePl()) {
-                               Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
-                               startActivity(intent);
-                           }
                        }
 
                    }
@@ -58,10 +54,11 @@ public class ActivityLogin extends AppCompatActivity {
     boolean verificationPasswordAndUserNameAdmin(){
 
         UserAdmin userAdmin=new UserAdmin();
-
+        Privilegios privilegios=new Privilegios();
             if(userAdmin.getUserName().equalsIgnoreCase(editTextUseName.getText().toString())
                     && userAdmin.getPassWord().equalsIgnoreCase(editTextPassword.getText().toString()) ){
                 textViewAlert.setText("");
+                privilegios.setAllAcessView(true);
                 return true;
             }else {
                 textViewAlert.setText("Usuario ou senha invalido");
@@ -72,11 +69,13 @@ public class ActivityLogin extends AppCompatActivity {
     boolean verificationPasswordAndUserNamePl(){
 
         DB db=new DB();
-
+        db.addArrayListUserPl("sara","sara");
+        Privilegios privilegios=new Privilegios();
         for(UserPl user : db.getListUsePl()){
             if(user.getPassWordPl().equalsIgnoreCase(editTextUseName.getText().toString())
                     && user.getPassWordPl().equalsIgnoreCase(editTextPassword.getText().toString())){
                 textViewAlert.setText("");
+                privilegios.setAllAcessView(false);
                 return true;
             }else {
                 textViewAlert.setText("Usuario ou senha invalido");

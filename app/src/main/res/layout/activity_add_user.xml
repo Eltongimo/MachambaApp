@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/fundo"
+    android:background="@drawable/img_4"
     android:layout_height="match_parent"
     tools:context=".AddUserActivity">
 
@@ -11,13 +11,24 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        app:cardCornerRadius="30dp"
+        android:layout_margin="15dp"
         app:cardElevation="20dp" >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imageview"
+            android:src="@drawable/img_5"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="5dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"/>
+
         <LinearLayout
+            android:layout_below="@id/imageview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -33,7 +44,7 @@
                 android:textAlignment="center"
                 android:textSize="20dp" />
 
-           <androidx.cardview.widget.CardView
+            <androidx.cardview.widget.CardView
                android:layout_gravity="center_horizontal"
                android:layout_width="wrap_content"
                app:cardCornerRadius="130dp"
@@ -41,19 +52,7 @@
                <RelativeLayout
                    android:layout_width="140dp"
                    android:layout_height="wrap_content"
-                   android:layout_gravity="center">
-
-
-                   <ImageView
-                       android:id="@+id/imageAdd"
-                       android:layout_width="140dp"
-                       android:layout_height="140dp"
-                       android:scaleType="fitXY"
-                       android:src="@drawable/baseline_person_pin_24">
-
-                   </ImageView>
-
-               </RelativeLayout>
+                   android:layout_gravity="center"/>
            </androidx.cardview.widget.CardView>
 
             <EditText
@@ -98,6 +97,33 @@
                 android:padding="16dp"
                 android:paddingLeft="10dp" />
 
+            <TextView
+                android:drawablePadding="12dp"
+                android:layout_marginTop="40dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/text_foto"
+                android:fontFamily="@font/poppinssemibold"
+                android:layout_gravity="center"
+                android:text="Carregar foto do usuario"
+                android:textSize="18dp"
+                android:padding="10dp"
+                android:textColor="@color/cor_of_botton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <ImageView
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:id="@+id/imageAdd"
+                android:background="#FBF6F6"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/baseline_camera_24"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"/>
 
             <TextView
                 android:layout_marginTop="25dp"
@@ -143,20 +169,79 @@
                 android:layout_height="wrap_content"
                 />
 
-            <EditText
-                android:textColorLink="@color/teal_200"
-                android:layout_gravity="center"
-                android:layout_marginStart="28dp"
-                android:layout_marginEnd="28dp"
-                android:id="@+id/idIdade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/poppinsregular"
-                android:gravity="center"
-                android:hint="Dia /  Mês / Ano "
-                android:paddingLeft="10dp" />
+             <LinearLayout
+                 android:layout_gravity="center_horizontal"
+                 android:orientation="horizontal"
+                 android:layout_marginStart="16dp"
+                 android:layout_marginEnd="16dp"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="18dp"
+                        android:layout_marginStart="16dp"
+
+                        android:gravity="center_horizontal"
+                        android:text="Dia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <NumberPicker
+                        android:id="@+id/dia"
+                        android:layout_marginTop="29dp"
+                        android:solidColor="#E7EFEF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                 <RelativeLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+                     <TextView
+                         android:textStyle="bold"
+                         android:textSize="18dp"
+                         android:layout_marginStart="16dp"
+
+                         android:gravity="center_horizontal"
+                         android:text="Mes"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"/>
+
+                     <NumberPicker
+                         android:id="@+id/mes"
+                         android:layout_marginTop="29dp"
+                         android:solidColor="#E7EFEF"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         />
+                 </RelativeLayout>
+
+                 <RelativeLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+                     <TextView
+
+                         android:textStyle="bold"
+                         android:textSize="18dp"
+                         android:layout_marginStart="16dp"
+
+                         android:gravity="center_horizontal"
+                         android:text="Ano"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"/>
+
+                     <NumberPicker
+                         android:id="@+id/ano"
+                         android:layout_marginTop="29dp"
+                         android:solidColor="#E7EFEF"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         />
+                 </RelativeLayout>
+             </LinearLayout>
 
 
 
@@ -200,12 +285,13 @@
 
 
             <TextView
-                android:layout_marginTop="19dp"
+                android:drawablePadding="12dp"
+                android:layout_marginTop="40dp"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/text_areas"
+                android:id="@+id/text_foto2"
                 android:fontFamily="@font/poppinssemibold"
                 android:layout_gravity="center"
-                android:text="Selecione a foto do Documento "
+                android:text="Carregar foto do Documebto"
                 android:textSize="18dp"
                 android:padding="10dp"
                 android:textColor="@color/cor_of_botton"
@@ -213,13 +299,19 @@
                 android:layout_height="wrap_content"
                 />
 
-
             <ImageView
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:id="@+id/uploadImageDocument"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/baseline_insert_photo_24" />
+                android:background="#FBF6F6"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/baseline_camera_24"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"/>
+
 
 
             <Button
@@ -228,7 +320,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="42dp"
                 android:width="300dp"
                 android:backgroundTint="@color/cor_of_botton"
                 android:fontFamily="@font/poppinsbold"
@@ -239,7 +331,7 @@
                 app:cornerRadius="15sp" />
 
         </LinearLayout>
-
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
 </ScrollView>
