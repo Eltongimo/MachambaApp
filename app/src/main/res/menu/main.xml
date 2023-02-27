@@ -6,4 +6,10 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:icon="@drawable/direcao"
+        android:id="@+id/action_out"
+        android:orderInCategory="100"
+        android:title="@string/action_out"
+        app:showAsAction="never" />
 </menu>

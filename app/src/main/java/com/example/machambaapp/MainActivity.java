@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity  {
 
         if(!privilegios.isAllAcessView()){
             menu=navigationView.getMenu();
+            menuItem=menu.findItem(R.id.nav_admin);
             menuItem =menu.findItem(R.id.nav_distrito);
             menuItem.setVisible(false);
             menuItem =menu.findItem(R.id.nav_produtor_lider);

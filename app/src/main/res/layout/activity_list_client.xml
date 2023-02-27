@@ -44,6 +44,7 @@
        </androidx.recyclerview.widget.RecyclerView>
 
     <Button
+
         android:layout_marginBottom="18dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
@@ -61,7 +62,7 @@
         android:fontFamily="@font/poppinsbold"
         android:backgroundTint="@color/cor_of_botton"
         android:text="Registar usuario"
-        android:id="@+id/registerClient"/>
+        android:id="@+id/registerClientPl"/>
 
 
 

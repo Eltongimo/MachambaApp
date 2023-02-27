@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.machambaapp.databinding.ActivityChooseActionBinding;
 import com.example.machambaapp.model.DB;
@@ -72,6 +73,7 @@ public class ActivityLogin extends AppCompatActivity {
         DB db=new DB();
         Privilegios privilegios=new Privilegios();
         for(UserPl user : db.getListUsePl()){
+            System.out.println(db.getListUsePl());
             if(user.getPassWordPl().equalsIgnoreCase(editTextUseName.getText().toString())
                     && user.getPassWordPl().equalsIgnoreCase(editTextPassword.getText().toString())){
                 textViewAlert.setText("");

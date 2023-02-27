@@ -5,7 +5,8 @@
     <string name="nav_header_title">Usuario</string>
     <string name="nav_header_subtitle">Usuario produtor Lider</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">definições</string>
+    <string name="action_out">Sair</string>
 
 
     <string name="menu_admin">Pagina inicial</string>

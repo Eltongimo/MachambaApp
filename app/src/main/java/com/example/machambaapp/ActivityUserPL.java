@@ -7,24 +7,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.machambaapp.model.DB;
-import com.example.machambaapp.model.adapter.ClientAdapter;
 import com.example.machambaapp.model.adapter.UserPlAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ActivityUserPL extends AppCompatActivity {
-    FloatingActionButton floatingActionButton;
+    Button buttonRegister;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_pl);
+        setContentView(R.layout.activity_list_user_pl);
         setAdapter();
 
 
-        floatingActionButton=(FloatingActionButton) findViewById(R.id.idfloatUerPl);
+        buttonRegister =(Button) findViewById(R.id.registerClientPl);
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ActivityUserPL.this, ActivityUserRegister.class);
