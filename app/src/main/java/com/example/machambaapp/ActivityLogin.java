@@ -36,6 +36,7 @@ public class ActivityLogin extends AppCompatActivity {
            buttonLogar.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
+
                    if(editTextUseName.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()){
                        editTextPassword.setError("campo vazio");
                        editTextUseName.setError("campo vazio");
@@ -69,7 +70,6 @@ public class ActivityLogin extends AppCompatActivity {
     boolean verificationPasswordAndUserNamePl(){
 
         DB db=new DB();
-        db.addArrayListUserPl("sara","sara");
         Privilegios privilegios=new Privilegios();
         for(UserPl user : db.getListUsePl()){
             if(user.getPassWordPl().equalsIgnoreCase(editTextUseName.getText().toString())

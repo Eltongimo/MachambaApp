@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.WindowDecorActionBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.machambaapp.ActivitySelectClient;
@@ -39,6 +41,7 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
     public void onBindViewHolder(@NonNull UserPlAdapter.ViewHolder holder, int position) {
         UserPl userPl = mUserPl.get(position);
         holder.nomeUserPl.setText(userPl.getUserPl());
+        holder.imageView.setImageURI(userPl.getUriImage());
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
@@ -63,11 +66,13 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView nomeUserPl;
+        private final ImageView imageView;
         private IItemClickListener mItemClickListener;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             nomeUserPl = itemView.findViewById(R.id.nomeUserPl);
+            imageView=itemView.findViewById(R.id.imageClientView);
 
             itemView.setOnClickListener(this);
         }

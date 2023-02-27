@@ -8,7 +8,6 @@
     tools:context=".AddUserActivity">
 
     <androidx.cardview.widget.CardView
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="15dp"
@@ -69,7 +68,7 @@
                 android:padding="16dp"
                 android:paddingLeft="10dp" />
             <EditText
-                android:id="@+id/idApelido"
+                android:id="@+id/idApelidoCli"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
@@ -118,7 +117,7 @@
                 android:id="@+id/imageAdd"
                 android:background="#FBF6F6"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/baseline_camera_24"
+                android:src="@drawable/img_7"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="10dp"
@@ -305,7 +304,7 @@
                 android:id="@+id/uploadImageDocument"
                 android:background="#FBF6F6"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/baseline_camera_24"
+                android:src="@drawable/img_6"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="10dp"

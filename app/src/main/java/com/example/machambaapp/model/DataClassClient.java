@@ -1,27 +1,52 @@
 package com.example.machambaapp.model;
 
+import android.net.Uri;
+
 public class DataClassClient {
 
          private  String  fullName;
+
+         private  String apelido;
+
+         private  String distrito;
+         private String  localidade;
          private  String  idade;
          private  String  sexo;
          private  String  etnia;
          private  String  numeroEmola;
-         private  int  faceImage;
+         private Uri faceImage;
 
 
-    public DataClassClient(String faceImage, int image) {
-        this.fullName = faceImage;
-        this.faceImage= image;
+    public DataClassClient(String fullName, String apelido, String distrito, String localidade, Uri faceImage) {
+        this.fullName = fullName;
+        this.apelido = apelido;
+        this.distrito = distrito;
+        this.localidade = localidade;
+        this.faceImage = faceImage;
     }
 
-    public DataClassClient(String fullName, String idade, String sexo, String etnia, String numeroEmola, int faceImage) {
-        this.fullName = fullName;
-        this.idade = idade;
-        this.sexo = sexo;
-        this.etnia = etnia;
-        this.numeroEmola = numeroEmola;
-        this.faceImage = faceImage;
+    public String getApelido() {
+        return apelido;
+    }
+
+    public void setApelido(String apelido) {
+        this.apelido = apelido;
+    }
+
+    public String getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
     }
 
     public String getFullName() {
@@ -64,11 +89,11 @@ public class DataClassClient {
         this.numeroEmola = numeroEmola;
     }
 
-    public int getFaceImage() {
+    public Uri getFaceImage() {
         return faceImage;
     }
 
-    public void setFaceImage(int faceImage) {
+    public void setFaceImage(Uri faceImage) {
         this.faceImage = faceImage;
     }
 

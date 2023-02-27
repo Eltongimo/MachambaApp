@@ -1,23 +1,23 @@
 package com.example.machambaapp;
 
-import static android.os.Build.VERSION.SDK_INT;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -32,8 +32,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.machambaapp.model.DB;
-import com.example.machambaapp.model.DialogView;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -45,13 +46,22 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
     AutoCompleteTextView etniaInput;
     ArrayAdapter<String> adapterEtnia;
     CheckBox checkBoxMale;
+    static boolean isCamera;
+    static boolean isPhotoCaptureForDocument;
     CheckBox checkBoxFeme;
-    static Uri url;
+    static Uri urlImageGaleria;
+    static Uri urlImageCamera;
+    static Uri urlImageCaptureFace;
+
     Button buttonRegisterUser;
     Button ok;
+    Button cancel;
+    CardView galeria;
+    CardView camera;
     ImageView imageUserUpload;
     ImageView imageDocumentUpload;
     TextView textFullName;
+    TextView textApelido;
     EditText txtIdade;
 
     Dialog dialog;
@@ -65,59 +75,50 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
         setContentView(R.layout.activity_add_user);
         Calendar c=Calendar.getInstance();
         getIdView();
-
+        
         numberPickerDia.setMinValue(1);
         numberPickerDia.setMaxValue(31);
 
         numberPickerMes.setMinValue(1);
-        numberPickerMes.setMaxValue(c.MONTH);
+        numberPickerMes.setMaxValue(12);
 
         numberPickerAno.setMinValue(1900);
-        numberPickerAno.setMaxValue(c.YEAR);
+        numberPickerAno.setMaxValue(2023);
 
         /// dialog
-        dialog =new Dialog(AddUserActivity.this);
-        dialog.setContentView(R.layout.alert_view_dialog);
-
-
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
-            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_alert));
-        }
-         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-         dialog.setCancelable(false);
-         dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
-
-         ok=dialog.findViewById(R.id.confirm_ok);
-         ok.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 DB db=new DB();
-                 db.addArrayListClient(textFullName.getText().toString(),R.drawable.baseline_person_pin_24);
-
-                 Toast.makeText(AddUserActivity.this, "Usuario registado com Sucesso", Toast.LENGTH_SHORT).show();
-                 startActivity(new Intent(AddUserActivity.this,ActivityListClient.class));
-
-                 dialog.dismiss();
-             }
-         });
 
 
 
          // fim dialog
 
-        txtIdade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment  dialogFragment =new DialogView();
-                dialogFragment.show(getSupportFragmentManager(),"DataPicker");
-
-            }
-        });
-
-
         buttonRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog =new Dialog(AddUserActivity.this);
+                dialog.setContentView(R.layout.alert_view_dialog);
+
+
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_alert));
+                }
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.setCancelable(false);
+                dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+
+                ok=dialog.findViewById(R.id.confirm_ok);
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DB db=new DB();
+                        db.addArrayListClient(textFullName.getText().toString(),textApelido.getText().toString(),"","",urlImageCaptureFace);
+
+                        Toast.makeText(AddUserActivity.this, "Usuario registado com Sucesso", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddUserActivity.this,ActivityListClient.class));
+
+                        dialog.dismiss();
+                    }
+                });
+
                 dialog.show();
             }
         });
@@ -141,6 +142,8 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
             }
         });
 
+        //Mario =content://media/external/images/media/33
+       // Barata =android.graphics.Bitmap@e085dda
 
         ActivityResultLauncher<Intent> activityResultLauncherImageUsers = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -150,8 +153,9 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
                          if(result.getResultCode()== Activity.RESULT_OK){
 
                              Intent data=result.getData();
-                             url=data.getData();
-                             imageUserUpload.setImageURI(url);
+                             urlImageGaleria =data.getData();
+                             imageUserUpload.setImageURI(urlImageGaleria);
+                             System.out.println(" Mario ="+ urlImageGaleria);
                          }else {
                              Toast.makeText(AddUserActivity.this, "Selecione a imagem", Toast.LENGTH_SHORT).show();
                          }
@@ -167,8 +171,9 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
                         if(result.getResultCode()== Activity.RESULT_OK){
 
                             Intent data=result.getData();
-                            url=data.getData();
-                            imageDocumentUpload.setImageURI(url);
+                            urlImageGaleria =data.getData();
+                            imageDocumentUpload.setImageURI(urlImageGaleria);
+                            System.out.println(" Mario ="+ urlImageGaleria);
                         }else {
                             Toast.makeText(AddUserActivity.this, "Selecione a imagem", Toast.LENGTH_SHORT).show();
                         }
@@ -176,25 +181,138 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
                 }
         );
 
+
+
         imageUserUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent photoPicker=new Intent(Intent.ACTION_PICK);
-                photoPicker.setType("image/*");
-                activityResultLauncherImageUsers.launch(photoPicker);
+                 isPhotoCaptureForDocument=false;
+                dialog =new Dialog(AddUserActivity.this);
+                dialog.setContentView(R.layout.alert_view_dialog_choose_camera);
 
+
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_alert));
+                }
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.setCancelable(false);
+                dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+                camera=dialog.findViewById(R.id.idCardCamera);
+                cancel=dialog.findViewById(R.id.alertButton);
+                galeria=dialog.findViewById(R.id.idCardGaleria);
+
+                galeria.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        isCamera=false;
+                        Intent photoPicker=new Intent(Intent.ACTION_PICK);
+                        photoPicker.setType("image/*");
+                        activityResultLauncherImageUsers.launch(photoPicker);
+                        dialog.dismiss();
+                    }
+                });
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        isCamera=true;
+                        Intent openCamera=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(openCamera,1);
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
 
         imageDocumentUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent photoPicker=new Intent(Intent.ACTION_PICK);
-                photoPicker.setType("image/*");
-                activityResultLauncherImageDocuments.launch(photoPicker);
+                isPhotoCaptureForDocument=true;
+                dialog =new Dialog(AddUserActivity.this);
+                dialog.setContentView(R.layout.alert_view_dialog_choose_camera);
+
+
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_alert));
+                }
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.setCancelable(false);
+
+                dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
+                galeria=dialog.findViewById(R.id.idCardGaleria);
+                galeria=dialog.findViewById(R.id.idCardGaleria);
+
+                cancel=dialog.findViewById(R.id.alertButton);
+                camera=dialog.findViewById(R.id.idCardCamera);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        isCamera=true;
+                        Intent openCamera=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(openCamera,1);
+                        dialog.dismiss();
+                    }
+                });
+
+
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                galeria.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        isCamera=false;
+                   Intent photoPicker=new Intent(Intent.ACTION_PICK);
+                    photoPicker.setType("image/*");
+                    activityResultLauncherImageDocuments.launch(photoPicker);
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+
 
             }
         });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if(requestCode==1 && resultCode==RESULT_OK) {
+            if (isCamera) {
+                Bitmap bitmap=(Bitmap) data.getExtras().get("data");
+                ByteArrayOutputStream bytes =new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes);
+                String path= MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(),bitmap,"val",null);
+                urlImageCamera = Uri.parse(path);
+
+                if (!isPhotoCaptureForDocument) {
+                    urlImageCaptureFace=urlImageCamera;
+                    imageUserUpload.setImageURI(urlImageCamera);
+                } else {
+
+                    imageDocumentUpload.setImageURI(urlImageCamera);
+                }
+
+            }
+        }
 
     }
 
@@ -202,6 +320,7 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
 
         imageUserUpload =(ImageView) findViewById(R.id.imageAdd);
         textFullName=(TextView) findViewById(R.id.idFullNameClient);
+        textApelido=(TextView) findViewById(R.id.idApelidoCli) ;
         imageDocumentUpload=(ImageView) findViewById(R.id.uploadImageDocument);
         buttonRegisterUser =(Button) findViewById(R.id.registerUser);
 

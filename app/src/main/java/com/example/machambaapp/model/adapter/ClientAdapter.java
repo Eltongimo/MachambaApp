@@ -40,8 +40,8 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ClientAdapter.ViewHolder holder, int position) {
         DataClassClient client = mSpecies.get(position);
-        holder.nomeClient.setText(client.getFullName());
-        holder.foto.setImageResource(client.getFaceImage());
+        holder.nomeClient.setText(client.getFullName()+ " "+ client.getApelido());
+        holder.foto.setImageURI(client.getFaceImage());
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override

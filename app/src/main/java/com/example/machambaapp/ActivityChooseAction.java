@@ -21,9 +21,9 @@ public class ActivityChooseAction extends AppCompatActivity {
         setContentView(R.layout.activity_choose_action);
 
           startVisit=(CardView) findViewById(R.id.idCardVisita);
-          selectClient = (CardView) findViewById(R.id.idCardClient);
+          selectClient = (CardView) findViewById(R.id.idCardClientSelect);
 
-        startVisit.setOnClickListener(new View.OnClickListener() {
+           startVisit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(ActivityChooseAction.this, ActivitySelect.class);

@@ -1,5 +1,7 @@
 package com.example.machambaapp.model;
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 
 public class DB {
@@ -13,13 +15,13 @@ public class DB {
         return listClient;
     }
 
-    public void addArrayListClient(String fullname, int image){
-          listClient.add(new DataClassClient(fullname,image));
+    public void addArrayListClient(String nome, String apelido,String distrito,String localidade, Uri image){
+          listClient.add(new DataClassClient(nome, apelido,distrito,localidade,image));
 
     }
 
-    public void addArrayListUserPl(String fullname, String senha){
-        listUsePl.add(new UserPl(fullname, senha));
+    public void addArrayListUserPl(String fullname, String senha, Uri uriImage){
+        listUsePl.add(new UserPl(fullname, senha,uriImage));
 
     }
 
