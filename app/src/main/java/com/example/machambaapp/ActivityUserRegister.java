@@ -32,8 +32,8 @@ import java.io.ByteArrayOutputStream;
 public class ActivityUserRegister extends AppCompatActivity {
      Button addUser;
 
-    String[] itemsDistrito = {"Mecuf"};
-    String[] itemsPostoAdministrativo = {"Murrebue"};
+    String[] itemsDistrito = {"Mecúfi"};
+    String[] itemsPostoAdministrativo = {"Murrebuê"};
     String[] itemsLocalidade = {"L-Muitua"};
     String[] itemsComunidade = {"Sicura B", "Muitua Sede", "Murripa","Singura A"};
     AutoCompleteTextView autoCompleteDistrito;
@@ -81,8 +81,8 @@ public class ActivityUserRegister extends AppCompatActivity {
              public void onClick(View view) {
 
                 if(editTextApelido.getText().equals("") || editTextNome.getText().equals("")){
-                    editTextNome.setError(" campo vazio");
-                    editTextApelido.setError(" campo vazio");
+                    editTextNome.setError(" Campo Vazio ");
+                    editTextApelido.setError(" Campo Vazio ");
                 }else{
                     DB db =new DB();
                     db.addArrayListUserPl(editTextNome.getText().toString(),editTextApelido.getText().toString(), urlImage);

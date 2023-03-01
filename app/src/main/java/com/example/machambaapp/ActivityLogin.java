@@ -39,9 +39,9 @@ public class ActivityLogin extends AppCompatActivity {
                public void onClick(View view) {
 
                    if(editTextUseName.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()){
-                       editTextPassword.setError("campo vazio");
-                       editTextUseName.setError("campo vazio");
-                       textViewAlert.setText("Entrada invalido");
+                       editTextPassword.setError("Campo Vazio");
+                       editTextUseName.setError("Campo Vazio");
+                       textViewAlert.setText("Entrada inválida!");
                    }else {
                        if (verificationPasswordAndUserNameAdmin() || verificationPasswordAndUserNamePl()) {
                            Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
@@ -63,7 +63,7 @@ public class ActivityLogin extends AppCompatActivity {
                 privilegios.setAllAcessView(true);
                 return true;
             }else {
-                textViewAlert.setText("Usuario ou senha invalido");
+                textViewAlert.setText("Usuário ou senha inválido");
             }
      return false;
     }
@@ -80,7 +80,7 @@ public class ActivityLogin extends AppCompatActivity {
                 privilegios.setAllAcessView(false);
                 return true;
             }else {
-                textViewAlert.setText("Usuario ou senha invalido");
+                textViewAlert.setText("Usuário ou senha inválido");
             }
         }
 

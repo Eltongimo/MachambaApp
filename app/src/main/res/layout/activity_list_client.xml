@@ -61,7 +61,7 @@
         android:textSize="16dp"
         android:fontFamily="@font/poppinsbold"
         android:backgroundTint="@color/cor_of_botton"
-        android:text="Registar usuario"
+        android:text="Registar Usuário"
         android:id="@+id/registerClientPl"/>
 
 

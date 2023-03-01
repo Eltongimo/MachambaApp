@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fundo"
     tools:context=".ActivityLogin">
 
 
@@ -19,7 +20,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bem-vindo a Assistência Tecnica"
+        android:text="Bem-vindo a Assistência Técnica"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/poppinssemibold"
 
@@ -36,7 +37,7 @@
         android:layout_below="@id/titleR"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Insira as credenciais para poder entar"
+        android:text="Insira as credenciais para puder entar"
         android:textSize="12sp" />
 
       <LinearLayout
@@ -49,25 +50,25 @@
         android:id="@+id/linearlayout_1"
         >
 
-        <EditText
-            android:drawableLeft="@drawable/baseline_person_24"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:hint=" O nome do usuario"
-            android:paddingLeft="10dp"
-            android:textSize="16dp"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/poppinsregular"
-            android:background="@drawable/button_sape"
-            android:id="@+id/idEditUserName"
-            />
+          <EditText
+              android:id="@+id/idEditUserName"
+              android:layout_width="match_parent"
+              android:layout_height="58dp"
+              android:background="@drawable/button_sape"
+              android:drawableLeft="@drawable/baseline_phone_26"
+              android:drawablePadding="10dp"
+              android:inputType="phone"
+              android:fontFamily="@font/poppinsregular"
+              android:hint="Número de Telefone"
+              android:paddingLeft="10dp"
+              android:textSize="16dp" />
 
-        <EditText
+          <EditText
             android:id="@+id/idEditPassword"
             android:drawableLeft="@drawable/baseline_key"
             android:layout_width="match_parent"
             android:layout_height="58dp"
-            android:hint="  A senha do usuario"
+            android:hint="  A senha do Usuário"
             android:textSize="16dp"
             android:inputType="textPassword"
             android:drawablePadding="10dp"
