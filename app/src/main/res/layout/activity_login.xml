@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,140 +7,145 @@
     tools:context=".ActivityLogin">
 
 
-    <ImageView
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:id="@+id/imageTopR"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/img_5" />
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <ImageView
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="25dp"
+           android:id="@+id/imageTopR"
+           android:layout_width="130dp"
+           android:layout_height="130dp"
+           android:layout_alignParentTop="true"
+           android:src="@drawable/img_5" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bem-vindo a Assistência Tecnica"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/poppinssemibold"
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Bem-vindo a Assistência Tecnica"
+           android:layout_marginTop="12dp"
+           android:fontFamily="@font/poppinssemibold"
 
-        android:textSize="18dp"
-        android:id="@+id/titleR"
-        android:layout_below="@id/imageTopR"
-        android:layout_centerHorizontal="true"/>
+           android:textSize="18dp"
+           android:id="@+id/titleR"
+           android:layout_below="@id/imageTopR"
+           android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:id="@+id/subTitle"
-        android:fontFamily="@font/poppinsregular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleR"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Insira as credenciais para poder entar"
-        android:textSize="12sp" />
+       <TextView
+           android:id="@+id/subTitle"
+           android:fontFamily="@font/poppinsregular"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/titleR"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="10dp"
+           android:text="Insira as credenciais para poder entar"
+           android:textSize="12sp" />
 
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/subTitle"
-        android:layout_marginTop="10dp"
-        android:padding="30dp"
-        android:id="@+id/linearlayout_1"
-        >
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_below="@id/subTitle"
+           android:layout_marginTop="10dp"
+           android:padding="30dp"
+           android:id="@+id/linearlayout_1"
+           >
 
-        <EditText
-            android:drawableLeft="@drawable/baseline_person_24"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:hint=" O nome do usuario"
-            android:paddingLeft="10dp"
-            android:textSize="16dp"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/poppinsregular"
-            android:background="@drawable/button_sape"
-            android:id="@+id/idEditUserName"
-            />
+           <EditText
+               android:drawableLeft="@drawable/baseline_phone_26"
+               android:layout_width="match_parent"
+               android:layout_height="58dp"
+               android:inputType="phone"
+               android:hint=" O numero do telemovel"
+               android:paddingLeft="10dp"
+               android:textSize="16dp"
+               android:drawablePadding="10dp"
+               android:fontFamily="@font/poppinsregular"
+               android:background="@drawable/button_sape"
+               android:id="@+id/idEditUserName"
+               />
 
-        <EditText
-            android:id="@+id/idEditPassword"
-            android:drawableLeft="@drawable/baseline_key"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:hint="  A senha do usuario"
-            android:textSize="16dp"
-            android:inputType="textPassword"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/poppinsregular"
-            android:paddingLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_sape"
-            />
+           <EditText
+               android:id="@+id/idEditPassword"
+               android:drawableLeft="@drawable/baseline_key"
+               android:layout_width="match_parent"
+               android:layout_height="58dp"
+               android:hint="  A senha do usuario"
+               android:textSize="16dp"
+               android:inputType="textPassword"
+               android:drawablePadding="10dp"
+               android:fontFamily="@font/poppinsregular"
+               android:paddingLeft="10dp"
+               android:layout_marginTop="20dp"
+               android:background="@drawable/button_sape"
+               />
 
-          <TextView
-              android:id="@+id/idAlert"
-              android:textSize="12dp"
-              android:textColor="#F44336"
-              android:textStyle="bold"
-              android:layout_marginStart="16dp"
-              android:layout_marginEnd="16dp"
-              android:layout_marginTop="10dp"
-              android:text=""
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+           <TextView
+               android:id="@+id/idAlert"
+               android:textSize="12dp"
+               android:textColor="#F44336"
+               android:textStyle="bold"
+               android:layout_marginStart="16dp"
+               android:layout_marginEnd="16dp"
+               android:layout_marginTop="10dp"
+               android:text=""
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
 
-    </LinearLayout>
-
-
-    <Button
-        android:padding="12dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linearlayout_1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:id="@+id/idButtonlogar"
-        android:width="300dp"
-        android:fontFamily="@font/poppinsbold"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:backgroundTint="@color/cor_of_botton"
-        app:cornerRadius="15sp"
-        android:text="Entrar"/>
+       </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_marginTop="4dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/idButtonlogar"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_marginTop="4dp"
-            android:textSize="12sp"
-            android:layout_below="@id/idButtonlogar"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Para recuperar senha "
-
-            />
-
-        <TextView
-            android:textSize="12sp"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/cor_of_botton"
-            android:layout_below="@id/idButtonlogar"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" clique aqui " />
-    </LinearLayout>
+       <Button
+           android:padding="12dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/linearlayout_1"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="40dp"
+           android:id="@+id/idButtonlogar"
+           android:width="300dp"
+           android:fontFamily="@font/poppinsbold"
+           android:textSize="16sp"
+           android:textStyle="bold"
+           android:backgroundTint="@color/cor_of_botton"
+           app:cornerRadius="15sp"
+           android:text="Entrar"/>
 
 
+       <LinearLayout
+           android:layout_marginTop="4dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/idButtonlogar"
+           android:layout_centerHorizontal="true"
+           android:orientation="horizontal">
+
+           <TextView
+               android:layout_marginTop="4dp"
+               android:textSize="12sp"
+               android:layout_below="@id/idButtonlogar"
+               android:layout_centerHorizontal="true"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Para recuperar senha "
+
+               />
+
+           <TextView
+               android:textSize="12sp"
+               android:layout_marginTop="4dp"
+               android:textColor="@color/cor_of_botton"
+               android:layout_below="@id/idButtonlogar"
+               android:layout_centerHorizontal="true"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text=" clique aqui " />
+       </LinearLayout>
 
 
 
-</RelativeLayout>
+
+
+   </RelativeLayout>
+</ScrollView>

@@ -65,7 +65,7 @@
                 android:padding="30dp">
 
                 <EditText
-                    android:id="@+id/idNome"
+                    android:id="@+id/idNomePl"
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
                     android:background="@drawable/button_sape"
@@ -77,7 +77,7 @@
                     android:textSize="16dp" />
 
                 <EditText
-                    android:id="@+id/idApelido"
+                    android:id="@+id/idApelidoPl"
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
                     android:layout_marginTop="12dp"
@@ -90,6 +90,7 @@
                     android:textSize="16dp" />
 
                 <EditText
+                    android:id="@+id/idPhonePl"
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
                     android:layout_marginTop="15dp"
@@ -102,8 +103,22 @@
                     android:paddingLeft="10dp"
                     android:textSize="16dp" />
 
+                <EditText
+                    android:id="@+id/passWordPlr"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/button_sape"
+                    android:drawableLeft="@drawable/baseline_key"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/poppinsregular"
+                    android:hint="  Senha"
+                    android:inputType="phone|number"
+                    android:paddingLeft="10dp"
+                    android:textSize="16dp" />
+
                 <TextView
-                    android:id="@+id/text_foto"
+                    android:id="@+id/text_fotoPl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -117,7 +132,7 @@
                     android:textSize="18dp" />
 
                 <ImageView
-                    android:id="@+id/idImageUserView"
+                    android:id="@+id/idImageUserViewPl"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center_horizontal"
@@ -125,7 +140,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="16dp"
                     android:background="#FBF6F6"
-                    android:src="@drawable/img_6" />
+                    android:src="@drawable/img_7" />
             </LinearLayout>
 
             <LinearLayout
@@ -166,7 +181,7 @@
                     app:hintTextColor="@color/cor_of_botton">
 
                     <AutoCompleteTextView
-                        android:id="@+id/auto_select"
+                        android:id="@+id/auto_selectPl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppinsregular"
@@ -190,7 +205,7 @@
                     app:hintTextColor="@color/cor_of_botton">
 
                     <AutoCompleteTextView
-                        android:id="@+id/idLocalidade"
+                        android:id="@+id/idLocalidadePl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppinsregular"
@@ -216,7 +231,7 @@
 
                     <AutoCompleteTextView
 
-                        android:id="@+id/idPostoAdministrativo"
+                        android:id="@+id/idPostoAdministrativoPl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppinsregular"
@@ -239,7 +254,7 @@
                     app:boxCornerRadiusTopStart="23dp">
 
                     <AutoCompleteTextView
-                        android:id="@+id/idComunidade"
+                        android:id="@+id/idComunidadePl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppinsregular"

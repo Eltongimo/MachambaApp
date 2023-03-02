@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -16,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -26,10 +28,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.machambaapp.model.DB;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 
 public class ActivityUserRegister extends AppCompatActivity {
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
+
+
      Button addUser;
 
     String[] itemsDistrito = {"Mecuf"};
@@ -44,6 +56,8 @@ public class ActivityUserRegister extends AppCompatActivity {
     ArrayAdapter<String> adapterItems;
 
     EditText editTextNome;
+    EditText editSenha;
+    EditText editPhone;
     static Uri urlImage;
     Button cancel;
     CardView galeria;
@@ -58,14 +72,17 @@ public class ActivityUserRegister extends AppCompatActivity {
         setContentView(R.layout.activity_user_register);
 
         addUser=(Button) findViewById(R.id.registerUser);
-        editTextNome=(EditText) findViewById(R.id.idNome);
-        editTextApelido=(EditText) findViewById(R.id.idApelido);
-        imageViewUser=(ImageView) findViewById(R.id.idImageUserView);
-        autoCompleteDistrito = (AutoCompleteTextView) findViewById(R.id.auto_select);
 
-        autoCompletePostoAdministrativo = (AutoCompleteTextView) findViewById(R.id.idPostoAdministrativo);
-        autoCompleteLocalidade = (AutoCompleteTextView) findViewById(R.id.idLocalidade);
-        autoCompleteComunidade = (AutoCompleteTextView) findViewById(R.id.idComunidade);
+        editTextNome=(EditText) findViewById(R.id.idNomePl);
+        editSenha=(EditText) findViewById(R.id.passWordPlr);
+        editPhone=(EditText) findViewById(R.id.idPhonePl);
+        editTextApelido=(EditText) findViewById(R.id.idApelidoPl);
+        imageViewUser=(ImageView) findViewById(R.id.idImageUserViewPl);
+        autoCompleteDistrito = (AutoCompleteTextView) findViewById(R.id.auto_selectPl);
+
+        autoCompletePostoAdministrativo = (AutoCompleteTextView) findViewById(R.id.idPostoAdministrativoPl);
+        autoCompleteLocalidade = (AutoCompleteTextView) findViewById(R.id.idLocalidadePl);
+        autoCompleteComunidade = (AutoCompleteTextView) findViewById(R.id.idComunidadePl);
 
         adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_distrito, itemsDistrito);
         autoCompleteDistrito.setAdapter(adapterItems);
@@ -76,23 +93,72 @@ public class ActivityUserRegister extends AppCompatActivity {
         adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_comunidade, itemsComunidade);
         autoCompleteComunidade.setAdapter(adapterItems);
 
+
         addUser.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
 
-                if(editTextApelido.getText().equals("") || editTextNome.getText().equals("")){
-                    editTextNome.setError(" campo vazio");
-                    editTextApelido.setError(" campo vazio");
+              if(editTextApelido.getText().toString().isEmpty()
+                      || editTextNome.getText().toString().isEmpty()
+                      || editTextApelido.getText().toString().isEmpty()
+                      || editSenha.getText().toString().isEmpty()
+                      || autoCompleteDistrito.getText().toString().isEmpty()
+                      || autoCompleteLocalidade.getText().toString().isEmpty()
+                      || autoCompletePostoAdministrativo.getText().toString().isEmpty()
+                      || autoCompleteComunidade.getText().toString().isEmpty()
+
+              ){
+                  Toast.makeText(ActivityUserRegister.this, "Preenche todos campos", Toast.LENGTH_SHORT).show();
                 }else{
-                    DB db =new DB();
-                    db.addArrayListUserPl(editTextNome.getText().toString(),editTextApelido.getText().toString(), urlImage);
-                    Intent intent=new Intent(ActivityUserRegister.this, ActivityUserPL.class);
-                    startActivity(intent);
+                  completImage(imageViewUser);
+                  DB db =new DB();
+                  db.addArrayListUserPl(
+                          editTextNome.getText().toString(),
+                          editTextApelido.getText().toString(),
+                          editPhone.getText().toString(),
+                          editSenha.getText().toString(),
+                          urlImage,
+                          autoCompleteDistrito.getText().toString(),
+                          autoCompleteLocalidade.getText().toString(),
+                          autoCompletePostoAdministrativo.getText().toString(),
+                          autoCompleteComunidade.getText().toString());
+                  databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            if(snapshot.hasChild(editPhone.getText().toString())){
+                                   Toast.makeText(ActivityUserRegister.this, "Usuario ja registado", Toast.LENGTH_SHORT).show();
+                               }else {
+
+                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("nome").setValue(editTextNome.getText().toString());
+                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("apelido").setValue(editTextApelido.getText().toString());
+                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("senha").setValue(editSenha.getText().toString());
+                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("distrito").setValue(autoCompleteDistrito.getText().toString());
+                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("localidade").setValue(autoCompleteLocalidade.getText().toString());
+                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("postoAdministrativo").setValue( autoCompletePostoAdministrativo.getText().toString());
+                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("comunidade").setValue(autoCompleteComunidade.getText().toString());
+                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("imagem").setValue(urlImage.toString());
+
+                                   Intent intent=new Intent(ActivityUserRegister.this, ActivityUserPL.class);
+                                   startActivity(intent);
+                               }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(ActivityUserRegister.this, "Verifica a ligação de internet", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
 
                 }
 
              }
-         });
+
+            private void completImage(ImageView imageViewUser) {
+              
+            }
+        });
 
 
         ActivityResultLauncher<Intent> activityResultLauncherImageUsers = registerForActivityResult(
@@ -165,6 +231,13 @@ public class ActivityUserRegister extends AppCompatActivity {
 
 
         });
+
+    }
+
+    void sendMessage(String phone, String password){
+        String sms=" MachambaApp: Nome do usuario- "+phone+ "senha -"+password;
+        SmsManager smsManager=SmsManager.getDefault();
+        smsManager.sendTextMessage(phone.toString().trim(),null,sms,null,null);
 
     }
 

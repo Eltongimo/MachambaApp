@@ -24,12 +24,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.machambaapp.databinding.ActivityMainBinding;
+import com.google.firebase.ktx.Firebase;
 
 public class MainActivity extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
+
     private ActivityMainBinding binding;
    Menu menu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,6 @@ public class MainActivity extends AppCompatActivity  {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setSupportActionBar(binding.appBarMain.toolbar);
 
         DrawerLayout drawer = binding.drawerLayout;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity  {
         // menu should be considered as top level destinations.
                  mAppBarConfiguration = new AppBarConfiguration.Builder(
 
-                R.id.nav_admin, R.id.nav_clientes, R.id.nav_produtor_lider, R.id.nav_distrito,R.id.nav_posto_administrativo)
+                 R.id.nav_admin, R.id.nav_clientes, R.id.nav_produtor_lider, R.id.nav_distrito,R.id.nav_posto_administrativo)
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity  {
         if(!privilegios.isAllAcessView()){
             menu=navigationView.getMenu();
             menuItem=menu.findItem(R.id.nav_admin);
+            menuItem.setVisible(false);
             menuItem =menu.findItem(R.id.nav_distrito);
             menuItem.setVisible(false);
             menuItem =menu.findItem(R.id.nav_produtor_lider);

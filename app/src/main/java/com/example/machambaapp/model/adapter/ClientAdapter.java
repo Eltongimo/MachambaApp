@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.machambaapp.ActivitySelectClient;
-import com.example.machambaapp.AddUserActivity;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.DataClassClient;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
@@ -40,7 +39,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ClientAdapter.ViewHolder holder, int position) {
         DataClassClient client = mSpecies.get(position);
-        holder.nomeClient.setText(client.getFullName()+ " "+ client.getApelido());
+        holder.nomeClient.setText(client.getNome()+ " "+ client.getApelido());
         holder.foto.setImageURI(client.getFaceImage());
 
         holder.setItemClickListener(new IItemClickListener() {
@@ -53,7 +52,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
 
                  Intent intent = new Intent(mContext, ActivitySelectClient.class);
                  intent.putExtra("Foto", client.getFaceImage());
-                 intent.putExtra("fullName", client.getFullName());
+                 intent.putExtra("fullName", client.getNome());
                  mContext.startActivity(intent);
             }
         });

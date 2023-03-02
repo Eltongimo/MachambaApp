@@ -4,7 +4,9 @@ import android.net.Uri;
 
 public class DataClassClient {
 
-         private  String  fullName;
+         private  String nome;
+
+         private  Uri imageDocument;
 
          private  String apelido;
 
@@ -15,14 +17,27 @@ public class DataClassClient {
          private  String  etnia;
          private  String  numeroEmola;
          private Uri faceImage;
+         private  String phone;
 
 
-    public DataClassClient(String fullName, String apelido, String distrito, String localidade, Uri faceImage) {
-        this.fullName = fullName;
+
+    public DataClassClient(String fullName, String apelido,String phone, String distrito, String localidade, Uri faceImage, Uri imageDocument) {
+        this.nome = fullName;
         this.apelido = apelido;
         this.distrito = distrito;
         this.localidade = localidade;
         this.faceImage = faceImage;
+        this.imageDocument=imageDocument;
+        this.phone=phone;
+    }
+
+
+    public Uri getImageDocument() {
+        return imageDocument;
+    }
+
+    public void setImageDocument(Uri imageDocument) {
+        this.imageDocument = imageDocument;
     }
 
     public String getApelido() {
@@ -49,12 +64,12 @@ public class DataClassClient {
         this.localidade = localidade;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getNome() {
+        return nome;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getIdade() {
@@ -100,7 +115,7 @@ public class DataClassClient {
     @Override
     public String toString() {
         return "DataClassClient{" +
-                "fullName='" + fullName + '\'' +
+                "fullName='" + nome + '\'' +
                 ", faceImage='" + faceImage + '\'' +
                 '}';
     }

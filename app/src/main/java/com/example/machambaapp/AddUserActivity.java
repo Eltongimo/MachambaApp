@@ -110,7 +110,7 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
                     @Override
                     public void onClick(View view) {
                         DB db=new DB();
-                        db.addArrayListClient(textFullName.getText().toString(),textApelido.getText().toString(),"","",urlImageCaptureFace);
+                       // db.addArrayListClient(textFullName.getText().toString(),textApelido.getText().toString(),"","",urlImageCaptureFace);
 
                         Toast.makeText(AddUserActivity.this, "Usuario registado com Sucesso", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AddUserActivity.this,ActivityListClient.class));

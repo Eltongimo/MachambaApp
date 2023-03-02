@@ -1,7 +1,7 @@
 package com.example.machambaapp.model;
 
 public class UserAdmin {
-    String userName ="admin";
+    String userName ="888";
     String passWord="admin";
 
 

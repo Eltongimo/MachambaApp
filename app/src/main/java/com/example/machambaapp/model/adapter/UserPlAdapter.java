@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.WindowDecorActionBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.machambaapp.ActivitySelectClient;
@@ -40,8 +40,12 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserPlAdapter.ViewHolder holder, int position) {
         UserPl userPl = mUserPl.get(position);
-        holder.nomeUserPl.setText(userPl.getUserPl());
+        holder.nomeUserPl.setText(userPl.getNome());
         holder.imageView.setImageURI(userPl.getUriImage());
+        holder.distrito.setText(userPl.getDistrito());
+        holder.localidade.setText(userPl.getLocalidade());
+
+        Toast.makeText(mContext, ""+userPl.getLocalidade()+" "+ userPl.getDistrito(), Toast.LENGTH_SHORT).show();
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
@@ -52,7 +56,7 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
 //                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragmentViewEspecies).commit();
 
                  Intent intent = new Intent(mContext, ActivitySelectClient.class);
-                 intent.putExtra("fullName", userPl.getUserPl());
+                 intent.putExtra("fullName", userPl.getNome());
                  mContext.startActivity(intent);
             }
         });
@@ -66,6 +70,8 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView nomeUserPl;
+        private final TextView distrito;
+        private final TextView localidade;
         private final ImageView imageView;
         private IItemClickListener mItemClickListener;
 
@@ -73,6 +79,8 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
             super(itemView);
             nomeUserPl = itemView.findViewById(R.id.nomeUserPl);
             imageView=itemView.findViewById(R.id.imageClientView);
+            distrito=itemView.findViewById(R.id.idDistritoPl);
+            localidade=itemView.findViewById(R.id.iDLocalidadePl);
 
             itemView.setOnClickListener(this);
         }
