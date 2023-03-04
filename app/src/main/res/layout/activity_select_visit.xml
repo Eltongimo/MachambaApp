@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_4"
+    android:background="@drawable/fundo"
     tools:context=".ActivitySelectVisit">
 
   <RelativeLayout
@@ -41,7 +41,7 @@
                   android:layout_marginStart="16dp"
                   android:layout_marginEnd="16dp"
                   android:fontFamily="@font/poppinssemibold"
-                  android:text="Proprietario da Machamba "
+                  android:text="Proprietário da Machamba "
                   android:textColor="#8E8484"
                   android:textSize="18dp" />
 
@@ -57,7 +57,7 @@
                   android:drawablePadding="10dp"
                   android:fontFamily="@font/poppinsregular"
                   android:gravity="start|center_vertical"
-                  android:hint="Nome do proprietario"
+                  android:hint="Nome do Proprietário"
                   android:padding="16dp"
                   android:paddingLeft="10dp" />
 

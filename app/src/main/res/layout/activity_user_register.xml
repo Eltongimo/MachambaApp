@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/img_4"
+    android:background="@drawable/fundo"
     android:layout_height="match_parent"
     android:layout_marginBottom="27dp"
     tools:context=".ActivityUserRegister">
@@ -39,7 +39,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppinssemibold"
-                android:text="Adicionar Produtor Lider"
+                android:text="Adicionar Produtor Líder"
                 android:textSize="23dp"/>
 
             <TextView
@@ -72,7 +72,7 @@
                     android:drawableLeft="@drawable/baseline_person_24"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/poppinsregular"
-                    android:hint="  Nome proprio "
+                    android:hint="  Nome"
                     android:paddingLeft="10dp"
                     android:textSize="16dp" />
 
@@ -98,7 +98,7 @@
                     android:drawableLeft="@drawable/baseline_phone_26"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/poppinsregular"
-                    android:hint="  Numero do telemovel"
+                    android:hint="  Número do telefone"
                     android:inputType="phone|number"
                     android:paddingLeft="10dp"
                     android:textSize="16dp" />
@@ -127,7 +127,7 @@
                     android:drawablePadding="12dp"
                     android:fontFamily="@font/poppinssemibold"
                     android:padding="10dp"
-                    android:text="Carregar foto do usuario"
+                    android:text="Carregar foto do Usuário"
                     android:textColor="@color/cor_of_botton"
                     android:textSize="18dp" />
 
@@ -140,7 +140,11 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="16dp"
                     android:background="#FBF6F6"
+<<<<<<< HEAD
                     android:src="@drawable/img_7" />
+=======
+                    android:src="@drawable/baseline_photo_camera_24" />
+>>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
             </LinearLayout>
 
             <LinearLayout
@@ -276,7 +280,7 @@
                 android:backgroundTint="@color/cor_of_botton"
                 android:fontFamily="@font/poppinsbold"
                 android:padding="12sp"
-                android:text="Adicionar usuario"
+                android:text="Adicionar Usuário"
                 android:textSize="16dp"
                 app:cornerRadius="15sp" />
         </RelativeLayout>

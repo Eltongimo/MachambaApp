@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:iconifiedByDefault="false"
-        app:queryHint=" Buscar usuario"
+        app:queryHint=" Buscar Usuário"
         android:focusable="false"
 
         />
@@ -73,7 +73,7 @@
         android:textSize="16dp"
         android:fontFamily="@font/poppinsbold"
         android:backgroundTint="@color/cor_of_botton"
-        android:text="Registar usuario"
+        android:text="Registar Usuário"
         android:id="@+id/registerClientPl"/>
 
 

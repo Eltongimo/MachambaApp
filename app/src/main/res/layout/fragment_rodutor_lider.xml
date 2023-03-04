@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fundo"
     tools:context=".ui.produtorLider.ProdutorLiderFragment">
 
 
-
     <androidx.appcompat.widget.SearchView
-        android:backgroundTint="@color/white"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:id="@+id/idSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:iconifiedByDefault="false"
-        app:queryHint=" Buscar usuario"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/white"
         android:focusable="false"
+        app:iconifiedByDefault="false"
+        app:queryHint=" Buscar Usuário"
 
         />
 

@@ -47,8 +47,8 @@ public class ActivityUserRegister extends AppCompatActivity {
 
      Button addUser;
 
-    String[] itemsDistrito = {"Mecuf"};
-    String[] itemsPostoAdministrativo = {"Murrebue"};
+    String[] itemsDistrito = {"Mecúfi"};
+    String[] itemsPostoAdministrativo = {"Murrebuê"};
     String[] itemsLocalidade = {"L-Muitua"};
     String[] itemsComunidade = {"Sicura B", "Muitua Sede", "Murripa","Singura A"};
     AutoCompleteTextView autoCompleteDistrito;
@@ -101,6 +101,7 @@ public class ActivityUserRegister extends AppCompatActivity {
              @Override
              public void onClick(View view) {
 
+<<<<<<< HEAD
               if(editTextApelido.getText().toString().isEmpty()
                       || editTextNome.getText().toString().isEmpty()
                       || editTextApelido.getText().toString().isEmpty()
@@ -112,6 +113,11 @@ public class ActivityUserRegister extends AppCompatActivity {
 
               ){
                   Toast.makeText(ActivityUserRegister.this, "Preenche todos campos", Toast.LENGTH_SHORT).show();
+=======
+                if(editTextApelido.getText().equals("") || editTextNome.getText().equals("")){
+                    editTextNome.setError(" Campo Vazio ");
+                    editTextApelido.setError(" Campo Vazio ");
+>>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
                 }else{
                   completImage(imageViewUser);
                   DB db =new DB();

@@ -162,7 +162,12 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
 
 
 
+<<<<<<< HEAD
                         Toast.makeText(AddUserActivity.this, "Usuario registado com Sucesso", Toast.LENGTH_SHORT).show();
+=======
+                        Toast.makeText(AddUserActivity.this, "Usuário registado com Sucesso", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddUserActivity.this,ActivityListClient.class));
+>>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
 
                         dialog.dismiss();
                     }
@@ -189,8 +194,13 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
         checkBoxFeme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
                 Toast.makeText(AddUserActivity.this, "femenino", Toast.LENGTH_SHORT).show();
                 genero="Femenino";
+=======
+                Toast.makeText(AddUserActivity.this, "Feminino", Toast.LENGTH_SHORT).show();
+
+>>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
                 checkBoxMale.setChecked(false);
                 checkBoxFeme.setChecked(true);
             }

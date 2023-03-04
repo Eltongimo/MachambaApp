@@ -56,9 +56,15 @@ public class ActivityLogin extends AppCompatActivity {
                @Override
                public void onClick(View view) {
 
+<<<<<<< HEAD
                    if(editTextPhone.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()){
                        editTextPassword.setError("campo vazio");
                        editTextPhone.setError("campo vazio");
+=======
+                   if(editTextUseName.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()){
+                       editTextPassword.setError("Campo Vazio");
+                       editTextUseName.setError("Campo Vazio");
+>>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
                        textViewAlert.setText("Entrada inválida!");
                    }else {
                        if (verificationPasswordAndUserNameAdmin()) {
@@ -131,12 +137,34 @@ public class ActivityLogin extends AppCompatActivity {
                 textViewAlert.setText("");
                 privilegios.setAllAcessView(true);
                 return true;
+<<<<<<< HEAD
+=======
+            }else {
+                textViewAlert.setText("Usuário ou senha inválido");
+>>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
             }
      return false;
     }
 
     boolean verificationPasswordAndUserNamePl(){
+<<<<<<< HEAD
         final boolean isTrue = false;
+=======
+
+        DB db=new DB();
+        Privilegios privilegios=new Privilegios();
+        for(UserPl user : db.getListUsePl()){
+            System.out.println(db.getListUsePl());
+            if(user.getPassWordPl().equalsIgnoreCase(editTextUseName.getText().toString())
+                    && user.getPassWordPl().equalsIgnoreCase(editTextPassword.getText().toString())){
+                textViewAlert.setText("");
+                privilegios.setAllAcessView(false);
+                return true;
+            }else {
+                textViewAlert.setText("Usuário ou senha inválido");
+            }
+        }
+>>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
 
 
         return false;
