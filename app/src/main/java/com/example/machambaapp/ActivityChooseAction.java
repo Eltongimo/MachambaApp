@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class ActivityChooseAction extends AppCompatActivity {
 
@@ -38,5 +39,12 @@ public class ActivityChooseAction extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Toast.makeText(this, " voltou", Toast.LENGTH_SHORT).show();
     }
 }

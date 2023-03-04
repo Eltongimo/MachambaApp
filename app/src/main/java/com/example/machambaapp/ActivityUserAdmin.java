@@ -27,4 +27,10 @@ public class ActivityUserAdmin extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
 }

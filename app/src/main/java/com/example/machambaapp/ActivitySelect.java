@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class ActivitySelect extends AppCompatActivity {
 
@@ -38,5 +39,11 @@ public class ActivitySelect extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Toast.makeText(this, " voltou", Toast.LENGTH_SHORT).show();
     }
 }

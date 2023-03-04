@@ -1,74 +1,81 @@
 package com.example.machambaapp;
 
-import android.content.ClipData;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
+import android.widget.GridLayout;
 
-import com.example.machambaapp.model.DB;
 import com.example.machambaapp.model.Privilegios;
+import com.example.machambaapp.ui.clientes.ClientesFragment;
+import com.example.machambaapp.ui.home.HomeFragment;
+import com.example.machambaapp.ui.produtorLider.ProdutorLiderFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.ui.NavigationUI;
 
-import com.example.machambaapp.databinding.ActivityMainBinding;
-import com.google.firebase.ktx.Firebase;
-
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-    private ActivityMainBinding binding;
-   Menu menu;
 
+   Menu menu;
+   private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        setSupportActionBar(binding.appBarMain.toolbar);
-
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        privilegios(navigationView);
+        setContentView(R.layout.activity_main);
 
 
+        Toolbar toolbar=(Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-//        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-                 mAppBarConfiguration = new AppBarConfiguration.Builder(
+        drawer =(DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView=(findViewById(R.id.nav_view));
+        navigationView.setNavigationItemSelectedListener(this);
 
-                 R.id.nav_admin, R.id.nav_clientes, R.id.nav_produtor_lider, R.id.nav_distrito,R.id.nav_posto_administrativo)
-                .setOpenableLayout(drawer)
-                .build();
+        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this, drawer,toolbar,
+                R.string.navegation_drawer_open,R.string.navegation_drawer_close);
+
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        if(savedInstanceState== null) {
+            if(privilegios(navigationView)){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                navigationView.setCheckedItem(R.id.nav_admin);
+            }else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ClientesFragment()).commit();
+                navigationView.setCheckedItem(R.id.nav_clientes);
+            }
+        }
+
+
+
+
+
+
+
     }
 
-    private void privilegios(NavigationView navigationView) {
+
+    private boolean privilegios(NavigationView navigationView) {
         Privilegios privilegios=new Privilegios();
         MenuItem menuItem;
 
         if(!privilegios.isAllAcessView()){
             menu=navigationView.getMenu();
-            menuItem=menu.findItem(R.id.nav_admin);
+            menuItem =menu.findItem(R.id.nav_admin);
             menuItem.setVisible(false);
             menuItem =menu.findItem(R.id.nav_distrito);
             menuItem.setVisible(false);
@@ -84,13 +91,19 @@ public class MainActivity extends AppCompatActivity  {
             menuItem.setVisible(false);
             menuItem =menu.findItem(R.id.nav_posto_administrativo);
             menuItem.setVisible(false);
+            return false;
         }
-
+      return true;
     }
 
     @Override
     public void onBackPressed() {
-      super.onBackPressed();
+
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
     }
 
 
@@ -103,12 +116,25 @@ public class MainActivity extends AppCompatActivity  {
         return true;
     }
 
+
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_admin:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new HomeFragment()).commit();
+                break;
+            case R.id.nav_clientes:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ClientesFragment()).commit();
+                break;
+            case R.id.nav_produtor_lider:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ProdutorLiderFragment()).commit();
+                break;
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
-
-
 }

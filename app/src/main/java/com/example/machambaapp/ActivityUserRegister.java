@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.SavedStateHandle;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -28,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.machambaapp.model.DB;
+import com.example.machambaapp.model.Sha;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
 
 public class ActivityUserRegister extends AppCompatActivity {
 
@@ -122,6 +125,8 @@ public class ActivityUserRegister extends AppCompatActivity {
                           autoCompleteLocalidade.getText().toString(),
                           autoCompletePostoAdministrativo.getText().toString(),
                           autoCompleteComunidade.getText().toString());
+                  Intent intent=new Intent(ActivityUserRegister.this, ActivityUserPL.class);
+                  startActivity(intent);
                   databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -129,18 +134,20 @@ public class ActivityUserRegister extends AppCompatActivity {
                             if(snapshot.hasChild(editPhone.getText().toString())){
                                    Toast.makeText(ActivityUserRegister.this, "Usuario ja registado", Toast.LENGTH_SHORT).show();
                                }else {
+                                     String sha=getSha(editPhone.getText().toString());
+                                   databaseReference.child("usuarios").child(sha).child("telemovel").setValue( editPhone.getText().toString());
+                                   databaseReference.child("usuarios").child(sha).child("nome").setValue(editTextNome.getText().toString());
+                                   databaseReference.child("usuarios").child(sha).child("apelido").setValue(editTextApelido.getText().toString());
+                                   databaseReference.child("usuarios").child(sha).child("senha").setValue(editSenha.getText().toString());
+                                   databaseReference.child("usuarios").child(sha).child("distrito").setValue(autoCompleteDistrito.getText().toString());
+                                   databaseReference.child("usuarios").child(sha).child("localidade").setValue(autoCompleteLocalidade.getText().toString());
+                                   databaseReference.child("usuarios").child(sha).child("postoAdministrativo").setValue( autoCompletePostoAdministrativo.getText().toString());
+                                   databaseReference.child("usuarios").child(sha).child("comunidade").setValue(autoCompleteComunidade.getText().toString());
 
-                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("nome").setValue(editTextNome.getText().toString());
-                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("apelido").setValue(editTextApelido.getText().toString());
-                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("senha").setValue(editSenha.getText().toString());
-                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("distrito").setValue(autoCompleteDistrito.getText().toString());
-                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("localidade").setValue(autoCompleteLocalidade.getText().toString());
-                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("postoAdministrativo").setValue( autoCompletePostoAdministrativo.getText().toString());
-                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("comunidade").setValue(autoCompleteComunidade.getText().toString());
-                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("imagem").setValue(urlImage.toString());
+                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("imagem").setValue(urlImage+"");
 
-                                   Intent intent=new Intent(ActivityUserRegister.this, ActivityUserPL.class);
-                                   startActivity(intent);
+//                                   Intent intent=new Intent(ActivityUserRegister.this, ActivityUserPL.class);
+//                                   startActivity(intent);
                                }
                         }
 
@@ -257,6 +264,31 @@ public class ActivityUserRegister extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ActivityUserRegister.this, ActivityUserPL.class));
+        super.onBackPressed();
+    }
+
+
+    String getSha(String value){
+
+             byte[] inpuData= value.toString().getBytes();
+             byte[] outputData=new byte[0];
+
+             try {
+                 outputData= new Sha().encryptSHA(inpuData,"SHA-384");
+
+             } catch (Exception e) {
+                 throw new RuntimeException(e);
+             }
+
+        BigInteger shaData=new BigInteger(1,outputData);
+
+        return shaData.toString(16);
+    }
+
 }
 
 

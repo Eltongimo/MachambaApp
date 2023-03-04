@@ -82,7 +82,7 @@
                 android:paddingLeft="10dp" />
 
             <EditText
-                android:id="@+id/idCampoNome3"
+                android:id="@+id/idPhoneUser"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"

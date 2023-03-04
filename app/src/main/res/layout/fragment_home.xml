@@ -87,7 +87,7 @@
             <androidx.cardview.widget.CardView
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:id="@+id/idCardClient"
+                android:id="@+id/idCardCultura"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
@@ -129,7 +129,7 @@
             <androidx.cardview.widget.CardView
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:id="@+id/idCardOpct"
+                android:id="@+id/idCardOpctDistrito"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
@@ -175,7 +175,7 @@
             <androidx.cardview.widget.CardView
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:id="@+id/idCardOf"
+                android:id="@+id/idCardEtnia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardElevation="8dp"
@@ -219,7 +219,7 @@
             <androidx.cardview.widget.CardView
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:id="@+id/idCardOssatq"
+                android:id="@+id/idCardLocalidade"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 app:cardElevation="8dp"
@@ -264,7 +264,7 @@
             <androidx.cardview.widget.CardView
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:id="@+id/idCardOssr"
+                android:id="@+id/idCardComunidade"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 app:cardElevation="8dp"
@@ -307,7 +307,7 @@
             <androidx.cardview.widget.CardView
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:id="@+id/idCardOsws"
+                android:id="@+id/idCardPosto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardElevation="8dp"

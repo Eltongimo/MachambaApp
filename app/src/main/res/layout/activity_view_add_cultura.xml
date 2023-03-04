@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/fundo"
+    android:layout_height="match_parent"
+    tools:context=".ActivityViewAddCultura">
+
+
+
+    <androidx.appcompat.widget.ActionMenuView
+
+        android:id="@+id/menuBar"
+        android:layout_width="match_parent"
+        android:background="@drawable/baseline_grass_24"
+        android:backgroundTint="@color/cor_of_botton"
+        android:layout_alignParentTop="true"
+        android:layout_height="50dp">
+
+        <TextView
+            android:drawableRight="@drawable/baseline_grass_24"
+            android:textSize="16dp"
+            android:fontFamily="@font/poppinssemibold"
+            android:textColor="@color/white"
+            android:text="Culturas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.ActionMenuView>
+
+    <androidx.appcompat.widget.SearchView
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/button_sape"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/idSearch"
+        android:layout_below="@id/menuBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:iconifiedByDefault="false"
+        app:queryHint=" Buscar Cultura"
+        android:focusable="false"/>
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/idViewCulturaR"
+        android:layout_below="@id/idSearch"
+        android:layout_marginTop="10dp"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/list_culturas">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+
+        android:layout_marginBottom="18dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="300dp"
+        app:cornerRadius="15sp"
+        android:padding="12sp"
+        android:textSize="16dp"
+        android:fontFamily="@font/poppinsbold"
+        android:backgroundTint="@color/cor_of_botton"
+        android:text="Adicionar Cultura"
+        android:id="@+id/addCultura"/>
+
+
+</RelativeLayout>

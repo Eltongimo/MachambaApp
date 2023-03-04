@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -32,13 +33,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.machambaapp.model.DB;
+import com.example.machambaapp.model.Sha;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.util.Calendar;
 
 public class AddUserActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
+
 
     NumberPicker numberPickerDia;
     NumberPicker numberPickerMes;
@@ -60,10 +69,15 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
     CardView camera;
     ImageView imageUserUpload;
     ImageView imageDocumentUpload;
-    TextView textFullName;
+    TextView textNome;
     TextView textApelido;
     EditText txtIdade;
 
+    static String genero="";
+
+    EditText editTextPhone;
+    CheckBox checkBoxMacho;
+    CheckBox checkBoxFemenino;
     Dialog dialog;
 
     String[] listEtnia = {" Macua","Makonde","Mwani","Swahili","Sena","Shona","Ndau","Chuwabo","Nyungwe","Tsonga","Changana","Bitonga","Yaos","Outros"};
@@ -74,6 +88,11 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
         Calendar c=Calendar.getInstance();
+
+
+
+        editTextPhone=(EditText) findViewById(R.id.idPhoneUser);
+
         getIdView();
         
         numberPickerDia.setMinValue(1);
@@ -110,13 +129,47 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
                     @Override
                     public void onClick(View view) {
                         DB db=new DB();
-                       // db.addArrayListClient(textFullName.getText().toString(),textApelido.getText().toString(),"","",urlImageCaptureFace);
+
+                            db.addArrayListClient(
+                                    textNome.getText().toString(),
+                                    textApelido.getText().toString(),
+                                    editTextPhone.getText().toString(),
+                                    "","",urlImageCaptureFace,urlImageCaptureFace);
+
+
+                        databaseReference.child("clientes").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                                    String sha=getSha(editTextPhone.getText().toString());
+                                    databaseReference.child("clientes").child(sha).child("telemovel").setValue(editTextPhone.getText().toString());
+                                    databaseReference.child("clientes").child(sha).child("nome").setValue(textNome.getText().toString());
+                                    databaseReference.child("clientes").child(sha).child("apelido").setValue(textApelido.getText().toString());
+                                    databaseReference.child("clientes").child(sha).child("genero").setValue(genero);
+                                    databaseReference.child("clientes").child(sha).child("imagemDocumento").setValue(""+imageDocumentUpload);
+                                    databaseReference.child("clientes").child(sha).child("imagemUsuario").setValue(""+imageUserUpload);
+
+                                    startActivity(new Intent(AddUserActivity.this,ActivityListClient.class));
+                                }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+
 
                         Toast.makeText(AddUserActivity.this, "Usuario registado com Sucesso", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AddUserActivity.this,ActivityListClient.class));
 
                         dialog.dismiss();
                     }
+
+
+
+
                 });
 
                 dialog.show();
@@ -129,6 +182,7 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
                 Toast.makeText(AddUserActivity.this, "Masculino", Toast.LENGTH_SHORT).show();
                 checkBoxMale.setChecked(true);
                 checkBoxFeme.setChecked(false);
+                    genero="Masculino";
             }
         });
 
@@ -136,11 +190,13 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
             @Override
             public void onClick(View view) {
                 Toast.makeText(AddUserActivity.this, "femenino", Toast.LENGTH_SHORT).show();
-
+                genero="Femenino";
                 checkBoxMale.setChecked(false);
                 checkBoxFeme.setChecked(true);
             }
         });
+
+
 
         //Mario =content://media/external/images/media/33
        // Barata =android.graphics.Bitmap@e085dda
@@ -319,7 +375,7 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
     private void getIdView() {
 
         imageUserUpload =(ImageView) findViewById(R.id.imageAdd);
-        textFullName=(TextView) findViewById(R.id.idFullNameClient);
+        textNome =(TextView) findViewById(R.id.idFullNameClient);
         textApelido=(TextView) findViewById(R.id.idApelidoCli) ;
         imageDocumentUpload=(ImageView) findViewById(R.id.uploadImageDocument);
         buttonRegisterUser =(Button) findViewById(R.id.registerUser);
@@ -338,6 +394,7 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
 
     }
 
+
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         Calendar c=Calendar.getInstance();
@@ -346,5 +403,22 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
         c.set(Calendar.DAY_OF_MONTH,i2);
         String currentDate= DateFormat.getDateInstance().format(c.getTime());
         txtIdade.setText(currentDate);
+    }
+
+    String getSha(String value){
+
+        byte[] inpuData= value.toString().getBytes();
+        byte[] outputData=new byte[0];
+
+        try {
+            outputData= new Sha().encryptSHA(inpuData,"SHA-384");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        BigInteger shaData=new BigInteger(1,outputData);
+
+        return shaData.toString(16);
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MachambaApp</string>
+    <string name="app_name">Assistência técnica</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Usuario</string>
@@ -21,5 +21,9 @@
     <string name="select_comunidade">Comunidade</string>
     <string name="select_etnia">Etnia</string>
     <string name="select_cultura">Culturas</string>
+
+
+    <string name="navegation_drawer_open">Open navegation drawer</string>
+    <string name="navegation_drawer_close">Close navegation drawer</string>
 
 </resources>

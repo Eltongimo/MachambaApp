@@ -39,4 +39,11 @@ public class ActivityUserPL extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(userPlAdapter);
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent( ActivityUserPL.this,MainActivity.class));
+
+        super.onBackPressed();
+  }
 }

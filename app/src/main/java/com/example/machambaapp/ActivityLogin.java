@@ -1,17 +1,24 @@
 package com.example.machambaapp;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.machambaapp.model.DB;
 import com.example.machambaapp.model.Privilegios;
 import com.example.machambaapp.model.UserAdmin;
+import com.example.machambaapp.model.UserPl;
+import com.google.android.gms.common.data.DataBuffer;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -48,31 +55,53 @@ public class ActivityLogin extends AppCompatActivity {
            buttonLogar.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
+
                    if(editTextPhone.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()){
                        editTextPassword.setError("campo vazio");
                        editTextPhone.setError("campo vazio");
-                       textViewAlert.setText("Entrada invalido");
+                       textViewAlert.setText("Entrada inválida!");
                    }else {
                        if (verificationPasswordAndUserNameAdmin()) {
+                           editTextPassword.setText("");
+                           editTextPhone.setText("");
+                           textViewAlert.setText("");
                            Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
                            startActivity(intent);
                        } else {
+
+//                           Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
+//                           startActivity(intent);
+
+
                            databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
                                @Override
                                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-                                   if(snapshot.hasChild(editTextPhone.getText().toString())){
 
-                                       String getPasswordFromFirebase=snapshot.child(editTextPhone.getText().toString()).child("senha").getValue(String.class);
-                                       if(getPasswordFromFirebase.equalsIgnoreCase(editTextPassword.getText().toString())){
-                                           Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
-                                           startActivity(intent);
-                                       }else {
-                                           textViewAlert.setText("Usuario ou senha invalido");
+                                   // Este método é chamado uma vez com o valor inicial e novamente sempre que os dados no nó "users" são alterados.
+
+                                   // Percorra todos os nós filhos do nó "users"
+                                   for (DataSnapshot userSnapshot: snapshot.getChildren()) {
+                                       String phone = userSnapshot.child("telemovel").getValue(String.class);
+                                       String password = userSnapshot.child("senha").getValue(String.class);
+
+
+                                       if(phone.equalsIgnoreCase(editTextPhone.getText().toString()) &&
+                                               password.equalsIgnoreCase(editTextPassword.getText().toString())){
+
+                                           Privilegios privilegios= new Privilegios();
+                                           privilegios.setAllAcessView(false);
+
+                                           startActivity(new Intent(ActivityLogin.this,MainActivity.class));
                                        }
 
                                    }
+
+
+
+
+
 
                                }
 

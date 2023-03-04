@@ -104,6 +104,7 @@
                     android:textSize="16dp" />
 
                 <EditText
+
                     android:id="@+id/passWordPlr"
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
@@ -113,7 +114,6 @@
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/poppinsregular"
                     android:hint="  Senha"
-                    android:inputType="phone|number"
                     android:paddingLeft="10dp"
                     android:textSize="16dp" />
 
