@@ -20,50 +20,29 @@
            android:layout_alignParentTop="true"
            android:src="@drawable/img_5" />
 
-<<<<<<< HEAD
        <TextView
+           android:textSize="18dp"
+           android:textColor="@color/white"
+           android:layout_centerHorizontal="true"
+           android:layout_below="@id/imageTopR"
+           android:id="@+id/idTitle"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="Bem-vindo a Assistência Tecnica"
            android:layout_marginTop="12dp"
-           android:fontFamily="@font/poppinssemibold"
-=======
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bem-vindo a Assistência Técnica"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/poppinssemibold"
->>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
+           android:fontFamily="@font/poppinssemibold"/>
 
-           android:textSize="18dp"
-           android:id="@+id/titleR"
-           android:layout_below="@id/imageTopR"
-           android:layout_centerHorizontal="true"/>
-
-<<<<<<< HEAD
        <TextView
+
            android:id="@+id/subTitle"
            android:fontFamily="@font/poppinsregular"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_below="@id/titleR"
+           android:layout_below="@id/idTitle"
            android:layout_centerHorizontal="true"
            android:layout_marginTop="10dp"
            android:text="Insira as credenciais para poder entar"
            android:textSize="12sp" />
-=======
-    <TextView
-        android:id="@+id/subTitle"
-        android:fontFamily="@font/poppinsregular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleR"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Insira as credenciais para puder entar"
-        android:textSize="12sp" />
->>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
 
        <LinearLayout
            android:layout_width="match_parent"
@@ -75,7 +54,6 @@
            android:id="@+id/linearlayout_1"
            >
 
-<<<<<<< HEAD
            <EditText
                android:drawableLeft="@drawable/baseline_phone_26"
                android:layout_width="match_parent"
@@ -104,35 +82,7 @@
                android:layout_marginTop="20dp"
                android:background="@drawable/button_sape"
                />
-=======
-          <EditText
-              android:id="@+id/idEditUserName"
-              android:layout_width="match_parent"
-              android:layout_height="58dp"
-              android:background="@drawable/button_sape"
-              android:drawableLeft="@drawable/baseline_phone_26"
-              android:drawablePadding="10dp"
-              android:inputType="phone"
-              android:fontFamily="@font/poppinsregular"
-              android:hint="Número de Telefone"
-              android:paddingLeft="10dp"
-              android:textSize="16dp" />
 
-          <EditText
-            android:id="@+id/idEditPassword"
-            android:drawableLeft="@drawable/baseline_key"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:hint="  A senha do Usuário"
-            android:textSize="16dp"
-            android:inputType="textPassword"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/poppinsregular"
-            android:paddingLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_sape"
-            />
->>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
 
            <TextView
                android:id="@+id/idAlert"

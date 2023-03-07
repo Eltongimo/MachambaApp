@@ -40,7 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 
-public class ActivityUserRegister extends AppCompatActivity {
+ public class ActivityUserRegister extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
 
@@ -101,77 +101,76 @@ public class ActivityUserRegister extends AppCompatActivity {
              @Override
              public void onClick(View view) {
 
-<<<<<<< HEAD
-              if(editTextApelido.getText().toString().isEmpty()
-                      || editTextNome.getText().toString().isEmpty()
-                      || editTextApelido.getText().toString().isEmpty()
-                      || editSenha.getText().toString().isEmpty()
-                      || autoCompleteDistrito.getText().toString().isEmpty()
-                      || autoCompleteLocalidade.getText().toString().isEmpty()
-                      || autoCompletePostoAdministrativo.getText().toString().isEmpty()
-                      || autoCompleteComunidade.getText().toString().isEmpty()
+                 if (editTextApelido.getText().toString().isEmpty()
+                         || editTextNome.getText().toString().isEmpty()
+                         || editTextApelido.getText().toString().isEmpty()
+                         || editSenha.getText().toString().isEmpty()
+                         || autoCompleteDistrito.getText().toString().isEmpty()
+                         || autoCompleteLocalidade.getText().toString().isEmpty()
+                         || autoCompletePostoAdministrativo.getText().toString().isEmpty()
+                         || autoCompleteComunidade.getText().toString().isEmpty()
 
-              ){
-                  Toast.makeText(ActivityUserRegister.this, "Preenche todos campos", Toast.LENGTH_SHORT).show();
-=======
-                if(editTextApelido.getText().equals("") || editTextNome.getText().equals("")){
-                    editTextNome.setError(" Campo Vazio ");
-                    editTextApelido.setError(" Campo Vazio ");
->>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
-                }else{
-                  completImage(imageViewUser);
-                  DB db =new DB();
-                  db.addArrayListUserPl(
-                          editTextNome.getText().toString(),
-                          editTextApelido.getText().toString(),
-                          editPhone.getText().toString(),
-                          editSenha.getText().toString(),
-                          urlImage,
-                          autoCompleteDistrito.getText().toString(),
-                          autoCompleteLocalidade.getText().toString(),
-                          autoCompletePostoAdministrativo.getText().toString(),
-                          autoCompleteComunidade.getText().toString());
-                  Intent intent=new Intent(ActivityUserRegister.this, ActivityUserPL.class);
-                  startActivity(intent);
-                  databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                 ) {
+                     Toast.makeText(ActivityUserRegister.this, "Preenche todos campos", Toast.LENGTH_SHORT).show();
 
-                            if(snapshot.hasChild(editPhone.getText().toString())){
-                                   Toast.makeText(ActivityUserRegister.this, "Usuario ja registado", Toast.LENGTH_SHORT).show();
-                               }else {
-                                     String sha=getSha(editPhone.getText().toString());
-                                   databaseReference.child("usuarios").child(sha).child("telemovel").setValue( editPhone.getText().toString());
-                                   databaseReference.child("usuarios").child(sha).child("nome").setValue(editTextNome.getText().toString());
-                                   databaseReference.child("usuarios").child(sha).child("apelido").setValue(editTextApelido.getText().toString());
-                                   databaseReference.child("usuarios").child(sha).child("senha").setValue(editSenha.getText().toString());
-                                   databaseReference.child("usuarios").child(sha).child("distrito").setValue(autoCompleteDistrito.getText().toString());
-                                   databaseReference.child("usuarios").child(sha).child("localidade").setValue(autoCompleteLocalidade.getText().toString());
-                                   databaseReference.child("usuarios").child(sha).child("postoAdministrativo").setValue( autoCompletePostoAdministrativo.getText().toString());
-                                   databaseReference.child("usuarios").child(sha).child("comunidade").setValue(autoCompleteComunidade.getText().toString());
+                     if (editTextApelido.getText().equals("") || editTextNome.getText().equals("")) {
+                         editTextNome.setError(" Campo Vazio ");
+                         editTextApelido.setError(" Campo Vazio ");
 
-                                   databaseReference.child("usuarios").child(editPhone.getText().toString()).child("imagem").setValue(urlImage+"");
+                     } else {
+
+                         DB db = new DB();
+                         db.addArrayListUserPl(
+                                 editTextNome.getText().toString(),
+                                 editTextApelido.getText().toString(),
+                                 editPhone.getText().toString(),
+                                 editSenha.getText().toString(),
+                                 urlImage,
+                                 autoCompleteDistrito.getText().toString(),
+                                 autoCompleteLocalidade.getText().toString(),
+                                 autoCompletePostoAdministrativo.getText().toString(),
+                                 autoCompleteComunidade.getText().toString());
+                         Intent intent = new Intent(ActivityUserRegister.this, ActivityUserPL.class);
+                         startActivity(intent);
+                         databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
+                             @Override
+                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                 if (snapshot.hasChild(editPhone.getText().toString())) {
+                                     Toast.makeText(ActivityUserRegister.this, "Usuario ja registado", Toast.LENGTH_SHORT).show();
+                                 } else {
+                                     String sha = getSha(editPhone.getText().toString());
+                                     databaseReference.child("usuarios").child(sha).child("telemovel").setValue(editPhone.getText().toString());
+                                     databaseReference.child("usuarios").child(sha).child("nome").setValue(editTextNome.getText().toString());
+                                     databaseReference.child("usuarios").child(sha).child("apelido").setValue(editTextApelido.getText().toString());
+                                     databaseReference.child("usuarios").child(sha).child("senha").setValue(editSenha.getText().toString());
+                                     databaseReference.child("usuarios").child(sha).child("distrito").setValue(autoCompleteDistrito.getText().toString());
+                                     databaseReference.child("usuarios").child(sha).child("localidade").setValue(autoCompleteLocalidade.getText().toString());
+                                     databaseReference.child("usuarios").child(sha).child("postoAdministrativo").setValue(autoCompletePostoAdministrativo.getText().toString());
+                                     databaseReference.child("usuarios").child(sha).child("comunidade").setValue(autoCompleteComunidade.getText().toString());
+
+                                     databaseReference.child("usuarios").child(editPhone.getText().toString()).child("imagem").setValue(urlImage + "");
 
 //                                   Intent intent=new Intent(ActivityUserRegister.this, ActivityUserPL.class);
 //                                   startActivity(intent);
-                               }
-                        }
+                                 }
+                             }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(ActivityUserRegister.this, "Verifica a ligação de internet", Toast.LENGTH_SHORT).show();
+                             @Override
+                             public void onCancelled(@NonNull DatabaseError error) {
+                                 Toast.makeText(ActivityUserRegister.this, "Verifica a ligação de internet", Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
+                             }
+                         });
+                     }
 
-                }
+                 }
 
              }
 
-            private void completImage(ImageView imageViewUser) {
-              
-            }
+
         });
+
 
 
         ActivityResultLauncher<Intent> activityResultLauncherImageUsers = registerForActivityResult(
@@ -245,7 +244,8 @@ public class ActivityUserRegister extends AppCompatActivity {
 
         });
 
-    }
+
+             }
 
     void sendMessage(String phone, String password){
         String sms=" MachambaApp: Nome do usuario- "+phone+ "senha -"+password;
@@ -295,6 +295,6 @@ public class ActivityUserRegister extends AppCompatActivity {
         return shaData.toString(16);
     }
 
-}
 
 
+    }

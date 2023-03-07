@@ -13,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:id="@+id/title"
             android:textSize="18dp"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:drawablePadding="12dp"
             android:paddingEnd="12dp"
@@ -26,164 +28,157 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-<<<<<<< HEAD
-        <GridLayout
-            android:layout_marginTop="100dp"
-            android:layout_width="match_parent"
-=======
-    <GridLayout
-        android:layout_marginBottom="29dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="120dp"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:rowCount="5"
-        android:columnCount="2">
 
-        <androidx.cardview.widget.CardView
-            android:foreground="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:id="@+id/idCardUserPlR"
-            android:layout_width="100dp"
->>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
-            android:layout_height="wrap_content"
-            android:rowCount="5"
-            android:layout_marginBottom="16dp"
-            android:columnOrderPreserved="false"
+         <TextView
+             android:fontFamily="@font/poppinssemibold"
+             android:textColor="@color/white"
+             android:layout_marginTop="39dp"
+             android:textSize="18dp"
+             android:text="Assistência Tecnica"
+             android:layout_marginStart="16dp"
+             android:layout_marginEnd="16dp"
+             android:layout_below="@id/title"
+             android:gravity="end"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"/>
+
+
+        <GridLayout
+            android:layout_marginTop="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:columnCount="2"
-            android:layout_weight="8"
-            android:padding="14dp"
-            android:alignmentMode="alignMargins"
-            >
+            android:rowCount="5">
 
             <androidx.cardview.widget.CardView
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
                 android:id="@+id/idCardUserPlR"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardElevation="8dp"
+                android:layout_height="160dp"
                 android:layout_row="0"
-                android:layout_column="0"
-                android:layout_margin="8dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
                 android:layout_rowWeight="1"
+                android:layout_column="0"
                 android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:backgroundTint="@color/white"
-                app:cardCornerRadius="8dp">
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:padding="16dp"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/baseline_person_add_alt_1_24"
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="46dp"
-                        android:layout_height="46dp"/>
+                        android:layout_height="46dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/baseline_person_add_alt_1_24" />
 
                     <TextView
-                        android:layout_gravity="center_horizontal"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/poppinssemibold"
-                        android:textColor="#8E8484"
-                        android:text="Usuario"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/poppinssemibold"
+                        android:text="Usuario"
+                        android:textAlignment="center"
+                        android:textColor="#8E8484"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
                 android:id="@+id/idCardCultura"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
-                app:cardElevation="8dp"
+                android:layout_height="160dp"
                 android:layout_row="0"
-                android:layout_column="1"
-                android:layout_margin="8dp"
                 android:layout_rowWeight="1"
+                android:layout_column="1"
                 android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:backgroundTint="@color/white"
-                app:cardCornerRadius="8dp">
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:padding="16dp"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
                     <ImageView
-                        android:src="@drawable/img_24"
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="46dp"
-                        android:layout_height="46dp"/>
+                        android:layout_height="46dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/img_24" />
+
                     <TextView
-                        android:gravity="center"
-                        android:textSize="18dp"
-                        android:fontFamily="@font/poppinssemibold"
-                        android:textColor="#8E8484"
-                        android:text="Cultura"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppinssemibold"
+                        android:gravity="center"
+                        android:text="Cultura"
+                        android:textColor="#8E8484"
+                        android:textSize="18dp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
                 android:id="@+id/idCardOpctDistrito"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
-                app:cardElevation="8dp"
+                android:layout_height="160dp"
                 android:layout_row="1"
-                android:layout_column="0"
-                android:layout_margin="8dp"
                 android:layout_rowWeight="1"
+                android:layout_column="0"
                 android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:backgroundTint="@color/white"
-                app:cardCornerRadius="8dp">
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:padding="16dp"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/img_15"
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="46dp"
-                        android:layout_height="46dp"/>
+                        android:layout_height="46dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/img_15" />
 
                     <TextView
-                        android:layout_gravity="center_horizontal"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/poppinssemibold"
-                        android:textColor="#8E8484"
-                        android:text= "Distrito"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/poppinssemibold"
+                        android:text="Distrito"
+                        android:textAlignment="center"
+                        android:textColor="#8E8484"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -191,177 +186,181 @@
 
 
             <androidx.cardview.widget.CardView
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
                 android:id="@+id/idCardEtnia"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardElevation="8dp"
+                android:layout_height="160dp"
                 android:layout_row="1"
-                android:layout_column="1"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_margin="8dp"
                 android:layout_rowWeight="1"
+                android:layout_column="1"
                 android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:backgroundTint="@color/white"
-                app:cardCornerRadius="8dp">
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:padding="16dp"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/baseline_edit_location_alt_24"
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="46dp"
-                        android:layout_height="46dp"/>
+                        android:layout_height="46dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/baseline_edit_location_alt_24" />
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
                         android:fontFamily="@font/poppinssemibold"
-                        android:textColor="#8E8484"
                         android:text="Etnia"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textAlignment="center"
+                        android:textColor="#8E8484"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
                 android:id="@+id/idCardLocalidade"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                app:cardElevation="8dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="160dp"
                 android:layout_row="2"
+                android:layout_rowWeight="1"
                 android:layout_column="0"
-                android:layout_margin="8dp"
-                android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:backgroundTint="@color/white"
-                app:cardCornerRadius="8dp">
-
-                <LinearLayout
-                    android:padding="16dp"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:src="@drawable/img_16"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"/>
-
-                    <TextView
-                        android:layout_gravity="center_horizontal"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/poppinssemibold"
-                        android:textColor="#8E8484"
-                        android:text="Localidade"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:id="@+id/idCardComunidade"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                app:cardElevation="8dp"
-                android:layout_row="2"
-                android:layout_column="1"
-                android:layout_marginRight="16dp"
+                android:layout_margin="8dp"
                 android:layout_marginLeft="16dp"
-                android:layout_margin="8dp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
+                android:layout_marginRight="16dp"
                 android:backgroundTint="@color/white"
-                app:cardCornerRadius="8dp">
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:padding="16dp"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <ImageView
-                        android:src="@drawable/img_18"
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="46dp"
-                        android:layout_height="46dp"/>
-                    <TextView
+                        android:layout_height="46dp"
                         android:layout_gravity="center_horizontal"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/poppinssemibold"
-                        android:textColor="#8E8484"
-                        android:text="Comunidade"
+                        android:src="@drawable/img_16" />
+
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/poppinssemibold"
+                        android:text="Localidade"
+                        android:textAlignment="center"
+                        android:textColor="#8E8484"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
-                android:foreground="?attr/selectableItemBackground"
+                android:id="@+id/idCardComunidade"
+                android:layout_width="wrap_content"
+                android:layout_height="160dp"
+                android:layout_row="2"
+                android:layout_rowWeight="1"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:backgroundTint="@color/white"
                 android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/img_18" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/poppinssemibold"
+                        android:text="Comunidade"
+                        android:textAlignment="center"
+                        android:textColor="#8E8484"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/idCardPosto"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardElevation="8dp"
+                android:layout_height="160dp"
                 android:layout_row="3"
-                android:layout_column="0"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_margin="8dp"
                 android:layout_rowWeight="1"
+                android:layout_column="0"
                 android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:backgroundTint="@color/white"
-                app:cardCornerRadius="8dp">
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:padding="16dp"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
 
                     <ImageView
-                        android:src="@drawable/img_14"
-                        android:layout_gravity="center_horizontal"
                         android:layout_width="46dp"
-                        android:layout_height="46dp"/>
-                    <TextView
+                        android:layout_height="46dp"
                         android:layout_gravity="center_horizontal"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/poppinssemibold"
-                        android:textColor="#8E8484"
-                        android:text="Posto "
+                        android:src="@drawable/img_14" />
+
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/poppinssemibold"
+                        android:text="Posto "
+                        android:textAlignment="center"
+                        android:textColor="#8E8484"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 

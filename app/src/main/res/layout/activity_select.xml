@@ -7,15 +7,25 @@
     android:background="@drawable/fundo"
     tools:context=".ActivitySelect">
 
-
+    <TextView
+        android:text=" Assistência Técnica"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppinssemibold"
+        android:textSize="25dp"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/idTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <GridLayout
+        android:layout_below="@id/idTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="29dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="120dp"
-        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
         android:layout_height="190dp"
         android:rowCount="3"
         android:columnCount="2"

@@ -7,7 +7,6 @@
     tools:context=".AddCultura">
 
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/idCardOpcao"
         android:layout_width="match_parent"
@@ -38,6 +37,7 @@
                 android:fontFamily="@font/poppinssemibold"
                 />
             <EditText
+                android:paddingStart="18dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:id="@+id/idAddCultura"

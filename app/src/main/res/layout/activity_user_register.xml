@@ -140,11 +140,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="16dp"
                     android:background="#FBF6F6"
-<<<<<<< HEAD
                     android:src="@drawable/img_7" />
-=======
-                    android:src="@drawable/baseline_photo_camera_24" />
->>>>>>> 2b8bf757073189ea1daba2f79a36542bd13a92e0
             </LinearLayout>
 
             <LinearLayout
