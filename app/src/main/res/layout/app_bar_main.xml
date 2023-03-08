@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/cor_of_botton"
+            android:background="#48b971"
             app:popupTheme="@style/Theme.MachambaApp.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>

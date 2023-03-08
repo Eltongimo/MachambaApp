@@ -12,7 +12,7 @@
         android:id="@+id/menuBar"
         android:layout_width="match_parent"
         android:background="@drawable/img_21"
-        android:backgroundTint="@color/cor_of_botton"
+        android:backgroundTint="#48b971"
         android:layout_alignParentTop="true"
         android:layout_height="50dp">
 
@@ -69,7 +69,7 @@
         android:padding="12sp"
         android:textSize="16dp"
         android:fontFamily="@font/poppinsbold"
-        android:backgroundTint="@color/cor_of_botton"
+        android:backgroundTint="#48b971"
         android:text="Adicionar Localidade"
         android:id="@+id/registerClientPl"/>
 

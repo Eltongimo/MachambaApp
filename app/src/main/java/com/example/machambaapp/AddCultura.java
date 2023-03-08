@@ -36,8 +36,12 @@ public class AddCultura extends AppCompatActivity {
         cultura=(EditText) findViewById(R.id.idAddCultura);
 
         button.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
+
+
 
                 databaseReference.child("culturas").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -46,7 +50,7 @@ public class AddCultura extends AppCompatActivity {
                             DB db=new DB();
                             db.addCultura(cultura.getText().toString());
                             String sha=getSha(cultura.getText().toString());
-                            databaseReference.child("culturas").child(sha).child(cultura.getText().toString()).setValue(cultura.getText().toString());
+                            databaseReference.child("culturas").child(sha).child("nome").setValue(cultura.getText().toString());
                             startActivity(new Intent(AddCultura.this,ActivityViewAddCultura.class));
 
                     }

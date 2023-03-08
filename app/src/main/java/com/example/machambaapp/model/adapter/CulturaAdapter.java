@@ -20,6 +20,9 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
     private final Context mContext;
     private final ArrayList<Cultura> mCultura;
 
+    {
+
+    }
     public CulturaAdapter(Context context, ArrayList<Cultura> userPls){
         mContext = context;
         mCultura = userPls;

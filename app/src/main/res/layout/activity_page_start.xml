@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fundo"
+    android:background="@drawable/welcome"
     tools:context=".ActivityPageStart">
 
 <RelativeLayout
@@ -31,6 +31,7 @@
         android:text=" Assistência Técnica"
         android:layout_marginTop="17dp"
         android:textSize="18sp"
+        android:textColor="@color/white"
         android:id="@+id/text_title"
         android:layout_below="@id/image_2" />
 
@@ -45,6 +46,7 @@
         android:gravity="center"
         android:padding="20dp"
         android:id="@+id/txt_3"
+        android:textColor="@color/white"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
 
     <Button
@@ -60,7 +62,7 @@
         android:textSize="16dp"
         android:fontFamily="@font/poppinsbold"
         android:textStyle="bold"
-        android:backgroundTint="@color/cor_of_botton"
+        android:backgroundTint="#48b971"
         android:text="Proximo" />
 
 </RelativeLayout>

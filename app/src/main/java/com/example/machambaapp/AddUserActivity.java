@@ -94,21 +94,9 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
         editTextPhone=(EditText) findViewById(R.id.idPhoneUser);
 
         getIdView();
-        
-        numberPickerDia.setMinValue(1);
-        numberPickerDia.setMaxValue(31);
-
-        numberPickerMes.setMinValue(1);
-        numberPickerMes.setMaxValue(12);
 
         numberPickerAno.setMinValue(1900);
-        numberPickerAno.setMaxValue(2023);
-
-        /// dialog
-
-
-
-         // fim dialog
+        numberPickerAno.setMaxValue(2040);
 
         buttonRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -398,8 +386,6 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
         etniaInput.setAdapter(adapterEtnia);
 
         numberPickerAno=(NumberPicker) findViewById(R.id.ano);
-        numberPickerDia=(NumberPicker) findViewById(R.id.dia);
-        numberPickerMes=(NumberPicker) findViewById(R.id.mes);
 
     }
 

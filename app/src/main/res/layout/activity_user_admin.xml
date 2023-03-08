@@ -286,8 +286,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-
-
                 <TextView
                     android:drawablePadding="12dp"
                     android:drawableEnd="@drawable/baseline_mode_edit_outline_24"

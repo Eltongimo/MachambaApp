@@ -86,7 +86,7 @@
                   android:text="Selecione a Localização "
                   android:textSize="18dp"
                   android:padding="10dp"
-                  android:textColor="@color/cor_of_botton"
+                  android:textColor=" #48b971"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   />
@@ -246,7 +246,7 @@
                   android:layout_gravity="center"
                   android:layout_marginTop="22dp"
                   android:width="300dp"
-                  android:backgroundTint="@color/cor_of_botton"
+                  android:backgroundTint="#48b971"
                   android:fontFamily="@font/poppinsbold"
                   android:gravity="center"
 

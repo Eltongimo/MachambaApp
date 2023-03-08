@@ -11,17 +11,15 @@
     <androidx.appcompat.widget.ActionMenuView
         android:id="@+id/menuBar"
         android:layout_width="match_parent"
-        android:background="@drawable/img"
-        android:backgroundTint="@color/cor_of_botton"
+        android:backgroundTint="#48b971"
         android:layout_alignParentTop="true"
         android:layout_height="50dp">
 
         <TextView
             android:drawablePadding="12dp"
-            android:drawableLeft="@drawable/baseline_compost_24"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="23dp"
+            android:textSize="23sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Culturas" />
