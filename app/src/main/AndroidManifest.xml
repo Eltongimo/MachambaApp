@@ -15,6 +15,21 @@
         android:theme="@style/Theme.MachambaApp"
         tools:targetApi="31">
         <activity
+            android:name=".AddPosto"
+            android:exported="false" />
+        <activity
+            android:name=".AddComunidade"
+            android:exported="false" />
+        <activity
+            android:name=".AddLocalidade"
+            android:exported="false" />
+        <activity
+            android:name=".AddEtnia"
+            android:exported="false" />
+        <activity
+            android:name=".AddDistrito"
+            android:exported="false" />
+        <activity
             android:name=".AddCultura"
             android:exported="false" />
         <activity

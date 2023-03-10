@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fundo"
-    tools:context=".ActivityViewPostoAdmnistrativo">
+    android:background="@drawable/fundo">
+<!--    tools:context="">-->
 
     <androidx.appcompat.widget.ActionMenuView
 
@@ -21,7 +21,7 @@
             android:textSize="18dp"
             android:fontFamily="@font/poppinssemibold"
             android:textColor="@color/white"
-            android:text="Posto administrativo"
+            android:text="Distrito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -38,21 +38,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:iconifiedByDefault="false"
-        app:queryHint=" Pesquisar por posto administrativo"
+        app:queryHint=" Buscar Distrito"
         android:focusable="false"/>
     <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/idRecyclerviewPosto"
+        android:id="@+id/idRecyclerviewDistrito"
         android:layout_below="@id/idSearch"
         android:layout_marginTop="10dp"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/list_posto_administrativo">
+        tools:listitem="@layout/list_distrito">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
+
         android:layout_marginBottom="18dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
@@ -69,8 +70,8 @@
         android:textSize="16dp"
         android:fontFamily="@font/poppinsbold"
         android:backgroundTint="#48b971"
-        android:text="Adicionar posto"
-        android:id="@+id/registerPosto"/>
+        android:text="Adicionar Distrito"
+        android:id="@+id/btnRegistarDistrito"/>
 
 
 </RelativeLayout>

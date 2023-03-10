@@ -32,10 +32,6 @@ public class DB {
 
     }
 
-    public void addArrayListUserPl(String name , String apelido,String phone, String senha, Uri uriImage,String distrito, String  localidade,String postoAdministrativo, String  comunidade){
-        listUsePl.add(new UserPl(name,apelido,phone,senha,uriImage, distrito, localidade, postoAdministrativo, comunidade));
-
-    }
 
     public static ArrayList<UserPl> getListUsePl() {
         return listUsePl;

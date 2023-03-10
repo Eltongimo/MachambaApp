@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.machambaapp.ActivitySelectClient;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.DataClassClient;
+import com.example.machambaapp.model.UserPl;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
 
 import java.util.ArrayList;
@@ -21,9 +22,9 @@ import java.util.ArrayList;
 public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder>{
 
     private final Context mContext;
-    private final ArrayList<DataClassClient> mSpecies;
+    private final ArrayList<UserPl> mSpecies;
 
-    public ClientAdapter(Context context, ArrayList<DataClassClient> species){
+    public ClientAdapter(Context context, ArrayList<UserPl> species){
         mContext = context;
         mSpecies = species;
     }
@@ -38,9 +39,9 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ClientAdapter.ViewHolder holder, int position) {
-        DataClassClient client = mSpecies.get(position);
+        UserPl client = mSpecies.get(position);
         holder.nomeClient.setText(client.getNome()+ " "+ client.getApelido());
-        holder.foto.setImageURI(client.getFaceImage());
+        //holder.foto.setImageURI(client.getFaceImage());
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
@@ -51,7 +52,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
 //                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragmentViewEspecies).commit();
 
                  Intent intent = new Intent(mContext, ActivitySelectClient.class);
-                 intent.putExtra("Foto", client.getFaceImage());
+             //    intent.putExtra("Foto", client.getFaceImage());
                  intent.putExtra("fullName", client.getNome());
                  mContext.startActivity(intent);
             }

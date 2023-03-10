@@ -8,11 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.machambaapp.model.DB;
 import com.example.machambaapp.model.Sha;
-import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,35 +18,49 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.math.BigInteger;
 
-public class AddCultura extends AppCompatActivity {
+public class AddEtnia extends AppCompatActivity {
+
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
 
-    Button button;
-    EditText cultura;
+    EditText etnia;
+    Button addEtnia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_cultura);
+        setContentView(R.layout.activity_add_etnia);
 
 
-        button=(Button) findViewById(R.id.addCultura);
-        cultura=(EditText) findViewById(R.id.idAddCultura);
-
-        button.setOnClickListener(new View.OnClickListener() {
+        etnia = (EditText) findViewById(R.id.nomeEtnia);
+        addEtnia = (Button) findViewById(R.id.addEtnia);
+        
+        addEtnia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseHelper.addCultura(cultura.getText().toString(), "culturas");
-                startActivity(new Intent(AddCultura.this, ActivityViewAddCultura.class));
+                databaseReference.child("etnias").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String sha=getSha(etnia.getText().toString());
+                        databaseReference.child("etnias").child(sha).child("nome").setValue(etnia.getText().toString());
+                        startActivity(new Intent(AddEtnia.this,ActivityViewEtnia.class));
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
             }
         });
 
     }
 
+
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(AddCultura.this,ActivityViewAddCultura.class));
+        startActivity(new Intent(AddEtnia.this,ActivityViewEtnia.class));
         super.onBackPressed();
     }
 

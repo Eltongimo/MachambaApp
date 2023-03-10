@@ -43,7 +43,7 @@
         android:focusable="false"/>
     <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/idRecyclerviewClient"
+        android:id="@+id/idRecyclerviewEtnia"
         android:layout_below="@id/idSearch"
         android:layout_marginTop="10dp"
         android:scrollbars="vertical"
@@ -72,7 +72,7 @@
         android:fontFamily="@font/poppinsbold"
         android:backgroundTint="#48b971"
         android:text="Adicionar Etnia"
-        android:id="@+id/registerClientPl"/>
+        android:id="@+id/registerEtnia"/>
 
 
 </RelativeLayout>

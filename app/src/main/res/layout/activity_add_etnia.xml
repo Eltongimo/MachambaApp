@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo"
+    tools:context=".AddEtnia">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/idCardOpcao"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="8dp"
+        android:layout_margin="30dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="8dp">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/baseline_edit_location_alt_24" />
+            <TextView
+
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adicionar Etnia"
+                android:fontFamily="@font/poppinssemibold"
+                />
+            <EditText
+                android:paddingStart="18dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:id="@+id/nomeEtnia"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/button_sape"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/poppinsregular"
+                android:gravity="start|center_vertical"
+                android:hint="Etnia"
+                android:padding="16dp"
+                android:paddingLeft="10dp" />
+            <Button
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="22dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="300dp"
+                app:cornerRadius="15sp"
+                android:padding="12sp"
+                android:textSize="16dp"
+                android:fontFamily="@font/poppinsbold"
+                android:backgroundTint="@color/cor_of_botton"
+                android:text="Adicionar"
+                android:id="@+id/addEtnia"/>
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

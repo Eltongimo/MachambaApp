@@ -30,6 +30,8 @@ import android.widget.Toast;
 
 import com.example.machambaapp.model.DB;
 import com.example.machambaapp.model.Sha;
+import com.example.machambaapp.model.UserPl;
+import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,8 +41,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
+import java.util.ArrayList;
 
- public class ActivityUserRegister extends AppCompatActivity {
+public class ActivityUserRegister extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
 
@@ -68,6 +71,7 @@ import java.math.BigInteger;
     ImageView imageViewUser;
     EditText editTextApelido;
 
+    private ArrayList<UserPl> usuarios = new ArrayList<UserPl>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,74 +105,23 @@ import java.math.BigInteger;
              @Override
              public void onClick(View view) {
 
-                 if (editTextApelido.getText().toString().isEmpty()
-                         || editTextNome.getText().toString().isEmpty()
-                         || editTextApelido.getText().toString().isEmpty()
-                         || editSenha.getText().toString().isEmpty()
-                         || autoCompleteDistrito.getText().toString().isEmpty()
-                         || autoCompleteLocalidade.getText().toString().isEmpty()
-                         || autoCompletePostoAdministrativo.getText().toString().isEmpty()
-                         || autoCompleteComunidade.getText().toString().isEmpty()
+                 UserPl u = new UserPl();
 
-                 ) {
-                     Toast.makeText(ActivityUserRegister.this, "Preenche todos campos", Toast.LENGTH_SHORT).show();
+                 u.setNome(editTextNome.getText().toString());
+                 u.setPhone(editPhone.getText().toString());
+                 u.setApelido(editTextApelido.getText().toString());
+                 u.setSenha(editSenha.getText().toString());
+                 u.setLocalidade(autoCompleteLocalidade.getText().toString());
+                 u.setDistrito(autoCompleteDistrito.getText().toString());
+                 u.setComunidade(autoCompleteComunidade.getText().toString());
+                 u.setPostoAdministrativo(autoCompletePostoAdministrativo.getText().toString());
 
-                     if (editTextApelido.getText().equals("") || editTextNome.getText().equals("")) {
-                         editTextNome.setError(" Campo Vazio ");
-                         editTextApelido.setError(" Campo Vazio ");
+                 DatabaseHelper.addUserPl(u);
+                 Intent i = new Intent(ActivityUserRegister.this, ActivityUserPL.class);
 
-                     } else {
-
-                         DB db = new DB();
-                         db.addArrayListUserPl(
-                                 editTextNome.getText().toString(),
-                                 editTextApelido.getText().toString(),
-                                 editPhone.getText().toString(),
-                                 editSenha.getText().toString(),
-                                 urlImage,
-                                 autoCompleteDistrito.getText().toString(),
-                                 autoCompleteLocalidade.getText().toString(),
-                                 autoCompletePostoAdministrativo.getText().toString(),
-                                 autoCompleteComunidade.getText().toString());
-                         Intent intent = new Intent(ActivityUserRegister.this, ActivityUserPL.class);
-                         startActivity(intent);
-                         databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
-                             @Override
-                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                 if (snapshot.hasChild(editPhone.getText().toString())) {
-                                     Toast.makeText(ActivityUserRegister.this, "Usuario ja registado", Toast.LENGTH_SHORT).show();
-                                 } else {
-                                     String sha = getSha(editPhone.getText().toString());
-                                     databaseReference.child("usuarios").child(sha).child("telemovel").setValue(editPhone.getText().toString());
-                                     databaseReference.child("usuarios").child(sha).child("nome").setValue(editTextNome.getText().toString());
-                                     databaseReference.child("usuarios").child(sha).child("apelido").setValue(editTextApelido.getText().toString());
-                                     databaseReference.child("usuarios").child(sha).child("senha").setValue(editSenha.getText().toString());
-                                     databaseReference.child("usuarios").child(sha).child("distrito").setValue(autoCompleteDistrito.getText().toString());
-                                     databaseReference.child("usuarios").child(sha).child("localidade").setValue(autoCompleteLocalidade.getText().toString());
-                                     databaseReference.child("usuarios").child(sha).child("postoAdministrativo").setValue(autoCompletePostoAdministrativo.getText().toString());
-                                     databaseReference.child("usuarios").child(sha).child("comunidade").setValue(autoCompleteComunidade.getText().toString());
-
-                                     databaseReference.child("usuarios").child(editPhone.getText().toString()).child("imagem").setValue(urlImage + "");
-
-//                                   Intent intent=new Intent(ActivityUserRegister.this, ActivityUserPL.class);
-//                                   startActivity(intent);
-                                 }
-                             }
-
-                             @Override
-                             public void onCancelled(@NonNull DatabaseError error) {
-                                 Toast.makeText(ActivityUserRegister.this, "Verifica a ligação de internet", Toast.LENGTH_SHORT).show();
-
-                             }
-                         });
-                     }
-
-                 }
+                 startActivity(i);
 
              }
-
-
         });
 
 

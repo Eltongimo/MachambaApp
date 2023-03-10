@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.machambaapp.model.helper.DatabaseHelper;
+
 public class ActivityCulturaAdmin extends AppCompatActivity {
 
     @Override

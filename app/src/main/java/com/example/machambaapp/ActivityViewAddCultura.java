@@ -7,14 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
-import com.example.machambaapp.model.DB;
-import com.example.machambaapp.model.Privilegios;
-import com.example.machambaapp.model.adapter.ClientAdapter;
 import com.example.machambaapp.model.adapter.CulturaAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,14 +24,13 @@ public class ActivityViewAddCultura extends AppCompatActivity {
    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
     private static ArrayList<Cultura> culturas = new ArrayList<Cultura>();
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getCulturasFromFirebase();
         setContentView(R.layout.activity_view_add_cultura);
-        setAdapter();
+
 
           addCultura=(Button) findViewById(R.id.addCultura);
 
@@ -53,10 +46,12 @@ public class ActivityViewAddCultura extends AppCompatActivity {
         databaseReference.child("culturas").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                culturas.clear();
                 for (DataSnapshot culturasSnap : snapshot.getChildren()) {
                     String nomeCultura = culturasSnap.child("nome").getValue(String.class);
                     culturas.add(new Cultura(nomeCultura));
                 }
+                setAdapter();
             }
 
             @Override
@@ -69,7 +64,6 @@ public class ActivityViewAddCultura extends AppCompatActivity {
 
     private void setAdapter(){
 
-        getCulturasFromFirebase();
         RecyclerView recyclerView = findViewById(R.id.idViewCulturaR);
         CulturaAdapter culturaAdapter = new CulturaAdapter(this, culturas);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

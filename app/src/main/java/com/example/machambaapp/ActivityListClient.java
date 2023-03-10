@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.example.machambaapp.model.DB;
 import com.example.machambaapp.model.adapter.ClientAdapter;
+import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ActivityListClient extends AppCompatActivity {
@@ -22,6 +23,9 @@ public class ActivityListClient extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setAdapter();
+
         setContentView(R.layout.activity_list_client);
 
           buttonUserAdd=(Button) findViewById(R.id.registerClientPl);
@@ -45,12 +49,11 @@ public class ActivityListClient extends AppCompatActivity {
           });
 
 
-        setAdapter();
     }
 
     private void setAdapter(){
         RecyclerView recyclerView = findViewById(R.id.idRecyclerviewClient);
-        ClientAdapter clientAdapter = new ClientAdapter(this, DB.getListClient());
+        ClientAdapter clientAdapter = new ClientAdapter(this, DatabaseHelper.getUsersPL());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(clientAdapter);

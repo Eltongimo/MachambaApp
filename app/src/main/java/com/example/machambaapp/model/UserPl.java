@@ -4,19 +4,18 @@ import android.net.Uri;
 
 public class UserPl {
     private Uri uriImage;
-
+    private String genero;
     private String distrito;
     private String localidade;
     private String postoAdministrativo;
     private String comunidade;
 
+    private String senha;
     private String phone;
     private String nome ="";
     private String apelido;
-    private String passWordPl="";
-    public UserPl(String nome,String apelido,String phone, String passWordPl, Uri uriImage, String distrito,String localidade,String postoAdministrativo, String comunidade) {
+    public UserPl(String nome,String apelido, String senha,String genero,String phone, Uri uriImage, String distrito,String localidade,String postoAdministrativo, String comunidade) {
         this.nome = nome;
-        this.passWordPl = passWordPl;
         this.uriImage=uriImage;
         this.phone=phone;
         this.apelido=apelido;
@@ -24,6 +23,25 @@ public class UserPl {
         this.localidade=localidade;
         this.postoAdministrativo=postoAdministrativo;
         this.comunidade=comunidade;
+        this.genero=genero;
+        this.senha = senha;
+
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public String getDistrito() {
@@ -91,12 +109,5 @@ public class UserPl {
         this.nome = nome;
     }
 
-    public String getPassWordPl() {
-        return passWordPl;
-    }
-
-    public void setPassWordPl(String passWordPl) {
-        this.passWordPl = passWordPl;
-    }
 }
 

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.machambaapp.model.DB;
 import com.example.machambaapp.model.DataClassClient;
 import com.example.machambaapp.model.adapter.ClientAdapter;
+import com.example.machambaapp.model.helper.DatabaseHelper;
 
 public class ActivitySelectClient extends AppCompatActivity {
     RecyclerView recyclerView ;
@@ -32,7 +33,7 @@ public class ActivitySelectClient extends AppCompatActivity {
   }
 
     private void setAdapter(){
-        ClientAdapter clientAdapter = new ClientAdapter(this, DB.getListClient());
+        ClientAdapter clientAdapter = new ClientAdapter(this, DatabaseHelper.getUsersPL());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(clientAdapter);

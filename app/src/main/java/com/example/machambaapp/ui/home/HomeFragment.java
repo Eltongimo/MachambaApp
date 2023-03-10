@@ -18,6 +18,7 @@ import com.example.machambaapp.ActivityUserRegister;
 import com.example.machambaapp.ActivityViewAddCultura;
 import com.example.machambaapp.ActivityViewComunidade;
 import com.example.machambaapp.ActivityViewDistrito;
+import com.example.machambaapp.ActivityViewEtnia;
 import com.example.machambaapp.ActivityViewLocalidade;
 import com.example.machambaapp.ActivityViewPostoAdmnistrativo;
 import com.example.machambaapp.AddUserActivity;
@@ -56,14 +57,14 @@ public class HomeFragment extends Fragment {
         cardViewComunidade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), ActivityUserPL.class));
+                startActivity(new Intent(getContext(), ActivityViewComunidade.class));
             }
         });
 
         cardViewEtnia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), ActivityViewComunidade.class));
+                startActivity(new Intent(getContext(), ActivityViewEtnia.class));
             }
         });
 

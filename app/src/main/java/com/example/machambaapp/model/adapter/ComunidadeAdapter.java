@@ -5,36 +5,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.machambaapp.Cultura;
+
 import com.example.machambaapp.R;
+import com.example.machambaapp.model.datamodel.Comunidade;
+import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
+
 import java.util.ArrayList;
 
-public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHolder>{
-
+public class ComunidadeAdapter extends RecyclerView.Adapter<ComunidadeAdapter.ViewHolder> {
     private final Context mContext;
-    private final ArrayList<Cultura> mCultura;
+    private final ArrayList<Comunidade> comunidades;
 
-
-    public CulturaAdapter(Context context, ArrayList<Cultura> userPls){
+    public ComunidadeAdapter(Context context, ArrayList<Comunidade> comunidadeC) {
         mContext = context;
-        mCultura = userPls;
+        comunidades = comunidadeC;
     }
-
-
     @NonNull
     @Override
-    public CulturaAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_culturas, parent, false);
-        return new CulturaAdapter.ViewHolder(view);
+    public ComunidadeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_comunidade, parent, false);
+        return new ComunidadeAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CulturaAdapter.ViewHolder holder, int position) {
-        Cultura cultura = this.mCultura.get(position);
-        holder.cultura.setText(cultura.getCultura());
+    public void onBindViewHolder(@NonNull ComunidadeAdapter.ViewHolder holder, int position) {
+        Comunidade Comunidade = this.comunidades.get(position);
+        holder.Comunidade.setText(Comunidade.getNome());
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
@@ -45,17 +45,17 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mCultura.size();
+        return comunidades.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private final TextView cultura;
+        private final TextView Comunidade;
 
         private IItemClickListener mItemClickListener;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            cultura = itemView.findViewById(R.id.nomeCultura);
+            Comunidade = itemView.findViewById(R.id.nomeClient);
 
 
             itemView.setOnClickListener(this);
@@ -71,3 +71,5 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
         }
     }
 }
+
+

@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.example.machambaapp.model.DB;
 import com.example.machambaapp.model.Sha;
+import com.example.machambaapp.model.UserPl;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,10 +44,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import com.example.machambaapp.model.UserPl;
+import java.util.UUID;
 
 public class AddUserActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
 
 
     NumberPicker numberPickerDia;
@@ -80,7 +83,6 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
     CheckBox checkBoxFemenino;
     Dialog dialog;
 
-    String[] listEtnia = {" Macua","Makonde","Mwani","Swahili","Sena","Shona","Ndau","Chuwabo","Nyungwe","Tsonga","Changana","Bitonga","Yaos","Outros"};
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -92,7 +94,7 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
 
 
         editTextPhone=(EditText) findViewById(R.id.idPhoneUser);
-
+    /*
         getIdView();
 
         numberPickerAno.setMinValue(1900);
@@ -101,6 +103,22 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
         buttonRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String sha = UUID.randomUUID().toString();
+
+                UserPl u = new  UserPl();
+
+                 u.setApelido(   textApelido.getText().toString() );
+                 u.setNome(textNome);
+                databaseReference.child("clientes").child(sha).child("telemovel").setValue(editTextPhone.getText().toString());
+                databaseReference.child("clientes").child(sha).child("nome").setValue(textNome.getText().toString());
+                databaseReference.child("clientes").child(sha).child("apelido").setValue(textApelido.getText().toString());
+                databaseReference.child("clientes").child(sha).child("genero").setValue(genero);
+                databaseReference.child("clientes").child(sha).child("imagemDocumento").setValue(""+imageDocumentUpload);
+                databaseReference.child("clientes").child(sha).child("imagemUsuario").setValue(""+imageUserUpload);
+
+
+                /*
                 dialog =new Dialog(AddUserActivity.this);
                 dialog.setContentView(R.layout.alert_view_dialog);
 
@@ -116,14 +134,6 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        DB db=new DB();
-
-                            db.addArrayListClient(
-                                    textNome.getText().toString(),
-                                    textApelido.getText().toString(),
-                                    editTextPhone.getText().toString(),
-                                    "","",urlImageCaptureFace,urlImageCaptureFace);
-
 
                         databaseReference.child("clientes").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -147,10 +157,10 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
                             }
                         });
 
+*/
 
 
-
-
+/*
                         Toast.makeText(AddUserActivity.this, "Usuario registado com Sucesso", Toast.LENGTH_SHORT).show();
 
                         Toast.makeText(AddUserActivity.this, "Usuário registado com Sucesso", Toast.LENGTH_SHORT).show();
@@ -167,7 +177,7 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
                 dialog.show();
             }
         });
-
+*/
         checkBoxMale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -382,7 +392,7 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
         checkBoxMale=(CheckBox) findViewById(R.id.idCheckBoxMale);
 
         etniaInput=(AutoCompleteTextView) findViewById(R.id.etnia_select);
-        adapterEtnia = new ArrayAdapter<String>(this, R.layout.list_item_etnia, listEtnia);
+        adapterEtnia = new ArrayAdapter<String>(this, R.layout.list_item_etnia, new ArrayList<>());
         etniaInput.setAdapter(adapterEtnia);
 
         numberPickerAno=(NumberPicker) findViewById(R.id.ano);

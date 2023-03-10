@@ -1,5 +1,6 @@
 package com.example.machambaapp.model.adapter;
 
+import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,34 +8,34 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.machambaapp.Cultura;
+import com.example.machambaapp.model.datamodel.Distrito;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
 import java.util.ArrayList;
 
-public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHolder>{
+public class DistritoAdapter extends RecyclerView.Adapter<DistritoAdapter.ViewHolder>{
 
     private final Context mContext;
-    private final ArrayList<Cultura> mCultura;
+    private final ArrayList<Distrito> mDistrito;
 
 
-    public CulturaAdapter(Context context, ArrayList<Cultura> userPls){
+    public DistritoAdapter(Context context, ArrayList<Distrito> userPls){
         mContext = context;
-        mCultura = userPls;
+        mDistrito = userPls;
     }
 
 
     @NonNull
     @Override
-    public CulturaAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_culturas, parent, false);
-        return new CulturaAdapter.ViewHolder(view);
+    public DistritoAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_distrito, parent, false);
+        return new DistritoAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CulturaAdapter.ViewHolder holder, int position) {
-        Cultura cultura = this.mCultura.get(position);
-        holder.cultura.setText(cultura.getCultura());
+    public void onBindViewHolder(@NonNull DistritoAdapter.ViewHolder holder, int position) {
+        Distrito Distrito = this.mDistrito.get(position);
+        holder.Distrito.setText(Distrito.getNome());
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
@@ -45,17 +46,17 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mCultura.size();
+        return mDistrito.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private final TextView cultura;
+        private final TextView Distrito;
 
         private IItemClickListener mItemClickListener;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            cultura = itemView.findViewById(R.id.nomeCultura);
+            Distrito = itemView.findViewById(R.id.nomeClient);
 
 
             itemView.setOnClickListener(this);
@@ -70,4 +71,6 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
             this.mItemClickListener = itemClickListener;
         }
     }
+
+
 }
