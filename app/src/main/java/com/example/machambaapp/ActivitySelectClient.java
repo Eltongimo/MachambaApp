@@ -4,14 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.machambaapp.model.DB;
-import com.example.machambaapp.model.DataClassClient;
 import com.example.machambaapp.model.adapter.ClientAdapter;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 
@@ -25,11 +21,7 @@ public class ActivitySelectClient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_client);
         recyclerView = findViewById(R.id.idRecyclerviewClients2);
-
-
-
         setAdapter();
-
   }
 
     private void setAdapter(){
@@ -37,6 +29,12 @@ public class ActivitySelectClient extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(clientAdapter);
+    }
+    @Override
+    public void onBackPressed() {
+        // Add your code here
+        super.onBackPressed();
+        finish();
     }
 
 }

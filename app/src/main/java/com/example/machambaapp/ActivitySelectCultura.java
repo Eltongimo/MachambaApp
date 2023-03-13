@@ -11,4 +11,11 @@ public class ActivitySelectCultura extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_cultura);
     }
+    @Override
+    public void onBackPressed() {
+        // Add your code here
+        super.onBackPressed();
+        finish();
+    }
+
 }

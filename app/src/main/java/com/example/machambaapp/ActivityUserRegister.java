@@ -64,8 +64,6 @@ public class ActivityUserRegister extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        System.out.println(SplashScreen.comunidades);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
 
@@ -108,9 +106,7 @@ public class ActivityUserRegister extends AppCompatActivity {
                  u.setPostoAdministrativo(autoCompletePostoAdministrativo.getText().toString());
 
                  DatabaseHelper.addUserPl(u);
-                 Intent i = new Intent(ActivityUserRegister.this, ActivityUserPL.class);
-
-                 startActivity(i);
+                 finish();
 
              }
         });
@@ -186,13 +182,6 @@ public class ActivityUserRegister extends AppCompatActivity {
         });
     }
 
-    void sendMessage(String phone, String password){
-        String sms=" MachambaApp: Nome do usuario- "+phone+ "senha -"+password;
-        SmsManager smsManager=SmsManager.getDefault();
-        smsManager.sendTextMessage(phone.toString().trim(),null,sms,null,null);
-
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -211,7 +200,7 @@ public class ActivityUserRegister extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(ActivityUserRegister.this, ActivityUserPL.class));
         super.onBackPressed();
+        finish();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.machambaapp;
+package com.example.machambaapp.ui.admin.views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.machambaapp.ui.admin.addforms.AddCultura;
+import com.example.machambaapp.Cultura;
+import com.example.machambaapp.MainActivity;
+import com.example.machambaapp.R;
 import com.example.machambaapp.model.adapter.CulturaAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +41,7 @@ public class ActivityViewAddCultura extends AppCompatActivity {
           addCultura.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                  startActivity(new Intent(ActivityViewAddCultura.this,AddCultura.class));
+                  startActivity(new Intent(ActivityViewAddCultura.this, AddCultura.class));
               }
           });
     }
@@ -72,8 +77,7 @@ public class ActivityViewAddCultura extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(ActivityViewAddCultura.this,MainActivity.class));
-
         super.onBackPressed();
+        finish();
     }
 }

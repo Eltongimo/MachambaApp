@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/fundo"
     android:layout_height="wrap_content"
-    tools:context=".ActivityUserAdmin">
+    tools:context=".ui.admin.views.ActivityUserAdmin">
 
     <TextView
         android:textSize="18dp"

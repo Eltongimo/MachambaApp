@@ -25,8 +25,6 @@ import androidx.navigation.ui.NavigationUI;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-
-
    Menu menu;
    private DrawerLayout drawer;
 
@@ -98,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else {
             super.onBackPressed();
         }
+        finish();
     }
 
 
@@ -131,4 +130,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

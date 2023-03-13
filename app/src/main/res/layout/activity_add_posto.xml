@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fundo"
-    tools:context=".AddPosto">
+    tools:context=".ui.admin.addforms.AddPosto">
 
 
     <androidx.cardview.widget.CardView

@@ -1,49 +1,27 @@
 package com.example.machambaapp.model.helper;
 
-import android.net.Uri;
-
 import androidx.annotation.NonNull;
 
-import com.example.machambaapp.ActivityUserPL;
-import com.example.machambaapp.ActivityViewAddCultura;
-import com.example.machambaapp.AddCultura;
-import com.example.machambaapp.Cultura;
-import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.UserPl;
-import com.example.machambaapp.model.adapter.UserPlAdapter;
-import com.example.machambaapp.model.interfaces.Cliente;
-import com.google.android.gms.tasks.Task;
+import com.example.machambaapp.model.datamodel.Cliente;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import com.example.machambaapp.model.adapter.CulturaAdapter;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class DatabaseHelper extends AppCompatActivity{
 
     public final static DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
-    private static String getSha(String s){
+    public static String getSha(){
         return UUID.randomUUID().toString();
     }
 
@@ -56,7 +34,7 @@ public class DatabaseHelper extends AppCompatActivity{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                databaseReference.child(t).child(getSha(c)).child("nome").setValue(c);
+                databaseReference.child(t).child(getSha()).child("nome").setValue(c);
                 if (t.equals("distritos")){
                     SplashScreen.distritos.add(c);
                 }
@@ -89,12 +67,12 @@ public class DatabaseHelper extends AppCompatActivity{
     }
 
     public static void addUserPl(UserPl u){
-         databaseReference.child("usuarios").child(getSha(u.getApelido())).setValue(u);
+         databaseReference.child("usuarios").child(getSha()).setValue(u);
     }
 
     public static void  addClientes(Cliente c){
 
-        databaseReference.child("clientes").child(getSha(c.getApelido())).setValue(c);
+        databaseReference.child("clientes").child(getSha()).setValue(c);
 
     }
     public static ArrayList<UserPl> getUsersPL(){

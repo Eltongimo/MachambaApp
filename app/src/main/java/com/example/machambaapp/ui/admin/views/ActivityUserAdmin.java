@@ -1,4 +1,4 @@
-package com.example.machambaapp;
+package com.example.machambaapp.ui.admin.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -7,9 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.machambaapp.ActivityUserPL;
+import com.example.machambaapp.R;
+
 public class ActivityUserAdmin extends AppCompatActivity {
 
     CardView cardViewUserPl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +32,6 @@ public class ActivityUserAdmin extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        finish();
     }
 }

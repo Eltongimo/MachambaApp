@@ -15,49 +15,49 @@
         android:theme="@style/Theme.MachambaApp"
         tools:targetApi="31">
         <activity
-            android:name=".AddPosto"
+            android:name=".ui.admin.addforms.AddPosto"
             android:exported="false" />
         <activity
-            android:name=".AddComunidade"
+            android:name=".ui.admin.addforms.AddComunidade"
             android:exported="false" />
         <activity
-            android:name=".AddLocalidade"
+            android:name=".ui.admin.addforms.AddLocalidade"
             android:exported="false" />
         <activity
-            android:name=".AddEtnia"
+            android:name=".ui.admin.addforms.AddEtnia"
             android:exported="false" />
         <activity
-            android:name=".AddDistrito"
+            android:name=".ui.admin.addforms.AddDistrito"
             android:exported="false" />
         <activity
-            android:name=".AddCultura"
+            android:name=".ui.admin.addforms.AddCultura"
             android:exported="false" />
         <activity
-            android:name=".ActivityViewPostoAdmnistrativo"
+            android:name=".ui.admin.views.ActivityViewPostoAdmnistrativo"
             android:exported="false" />
         <activity
-            android:name=".ActivityViewComunidade"
+            android:name=".ui.admin.views.ActivityViewComunidade"
             android:exported="false" />
         <activity
-            android:name=".ActivityViewEtnia"
+            android:name=".ui.admin.views.ActivityViewEtnia"
             android:exported="false" />
         <activity
-            android:name=".ActivityViewLocalidade"
+            android:name=".ui.admin.views.ActivityViewLocalidade"
             android:exported="false" />
         <activity
-            android:name=".ActivityViewDistrito"
+            android:name=".ui.admin.views.ActivityViewDistrito"
             android:exported="false" />
         <activity
-            android:name=".ActivityViewAddCultura"
+            android:name=".ui.admin.views.ActivityViewAddCultura"
             android:exported="false" />
         <activity
-            android:name=".ActivityCulturaAdmin"
+            android:name=".ui.admin.views.ActivityCulturaAdmin"
             android:exported="false" />
         <activity
             android:name=".ActivityUserPL"
             android:exported="false" />
         <activity
-            android:name=".ActivityUserAdmin"
+            android:name=".ui.admin.views.ActivityUserAdmin"
             android:exported="false" />
         <activity
             android:name=".ActivitySelectCultura"
@@ -66,7 +66,7 @@
             android:name=".ActivitySelectClient"
             android:exported="false" />
         <activity
-            android:name=".AddUserActivity"
+            android:name=".ui.admin.addforms.AddUserActivity"
             android:exported="false" />
         <activity
             android:name=".ActivityListClient"

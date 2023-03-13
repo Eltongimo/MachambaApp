@@ -1,4 +1,4 @@
-package com.example.machambaapp;
+package com.example.machambaapp.ui.admin.views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,10 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.machambaapp.ui.admin.addforms.AddComunidade;
+import com.example.machambaapp.R;
 import com.example.machambaapp.model.adapter.ComunidadeAdapter;
-import com.example.machambaapp.model.adapter.LocalidadeAdapter;
 import com.example.machambaapp.model.datamodel.Comunidade;
-import com.example.machambaapp.model.datamodel.Localidade;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +38,6 @@ public class ActivityViewComunidade extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ActivityViewComunidade.this, AddComunidade.class));
-
             }
         });
     }
@@ -68,4 +67,11 @@ public class ActivityViewComunidade extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(comunidadeAdapter);
     }
+    @Override
+    public void onBackPressed() {
+        // Add your code here
+        super.onBackPressed();
+        finish();
+    }
+
 }

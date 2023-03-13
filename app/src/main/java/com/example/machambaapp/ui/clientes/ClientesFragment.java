@@ -14,10 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.machambaapp.ActivityListClient;
 import com.example.machambaapp.ActivitySelect;
-import com.example.machambaapp.ActivitySelectVisit;
-import com.example.machambaapp.AddUserActivity;
+import com.example.machambaapp.ui.admin.addforms.AddUserActivity;
 import com.example.machambaapp.R;
 
 public class ClientesFragment extends Fragment {

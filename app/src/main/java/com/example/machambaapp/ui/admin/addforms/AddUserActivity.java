@@ -1,17 +1,15 @@
-package com.example.machambaapp;
+package com.example.machambaapp.ui.admin.addforms;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,35 +23,22 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.machambaapp.model.DB;
-import com.example.machambaapp.model.Sha;
-import com.example.machambaapp.model.UserPl;
+import com.example.machambaapp.R;
 import com.example.machambaapp.model.helper.DatabaseHelper;
-import com.example.machambaapp.model.interfaces.Cliente;
+import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.ui.produtorLider.ProdutorLiderFragment;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
-import java.math.BigInteger;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import com.example.machambaapp.model.UserPl;
-import java.util.UUID;
 
 public class AddUserActivity extends AppCompatActivity {
-
 
 
     NumberPicker numberPickerAno;
@@ -85,6 +70,13 @@ public class AddUserActivity extends AppCompatActivity {
     CheckBox generoMasc;
     CheckBox generoFem;
     Dialog dialog;
+
+    @Override
+    public void onBackPressed() {
+        // Add your code here
+        super.onBackPressed();
+        finish();
+    }
 
 
     @SuppressLint("MissingInflatedId")
@@ -137,7 +129,8 @@ public class AddUserActivity extends AppCompatActivity {
                 Toast.makeText(AddUserActivity.this, "Cliente "+editTextNome.getText().toString()+
                         " Adicionado com sucesso!", Toast.LENGTH_SHORT).show();
                 DatabaseHelper.addClientes(cliente);
-                startActivity(new Intent(getBaseContext(), ProdutorLiderFragment.class));
+                finish();
+           //     startActivity(new Intent(getBaseContext(), ProdutorLiderFragment.class));
             }
         });
 

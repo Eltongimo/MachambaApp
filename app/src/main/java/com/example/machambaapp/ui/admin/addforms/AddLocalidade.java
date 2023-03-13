@@ -1,4 +1,4 @@
-package com.example.machambaapp;
+package com.example.machambaapp.ui.admin.addforms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,9 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.example.machambaapp.R;
+import com.example.machambaapp.SplashScreen;
+import com.example.machambaapp.ui.admin.views.ActivityViewLocalidade;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 
 public class AddLocalidade extends AppCompatActivity {
@@ -21,6 +22,14 @@ public class AddLocalidade extends AppCompatActivity {
 
     ArrayAdapter<String> adapterDistritos;
     AutoCompleteTextView autoDistritos;
+
+    @Override
+    public void onBackPressed() {
+        // Add your code here
+        super.onBackPressed();
+        finish();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +49,8 @@ public class AddLocalidade extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatabaseHelper.addCultura(localidade.getText().toString(), "localidades");
-                startActivity(new Intent(AddLocalidade.this, ActivityViewLocalidade.class));
+                finish();
+            //    startActivity(new Intent(AddLocalidade.this, ActivityViewLocalidade.class));
             }
         });
     }

@@ -1,8 +1,7 @@
-package com.example.machambaapp.model.interfaces;
+package com.example.machambaapp.model.datamodel;
 
 public class Cliente {
     private String nome, apelido, numero, ano, etnia, genero;
-
     public Cliente(String nome, String apelido, String numero, String ano, String genero,String etnia) {
         this.nome = nome;
         this.apelido = apelido;

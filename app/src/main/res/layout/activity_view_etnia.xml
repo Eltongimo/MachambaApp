@@ -5,7 +5,7 @@
     android:background="@drawable/fundo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityViewEtnia">
+    tools:context=".ui.admin.views.ActivityViewEtnia">
 
 
     <androidx.appcompat.widget.ActionMenuView

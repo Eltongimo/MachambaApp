@@ -1,7 +1,5 @@
 package com.example.machambaapp;
 
-import static com.example.machambaapp.R.id.idfloat;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,8 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.machambaapp.model.DB;
 import com.example.machambaapp.model.adapter.ClientAdapter;
+import com.example.machambaapp.ui.admin.addforms.AddUserActivity;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -57,4 +55,11 @@ public class ActivityListClient extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(clientAdapter);
     }
+    @Override
+    public void onBackPressed() {
+        // Add your code here
+        super.onBackPressed();
+        finish();
+    }
+
 }

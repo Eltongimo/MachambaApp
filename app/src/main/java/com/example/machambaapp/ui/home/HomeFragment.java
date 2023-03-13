@@ -12,18 +12,15 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.machambaapp.ActivityListClient;
 import com.example.machambaapp.ActivityUserPL;
-import com.example.machambaapp.ActivityUserRegister;
-import com.example.machambaapp.ActivityViewAddCultura;
-import com.example.machambaapp.ActivityViewComunidade;
-import com.example.machambaapp.ActivityViewDistrito;
-import com.example.machambaapp.ActivityViewEtnia;
-import com.example.machambaapp.ActivityViewLocalidade;
-import com.example.machambaapp.ActivityViewPostoAdmnistrativo;
-import com.example.machambaapp.AddUserActivity;
-import com.example.machambaapp.R;
 import com.example.machambaapp.databinding.FragmentHomeBinding;
+import com.example.machambaapp.ui.admin.views.ActivityViewAddCultura;
+import com.example.machambaapp.ui.admin.views.ActivityViewComunidade;
+import com.example.machambaapp.ui.admin.views.ActivityViewDistrito;
+import com.example.machambaapp.ui.admin.views.ActivityViewEtnia;
+import com.example.machambaapp.ui.admin.views.ActivityViewLocalidade;
+import com.example.machambaapp.ui.admin.views.ActivityViewPostoAdmnistrativo;
+import com.example.machambaapp.R;
 
 public class HomeFragment extends Fragment {
 

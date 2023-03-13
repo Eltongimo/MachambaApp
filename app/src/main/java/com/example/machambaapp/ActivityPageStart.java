@@ -12,7 +12,6 @@ public class ActivityPageStart extends AppCompatActivity {
 
     private Button buttonStart;
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

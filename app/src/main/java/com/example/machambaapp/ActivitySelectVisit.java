@@ -25,7 +25,13 @@ public class ActivitySelectVisit extends AppCompatActivity {
                 startActivity(intent);
             } 
         });
-
-
     }
+
+    @Override
+    public void onBackPressed() {
+        // Add your code here
+        super.onBackPressed();
+        finish();
+    }
+
 }

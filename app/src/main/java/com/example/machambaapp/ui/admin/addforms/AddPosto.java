@@ -1,4 +1,4 @@
-package com.example.machambaapp;
+package com.example.machambaapp.ui.admin.addforms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,12 +8,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.machambaapp.R;
+import com.example.machambaapp.ui.admin.views.ActivityViewPostoAdmnistrativo;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 
 public class AddPosto extends AppCompatActivity {
 
     Button addPosto;
     EditText postoAdministrativo;
+
+    @Override
+    public void onBackPressed() {
+        // Add your code here
+        super.onBackPressed();
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +36,10 @@ public class AddPosto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatabaseHelper.addCultura(postoAdministrativo.getText().toString(), "postosAdministrativos");
-                startActivity(new Intent(AddPosto.this, ActivityViewPostoAdmnistrativo.class));
+                finish();
+                //    startActivity(new Intent(AddPosto.this, ActivityViewPostoAdmnistrativo.class));
             }
+
         });
     }
 }
