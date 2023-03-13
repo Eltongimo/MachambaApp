@@ -29,11 +29,12 @@ public class AddLocalidade extends AppCompatActivity {
 
         addLocalidade = (Button) findViewById(R.id.addLocalidade);
         localidade = (EditText) findViewById(R.id.nomeLocalidade);
-        autoDistritos= (AutoCompleteTextView) findViewById(R.id.autoCompleteDistritos);
+        autoDistritos= (AutoCompleteTextView) findViewById(R.id.distritos);
 
-        String []distritosArray = SplashScreen.localiadades.toArray(new String[SplashScreen.localiadades.size()]);
+        String [] distritosArray = SplashScreen.distritos.toArray(new String[SplashScreen.distritos.size()]);
 
-        adapterDistritos = new ArrayAdapter<String>(this, R.layout.activity_add_localidade, distritosArray);
+        adapterDistritos = new ArrayAdapter<>(this, R.layout.list_item_distrito, distritosArray);
+        autoDistritos.setAdapter(adapterDistritos);
 
         addLocalidade.setOnClickListener(new View.OnClickListener() {
             @Override

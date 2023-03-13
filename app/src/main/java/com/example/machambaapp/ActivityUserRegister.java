@@ -79,8 +79,8 @@ public class ActivityUserRegister extends AppCompatActivity {
         editPhone=(EditText) findViewById(R.id.idPhonePl);
         editTextApelido=(EditText) findViewById(R.id.idApelidoPl);
         imageViewUser=(ImageView) findViewById(R.id.idImageUserViewPl);
-        autoCompleteDistrito = (AutoCompleteTextView) findViewById(R.id.auto_selectPl);
 
+        autoCompleteDistrito = (AutoCompleteTextView) findViewById(R.id.auto_selectPl);
         autoCompletePostoAdministrativo = (AutoCompleteTextView) findViewById(R.id.idPostoAdministrativoPl);
         autoCompleteLocalidade = (AutoCompleteTextView) findViewById(R.id.idLocalidadePl);
         autoCompleteComunidade = (AutoCompleteTextView) findViewById(R.id.idComunidadePl);

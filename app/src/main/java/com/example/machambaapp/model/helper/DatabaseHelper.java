@@ -9,6 +9,7 @@ import com.example.machambaapp.ActivityViewAddCultura;
 import com.example.machambaapp.AddCultura;
 import com.example.machambaapp.Cultura;
 import com.example.machambaapp.R;
+import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.UserPl;
 import com.example.machambaapp.model.adapter.UserPlAdapter;
 import com.example.machambaapp.model.interfaces.Cliente;
@@ -54,7 +55,11 @@ public class DatabaseHelper extends AppCompatActivity{
         databaseReference.child(t).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 databaseReference.child(t).child(getSha(c)).child("nome").setValue(c);
+                if (t.equals("distritos")){
+                    SplashScreen.distritos.add(c);
+                }
             }
 
             @Override
