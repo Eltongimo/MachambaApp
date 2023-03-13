@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.machambaapp.ActivityListClient;
 import com.example.machambaapp.ActivitySelect;
 import com.example.machambaapp.ActivitySelectVisit;
+import com.example.machambaapp.AddUserActivity;
 import com.example.machambaapp.R;
 
 public class ClientesFragment extends Fragment {
@@ -37,7 +38,7 @@ public class ClientesFragment extends Fragment {
         cardViewClientes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), ActivityListClient.class));
+                startActivity(new Intent(getContext(), AddUserActivity.class));
             }
         });
 

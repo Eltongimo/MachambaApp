@@ -35,6 +35,9 @@ import android.widget.Toast;
 import com.example.machambaapp.model.DB;
 import com.example.machambaapp.model.Sha;
 import com.example.machambaapp.model.UserPl;
+import com.example.machambaapp.model.helper.DatabaseHelper;
+import com.example.machambaapp.model.interfaces.Cliente;
+import com.example.machambaapp.ui.produtorLider.ProdutorLiderFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,11 +52,10 @@ import java.util.Calendar;
 import com.example.machambaapp.model.UserPl;
 import java.util.UUID;
 
-public class AddUserActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class AddUserActivity extends AppCompatActivity {
 
 
-    NumberPicker numberPickerDia;
-    NumberPicker numberPickerMes;
+
     NumberPicker numberPickerAno;
     AutoCompleteTextView etniaInput;
     ArrayAdapter<String> adapterEtnia;
@@ -74,13 +76,14 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
     ImageView imageDocumentUpload;
     TextView textNome;
     TextView textApelido;
-    EditText txtIdade;
+    EditText txtAno;
 
     static String genero="";
 
-    EditText editTextPhone;
-    CheckBox checkBoxMacho;
-    CheckBox checkBoxFemenino;
+    EditText editTextPhone, editTextNome, editTextApelido;
+    AutoCompleteTextView etnia;
+    CheckBox generoMasc;
+    CheckBox generoFem;
     Dialog dialog;
 
 
@@ -91,122 +94,53 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
         setContentView(R.layout.activity_add_user);
         Calendar c=Calendar.getInstance();
 
-
-
         editTextPhone=(EditText) findViewById(R.id.idPhoneUser);
-    /*
+        editTextNome = (EditText) findViewById(R.id.idFullNameClient);
+        editTextApelido = (EditText) findViewById(R.id.idApelidoCli);
+        buttonRegisterUser = (Button) findViewById(R.id.registerUser);
+        numberPickerAno = (NumberPicker) findViewById(R.id.ano);
+        generoFem =  (CheckBox) findViewById(R.id.idCheckBoxfeme);
+        generoMasc = (CheckBox) findViewById(R.id.idCheckBoxMale);
+        etnia = (AutoCompleteTextView) findViewById(R.id.etnia_select);
+
         getIdView();
+
+        generoMasc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generoFem.setChecked(false);
+            }
+        });
+
+        generoFem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generoMasc.setChecked(false);
+            }
+        });
 
         numberPickerAno.setMinValue(1900);
         numberPickerAno.setMaxValue(2040);
 
         buttonRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                String sha = UUID.randomUUID().toString();
-
-                UserPl u = new  UserPl();
-
-                 u.setApelido(   textApelido.getText().toString() );
-                 u.setNome(textNome);
-                databaseReference.child("clientes").child(sha).child("telemovel").setValue(editTextPhone.getText().toString());
-                databaseReference.child("clientes").child(sha).child("nome").setValue(textNome.getText().toString());
-                databaseReference.child("clientes").child(sha).child("apelido").setValue(textApelido.getText().toString());
-                databaseReference.child("clientes").child(sha).child("genero").setValue(genero);
-                databaseReference.child("clientes").child(sha).child("imagemDocumento").setValue(""+imageDocumentUpload);
-                databaseReference.child("clientes").child(sha).child("imagemUsuario").setValue(""+imageUserUpload);
+            public void onClick(View v) {
+                String gen = generoFem.isChecked() ? "Feminino" : "Masculino";
 
 
-                /*
-                dialog =new Dialog(AddUserActivity.this);
-                dialog.setContentView(R.layout.alert_view_dialog);
+                Cliente cliente = new Cliente(editTextNome.getText().toString(),
+                                              editTextApelido.getText().toString(),
+                                              editTextPhone.getText().toString(),
+                                              new String(numberPickerAno.getValue()+""),
+                                              gen, etnia.getText().toString());
 
-
-                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
-                    dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_alert));
-                }
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog.setCancelable(false);
-                dialog.getWindow().getAttributes().windowAnimations=R.style.animation;
-
-                ok=dialog.findViewById(R.id.confirm_ok);
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        databaseReference.child("clientes").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-                                    String sha=getSha(editTextPhone.getText().toString());
-                                    databaseReference.child("clientes").child(sha).child("telemovel").setValue(editTextPhone.getText().toString());
-                                    databaseReference.child("clientes").child(sha).child("nome").setValue(textNome.getText().toString());
-                                    databaseReference.child("clientes").child(sha).child("apelido").setValue(textApelido.getText().toString());
-                                    databaseReference.child("clientes").child(sha).child("genero").setValue(genero);
-                                    databaseReference.child("clientes").child(sha).child("imagemDocumento").setValue(""+imageDocumentUpload);
-                                    databaseReference.child("clientes").child(sha).child("imagemUsuario").setValue(""+imageUserUpload);
-
-                                    startActivity(new Intent(AddUserActivity.this,ActivityListClient.class));
-                                }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-*/
-
-
-/*
-                        Toast.makeText(AddUserActivity.this, "Usuario registado com Sucesso", Toast.LENGTH_SHORT).show();
-
-                        Toast.makeText(AddUserActivity.this, "Usuário registado com Sucesso", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AddUserActivity.this,ActivityListClient.class));
-
-                        dialog.dismiss();
-                    }
-
-
-
-
-                });
-
-                dialog.show();
-            }
-        });
-*/
-        checkBoxMale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(AddUserActivity.this, "Masculino", Toast.LENGTH_SHORT).show();
-                checkBoxMale.setChecked(true);
-                checkBoxFeme.setChecked(false);
-                    genero="Masculino";
+                Toast.makeText(AddUserActivity.this, "Cliente "+editTextNome.getText().toString()+
+                        " Adicionado com sucesso!", Toast.LENGTH_SHORT).show();
+                DatabaseHelper.addClientes(cliente);
+                startActivity(new Intent(getBaseContext(), ProdutorLiderFragment.class));
             }
         });
 
-        checkBoxFeme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Toast.makeText(AddUserActivity.this, "femenino", Toast.LENGTH_SHORT).show();
-                genero="Femenino";
-
-                Toast.makeText(AddUserActivity.this, "Feminino", Toast.LENGTH_SHORT).show();
-
-
-                checkBoxMale.setChecked(false);
-                checkBoxFeme.setChecked(true);
-            }
-        });
-
-
-
-        //Mario =content://media/external/images/media/33
-       // Barata =android.graphics.Bitmap@e085dda
 
         ActivityResultLauncher<Intent> activityResultLauncherImageUsers = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -243,8 +177,6 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
                     }
                 }
         );
-
-
 
         imageUserUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -399,31 +331,4 @@ public class AddUserActivity extends AppCompatActivity implements DatePickerDial
 
     }
 
-
-    @Override
-    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        Calendar c=Calendar.getInstance();
-        c.set(Calendar.YEAR,i);
-        c.set(Calendar.MONTH,i1);
-        c.set(Calendar.DAY_OF_MONTH,i2);
-        String currentDate= DateFormat.getDateInstance().format(c.getTime());
-        txtIdade.setText(currentDate);
-    }
-
-    String getSha(String value){
-
-        byte[] inpuData= value.toString().getBytes();
-        byte[] outputData=new byte[0];
-
-        try {
-            outputData= new Sha().encryptSHA(inpuData,"SHA-384");
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        BigInteger shaData=new BigInteger(1,outputData);
-
-        return shaData.toString(16);
-    }
 }
