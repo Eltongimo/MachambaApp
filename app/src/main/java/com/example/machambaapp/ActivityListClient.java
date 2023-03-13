@@ -20,6 +20,7 @@ public class ActivityListClient extends AppCompatActivity {
      FloatingActionButton floatingActionButton;
      Button buttonUserAdd;
     RecyclerView recyclerView ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +48,6 @@ public class ActivityListClient extends AppCompatActivity {
                   startActivity(intent);
               }
           });
-
-
     }
 
     private void setAdapter(){

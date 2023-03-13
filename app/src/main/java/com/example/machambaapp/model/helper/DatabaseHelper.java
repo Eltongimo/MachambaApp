@@ -4,10 +4,13 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
+import com.example.machambaapp.ActivityUserPL;
 import com.example.machambaapp.ActivityViewAddCultura;
 import com.example.machambaapp.AddCultura;
 import com.example.machambaapp.Cultura;
+import com.example.machambaapp.R;
 import com.example.machambaapp.model.UserPl;
+import com.example.machambaapp.model.adapter.UserPlAdapter;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -37,11 +40,15 @@ import java.util.UUID;
 
 public class DatabaseHelper extends AppCompatActivity{
 
-    private final static DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
-
+    public final static DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
     private static String getSha(String s){
         return UUID.randomUUID().toString();
     }
+
+    public static void addLocation(String locationName, String locatioParentName, String ParentKey){
+
+    }
+
     public static void addCultura(String c, String t){
         databaseReference.child(t).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -57,20 +64,7 @@ public class DatabaseHelper extends AppCompatActivity{
     }
 
     public static void addUserPl(UserPl u){
-
          databaseReference.child("usuarios").child(getSha(u.getApelido())).setValue(u);
-        /*
-        databaseReference.child("usuarios").child(sha).child("telemovel").setValue(editPhone.getText().toString());
-        databaseReference.child("usuarios").child(sha).child("nome").setValue(editTextNome.getText().toString());
-        databaseReference.child("usuarios").child(sha).child("apelido").setValue(editTextApelido.getText().toString());
-        databaseReference.child("usuarios").child(sha).child("senha").setValue(editSenha.getText().toString());
-        databaseReference.child("usuarios").child(sha).child("distrito").setValue(autoCompleteDistrito.getText().toString());
-        databaseReference.child("usuarios").child(sha).child("localidade").setValue(autoCompleteLocalidade.getText().toString());
-        databaseReference.child("usuarios").child(sha).child("postoAdministrativo").setValue(autoCompletePostoAdministrativo.getText().toString());
-        databaseReference.child("usuarios").child(sha).child("comunidade").setValue(autoCompleteComunidade.getText().toString());
-
-        databaseReference.child("usuarios").child(editPhone.getText().toString()).child("imagem").setValue(urlImage + "");
-*/
     }
 
     public static ArrayList<UserPl> getUsersPL(){
@@ -80,20 +74,19 @@ public class DatabaseHelper extends AppCompatActivity{
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot culturasSnap : snapshot.getChildren()) {
-                    String comunidade=culturasSnap.child("comunidade").getValue(String.class);;
-                    String nome = culturasSnap.child("nome").getValue(String.class);
-                    String passWordPl = culturasSnap.child("senha").getValue(String.class);
-                    String phone=  culturasSnap.child("telefone").getValue(String.class);
-                    String apelido= culturasSnap.child("apelido").getValue(String.class);
-                    String distrito= culturasSnap.child("senha").getValue(String.class);
-                    String localidade= culturasSnap.child("localidade").getValue(String.class);;
-                    String postoAdministrativo=culturasSnap.child("postoAdministrativo").getValue(String.class);;
-                    String genero=culturasSnap.child("genero").getValue(String.class);;
-                    String senha=culturasSnap.child("senha").getValue(String.class);;
+                for (DataSnapshot userPLSnapshot : snapshot.getChildren()) {
+                    String comunidade=userPLSnapshot.child("comunidade").getValue(String.class);;
+                    String nome = userPLSnapshot.child("nome").getValue(String.class);
+                    String phone=  userPLSnapshot.child("telefone").getValue(String.class);
+                    String apelido= userPLSnapshot.child("apelido").getValue(String.class);
+                    String distrito= userPLSnapshot.child("senha").getValue(String.class);
+                    String localidade= userPLSnapshot.child("localidade").getValue(String.class);;
+                    String postoAdministrativo=userPLSnapshot.child("postoAdministrativo").getValue(String.class);;
+                    String genero=userPLSnapshot.child("genero").getValue(String.class);;
+                    String senha=userPLSnapshot.child("senha").getValue(String.class);;
 
-
-                    userPls.add(new UserPl( nome, apelido, senha,genero,phone,  null,  distrito, localidade, postoAdministrativo,  comunidade));
+                    System.out.println(nome);
+                   userPls.add(new UserPl( nome, apelido, senha,genero,phone,  null,  distrito, localidade, postoAdministrativo,  comunidade));
 
                 }
             }
@@ -102,6 +95,7 @@ public class DatabaseHelper extends AppCompatActivity{
 
             }
         });
+
         return userPls;
 
     }

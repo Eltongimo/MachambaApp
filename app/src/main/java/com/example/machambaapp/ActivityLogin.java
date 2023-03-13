@@ -56,7 +56,6 @@ public class ActivityLogin extends AppCompatActivity {
                @Override
                public void onClick(View view) {
 
-
                    if(editTextPhone.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()){
                        editTextPassword.setError("Campo Vazio");
                        editTextPhone.setError("Campo Vazio");
@@ -70,25 +69,19 @@ public class ActivityLogin extends AppCompatActivity {
                            startActivity(intent);
                        } else {
 
-//                           Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
-//                           startActivity(intent);
-
-
                            databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
                                @Override
                                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
-
                                    // Este método é chamado uma vez com o valor inicial e novamente sempre que os dados no nó "users" são alterados.
 
                                    // Percorra todos os nós filhos do nó "users"
+
                                    for (DataSnapshot userSnapshot: snapshot.getChildren()) {
                                        String phone = userSnapshot.child("telemovel").getValue(String.class);
                                        String password = userSnapshot.child("senha").getValue(String.class);
 
-
-                                       if(phone.equalsIgnoreCase(editTextPhone.getText().toString()) &&
+                                       if(phone.equals(editTextPhone.getText().toString()) &&
                                                password.equalsIgnoreCase(editTextPassword.getText().toString())){
 
                                            Privilegios privilegios= new Privilegios();

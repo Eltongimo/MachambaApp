@@ -31,7 +31,6 @@ public class ActivityViewAddCultura extends AppCompatActivity {
         getCulturasFromFirebase();
         setContentView(R.layout.activity_view_add_cultura);
 
-
           addCultura=(Button) findViewById(R.id.addCultura);
 
           addCultura.setOnClickListener(new View.OnClickListener() {
