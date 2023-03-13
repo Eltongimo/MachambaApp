@@ -63,6 +63,25 @@ public class DatabaseHelper extends AppCompatActivity{
         });
     }
 
+    public static ArrayList<String> getLocation(String pathName){
+
+        ArrayList<String> s = new ArrayList<String>();
+
+        databaseReference.child(pathName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot userPLSnapshot : snapshot.getChildren()) {
+                    s.add(userPLSnapshot.child("nome").getValue(String.class));
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return s;
+    }
+
     public static void addUserPl(UserPl u){
          databaseReference.child("usuarios").child(getSha(u.getApelido())).setValue(u);
     }

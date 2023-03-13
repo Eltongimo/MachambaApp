@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.SavedStateHandle;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -28,39 +27,33 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.machambaapp.model.DB;
-import com.example.machambaapp.model.Sha;
 import com.example.machambaapp.model.UserPl;
 import com.example.machambaapp.model.helper.DatabaseHelper;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.io.ByteArrayOutputStream;
-import java.math.BigInteger;
 import java.util.ArrayList;
+
+import javax.xml.parsers.SAXParser;
 
 public class ActivityUserRegister extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
 
-
-     Button addUser;
-
-    String[] itemsDistrito = {"Mecúfi"};
-    String[] itemsPostoAdministrativo = {"Murrebuê"};
-    String[] itemsLocalidade = {"L-Muitua"};
-    String[] itemsComunidade = {"Sicura B", "Muitua Sede", "Murripa","Singura A"};
+    Button addUser;
+    String[] itemsDistrito = SplashScreen.distritos.toArray(new String[SplashScreen.distritos.size()]);
+    String[] itemsPostoAdministrativo = SplashScreen.postosAdministrativos.toArray(new String[SplashScreen.postosAdministrativos.size()]);
+    String [] itemsLocalidade = SplashScreen.localiadades.toArray(new String[SplashScreen.localiadades.size()]);;
+    String [] itemsComunidade = SplashScreen.comunidades.toArray(new String[SplashScreen.comunidades.size()]);;
     AutoCompleteTextView autoCompleteDistrito;
     Dialog dialog;
     AutoCompleteTextView autoCompletePostoAdministrativo;
     AutoCompleteTextView autoCompleteLocalidade;
     AutoCompleteTextView autoCompleteComunidade;
     ArrayAdapter<String> adapterItems;
-
     EditText editTextNome;
     EditText editSenha;
     EditText editPhone;
@@ -71,10 +64,11 @@ public class ActivityUserRegister extends AppCompatActivity {
     ImageView imageViewUser;
     EditText editTextApelido;
 
-    private ArrayList<UserPl> usuarios = new ArrayList<UserPl>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        System.out.println(SplashScreen.comunidades);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
 
@@ -192,13 +186,8 @@ public class ActivityUserRegister extends AppCompatActivity {
 
                 dialog.show();
             }
-
-
-
         });
-
-
-             }
+    }
 
     void sendMessage(String phone, String password){
         String sms=" MachambaApp: Nome do usuario- "+phone+ "senha -"+password;
@@ -206,7 +195,6 @@ public class ActivityUserRegister extends AppCompatActivity {
         smsManager.sendTextMessage(phone.toString().trim(),null,sms,null,null);
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -229,25 +217,4 @@ public class ActivityUserRegister extends AppCompatActivity {
         startActivity(new Intent(ActivityUserRegister.this, ActivityUserPL.class));
         super.onBackPressed();
     }
-
-
-    String getSha(String value){
-
-             byte[] inpuData= value.toString().getBytes();
-             byte[] outputData=new byte[0];
-
-             try {
-                 outputData= new Sha().encryptSHA(inpuData,"SHA-384");
-
-             } catch (Exception e) {
-                 throw new RuntimeException(e);
-             }
-
-        BigInteger shaData=new BigInteger(1,outputData);
-
-        return shaData.toString(16);
-    }
-
-
-
-    }
+}

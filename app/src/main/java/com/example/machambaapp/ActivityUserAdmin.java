@@ -9,13 +9,11 @@ import android.view.View;
 
 public class ActivityUserAdmin extends AppCompatActivity {
 
-
     CardView cardViewUserPl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_admin);
-
 
         cardViewUserPl=(CardView) findViewById(R.id.idCardUserPl);
         cardViewUserPl.setOnClickListener(new View.OnClickListener() {
