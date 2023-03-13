@@ -11,6 +11,7 @@ import com.example.machambaapp.Cultura;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.UserPl;
 import com.example.machambaapp.model.adapter.UserPlAdapter;
+import com.example.machambaapp.model.interfaces.Cliente;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -86,8 +87,14 @@ public class DatabaseHelper extends AppCompatActivity{
          databaseReference.child("usuarios").child(getSha(u.getApelido())).setValue(u);
     }
 
+    public static void  addClientes(Cliente c){
+
+        databaseReference.child("clientes").child(getSha(c.getApelido())).setValue(c);
+
+    }
     public static ArrayList<UserPl> getUsersPL(){
         ArrayList<UserPl> userPls = new ArrayList<UserPl>();
+
 
         databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -104,7 +111,6 @@ public class DatabaseHelper extends AppCompatActivity{
                     String genero=userPLSnapshot.child("genero").getValue(String.class);;
                     String senha=userPLSnapshot.child("senha").getValue(String.class);;
 
-                    System.out.println(nome);
                    userPls.add(new UserPl( nome, apelido, senha,genero,phone,  null,  distrito, localidade, postoAdministrativo,  comunidade));
 
                 }

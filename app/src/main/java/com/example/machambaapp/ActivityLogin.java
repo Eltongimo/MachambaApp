@@ -78,7 +78,7 @@ public class ActivityLogin extends AppCompatActivity {
                                    // Percorra todos os nós filhos do nó "users"
 
                                    for (DataSnapshot userSnapshot: snapshot.getChildren()) {
-                                       String phone = userSnapshot.child("telemovel").getValue(String.class);
+                                       String phone = userSnapshot.child("phone").getValue(String.class);
                                        String password = userSnapshot.child("senha").getValue(String.class);
 
                                        if(phone.equals(editTextPhone.getText().toString()) &&
