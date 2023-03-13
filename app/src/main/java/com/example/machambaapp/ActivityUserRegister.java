@@ -26,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.example.machambaapp.model.UserPl;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.firebase.database.DataSnapshot;
@@ -36,9 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-
 import javax.xml.parsers.SAXParser;
-
 public class ActivityUserRegister extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
