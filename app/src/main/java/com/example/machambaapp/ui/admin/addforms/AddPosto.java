@@ -50,7 +50,8 @@ public class AddPosto extends AppCompatActivity {
         addPosto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseHelper.addCultura(postoAdministrativo.getText().toString(), "postosAdministrativos");
+                DatabaseHelper.addCultura(postoAdministrativo.getText().toString(),
+                        "postosAdministrativos",autoLocalidade.getText().toString(),"localidade");
                 finish();
             }
         });

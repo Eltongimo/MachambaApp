@@ -48,7 +48,8 @@ public class AddComunidade extends AppCompatActivity {
         addComunidade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseHelper.addCultura(comunidade.getText().toString(), "comunidades");
+                DatabaseHelper.addCultura(comunidade.getText().toString(),
+                        "comunidades",autoComunidade.getText().toString(),"distrito");
                 finish();
                 //      startActivity(new Intent(AddComunidade.this, ActivityViewComunidade.class));
             }

@@ -48,7 +48,7 @@ public class AddLocalidade extends AppCompatActivity {
         addLocalidade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseHelper.addCultura(localidade.getText().toString(), "localidades");
+                DatabaseHelper.addCultura(localidade.getText().toString(), "localidades",autoDistritos.getText().toString(),"distrito");
                 finish();
             //    startActivity(new Intent(AddLocalidade.this, ActivityViewLocalidade.class));
             }

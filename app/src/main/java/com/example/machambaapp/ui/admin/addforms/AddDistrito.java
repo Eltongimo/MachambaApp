@@ -42,11 +42,9 @@ public class AddDistrito extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                DatabaseHelper.addCultura(nomeDistrito.getText().toString(), "distritos");
+                DatabaseHelper.addCultura(nomeDistrito.getText().toString(), "distritos","","");
                 finish();
                 //    startActivity(new Intent(AddDistrito.this, ActivityViewDistrito.class));
-
-
             }
         });
     }

@@ -35,7 +35,7 @@ public class AddCultura extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseHelper.addCultura(cultura.getText().toString(), "culturas");
+                DatabaseHelper.addCultura(cultura.getText().toString(), "culturas","","");
                 finish();
                 //     startActivity(new Intent(AddCultura.this, ActivityViewAddCultura.class));
 

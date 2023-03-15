@@ -27,18 +27,16 @@ public class DatabaseHelper extends AppCompatActivity{
         return UUID.randomUUID().toString();
     }
 
-    public static void addLocation(String locationName, String locatioParentName, String ParentKey){
-
-    }
-
-    public static void addCultura(String c, String t){
-        databaseReference.child(t).addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void addCultura(String childValue, String childKey,String parentValue, String parentKey){
+        databaseReference.child(childKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                databaseReference.child(t).child(getSha()).child("nome").setValue(c);
-                if (t.equals("distritos")){
-                    SplashScreen.distritos.add(c);
+                String key = getSha();
+                databaseReference.child(childKey).child(key).child("nome").setValue(childValue);
+
+                if ( !parentKey.equals("") && !parentValue.equals("")){
+                    databaseReference.child(childKey).child(key).child(parentKey).setValue(parentValue);
                 }
             }
 
@@ -52,7 +50,6 @@ public class DatabaseHelper extends AppCompatActivity{
     public static ArrayList<String> getLocation(String pathName){
 
         ArrayList<String> s = new ArrayList<String>();
-        CountDownLatch myLatch= new CountDownLatch(1);
 
         databaseReference.child(pathName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -63,10 +60,8 @@ public class DatabaseHelper extends AppCompatActivity{
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                myLatch.countDown();
             }
         });
-        myLatch.countDown();
         return s;
     }
 
