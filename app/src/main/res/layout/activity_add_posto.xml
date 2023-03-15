@@ -52,6 +52,32 @@
                 android:hint="Posto Administrativo"
                 android:padding="16dp"
                 android:paddingLeft="10dp" />
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/textinputlayout_2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="11dp"
+                android:hint="@string/select_localidade"
+                app:boxCornerRadiusBottomEnd="23dp"
+                app:boxCornerRadiusBottomStart="23dp"
+                app:boxCornerRadiusTopEnd="23dp"
+                app:boxCornerRadiusTopStart="23dp"
+                app:boxStrokeColor="@color/teal_200"
+                app:hintTextColor="@color/teal_200">
+
+                <AutoCompleteTextView
+
+                    android:id="@+id/localidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsregular"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
             <Button
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
