@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.ui.admin.addforms.AddCultura;
 import com.example.machambaapp.Cultura;
 import com.example.machambaapp.MainActivity;
@@ -33,7 +34,9 @@ public class ActivityViewAddCultura extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getCulturasFromFirebase();
+        culturas = DatabaseHelper.getCulturas();
+        setAdapter();
+
         setContentView(R.layout.activity_view_add_cultura);
 
           addCultura=(Button) findViewById(R.id.addCultura);
@@ -44,26 +47,6 @@ public class ActivityViewAddCultura extends AppCompatActivity {
                   startActivity(new Intent(ActivityViewAddCultura.this, AddCultura.class));
               }
           });
-    }
-
-    private void getCulturasFromFirebase(){
-        databaseReference.child("culturas").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                culturas.clear();
-                for (DataSnapshot culturasSnap : snapshot.getChildren()) {
-                    String nomeCultura = culturasSnap.child("nome").getValue(String.class);
-                    culturas.add(new Cultura(nomeCultura));
-                }
-                setAdapter();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
     }
 
     private void setAdapter(){

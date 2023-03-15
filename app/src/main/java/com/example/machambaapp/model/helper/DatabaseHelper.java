@@ -2,6 +2,7 @@ package com.example.machambaapp.model.helper;
 
 import androidx.annotation.NonNull;
 
+import com.example.machambaapp.Cultura;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.UserPl;
 import com.example.machambaapp.model.datamodel.Cliente;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import java.util.ArrayList;
 
 import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
 
 public class DatabaseHelper extends AppCompatActivity{
 
@@ -50,6 +52,7 @@ public class DatabaseHelper extends AppCompatActivity{
     public static ArrayList<String> getLocation(String pathName){
 
         ArrayList<String> s = new ArrayList<String>();
+        CountDownLatch myLatch= new CountDownLatch(1);
 
         databaseReference.child(pathName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -60,9 +63,10 @@ public class DatabaseHelper extends AppCompatActivity{
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                myLatch.countDown();
             }
         });
+        myLatch.countDown();
         return s;
     }
 
@@ -75,9 +79,34 @@ public class DatabaseHelper extends AppCompatActivity{
         databaseReference.child("clientes").child(getSha()).setValue(c);
 
     }
+
+    public static ArrayList<Cultura> getCulturas(){
+        ArrayList<Cultura> culturas = new ArrayList<Cultura>();
+
+        CountDownLatch myLatch = new CountDownLatch(1);
+
+        databaseReference.child("culturas").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                culturas.clear();
+                for (DataSnapshot culturasSnap : snapshot.getChildren()) {
+                    String nomeCultura = culturasSnap.child("nome").getValue(String.class);
+                    culturas.add(new Cultura(nomeCultura));
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                myLatch.countDown();
+            }
+
+        });
+        myLatch.countDown();
+        return culturas;
+    }
     public static ArrayList<UserPl> getUsersPL(){
         ArrayList<UserPl> userPls = new ArrayList<UserPl>();
 
+        CountDownLatch myLatch = new CountDownLatch(1);
 
         databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -100,10 +129,10 @@ public class DatabaseHelper extends AppCompatActivity{
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                myLatch.countDown();
             }
         });
-
+        myLatch.countDown();
         return userPls;
 
     }
