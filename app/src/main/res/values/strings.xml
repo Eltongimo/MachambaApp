@@ -25,5 +25,7 @@
 
     <string name="navegation_drawer_open">Open navegation drawer</string>
     <string name="navegation_drawer_close">Close navegation drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

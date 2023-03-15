@@ -37,9 +37,7 @@ public class AddPosto extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseHelper.addCultura(postoAdministrativo.getText().toString(), "postosAdministrativos");
                 finish();
-                //    startActivity(new Intent(AddPosto.this, ActivityViewPostoAdmnistrativo.class));
             }
-
         });
     }
 }

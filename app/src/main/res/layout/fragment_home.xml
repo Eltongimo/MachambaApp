@@ -42,9 +42,9 @@
 
 
         <GridLayout
-            android:layout_marginTop="150dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="150dp"
             android:columnCount="2"
             android:rowCount="5">
 
@@ -361,9 +361,51 @@
                         android:textSize="18sp" />
 
                 </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/idFormulario"
+                android:layout_width="wrap_content"
+                android:layout_height="160dp"
+                android:layout_row="3"
+                android:layout_rowWeight="1"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:backgroundTint="@color/white"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
 
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/img_14" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/poppinssemibold"
+                        android:text="Formularios"
+                        android:textAlignment="center"
+                        android:textColor="#8E8484"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         </GridLayout>

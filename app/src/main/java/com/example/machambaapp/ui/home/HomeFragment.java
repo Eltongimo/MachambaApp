@@ -41,9 +41,16 @@ public class HomeFragment extends Fragment {
         CardView cardViewEtnia=(CardView) view.findViewById(R.id.idCardEtnia);
         CardView cardViewCultura=(CardView) view.findViewById(R.id.idCardCultura);
         CardView cardViewPostoAdministrativo=(CardView) view.findViewById(R.id.idCardPosto);
+        CardView cardViewFormulario = (CardView) view.findViewById(R.id.idFormulario);
 
 
-
+        cardViewFormulario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Indevelopment yet", Toast.LENGTH_SHORT).show();
+           //     startActivity(new Intent(getContex//));
+            }
+        });
         cardViewUserPl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

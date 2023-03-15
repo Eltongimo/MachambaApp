@@ -46,9 +46,6 @@ public class ClientesFragment extends Fragment {
                 startActivity(new Intent(getContext(), ActivitySelect.class));
             }
         });
-
-
-
         return view;
     }
 
