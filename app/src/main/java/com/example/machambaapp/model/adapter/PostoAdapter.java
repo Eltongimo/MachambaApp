@@ -18,9 +18,10 @@ public class PostoAdapter extends RecyclerView.Adapter<PostoAdapter.ViewHolder>{
     private final ArrayList<Posto> postosAdministrativos;
 
 
-    public PostoAdapter(Context context, ArrayList<Posto> postosAdministrativosP){
+    public PostoAdapter(Context context, ArrayList<Posto> postosAdministrativosP ){
         mContext = context;
         postosAdministrativos = postosAdministrativosP;
+
     }
     @NonNull
     @Override
@@ -33,6 +34,7 @@ public class PostoAdapter extends RecyclerView.Adapter<PostoAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull PostoAdapter.ViewHolder holder, int position) {
         Posto Posto = this.postosAdministrativos.get(position);
         holder.Posto.setText(Posto.getNome());
+        holder.Localidade.setText(Posto.getLocalidade());
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
@@ -47,13 +49,14 @@ public class PostoAdapter extends RecyclerView.Adapter<PostoAdapter.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private final TextView Posto;
+        private final TextView Posto, Localidade;
 
         private IItemClickListener mItemClickListener;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             Posto = itemView.findViewById(R.id.nomeClient);
+            Localidade = itemView.findViewById(R.id.nomeLocalidade);
 
 
             itemView.setOnClickListener(this);

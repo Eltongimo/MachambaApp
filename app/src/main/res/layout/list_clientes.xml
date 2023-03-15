@@ -28,27 +28,88 @@
              />
      </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:textSize="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="30dp"
-            android:layout_alignParentEnd="true"
-            android:text="12:20 pm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/nomeClient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Barata"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:fontFamily="@font/poppinsregular"
             android:layout_toEndOf="@id/idCard"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:layout_marginStart="10dp"
-
             />
+
+            <TextView
+                android:id="@+id/nomeDistrito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/idCard"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Distrito"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/nomeLocalidade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/nomeDistrito"
+                android:layout_marginStart="65dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/idCard"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Localidade"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/nomePosto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/nomeDistrito"
+                android:layout_marginStart="164dp"
+                android:layout_marginLeft="154dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@id/idCard"
+                android:fontFamily="@font/poppinsregular"
+                android:text="Posto"
+                android:textSize="12dp" />
+
+
+        <TextView
+            android:id="@+id/nomeComunidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nomeDistrito"
+            android:layout_marginStart="70dp"
+            android:fontFamily="@font/poppinsregular"
+            android:text="Comunidade"
+            android:textSize="12dp" />
+
+        <LinearLayout
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/atualizarCliente"
+                android:src="@drawable/baseline_mode_edit_outline_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/deletarCliente"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/baseline_delete_forever_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </RelativeLayout>
 
 

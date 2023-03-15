@@ -17,6 +17,8 @@ public class SplashScreen extends AppCompatActivity {
     public static ArrayList<String> postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
     public static ArrayList<String> localiadades = DatabaseHelper.getLocation("localidades");
     public static ArrayList<String> comunidades = DatabaseHelper.getLocation("comunidades");
+    public static ArrayList<String> etnia = DatabaseHelper.getEtnia("etnias");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

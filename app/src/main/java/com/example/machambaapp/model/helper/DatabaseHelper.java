@@ -3,7 +3,6 @@ package com.example.machambaapp.model.helper;
 import androidx.annotation.NonNull;
 
 import com.example.machambaapp.Cultura;
-import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.UserPl;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +26,7 @@ public class DatabaseHelper extends AppCompatActivity{
         return UUID.randomUUID().toString();
     }
 
-    public static void addCultura(String childValue, String childKey,String parentValue, String parentKey){
+    public static void addLocations(String childValue, String childKey, String parentValue, String parentKey){
         databaseReference.child(childKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -63,6 +62,23 @@ public class DatabaseHelper extends AppCompatActivity{
             }
         });
         return s;
+    }
+    public static ArrayList<String> getEtnia(String pathName){
+
+        ArrayList<String> e = new ArrayList<String>();
+
+        databaseReference.child(pathName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot userPLSnapshot : snapshot.getChildren()) {
+                    e.add(userPLSnapshot.child("nome").getValue(String.class));
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        return e;
     }
 
     public static void addUserPl(UserPl u){

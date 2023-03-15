@@ -52,7 +52,8 @@ public class ActivityViewLocalidade extends AppCompatActivity {
                 localidades.clear();
                 for (DataSnapshot localidadesSnap : snapshot.getChildren()) {
                     String nomeLocalidades = localidadesSnap.child("nome").getValue(String.class);
-                    localidades.add(new Localidade(nomeLocalidades));
+                    String nomeDistrito = localidadesSnap.child("distrito").getValue(String.class);
+                    localidades.add(new Localidade(nomeLocalidades, nomeDistrito));
                 }
                 setAdapter();
             }

@@ -28,7 +28,6 @@
              />
      </androidx.cardview.widget.CardView>
 
-
         <TextView
             android:id="@+id/nomeClient"
             android:layout_width="wrap_content"
@@ -37,9 +36,18 @@
             android:textSize="18dp"
             android:fontFamily="@font/poppinsregular"
             android:layout_toEndOf="@id/idCard"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="10dp" />
-
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"/>
+        <TextView
+            android:id="@+id/nomeLocalidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Localidade"
+            android:textSize="18dp"
+            android:fontFamily="@font/poppinsregular"
+            android:layout_toEndOf="@id/idCard"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="10dp"/>
 
         <LinearLayout
             android:layout_marginEnd="16dp"
@@ -51,15 +59,16 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/atualizarPosto"
                 android:src="@drawable/baseline_mode_edit_outline_24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <ImageView
+                android:id="@+id/deletarPosto"
                 android:layout_marginLeft="16dp"
                 android:src="@drawable/baseline_delete_forever_24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
         </LinearLayout>
     </RelativeLayout>
 

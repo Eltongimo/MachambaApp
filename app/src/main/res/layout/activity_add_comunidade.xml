@@ -60,7 +60,7 @@
                 android:padding="16dp"
                 android:paddingLeft="10dp"
                 android:layout_marginTop="11dp"
-                android:hint="@string/select_distrito"
+                android:hint="@string/select_posto_administrativo"
                 app:boxCornerRadiusBottomEnd="23dp"
                 app:boxCornerRadiusBottomStart="23dp"
                 app:boxCornerRadiusTopEnd="23dp"

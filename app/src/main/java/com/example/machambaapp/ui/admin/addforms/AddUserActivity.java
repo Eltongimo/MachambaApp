@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.machambaapp.R;
+import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.ui.produtorLider.ProdutorLiderFragment;
@@ -70,6 +71,8 @@ public class AddUserActivity extends AppCompatActivity {
     CheckBox generoMasc;
     CheckBox generoFem;
     Dialog dialog;
+    ArrayAdapter<String> adapterEtnias;
+    AutoCompleteTextView autoEtnias;
 
     @Override
     public void onBackPressed() {
@@ -93,7 +96,13 @@ public class AddUserActivity extends AppCompatActivity {
         numberPickerAno = (NumberPicker) findViewById(R.id.ano);
         generoFem =  (CheckBox) findViewById(R.id.idCheckBoxfeme);
         generoMasc = (CheckBox) findViewById(R.id.idCheckBoxMale);
-        etnia = (AutoCompleteTextView) findViewById(R.id.etnia_select);
+        autoEtnias = (AutoCompleteTextView) findViewById(R.id.etnia_select);
+
+        String [] etnias = SplashScreen.etnia.toArray(new
+                String[SplashScreen.etnia.size()]);
+        adapterEtnias = new ArrayAdapter<>(this, R.layout.list_item_etnia, etnias);
+        autoEtnias.setAdapter(adapterEtnias);
+
 
         getIdView();
 

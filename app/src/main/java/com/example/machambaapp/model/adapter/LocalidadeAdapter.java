@@ -27,7 +27,7 @@ public class LocalidadeAdapter extends RecyclerView.Adapter<LocalidadeAdapter.Vi
     @NonNull
     @Override
     public LocalidadeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_etnia, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_localidade, parent, false);
         return new LocalidadeAdapter.ViewHolder(view);
     }
 
@@ -35,6 +35,7 @@ public class LocalidadeAdapter extends RecyclerView.Adapter<LocalidadeAdapter.Vi
     public void onBindViewHolder(@NonNull LocalidadeAdapter.ViewHolder holder, int position) {
         Localidade Localidade = this.localidades.get(position);
         holder.Localidade.setText(Localidade.getNome());
+        holder.Distrito.setText(Localidade.getDistrito());
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
@@ -49,13 +50,14 @@ public class LocalidadeAdapter extends RecyclerView.Adapter<LocalidadeAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private final TextView Localidade;
+        private final TextView Localidade, Distrito;
 
         private IItemClickListener mItemClickListener;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             Localidade = itemView.findViewById(R.id.nomeClient);
+            Distrito = itemView.findViewById(R.id.idDistrito);
 
 
             itemView.setOnClickListener(this);

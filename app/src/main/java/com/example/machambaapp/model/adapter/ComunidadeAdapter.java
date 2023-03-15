@@ -35,6 +35,7 @@ public class ComunidadeAdapter extends RecyclerView.Adapter<ComunidadeAdapter.Vi
     public void onBindViewHolder(@NonNull ComunidadeAdapter.ViewHolder holder, int position) {
         Comunidade Comunidade = this.comunidades.get(position);
         holder.Comunidade.setText(Comunidade.getNome());
+        holder.PostoAdministrativo.setText(Comunidade.getPostoAdministrativo());
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
@@ -49,14 +50,14 @@ public class ComunidadeAdapter extends RecyclerView.Adapter<ComunidadeAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private final TextView Comunidade;
+        private final TextView Comunidade, PostoAdministrativo;
 
         private IItemClickListener mItemClickListener;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             Comunidade = itemView.findViewById(R.id.nomeClient);
-
+            PostoAdministrativo = itemView.findViewById(R.id.nomePosto);
 
             itemView.setOnClickListener(this);
         }
