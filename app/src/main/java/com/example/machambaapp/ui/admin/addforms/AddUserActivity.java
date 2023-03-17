@@ -67,7 +67,6 @@ public class AddUserActivity extends AppCompatActivity {
     static String genero="";
 
     EditText editTextPhone, editTextNome, editTextApelido;
-    AutoCompleteTextView etnia;
     CheckBox generoMasc;
     CheckBox generoFem;
     Dialog dialog;
@@ -87,6 +86,7 @@ public class AddUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
+        getIdView();
         Calendar c=Calendar.getInstance();
 
         editTextPhone=(EditText) findViewById(R.id.idPhoneUser);
@@ -100,11 +100,10 @@ public class AddUserActivity extends AppCompatActivity {
 
         String [] etnias = SplashScreen.etnia.toArray(new
                 String[SplashScreen.etnia.size()]);
+
         adapterEtnias = new ArrayAdapter<>(this, R.layout.list_item_etnia, etnias);
+
         autoEtnias.setAdapter(adapterEtnias);
-
-
-        getIdView();
 
         generoMasc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,16 +127,16 @@ public class AddUserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String gen = generoFem.isChecked() ? "Feminino" : "Masculino";
 
+                String nome = editTextNome.getText().toString();
+                String apelido = editTextApelido.getText().toString();
+                String phone = editTextPhone.getText().toString();
+                String et = autoEtnias.getText().toString();
 
-                Cliente cliente = new Cliente(editTextNome.getText().toString(),
-                                              editTextApelido.getText().toString(),
-                                              editTextPhone.getText().toString(),
-                                              new String(numberPickerAno.getValue()+""),
-                                              gen, etnia.getText().toString());
+                Cliente cliente = new Cliente(nome,apelido,phone, new String(numberPickerAno.getValue()+""),  gen, et);
 
-                Toast.makeText(AddUserActivity.this, "Cliente "+editTextNome.getText().toString()+
-                        " Adicionado com sucesso!", Toast.LENGTH_SHORT).show();
                 DatabaseHelper.addClientes(cliente);
+
+                Toast.makeText(AddUserActivity.this, "", Toast.LENGTH_SHORT).show();
                 finish();
            //     startActivity(new Intent(getBaseContext(), ProdutorLiderFragment.class));
             }

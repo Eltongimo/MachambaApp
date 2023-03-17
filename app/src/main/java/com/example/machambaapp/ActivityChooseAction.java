@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 public class ActivityChooseAction extends AppCompatActivity {
 
-
     CardView startVisit;
     CardView selectClient;
 

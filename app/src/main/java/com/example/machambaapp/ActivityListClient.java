@@ -10,22 +10,27 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.machambaapp.model.adapter.ClientAdapter;
+import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.ui.admin.addforms.AddUserActivity;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class ActivityListClient extends AppCompatActivity {
      FloatingActionButton floatingActionButton;
      Button buttonUserAdd;
     RecyclerView recyclerView ;
+    private ArrayList<Cliente> client = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setAdapter();
+         setContentView(R.layout.activity_list_client);
+         setAdapter();
 
-        setContentView(R.layout.activity_list_client);
+        System.out.println("Heleeee");
 
           buttonUserAdd=(Button) findViewById(R.id.registerClientPl);
           recyclerView = findViewById(R.id.idRecyclerviewClient);
@@ -50,7 +55,7 @@ public class ActivityListClient extends AppCompatActivity {
 
     private void setAdapter(){
         RecyclerView recyclerView = findViewById(R.id.idRecyclerviewClient);
-        ClientAdapter clientAdapter = new ClientAdapter(this, DatabaseHelper.getUsersPL());
+        ClientAdapter clientAdapter = new ClientAdapter(this, client);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(clientAdapter);

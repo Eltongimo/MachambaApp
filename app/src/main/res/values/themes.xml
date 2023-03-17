@@ -21,10 +21,6 @@
 
     </style>
 
-    <style name="Theme.MachambaApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.MachambaApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 
     <style name="animation">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
