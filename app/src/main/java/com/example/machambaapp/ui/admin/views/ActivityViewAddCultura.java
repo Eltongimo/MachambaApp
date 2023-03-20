@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.ui.admin.addforms.AddCultura;
 import com.example.machambaapp.Cultura;
@@ -35,9 +36,10 @@ public class ActivityViewAddCultura extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         culturas = DatabaseHelper.getCulturas();
-        setAdapter();
 
-        setContentView(R.layout.activity_view_add_cultura);
+
+       setContentView(R.layout.activity_view_add_cultura);
+       setAdapter();
 
           addCultura=(Button) findViewById(R.id.addCultura);
 
@@ -63,4 +65,5 @@ public class ActivityViewAddCultura extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+
 }
