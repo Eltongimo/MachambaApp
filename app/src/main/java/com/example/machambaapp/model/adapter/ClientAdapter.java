@@ -15,6 +15,7 @@ import com.example.machambaapp.ActivitySelectClient;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.DataClassClient;
 import com.example.machambaapp.model.UserPl;
+import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
 
 import java.util.ArrayList;
@@ -22,9 +23,9 @@ import java.util.ArrayList;
 public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder>{
 
     private final Context mContext;
-    private final ArrayList<UserPl> mSpecies;
+    private final ArrayList<Cliente> mSpecies;
 
-    public ClientAdapter(Context context, ArrayList<UserPl> species){
+    public ClientAdapter(Context context, ArrayList<Cliente> species){
         mContext = context;
         mSpecies = species;
     }
@@ -39,7 +40,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ClientAdapter.ViewHolder holder, int position) {
-        UserPl client = mSpecies.get(position);
+        Cliente client = mSpecies.get(position);
         holder.nomeClient.setText(client.getNome()+ " "+ client.getApelido());
         //holder.foto.setImageURI(client.getFaceImage());
 

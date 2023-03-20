@@ -37,13 +37,10 @@ public class ActivitySelect extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Toast.makeText(this, " voltou", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

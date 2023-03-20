@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.machambaapp.model.Privilegios;
 import com.example.machambaapp.model.UserAdmin;
+import com.example.machambaapp.model.UserPl;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,6 +73,12 @@ public class ActivityLogin extends AppCompatActivity {
 
                                            Privilegios privilegios= new Privilegios();
                                            privilegios.setAllAcessView(false);
+
+                                           UserPl u = new UserPl();
+                                           u.setNome(userSnapshot.child("nome").getValue(String.class));
+                                           u.setPhone(userSnapshot.child("phone").getValue(String.class));
+
+                                           SplashScreen.currentUser = u;
 
                                            startActivity(new Intent(ActivityLogin.this,MainActivity.class));
                                        }

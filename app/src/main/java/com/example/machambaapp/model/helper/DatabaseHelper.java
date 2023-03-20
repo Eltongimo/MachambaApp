@@ -3,6 +3,7 @@ package com.example.machambaapp.model.helper;
 import androidx.annotation.NonNull;
 
 import com.example.machambaapp.Cultura;
+import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.UserPl;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.google.firebase.database.DataSnapshot;
@@ -87,8 +88,10 @@ public class DatabaseHelper extends AppCompatActivity{
 
     public static void  addClientes(Cliente c){
 
-        databaseReference.child("clientes").child(getSha()).setValue(c);
-
+        String key = getSha();
+        databaseReference.child("clientes").child(key).setValue(c);
+        databaseReference.child("clientes").child(key).child("pl").child("nome").setValue(SplashScreen.currentUser.getNome());
+        databaseReference.child("clientes").child(key).child("pl").child("phone").setValue(SplashScreen.currentUser.getPhone());
     }
 
     public static ArrayList<Cultura> getCulturas(){
