@@ -35,6 +35,7 @@ public class ActivityViewAddCultura extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
     private static ArrayList<Cultura> culturas = new ArrayList<Cultura>();
 
+
     private void getComunidadesFromFirebase(){
         databaseReference.child("culturas").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -42,7 +43,9 @@ public class ActivityViewAddCultura extends AppCompatActivity {
                 culturas.clear();
                 for (DataSnapshot comunidadesSnap : snapshot.getChildren()) {
                     String cultura = comunidadesSnap.child("nome").getValue(String.class);
-                    culturas.add(new Cultura(cultura, comunidadesSnap.getKey()));
+                    String chave = comunidadesSnap.getKey().toString();
+
+                    culturas.add(new Cultura(cultura, chave));
                 }
                 setAdapter();
             }
@@ -65,9 +68,6 @@ public class ActivityViewAddCultura extends AppCompatActivity {
         getComunidadesFromFirebase();
 
         addCultura=(Button) findViewById(R.id.addCultura);
-        apagar = (ImageView) findViewById(R.id.apagar);
-        editar = (ImageView) findViewById(R.id.editar);
-
 
         addCultura.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +85,7 @@ public class ActivityViewAddCultura extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(culturaAdapter);
     }
+
 
     @Override
     public void onBackPressed() {

@@ -27,6 +27,10 @@ public class DatabaseHelper extends AppCompatActivity{
         return UUID.randomUUID().toString();
     }
 
+    public static void deleteCultura(String key){
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("culturas/" + key);
+        userRef.removeValue();
+    }
     public static void addLocations(String childValue, String childKey, String parentValue, String parentKey){
         databaseReference.child(childKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

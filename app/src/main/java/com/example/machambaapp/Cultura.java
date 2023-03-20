@@ -19,6 +19,7 @@ public class Cultura {
 
     public Cultura(String cultura, String key) {
         this.cultura = cultura;
+        this.Key = key;
     }
 
     public String getCultura() {
