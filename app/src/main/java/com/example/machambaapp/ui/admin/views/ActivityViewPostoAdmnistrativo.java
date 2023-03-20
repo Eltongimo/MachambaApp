@@ -51,8 +51,9 @@ public class ActivityViewPostoAdmnistrativo extends AppCompatActivity {
                 for (DataSnapshot postosAdministrativosSnap : snapshot.getChildren()) {
                     String nomePostosAdministrativos = postosAdministrativosSnap.child("nome").getValue(String.class);
                     String nomeLocalidade = postosAdministrativosSnap.child("localidade").getValue(String.class);
+                    String chave = postosAdministrativosSnap.getKey().toString();
 
-                    postosAdministrativos.add(new Posto(nomePostosAdministrativos, nomeLocalidade));
+                    postosAdministrativos.add(new Posto(nomePostosAdministrativos, nomeLocalidade, chave));
                 }
                 setAdapter();
             }

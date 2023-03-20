@@ -44,7 +44,6 @@ public class ActivityViewAddCultura extends AppCompatActivity {
                 for (DataSnapshot comunidadesSnap : snapshot.getChildren()) {
                     String cultura = comunidadesSnap.child("nome").getValue(String.class);
                     String chave = comunidadesSnap.getKey().toString();
-
                     culturas.add(new Cultura(cultura, chave));
                 }
                 setAdapter();
