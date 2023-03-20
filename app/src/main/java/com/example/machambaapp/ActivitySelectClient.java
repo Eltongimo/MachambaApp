@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.machambaapp.model.adapter.ClientAdapter;
 import com.example.machambaapp.model.datamodel.Cliente;
@@ -24,6 +26,7 @@ public class ActivitySelectClient extends AppCompatActivity {
     RecyclerView recyclerView ;
     EditText editName;
     ImageView imageFaceUser;
+    TextView distrito, localidade, posto, comunidade;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
 
     ArrayList<Cliente> clients = new ArrayList<>();
@@ -59,12 +62,18 @@ public class ActivitySelectClient extends AppCompatActivity {
 
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_client);
         getCliensFromDatabase();
         recyclerView = findViewById(R.id.idRecyclerviewClients2);
+
+        distrito = (TextView) findViewById(R.id.nomeDistrito);
+        localidade =  (TextView) findViewById(R.id.nomeLocalidade);
+        posto =  (TextView) findViewById(R.id.nomePosto);
+        comunidade = (TextView) findViewById(R.id.nomeComunidade);
 
   }
 

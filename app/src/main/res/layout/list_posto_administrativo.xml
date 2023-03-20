@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Localidade"
-            android:textSize="18dp"
+            android:textSize="14dp"
             android:fontFamily="@font/poppinsregular"
             android:layout_toEndOf="@id/idCard"
             android:layout_marginTop="25dp"

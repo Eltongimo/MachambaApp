@@ -111,8 +111,6 @@ public class ActivityUserRegister extends AppCompatActivity {
              }
         });
 
-
-
         ActivityResultLauncher<Intent> activityResultLauncherImageUsers = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {

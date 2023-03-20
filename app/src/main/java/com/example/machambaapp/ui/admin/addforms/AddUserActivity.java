@@ -64,6 +64,7 @@ public class AddUserActivity extends AppCompatActivity {
     TextView textApelido;
     EditText txtAno;
 
+
     static String genero="";
 
     EditText editTextPhone, editTextNome, editTextApelido;

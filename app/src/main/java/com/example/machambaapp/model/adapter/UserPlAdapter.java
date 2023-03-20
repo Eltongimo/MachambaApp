@@ -44,8 +44,10 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
         holder.imageView.setImageURI(userPl.getUriImage());
         holder.distrito.setText(userPl.getDistrito());
         holder.localidade.setText(userPl.getLocalidade());
+        holder.comunidade.setText(userPl.getComunidade());
+        holder.apelido.setText(userPl.getApelido());
+        holder.posto.setText(userPl.getPostoAdministrativo());
 
-        Toast.makeText(mContext, ""+userPl.getLocalidade()+" "+ userPl.getDistrito(), Toast.LENGTH_SHORT).show();
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
@@ -72,6 +74,9 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
         private final TextView nomeUserPl;
         private final TextView distrito;
         private final TextView localidade;
+        private final TextView apelido;
+        private final TextView comunidade;
+        private final TextView posto;
         private final ImageView imageView;
         private IItemClickListener mItemClickListener;
 
@@ -81,6 +86,9 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
             imageView=itemView.findViewById(R.id.imageClientView);
             distrito=itemView.findViewById(R.id.idDistritoPl);
             localidade=itemView.findViewById(R.id.iDLocalidadePl);
+            apelido = itemView.findViewById(R.id.nomeApelido);
+            comunidade = itemView.findViewById(R.id.idComunidade);
+            posto = itemView.findViewById(R.id.idPosto);
 
             itemView.setOnClickListener(this);
         }

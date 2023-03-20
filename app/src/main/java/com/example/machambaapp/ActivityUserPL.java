@@ -50,7 +50,7 @@ public class ActivityUserPL extends AppCompatActivity {
                     String nome = userPLSnapshot.child("nome").getValue(String.class);
                     String phone=  userPLSnapshot.child("telefone").getValue(String.class);
                     String apelido= userPLSnapshot.child("apelido").getValue(String.class);
-                    String distrito= userPLSnapshot.child("senha").getValue(String.class);
+                    String distrito= userPLSnapshot.child("distrito").getValue(String.class);
                     String localidade= userPLSnapshot.child("localidade").getValue(String.class);;
                     String postoAdministrativo=userPLSnapshot.child("postoAdministrativo").getValue(String.class);;
                     String genero=userPLSnapshot.child("genero").getValue(String.class);;

@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.machambaapp.model.datamodel.Comunidade;
 import com.example.machambaapp.model.helper.DatabaseHelper;
@@ -28,6 +30,8 @@ import java.util.ArrayList;
 public class ActivityViewAddCultura extends AppCompatActivity {
 
     Button addCultura;
+    ImageView apagar;
+    ImageView editar;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
     private static ArrayList<Cultura> culturas = new ArrayList<Cultura>();
 
@@ -38,7 +42,7 @@ public class ActivityViewAddCultura extends AppCompatActivity {
                 culturas.clear();
                 for (DataSnapshot comunidadesSnap : snapshot.getChildren()) {
                     String cultura = comunidadesSnap.child("nome").getValue(String.class);
-                    culturas.add(new Cultura(cultura));
+                    culturas.add(new Cultura(cultura, comunidadesSnap.getKey()));
                 }
                 setAdapter();
             }
@@ -51,6 +55,8 @@ public class ActivityViewAddCultura extends AppCompatActivity {
 
     }
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +65,9 @@ public class ActivityViewAddCultura extends AppCompatActivity {
         getComunidadesFromFirebase();
 
         addCultura=(Button) findViewById(R.id.addCultura);
+        apagar = (ImageView) findViewById(R.id.apagar);
+        editar = (ImageView) findViewById(R.id.editar);
+
 
         addCultura.setOnClickListener(new View.OnClickListener() {
             @Override

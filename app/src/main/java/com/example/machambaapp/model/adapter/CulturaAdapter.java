@@ -4,19 +4,23 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.machambaapp.Cultura;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
+
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHolder>{
 
     private final Context mContext;
     private final ArrayList<Cultura> mCultura;
-
 
     public CulturaAdapter(Context context, ArrayList<Cultura> userPls){
         mContext = context;
@@ -36,9 +40,11 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
         Cultura cultura = this.mCultura.get(position);
         holder.cultura.setText(cultura.getCultura());
 
+
         holder.setItemClickListener(new IItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+
             }
         });
     }
@@ -50,12 +56,26 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView cultura;
+        private final ImageView apagar;
+
+        private final ImageView editar;
+
 
         private IItemClickListener mItemClickListener;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             cultura = itemView.findViewById(R.id.nomeCultura);
+            apagar = itemView.findViewById(R.id.apagar);
+            editar = itemView.findViewById(R.id.editar);
+
+
+            apagar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println(editar);
+               }
+            });
 
 
             itemView.setOnClickListener(this);

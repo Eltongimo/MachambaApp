@@ -30,7 +30,6 @@ public class ActivityListClient extends AppCompatActivity {
          setContentView(R.layout.activity_list_client);
          setAdapter();
 
-        System.out.println("Heleeee");
 
           buttonUserAdd=(Button) findViewById(R.id.registerClientPl);
           recyclerView = findViewById(R.id.idRecyclerviewClient);
