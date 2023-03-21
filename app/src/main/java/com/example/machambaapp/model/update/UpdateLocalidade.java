@@ -1,4 +1,4 @@
-package com.example.machambaapp.ui.admin.addforms;
+package com.example.machambaapp.model.update;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,11 +13,9 @@ import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 
-public class AddLocalidade extends AppCompatActivity {
-
-    Button addLocalidade;
-    EditText localidade;
-
+public class UpdateLocalidade extends AppCompatActivity {
+    Button update;
+    EditText nome;
     ArrayAdapter<String> adapterDistritos;
     AutoCompleteTextView autoDistritos;
 
@@ -32,10 +30,10 @@ public class AddLocalidade extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_localidade);
+        setContentView(R.layout.activity_update_localidade);
 
-        addLocalidade = (Button) findViewById(R.id.addLocalidade);
-        localidade = (EditText) findViewById(R.id.nomeLocalidade);
+        update = (Button) findViewById(R.id.updateLocalidade);
+        nome = (EditText) findViewById(R.id.nomeLocalidade);
         autoDistritos= (AutoCompleteTextView) findViewById(R.id.distritos);
 
         String [] distritosArray = SplashScreen.distritos.toArray(new String[SplashScreen.distritos.size()]);
@@ -43,12 +41,14 @@ public class AddLocalidade extends AppCompatActivity {
         adapterDistritos = new ArrayAdapter<>(this, R.layout.list_item_distrito, distritosArray);
         autoDistritos.setAdapter(adapterDistritos);
 
-        addLocalidade.setOnClickListener(new View.OnClickListener() {
+        update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseHelper.addLocations(localidade.getText().toString(), "localidades",autoDistritos.getText().toString(),"distrito");
+                DatabaseHelper.addLocations(nome.getText().toString(), "localidades",autoDistritos.getText().toString(),"distrito");
                 finish();
+
             }
         });
+
     }
 }

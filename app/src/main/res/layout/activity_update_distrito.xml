@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.admin.addforms.AddLocalidade">
+    android:background="@drawable/fundo"
+    tools:context=".model.update.UpdateDistrito">
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/idCardOpcao"
@@ -23,22 +25,22 @@
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:src="@drawable/img_16" />
+                android:src="@drawable/img_15" />
             <TextView
+
                 android:layout_marginTop="2dp"
                 android:gravity="center"
                 android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Adicionar Localidade"
+                android:text="Atualizar Distrito"
                 android:fontFamily="@font/poppinssemibold"
                 />
-
             <EditText
                 android:paddingStart="18dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:id="@+id/nomeLocalidade"
+                android:id="@+id/nomeDistrito"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="50dp"
@@ -46,38 +48,9 @@
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/poppinsregular"
                 android:gravity="start|center_vertical"
-                android:hint="Localidade"
+                android:hint="Distrito"
                 android:padding="16dp"
                 android:paddingLeft="10dp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-
-                android:id="@+id/textinputlayout_2"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:paddingLeft="10dp"
-                android:layout_marginTop="11dp"
-                android:hint="@string/select_distrito"
-                app:boxCornerRadiusBottomEnd="23dp"
-                app:boxCornerRadiusBottomStart="23dp"
-                app:boxCornerRadiusTopEnd="23dp"
-                app:boxCornerRadiusTopStart="23dp"
-                app:boxStrokeColor="@color/teal_200"
-                app:hintTextColor="@color/teal_200">
-
-                <AutoCompleteTextView
-
-                    android:id="@+id/distritos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppinsregular"
-                    android:inputType="none" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
             <Button
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
@@ -92,9 +65,11 @@
                 android:textSize="16dp"
                 android:fontFamily="@font/poppinsbold"
                 android:backgroundTint="@color/cor_of_botton"
-                android:text="Adicionar"
-                android:id="@+id/addLocalidade"/>
+                android:text="Atualizar"
+                android:id="@+id/updateDistrito"/>
         </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

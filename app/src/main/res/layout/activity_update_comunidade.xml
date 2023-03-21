@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.admin.addforms.AddLocalidade">
+    android:background="@drawable/fundo"
+    tools:context=".model.update.UpdateComunidade">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/idCardOpcao"
@@ -30,7 +31,7 @@
                 android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Adicionar Localidade"
+                android:text="Atualizar Localidade"
                 android:fontFamily="@font/poppinssemibold"
                 />
 
@@ -68,7 +69,6 @@
                 app:hintTextColor="@color/teal_200">
 
                 <AutoCompleteTextView
-
                     android:id="@+id/distritos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,7 +76,6 @@
                     android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <Button
                 android:layout_marginStart="20dp"
@@ -92,8 +91,8 @@
                 android:textSize="16dp"
                 android:fontFamily="@font/poppinsbold"
                 android:backgroundTint="@color/cor_of_botton"
-                android:text="Adicionar"
-                android:id="@+id/addLocalidade"/>
+                android:text="Atualizar"
+                android:id="@+id/updateLocalidade"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
