@@ -32,6 +32,12 @@ public class DatabaseHelper extends AppCompatActivity{
         userRef.removeValue();
     }
 
+    public static void updateCultura(String cultura, String key){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("culturas");
+        myRef.child(key).child("nome").setValue(cultura);
+    }
+
     public static void deletePosto(String key){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("postosAdministrativos/" + key);
         userRef.removeValue();
@@ -55,6 +61,11 @@ public class DatabaseHelper extends AppCompatActivity{
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("etnias/" + key);
         userRef.removeValue();
     }
+
+    public static void updateLocations(String childValue, String childKey, String parentValue, String parentKey){
+
+
+    }
     public static void addLocations(String childValue, String childKey, String parentValue, String parentKey){
         databaseReference.child(childKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -67,6 +78,8 @@ public class DatabaseHelper extends AppCompatActivity{
                     databaseReference.child(childKey).child(key).child(parentKey).setValue(parentValue);
                 }
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -15,22 +15,22 @@
         android:theme="@style/Theme.MachambaApp"
         tools:targetApi="31">
         <activity
-            android:name=".UpdatePosto"
+            android:name=".model.update.UpdatePosto"
             android:exported="false" />
         <activity
-            android:name=".UpdateComunidade"
+            android:name=".model.update.UpdateComunidade"
             android:exported="false" />
         <activity
-            android:name=".UpdateLocalidade"
+            android:name=".model.update.UpdateLocalidade"
             android:exported="false" />
         <activity
-            android:name=".UpdateEtnia"
+            android:name=".model.update.UpdateEtnia"
             android:exported="false" />
         <activity
-            android:name=".UpdateCultura"
+            android:name=".model.update.UpdateCultura"
             android:exported="false" />
         <activity
-            android:name=".UpdateDistrito"
+            android:name=".model.update.UpdateDistrito"
             android:exported="false" />
         <activity
             android:name=".ui.admin.addforms.AddPosto"
