@@ -1,5 +1,6 @@
 package com.example.machambaapp.model.adapter;
 
+import android.app.Activity;
 import android.app.Activity.*;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -60,6 +61,8 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DatabaseHelper.deleteCultura(cultura.getKey());
+                        Toast.makeText(mContext, "Apagado com sucesso!", Toast.LENGTH_SHORT).show();
+                        ((Activity) mContext).recreate();
 
                     }
                 });

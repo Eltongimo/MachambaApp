@@ -36,6 +36,15 @@ public class DatabaseHelper extends AppCompatActivity{
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("postosAdministrativos/" + key);
         userRef.removeValue();
     }
+    public static void deleteComunidade(String key){
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("comunidades/" + key);
+        userRef.removeValue();
+    }
+
+    public static void deleteLocalidade(String key){
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("localidades/" + key);
+        userRef.removeValue();
+    }
     public static void addLocations(String childValue, String childKey, String parentValue, String parentKey){
         databaseReference.child(childKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

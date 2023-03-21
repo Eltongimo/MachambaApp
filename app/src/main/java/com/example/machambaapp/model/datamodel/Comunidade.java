@@ -1,11 +1,20 @@
 package com.example.machambaapp.model.datamodel;
 
 public class Comunidade {
-    String nome, postoAdministrativo;
+    String nome, postoAdministrativo, key;
 
-    public Comunidade(String nome, String postoAdministrativo) {
+    public Comunidade(String nome, String postoAdministrativo, String key) {
         this.nome = nome;
         this.postoAdministrativo = postoAdministrativo;
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getNome() {

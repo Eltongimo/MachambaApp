@@ -49,7 +49,8 @@ public class ActivityViewComunidade extends AppCompatActivity {
                 for (DataSnapshot comunidadesSnap : snapshot.getChildren()) {
                     String nomecomunidades = comunidadesSnap.child("nome").getValue(String.class);
                     String nomePosto = comunidadesSnap.child("postoAdministrativo").getValue(String.class);
-                    comunidades.add(new Comunidade(nomecomunidades, nomePosto));
+                    String chave = comunidadesSnap.getKey().toString();
+                    comunidades.add(new Comunidade(nomecomunidades, nomePosto, chave));
                 }
                 setAdapter();
             }

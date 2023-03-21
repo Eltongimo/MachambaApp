@@ -1,12 +1,21 @@
 package com.example.machambaapp.model.datamodel;
 
 public class Localidade {
-    String nome, distrito;
+    String nome, distrito, key;
 
-    public Localidade(String nome, String distrito) {
+    public Localidade(String nome, String distrito, String key) {
         this.nome = nome;
+        this.key = key;
         this.distrito = distrito;
 
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getNome() {

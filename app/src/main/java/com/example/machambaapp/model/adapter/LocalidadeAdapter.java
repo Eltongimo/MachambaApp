@@ -1,15 +1,23 @@
 package com.example.machambaapp.model.adapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.datamodel.Localidade;
+import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
 import java.util.ArrayList;
 
@@ -36,6 +44,35 @@ public class LocalidadeAdapter extends RecyclerView.Adapter<LocalidadeAdapter.Vi
         Localidade Localidade = this.localidades.get(position);
         holder.Localidade.setText(Localidade.getNome());
         holder.Distrito.setText(Localidade.getDistrito());
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(mContext.getApplicationContext());
+        holder.Localidade.setText(Localidade.getNome());
+
+        holder.apagar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Apagar Localidade!");
+                builder.setMessage("Deseja mesmo apagar a localidade "+Localidade.getNome()+" ?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseHelper.deleteLocalidade(Localidade.getKey());
+                        Toast.makeText(mContext, "Apagado com sucesso!", Toast.LENGTH_SHORT).show();
+                        ((Activity) mContext).recreate();
+
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
 
         holder.setItemClickListener(new IItemClickListener() {
             @Override
@@ -51,13 +88,15 @@ public class LocalidadeAdapter extends RecyclerView.Adapter<LocalidadeAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView Localidade, Distrito;
-
+        private final ImageView apagar, editar;
         private IItemClickListener mItemClickListener;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             Localidade = itemView.findViewById(R.id.nomeClient);
             Distrito = itemView.findViewById(R.id.idDistrito);
+            apagar = itemView.findViewById(R.id.deletarLocalidade);
+            editar = itemView.findViewById(R.id.atualizarLocalidade);
 
 
             itemView.setOnClickListener(this);

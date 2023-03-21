@@ -1,6 +1,7 @@
 package com.example.machambaapp.model.adapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.machambaapp.model.datamodel.Etnia;
@@ -53,6 +56,8 @@ public class PostoAdapter extends RecyclerView.Adapter<PostoAdapter.ViewHolder>{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DatabaseHelper.deletePosto(Posto.getKey());
+                        Toast.makeText(mContext, "Apagado com sucesso!", Toast.LENGTH_SHORT).show();
+                        ((Activity) mContext).recreate();
 
                     }
                 });
