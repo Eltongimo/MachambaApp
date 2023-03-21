@@ -57,7 +57,8 @@ public class ActivityViewDistrito extends AppCompatActivity {
                     distritos.clear();
                     for (DataSnapshot DistritosSnap : snapshot.getChildren()) {
                         String nomeDistrito = DistritosSnap.child("nome").getValue(String.class);
-                        distritos.add(new Distrito(nomeDistrito));
+                        String chave = DistritosSnap.getKey().toString();
+                        distritos.add(new Distrito(nomeDistrito, chave));
                     }
                     setAdapter();
                 }

@@ -49,7 +49,8 @@ public class ActivityViewEtnia extends AppCompatActivity {
                 etnias.clear();
                 for (DataSnapshot etniasSnap : snapshot.getChildren()) {
                     String nomeEtnias = etniasSnap.child("nome").getValue(String.class);
-                    etnias.add(new Etnia(nomeEtnias));
+                    String chave = etniasSnap.getKey().toString();
+                    etnias.add(new Etnia(nomeEtnias, chave));
                 }
                 setAdapter();
             }
