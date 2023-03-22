@@ -71,8 +71,6 @@ public class ActivityViewDistrito extends AppCompatActivity {
 
         }
         private void setAdapter(){
-
-            getDistritosFromFirebase();
             RecyclerView recyclerView = findViewById(R.id.idRecyclerviewClient);
             DistritoAdapter DistritoAdapter = new DistritoAdapter(this, distritos);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

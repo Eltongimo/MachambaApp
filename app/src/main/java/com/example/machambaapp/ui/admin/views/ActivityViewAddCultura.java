@@ -34,8 +34,6 @@ public class ActivityViewAddCultura extends AppCompatActivity {
     ImageView editar;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
     private static ArrayList<Cultura> culturas = new ArrayList<Cultura>();
-
-
     private void getComunidadesFromFirebase(){
         databaseReference.child("culturas").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

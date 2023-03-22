@@ -5,9 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 
-import com.example.machambaapp.model.UserPl;
+import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class SplashScreen extends AppCompatActivity {
 
     public static ArrayList<String> etnia = DatabaseHelper.getEtnia("etnias");
 
-    public static UserPl currentUser = new UserPl();
+    public static Cliente.UserPl currentUser = new Cliente.UserPl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

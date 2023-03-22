@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,9 @@ import com.example.machambaapp.model.datamodel.Localidade;
 import com.example.machambaapp.model.datamodel.Posto;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
+import com.example.machambaapp.model.update.UpdateLocalidade;
+import com.example.machambaapp.model.update.UpdatePosto;
+
 import java.util.ArrayList;
 public class PostoAdapter extends RecyclerView.Adapter<PostoAdapter.ViewHolder>{
     private final Context mContext;
@@ -45,6 +49,18 @@ public class PostoAdapter extends RecyclerView.Adapter<PostoAdapter.ViewHolder>{
         builder = new AlertDialog.Builder(mContext.getApplicationContext());
         holder.Posto.setText(Posto.getNome());
         holder.Localidade.setText(Posto.getLocalidade());
+
+        holder.editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, UpdatePosto.class);
+                intent.putExtra("localidade", Posto.getLocalidade());
+                intent.putExtra("posto", Posto.getNome());
+                intent.putExtra("key", Posto.getKey());
+                ((Activity) mContext).finish();
+                ((Activity) mContext).startActivity(intent);
+            }
+        });
 
         holder.apagar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,8 +114,6 @@ public class PostoAdapter extends RecyclerView.Adapter<PostoAdapter.ViewHolder>{
             Localidade = itemView.findViewById(R.id.nomeLocalidade);
             apagar = itemView.findViewById(R.id.deletarPosto);
             editar = itemView.findViewById(R.id.atualizarPosto);
-
-
             itemView.setOnClickListener(this);
         }
 

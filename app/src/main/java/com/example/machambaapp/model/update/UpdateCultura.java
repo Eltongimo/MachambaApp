@@ -37,7 +37,6 @@ public class UpdateCultura extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseHelper.updateCultura(nome.getText().toString(),key);
                 finish();
-
                 startActivity(new Intent(UpdateCultura.this, ActivityViewAddCultura.class));
             }
         });

@@ -2,6 +2,8 @@ package com.example.machambaapp.model.update;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,6 +14,8 @@ import android.widget.EditText;
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.helper.DatabaseHelper;
+import com.example.machambaapp.ui.admin.views.ActivityViewComunidade;
+import com.example.machambaapp.ui.admin.views.ActivityViewEtnia;
 
 public class UpdateComunidade extends AppCompatActivity {
 
@@ -19,7 +23,7 @@ public class UpdateComunidade extends AppCompatActivity {
     EditText nome;
 
     ArrayAdapter<String> adapterDistritos;
-    AutoCompleteTextView autoDistritos;
+    AutoCompleteTextView postoAdmnistrativo;
 
     @Override
     public void onBackPressed() {
@@ -28,6 +32,7 @@ public class UpdateComunidade extends AppCompatActivity {
         finish();
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,18 +40,23 @@ public class UpdateComunidade extends AppCompatActivity {
 
         update = (Button) findViewById(R.id.updateLocalidade);
         nome = (EditText) findViewById(R.id.nomeLocalidade);
-        autoDistritos= (AutoCompleteTextView) findViewById(R.id.distritos);
+        postoAdmnistrativo = (AutoCompleteTextView) findViewById(R.id.nomePosto);
 
         String [] distritosArray = SplashScreen.distritos.toArray(new String[SplashScreen.distritos.size()]);
 
+        nome.setText(getIntent().getStringExtra("comunidade"));
+        postoAdmnistrativo.setHint(getIntent().getStringExtra("posto"));
+
         adapterDistritos = new ArrayAdapter<>(this, R.layout.list_item_distrito, distritosArray);
-        autoDistritos.setAdapter(adapterDistritos);
+        postoAdmnistrativo.setAdapter(adapterDistritos);
+
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseHelper.addLocations(nome.getText().toString(), "localidades",autoDistritos.getText().toString(),"distrito");
+                DatabaseHelper.updateComunidade(nome.getText().toString(), postoAdmnistrativo.getText().toString(), getIntent().getStringExtra("key"));
                 finish();
+                startActivity(new Intent(UpdateComunidade.this, ActivityViewComunidade.class));
             }
         });
     }

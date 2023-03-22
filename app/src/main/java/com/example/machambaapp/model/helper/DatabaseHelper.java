@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import com.example.machambaapp.Cultura;
 import com.example.machambaapp.SplashScreen;
-import com.example.machambaapp.model.UserPl;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -32,10 +31,53 @@ public class DatabaseHelper extends AppCompatActivity{
         userRef.removeValue();
     }
 
+    public static void deleteUserPL(String key){
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("usuarios/" + key);
+        userRef.removeValue();
+    }
+
+    public static void updateUserPl(Cliente.UserPl u, String key){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("usuarios");
+        myRef.child(key).child("nome").setValue(u);
+    }
+
+    public static void updatePosto(String posto, String localidade, String key){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("postosAdministrativos");
+        myRef.child(key).child("nome").setValue(posto);
+        myRef.child(key).child("localidade").setValue(localidade);
+    }
+    public static void updateComunidade(String comunidade, String posto, String key){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("comunidades");
+        myRef.child(key).child("nome").setValue(comunidade);
+        myRef.child(key).child("postoAdministrativo").setValue(posto);
+    }
+
     public static void updateCultura(String cultura, String key){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("culturas");
         myRef.child(key).child("nome").setValue(cultura);
+    }
+
+    public static void updateLocalidade(String localidade, String distrito, String key){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("localidades");
+        myRef.child(key).child("nome").setValue(localidade);
+        myRef.child(key).child("distrito").setValue(distrito);
+
+    }
+    public static void updateEtnia(String et, String key){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("etnias");
+        myRef.child(key).child("nome").setValue(et);
+    }
+
+   public static void  updateDistrito(String distrito, String key){
+       FirebaseDatabase database = FirebaseDatabase.getInstance();
+       DatabaseReference myRef = database.getReference("distritos");
+       myRef.child(key).child("nome").setValue(distrito);
     }
 
     public static void deletePosto(String key){
@@ -123,7 +165,7 @@ public class DatabaseHelper extends AppCompatActivity{
         return e;
     }
 
-    public static void addUserPl(UserPl u){
+    public static void addUserPl(Cliente.UserPl u){
          databaseReference.child("usuarios").child(getSha()).setValue(u);
     }
 
@@ -157,38 +199,5 @@ public class DatabaseHelper extends AppCompatActivity{
         });
         myLatch.countDown();
         return culturas;
-    }
-    public static ArrayList<UserPl> getUsersPL(){
-        ArrayList<UserPl> userPls = new ArrayList<UserPl>();
-
-        CountDownLatch myLatch = new CountDownLatch(1);
-
-        databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot userPLSnapshot : snapshot.getChildren()) {
-                    String comunidade=userPLSnapshot.child("comunidade").getValue(String.class);;
-                    String nome = userPLSnapshot.child("nome").getValue(String.class);
-                    String phone=  userPLSnapshot.child("telefone").getValue(String.class);
-                    String apelido= userPLSnapshot.child("apelido").getValue(String.class);
-                    String distrito= userPLSnapshot.child("senha").getValue(String.class);
-                    String localidade= userPLSnapshot.child("localidade").getValue(String.class);;
-                    String postoAdministrativo=userPLSnapshot.child("postoAdministrativo").getValue(String.class);;
-                    String genero=userPLSnapshot.child("genero").getValue(String.class);;
-                    String senha=userPLSnapshot.child("senha").getValue(String.class);;
-
-                   userPls.add(new UserPl( nome, apelido, senha,genero,phone,  null,  distrito, localidade, postoAdministrativo,  comunidade));
-
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                myLatch.countDown();
-            }
-        });
-        myLatch.countDown();
-        return userPls;
-
     }
 }

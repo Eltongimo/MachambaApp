@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,9 @@ import com.example.machambaapp.R;
 import com.example.machambaapp.model.datamodel.Localidade;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
+import com.example.machambaapp.model.update.UpdateEtnia;
+import com.example.machambaapp.model.update.UpdateLocalidade;
+
 import java.util.ArrayList;
 
 public class LocalidadeAdapter extends RecyclerView.Adapter<LocalidadeAdapter.ViewHolder> {
@@ -47,6 +51,18 @@ public class LocalidadeAdapter extends RecyclerView.Adapter<LocalidadeAdapter.Vi
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(mContext.getApplicationContext());
         holder.Localidade.setText(Localidade.getNome());
+
+        holder.editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, UpdateLocalidade.class);
+                intent.putExtra("localidade", Localidade.getNome());
+                intent.putExtra("distrito", Localidade.getDistrito());
+                intent.putExtra("key", Localidade.getKey());
+                ((Activity) mContext).finish();
+                ((Activity) mContext).startActivity(intent);
+            }
+        });
 
         holder.apagar.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -41,7 +41,6 @@ import java.util.Calendar;
 
 public class AddUserActivity extends AppCompatActivity {
 
-
     NumberPicker numberPickerAno;
     AutoCompleteTextView etniaInput;
     ArrayAdapter<String> adapterEtnia;

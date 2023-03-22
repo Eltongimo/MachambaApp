@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,9 @@ import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
+import com.example.machambaapp.model.update.UpdateCultura;
+import com.example.machambaapp.model.update.UpdateEtnia;
+
 import java.util.ArrayList;
 
 public class EtniaAdapter extends RecyclerView.Adapter<EtniaAdapter.ViewHolder>{
@@ -45,21 +49,31 @@ public class EtniaAdapter extends RecyclerView.Adapter<EtniaAdapter.ViewHolder>{
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(mContext.getApplicationContext());
 
+        holder.editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, UpdateEtnia.class);
+                intent.putExtra("etnia", Etnia.getNome());
+                intent.putExtra("key", Etnia.getKey());
+                ((Activity) mContext).finish();
+                ((Activity) mContext).startActivity(intent);
+            }
+        });
+
         holder.apagar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("Apagar cultura");
-                builder.setMessage("Deseja mesmo apagar a cultura "+Etnia.getNome()+" ?");
+                builder.setTitle("Apagar Etnia");
+                builder.setMessage("Deseja mesmo apagar a etnia "+Etnia.getNome()+" ?");
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DatabaseHelper.deleteEtnia(Etnia.getKey());
                         Toast.makeText(mContext, "Apagado com sucesso!", Toast.LENGTH_SHORT).show();
                         ((Activity) mContext).recreate();
-
                     }
                 });
                 builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -100,8 +114,6 @@ public class EtniaAdapter extends RecyclerView.Adapter<EtniaAdapter.ViewHolder>{
             Etnia = itemView.findViewById(R.id.nomeClient);
             apagar = itemView.findViewById(R.id.deletarEtnia);
             editar = itemView.findViewById(R.id.atualizarEtnia);
-
-
             itemView.setOnClickListener(this);
         }
 

@@ -9,8 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import com.example.machambaapp.model.UserPl;
+
 import com.example.machambaapp.model.adapter.UserPlAdapter;
+import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class ActivityUserPL extends AppCompatActivity {
     Button buttonRegister;
-    private ArrayList<UserPl> userPls = new ArrayList<UserPl>();
+    private ArrayList<Cliente.UserPl> userPls = new ArrayList<Cliente.UserPl>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,8 @@ public class ActivityUserPL extends AppCompatActivity {
 
         buttonRegister =(Button) findViewById(R.id.registerClientPl);
         buttonRegister.setOnClickListener(new View.OnClickListener() {
+
+            /*Should provide a List of PL and his clients*/
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ActivityUserPL.this, ActivityUserRegister.class);
@@ -55,7 +58,7 @@ public class ActivityUserPL extends AppCompatActivity {
                     String postoAdministrativo=userPLSnapshot.child("postoAdministrativo").getValue(String.class);;
                     String genero=userPLSnapshot.child("genero").getValue(String.class);;
                     String senha=userPLSnapshot.child("senha").getValue(String.class);;
-                   userPls.add(new UserPl( nome, apelido, senha,genero,phone,  null,  distrito, localidade, postoAdministrativo,  comunidade));
+                   userPls.add(new Cliente.UserPl( nome, apelido, senha,genero,phone,  null,  distrito, localidade, postoAdministrativo,  comunidade, userPLSnapshot.getKey()));
                 }
                 setAdapter();
             }

@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.machambaapp.ActivitySelectClient;
 import com.example.machambaapp.R;
-import com.example.machambaapp.model.DataClassClient;
-import com.example.machambaapp.model.UserPl;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
 

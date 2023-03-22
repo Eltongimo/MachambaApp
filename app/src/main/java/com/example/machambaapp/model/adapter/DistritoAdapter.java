@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,9 @@ import com.example.machambaapp.model.datamodel.Distrito;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
+import com.example.machambaapp.model.update.UpdateCultura;
+import com.example.machambaapp.model.update.UpdateDistrito;
+
 import java.util.ArrayList;
 
 public class DistritoAdapter extends RecyclerView.Adapter<DistritoAdapter.ViewHolder>{
@@ -47,6 +51,17 @@ public class DistritoAdapter extends RecyclerView.Adapter<DistritoAdapter.ViewHo
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(mContext.getApplicationContext());
         holder.Distrito.setText(Distrito.getNome());
+
+        holder.editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, UpdateDistrito.class);
+                intent.putExtra("distrito", Distrito.getNome());
+                intent.putExtra("key", Distrito.getKey());
+                ((Activity) mContext).finish();
+                ((Activity) mContext).startActivity(intent);
+            }
+        });
 
         holder.apagar.setOnClickListener(new View.OnClickListener() {
             @Override

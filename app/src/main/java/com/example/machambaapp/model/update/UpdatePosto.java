@@ -2,6 +2,7 @@ package com.example.machambaapp.model.update;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.helper.DatabaseHelper;
+import com.example.machambaapp.ui.admin.views.ActivityViewLocalidade;
+import com.example.machambaapp.ui.admin.views.ActivityViewPostoAdmnistrativo;
 
 public class UpdatePosto extends AppCompatActivity {
 
@@ -43,13 +46,15 @@ public class UpdatePosto extends AppCompatActivity {
         adapterLocalidade = new ArrayAdapter<>(this, R.layout.list_item_localidade, localidadesArray);
         autoLocalidade.setAdapter(adapterLocalidade);
 
+        nome.setText(getIntent().getStringExtra("posto"));
+        autoLocalidade.setHint(getIntent().getStringExtra("localidade"));
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseHelper.addLocations(nome.getText().toString(),
-                        "postosAdministrativos",autoLocalidade.getText().toString(),"localidade");
+                DatabaseHelper.updatePosto(nome.getText().toString(), autoLocalidade.getText().toString(), getIntent().getStringExtra("key"));
                 finish();
+                startActivity(new Intent(UpdatePosto.this, ActivityViewPostoAdmnistrativo.class));
             }
         });
 
