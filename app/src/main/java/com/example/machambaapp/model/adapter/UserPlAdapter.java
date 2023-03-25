@@ -46,20 +46,16 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserPlAdapter.ViewHolder holder, int position) {
         Cliente.UserPl userPl = mUserPl.get(position);
-        holder.nomeUserPl.setText(userPl.getNome());
+        holder.nomeUserPl.setText(userPl.getNome()+" "+userPl.getApelido());
         holder.imageView.setImageURI(userPl.getUriImage());
         holder.distrito.setText(userPl.getDistrito());
-        holder.localidade.setText(userPl.getLocalidade());
-        holder.comunidade.setText(userPl.getComunidade());
-        holder.apelido.setText(userPl.getApelido());
-        holder.posto.setText(userPl.getPostoAdministrativo());
+
 
         holder.editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, UpdateUserPL.class);
                     /*Put some extra attribbutes of current user pl with intent putextra */
-
                 intent.putExtra("distrito", userPl.getDistrito());
                 intent.putExtra("posto",userPl.getPostoAdministrativo());
                 intent.putExtra("localidade",userPl.getLocalidade());
@@ -102,21 +98,6 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
             }
         });
 
-
-
-//        holder.setItemClickListener(new IItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//
-////                Fragment fragmentViewEspecies= SubEspecieFragment.newInstance("ESTO AQUI BARATA");
-////                AppCompatActivity appCompatActivity=(AppCompatActivity) view.getContext();
-////                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragmentViewEspecies).commit();
-//
-//                 Intent intent = new Intent(mContext, ActivitySelectClient.class);
-//                 intent.putExtra("fullName", userPl.getNome());
-//                 mContext.startActivity(intent);
-//            }
-//        });
     }
 
 
@@ -128,10 +109,6 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView nomeUserPl;
         private final TextView distrito;
-        private final TextView localidade;
-        private final TextView apelido;
-        private final TextView comunidade;
-        private final TextView posto;
         private final ImageView imageView;
         private IItemClickListener mItemClickListener;
 
@@ -143,10 +120,6 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
             nomeUserPl = itemView.findViewById(R.id.nomeUserPl);
             imageView=itemView.findViewById(R.id.imageClientView);
             distrito=itemView.findViewById(R.id.idDistritoPl);
-            localidade=itemView.findViewById(R.id.iDLocalidadePl);
-            apelido = itemView.findViewById(R.id.nomeApelido);
-            comunidade = itemView.findViewById(R.id.idComunidade);
-            posto = itemView.findViewById(R.id.idPosto);
             editar = itemView.findViewById(R.id.editUserPl);
             apagar = itemView.findViewById(R.id.deleteUserPl);
             itemView.setOnClickListener(this);

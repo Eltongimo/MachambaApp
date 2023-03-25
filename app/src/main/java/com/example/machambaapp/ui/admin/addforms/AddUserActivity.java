@@ -33,6 +33,9 @@ import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.datamodel.Cliente;
+import com.example.machambaapp.model.update.UpdateCultura;
+import com.example.machambaapp.ui.admin.views.ActivityUserPL;
+import com.example.machambaapp.ui.admin.views.ActivityViewAddCultura;
 import com.example.machambaapp.ui.produtorLider.ProdutorLiderFragment;
 
 import java.io.ByteArrayOutputStream;
@@ -70,8 +73,13 @@ public class AddUserActivity extends AppCompatActivity {
     CheckBox generoMasc;
     CheckBox generoFem;
     Dialog dialog;
-    ArrayAdapter<String> adapterEtnias;
+
+    ArrayAdapter<String> adapterItems;
     AutoCompleteTextView autoEtnias;
+    AutoCompleteTextView autoCompleteDistrito;
+    AutoCompleteTextView autoCompletePostoAdministrativo;
+    AutoCompleteTextView autoCompleteLocalidade;
+    AutoCompleteTextView autoCompleteComunidade;
 
     @Override
     public void onBackPressed() {
@@ -97,13 +105,33 @@ public class AddUserActivity extends AppCompatActivity {
         generoFem =  (CheckBox) findViewById(R.id.idCheckBoxfeme);
         generoMasc = (CheckBox) findViewById(R.id.idCheckBoxMale);
         autoEtnias = (AutoCompleteTextView) findViewById(R.id.etnia_select);
+        autoCompleteDistrito = (AutoCompleteTextView) findViewById(R.id.auto_distrito);
+        autoCompleteLocalidade = (AutoCompleteTextView) findViewById(R.id.auto_localidades);
+        autoCompletePostoAdministrativo = (AutoCompleteTextView) findViewById(R.id.auto_postos);
+        autoCompleteComunidade = (AutoCompleteTextView) findViewById(R.id.auto_comunidades);
 
-        String [] etnias = SplashScreen.etnia.toArray(new
-                String[SplashScreen.etnia.size()]);
+        String [] etnias = SplashScreen.etnia.toArray(new String[SplashScreen.etnia.size()]);
+        String[] itemsDistrito = SplashScreen.distritos.toArray(new String[SplashScreen.distritos.size()]);
+        String[] itemsPostoAdministrativo = SplashScreen.postosAdministrativos.toArray(new String[SplashScreen.postosAdministrativos.size()]);
+        String [] itemsLocalidade = SplashScreen.localiadades.toArray(new String[SplashScreen.localiadades.size()]);
+        String [] itemsComunidade = SplashScreen.comunidades.toArray(new String[SplashScreen.comunidades.size()]);
 
-        adapterEtnias = new ArrayAdapter<>(this, R.layout.list_item_etnia, etnias);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_distrito, itemsDistrito);
+        autoCompleteDistrito.setAdapter(adapterItems);
 
-        autoEtnias.setAdapter(adapterEtnias);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_localidade, itemsLocalidade);
+        autoCompleteLocalidade.setAdapter(adapterItems);
+
+        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_posto_administrativo, itemsPostoAdministrativo);
+        autoCompletePostoAdministrativo.setAdapter(adapterItems);
+
+        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_comunidade, itemsComunidade);
+        autoCompleteComunidade.setAdapter(adapterItems);
+
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item_etnia, etnias);
+        autoEtnias.setAdapter(adapterItems);
+
+
 
         generoMasc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,12 +161,9 @@ public class AddUserActivity extends AppCompatActivity {
                 String et = autoEtnias.getText().toString();
 
                 Cliente cliente = new Cliente(nome,apelido,phone, new String(numberPickerAno.getValue()+""),  gen, et);
-
                 DatabaseHelper.addClientes(cliente);
-
-                Toast.makeText(AddUserActivity.this, "", Toast.LENGTH_SHORT).show();
                 finish();
-           //     startActivity(new Intent(getBaseContext(), ProdutorLiderFragment.class));
+                startActivity(new Intent(AddUserActivity.this, ActivityUserPL.class));
             }
         });
 

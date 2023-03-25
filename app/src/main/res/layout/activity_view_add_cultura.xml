@@ -33,7 +33,7 @@
         android:background="@drawable/button_sape"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:id="@+id/idSearch"
+        android:id="@+id/searchCultura"
         android:layout_below="@id/menuBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/idViewCulturaR"
-        android:layout_below="@id/idSearch"
+        android:layout_below="@id/searchCultura"
         android:layout_marginTop="10dp"
         android:scrollbars="vertical"
         android:layout_width="match_parent"

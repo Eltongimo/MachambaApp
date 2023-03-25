@@ -41,6 +41,7 @@ public class UpdateLocalidade extends AppCompatActivity {
 
         String [] distritosArray = SplashScreen.distritos.toArray(new String[SplashScreen.distritos.size()]);
 
+
         adapterDistritos = new ArrayAdapter<>(this, R.layout.list_item_distrito, distritosArray);
         autoDistritos.setAdapter(adapterDistritos);
 

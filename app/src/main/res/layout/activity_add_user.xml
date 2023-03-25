@@ -216,6 +216,99 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textinputlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:hint="@string/select_distrito"
+                app:boxCornerRadiusBottomEnd="23dp"
+                app:boxCornerRadiusBottomStart="23dp"
+                app:boxCornerRadiusTopEnd="23dp"
+                app:boxCornerRadiusTopStart="23dp"
+                app:boxStrokeColor="@color/cor_of_botton"
+                app:hintTextColor="@color/cor_of_botton">
+
+                <AutoCompleteTextView
+                    android:id="@+id/auto_distrito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsregular"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/textinputlayout_3"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:hint="@string/select_localidade"
+                app:boxCornerRadiusBottomEnd="23dp"
+                app:boxCornerRadiusBottomStart="23dp"
+                app:boxCornerRadiusTopEnd="23dp"
+                app:boxCornerRadiusTopStart="23dp"
+                app:boxStrokeColor="@color/cor_of_botton"
+                app:hintTextColor="@color/cor_of_botton">
+
+                <AutoCompleteTextView
+                    android:id="@+id/auto_localidades"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsregular"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/textinputlayout_2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:hint="@string/select_posto_administrativo"
+                app:boxCornerRadiusBottomEnd="23dp"
+                app:boxCornerRadiusBottomStart="23dp"
+                app:boxCornerRadiusTopEnd="23dp"
+                app:boxCornerRadiusTopStart="23dp"
+                app:boxStrokeColor="@color/teal_200"
+                app:hintTextColor="@color/teal_200">
+
+                <AutoCompleteTextView
+                    android:id="@+id/auto_postos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsregular"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/textinputlayout_4"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:hint="@string/select_comunidade"
+                app:boxCornerRadiusBottomEnd="23dp"
+                app:boxCornerRadiusBottomStart="23dp"
+                app:boxCornerRadiusTopEnd="23dp"
+                app:boxCornerRadiusTopStart="23dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/auto_comunidades"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsregular"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textinputlayoutEtnia"
@@ -237,7 +330,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppinsregular"
                     android:inputType="none" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
 

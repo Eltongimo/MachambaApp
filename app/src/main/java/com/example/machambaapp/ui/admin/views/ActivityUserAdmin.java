@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.machambaapp.ActivityUserPL;
 import com.example.machambaapp.R;
 
 public class ActivityUserAdmin extends AppCompatActivity {

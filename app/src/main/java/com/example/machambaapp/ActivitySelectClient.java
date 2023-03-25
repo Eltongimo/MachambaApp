@@ -26,7 +26,7 @@ public class ActivitySelectClient extends AppCompatActivity {
     RecyclerView recyclerView ;
     EditText editName;
     ImageView imageFaceUser;
-    TextView distrito, localidade, posto, comunidade;
+    TextView distrito;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
 
     ArrayList<Cliente> clients = new ArrayList<>();
@@ -71,9 +71,7 @@ public class ActivitySelectClient extends AppCompatActivity {
         recyclerView = findViewById(R.id.idRecyclerviewClients2);
 
         distrito = (TextView) findViewById(R.id.nomeDistrito);
-        localidade =  (TextView) findViewById(R.id.nomeLocalidade);
-        posto =  (TextView) findViewById(R.id.nomePosto);
-        comunidade = (TextView) findViewById(R.id.nomeComunidade);
+
 
   }
 

@@ -41,17 +41,6 @@
             android:layout_marginStart="10dp"
             />
 
-        <TextView
-            android:id="@+id/nomeApelido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="79dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="30dp"
-            android:layout_toEndOf="@id/idCard"
-            android:fontFamily="@font/poppinsregular"
-            android:text="Apelido"
-            android:textSize="18dp" />
 
         <LinearLayout
 
@@ -68,27 +57,7 @@
                 android:text="Distrito"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <TextView
-                android:fontFamily="@font/poppinsmedium"
-                android:id="@+id/iDLocalidadePl"
-                android:layout_marginStart="10dp"
-                android:text="Localidade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:fontFamily="@font/poppinsmedium"
-                android:id="@+id/idPosto"
-                android:layout_marginStart="10dp"
-                android:text="Posto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:fontFamily="@font/poppinsmedium"
-                android:id="@+id/idComunidade"
-                android:layout_marginStart="10dp"
-                android:text="Comunidade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+
 
         </LinearLayout>
 

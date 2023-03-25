@@ -35,14 +35,14 @@ import java.io.ByteArrayOutputStream;
 public class ActivityUserRegister extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
-
     Button addUser;
     String[] itemsDistrito = SplashScreen.distritos.toArray(new String[SplashScreen.distritos.size()]);
     String[] itemsPostoAdministrativo = SplashScreen.postosAdministrativos.toArray(new String[SplashScreen.postosAdministrativos.size()]);
-    String [] itemsLocalidade = SplashScreen.localiadades.toArray(new String[SplashScreen.localiadades.size()]);;
-    String [] itemsComunidade = SplashScreen.comunidades.toArray(new String[SplashScreen.comunidades.size()]);;
-    AutoCompleteTextView autoCompleteDistrito;
+    String [] itemsLocalidade = SplashScreen.localiadades.toArray(new String[SplashScreen.localiadades.size()]);
+    String [] itemsComunidade = SplashScreen.comunidades.toArray(new String[SplashScreen.comunidades.size()]);
+
     Dialog dialog;
+    AutoCompleteTextView autoCompleteDistrito;
     AutoCompleteTextView autoCompletePostoAdministrativo;
     AutoCompleteTextView autoCompleteLocalidade;
     AutoCompleteTextView autoCompleteComunidade;
@@ -103,7 +103,6 @@ public class ActivityUserRegister extends AppCompatActivity {
 
                  DatabaseHelper.addUserPl(u);
                  finish();
-
              }
         });
 

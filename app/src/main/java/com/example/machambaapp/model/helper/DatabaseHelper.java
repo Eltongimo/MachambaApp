@@ -5,6 +5,11 @@ import androidx.annotation.NonNull;
 import com.example.machambaapp.Cultura;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Cliente;
+import com.example.machambaapp.model.datamodel.Comunidade;
+import com.example.machambaapp.model.datamodel.Distrito;
+import com.example.machambaapp.model.datamodel.Etnia;
+import com.example.machambaapp.model.datamodel.Localidade;
+import com.example.machambaapp.model.datamodel.Posto;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -14,8 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseError;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
@@ -26,9 +35,279 @@ public class DatabaseHelper extends AppCompatActivity{
         return UUID.randomUUID().toString();
     }
 
+    private static CountDownLatch counter = new CountDownLatch(1);
+    public static ArrayList<Cliente.UserPl> getUsers(){
+
+        final CountDownLatch latch = new CountDownLatch(2);
+
+        ArrayList<Cliente.UserPl> users = new ArrayList<>();
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot userPLSnapshot : dataSnapshot.getChildren()) {
+                    String comunidade=userPLSnapshot.child("comunidade").getValue(String.class);;
+                    String nome = userPLSnapshot.child("nome").getValue(String.class);
+                    String phone=  userPLSnapshot.child("phone").getValue(String.class);
+                    String apelido= userPLSnapshot.child("apelido").getValue(String.class);
+                    String distrito= userPLSnapshot.child("distrito").getValue(String.class);
+                    String localidade= userPLSnapshot.child("localidade").getValue(String.class);;
+                    String postoAdministrativo=userPLSnapshot.child("postoAdministrativo").getValue(String.class);;
+                    String genero=userPLSnapshot.child("genero").getValue(String.class);;
+                    String senha=userPLSnapshot.child("senha").getValue(String.class);;
+                    users.add(new Cliente.UserPl( nome, apelido, senha,genero,phone,  null,  distrito, localidade, postoAdministrativo,  comunidade, userPLSnapshot.getKey()));
+                }
+                latch.countDown();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                latch.countDown();
+            }
+        });
+        System.out.println("Returning");
+        return users;
+    }
+    public static ArrayList<Posto>getPostosAdministrativos(String query){
+        ArrayList<Posto> postos = new ArrayList<>();
+        databaseReference.child("postosAdministrativos").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postosAdministrativosSnap : snapshot.getChildren()) {
+
+                    String nomePostosAdministrativos = postosAdministrativosSnap.child("nome").getValue(String.class);
+                    String nomeLocalidade = postosAdministrativosSnap.child("localidade").getValue(String.class);
+
+                    if (nomeLocalidade.toLowerCase().contains(query.toLowerCase()) || nomePostosAdministrativos.toLowerCase().contains(query.toLowerCase())){
+                        String chave = postosAdministrativosSnap.getKey().toString();
+                        postos.add(new Posto(nomePostosAdministrativos, nomeLocalidade, chave));
+                    }
+
+                }
+                Collections.sort(postos, new Comparator<Posto>() {
+                    @Override
+                    public int compare(Posto u1, Posto u2) {
+                        return u1.getNome().compareTo(u2.getNome());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return postos;
+    }
     public static void deleteCultura(String key){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("culturas/" + key);
         userRef.removeValue();
+    }
+
+    public static ArrayList<Comunidade> getComunidades(String query){
+        ArrayList<Comunidade> comunidades = new ArrayList<>();
+
+        databaseReference.child("comunidades").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                comunidades.clear();
+                for (DataSnapshot comunidadesSnap : snapshot.getChildren()) {
+                    String nomecomunidades = comunidadesSnap.child("nome").getValue(String.class);
+                    String nomePosto = comunidadesSnap.child("postoAdministrativo").getValue(String.class);
+                    if (nomecomunidades.toLowerCase().contains(query.toLowerCase()) || nomePosto.toLowerCase().contains(query.toLowerCase())){
+                        String chave = comunidadesSnap.getKey().toString();
+                        comunidades.add(new Comunidade(nomecomunidades, nomePosto, chave));
+                    }
+                }
+                Collections.sort(comunidades, new Comparator<Comunidade>() {
+                    @Override
+                    public int compare(Comunidade u1, Comunidade u2) {
+                        return u1.getNome().compareTo(u2.getNome());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return comunidades;
+    }
+
+    public static ArrayList<Localidade> getLocalidades(String query){
+        ArrayList<Localidade> localidades = new ArrayList<Localidade>();
+
+        databaseReference.child("localidades").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                localidades.clear();
+                for (DataSnapshot localidadesSnap : snapshot.getChildren()) {
+
+                    String nomeLocalidades = localidadesSnap.child("nome").getValue(String.class);
+                    String nomeDistrito = localidadesSnap.child("distrito").getValue(String.class);
+
+                    if (nomeLocalidades.toLowerCase().contains(query.toLowerCase()) || nomeDistrito.toLowerCase().contains(query.toLowerCase())){
+                        String chave = localidadesSnap.getKey().toString();
+                        localidades.add(new Localidade(nomeLocalidades, nomeDistrito, chave));
+                    }
+                }
+                Collections.sort(localidades, new Comparator<Localidade>() {
+                    @Override
+                    public int compare(Localidade u1, Localidade u2) {
+                        return u1.getNome().compareTo(u2.getNome());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return localidades;
+    }
+    public static ArrayList<Etnia> getEtnias(String query){
+        ArrayList<Etnia> etnias = new ArrayList<>();
+
+        databaseReference.child("etnias").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot etniasSnap : snapshot.getChildren()) {
+                    String nomeEtnias = etniasSnap.child("nome").getValue(String.class);
+
+                    if (nomeEtnias.toLowerCase().contains(query.toLowerCase())){
+                        String chave = etniasSnap.getKey().toString();
+                        etnias.add(new Etnia(nomeEtnias, chave));
+                    }
+                }
+                Collections.sort(etnias, new Comparator<Etnia>() {
+                    @Override
+                    public int compare(Etnia u1, Etnia u2) {
+                        return u1.getNome().compareTo(u2.getNome());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        return etnias;
+    }
+
+    public static ArrayList<Distrito> getDistritos(String query){
+        ArrayList<Distrito> distritos = new ArrayList<>();
+
+        databaseReference.child("distritos").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                distritos.clear();
+                for (DataSnapshot DistritosSnap : snapshot.getChildren()) {
+                    String nomeDistrito = DistritosSnap.child("nome").getValue(String.class);
+
+                    if (nomeDistrito.toLowerCase().contains(query.toLowerCase())){
+                        String chave = DistritosSnap.getKey().toString();
+                        distritos.add(new Distrito(nomeDistrito, chave));
+                    }
+                }
+                Collections.sort(distritos, new Comparator<Distrito>() {
+                    @Override
+                    public int compare(Distrito u1, Distrito u2) {
+                        return u1.getNome().compareTo(u2.getNome());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return distritos;
+    }
+    public static ArrayList<Cultura> getCulturas(String query){
+        ArrayList<Cultura> c = new ArrayList<>();
+        databaseReference.child("culturas").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot comunidadesSnap : snapshot.getChildren()) {
+
+                    String cultura = comunidadesSnap.child("nome").getValue(String.class);
+
+                    if (cultura.toLowerCase().contains(query.toLowerCase())){
+                        String chave = comunidadesSnap.getKey().toString();
+                        c.add(new Cultura(cultura, chave));
+                    }
+                 }
+                Collections.sort(c, new Comparator<Cultura>() {
+                    @Override
+                    public int compare(Cultura c1, Cultura c2) {
+                        return c1.getCultura().compareTo(c2.getCultura());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return c;
+    }
+    public static ArrayList<Cliente.UserPl> getUsers(String query){
+        ArrayList<Cliente.UserPl> users = new ArrayList<>();
+
+
+        DatabaseHelper.databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                users.clear();
+                for (DataSnapshot userPLSnapshot : snapshot.getChildren()) {
+
+                    String nome = userPLSnapshot.child("nome").getValue(String.class);
+                    String apelido= userPLSnapshot.child("apelido").getValue(String.class);
+
+                    if ( nome.toLowerCase().contains(query.toLowerCase()) || apelido.toLowerCase().contains(query.toLowerCase()) ) {
+
+                        String comunidade = userPLSnapshot.child("comunidade").getValue(String.class);
+                        ;
+                        String phone = userPLSnapshot.child("phone").getValue(String.class);
+                        String distrito = userPLSnapshot.child("distrito").getValue(String.class);
+                        String localidade = userPLSnapshot.child("localidade").getValue(String.class);
+                        ;
+                        String postoAdministrativo = userPLSnapshot.child("postoAdministrativo").getValue(String.class);
+                        ;
+                        String genero = userPLSnapshot.child("genero").getValue(String.class);
+                        ;
+                        String senha = userPLSnapshot.child("senha").getValue(String.class);
+                        ;
+                        users.add(new Cliente.UserPl(nome, apelido, senha, genero, phone, null, distrito, localidade, postoAdministrativo, comunidade, userPLSnapshot.getKey()));
+                    }
+                }
+                Collections.sort(users, new Comparator<Cliente.UserPl>() {
+                    @Override
+                    public int compare(Cliente.UserPl u1, Cliente.UserPl u2) {
+                        return u1.getNome().compareTo(u2.getNome());
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return users;
     }
 
     public static void deleteUserPL(String key){
@@ -39,7 +318,7 @@ public class DatabaseHelper extends AppCompatActivity{
     public static void updateUserPl(Cliente.UserPl u, String key){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("usuarios");
-        myRef.child(key).child("nome").setValue(u);
+        myRef.child(key).setValue(u);
     }
 
     public static void updatePosto(String posto, String localidade, String key){
@@ -133,10 +412,10 @@ public class DatabaseHelper extends AppCompatActivity{
     public static ArrayList<String> getLocation(String pathName){
 
         ArrayList<String> s = new ArrayList<String>();
-
         databaseReference.child(pathName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                s.clear();
                 for (DataSnapshot userPLSnapshot : snapshot.getChildren()) {
                     s.add(userPLSnapshot.child("nome").getValue(String.class));
                 }

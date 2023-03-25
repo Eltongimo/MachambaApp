@@ -22,6 +22,20 @@ public class SplashScreen extends AppCompatActivity {
 
     public static Cliente.UserPl currentUser = new Cliente.UserPl();
 
+
+    public static void UpdateDataFromOnlineDatabase(){
+        try{
+            etnia = DatabaseHelper.getEtnia("etnias");
+            comunidades = DatabaseHelper.getLocation("comunidades");
+            localiadades = DatabaseHelper.getLocation("localidades");
+            postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
+            distritos = DatabaseHelper.getLocation("distritos");
+            Thread.sleep(5000);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +44,6 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
                 finish();
             }

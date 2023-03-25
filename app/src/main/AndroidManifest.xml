@@ -75,7 +75,7 @@
             android:name=".ui.admin.views.ActivityCulturaAdmin"
             android:exported="false" />
         <activity
-            android:name=".ActivityUserPL"
+            android:name=".ui.admin.views.ActivityUserPL"
             android:exported="false" />
         <activity
             android:name=".ui.admin.views.ActivityUserAdmin"

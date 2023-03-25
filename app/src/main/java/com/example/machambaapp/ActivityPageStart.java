@@ -20,9 +20,6 @@ public class ActivityPageStart extends AppCompatActivity {
 
         buttonStart =(Button) findViewById(R.id.button_start);
 
-
-
-
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -30,7 +27,5 @@ public class ActivityPageStart extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 }

@@ -1,9 +1,13 @@
 package com.example.machambaapp;
-
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.machambaapp.model.Privilegios;
 import com.example.machambaapp.ui.clientes.ClientesFragment;
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         Toolbar toolbar=(Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         drawer =(DrawerLayout) findViewById(R.id.drawer_layout);
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navegation_drawer_open,R.string.navegation_drawer_close);
 
         drawer.addDrawerListener(toggle);
+
         toggle.syncState();
 
         if(savedInstanceState== null) {
@@ -130,5 +136,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    public void exit(MenuItem item) {
+        try {
+            Toast.makeText(this, "Saindo da Aplicação", Toast.LENGTH_SHORT);
+            finish();
 
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

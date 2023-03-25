@@ -15,18 +15,15 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.machambaapp.ui.admin.views.ActivityUserPL;
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
-import com.example.machambaapp.ui.admin.views.ActivityUserAdmin;
-import com.example.machambaapp.ui.admin.views.ActivityViewPostoAdmnistrativo;
 
 public class UpdateUserPL extends AppCompatActivity {
 
     Button update;
-
-
     String[] itemsDistrito = SplashScreen.distritos.toArray(new String[SplashScreen.distritos.size()]);
     String[] itemsPostoAdministrativo = SplashScreen.postosAdministrativos.toArray(new String[SplashScreen.postosAdministrativos.size()]);
     String [] itemsLocalidade = SplashScreen.localiadades.toArray(new String[SplashScreen.localiadades.size()]);;
@@ -36,7 +33,10 @@ public class UpdateUserPL extends AppCompatActivity {
     AutoCompleteTextView autoCompletePostoAdministrativo;
     AutoCompleteTextView autoCompleteLocalidade;
     AutoCompleteTextView autoCompleteComunidade;
-    ArrayAdapter<String> adapterItems;
+    ArrayAdapter<String> adapterDistrito;
+    ArrayAdapter<String> adapterLocalidade;
+    ArrayAdapter<String> adapterComunidade;
+    ArrayAdapter<String> adapterPosto;
     EditText editTextNome;
     EditText editSenha;
     EditText editPhone;
@@ -73,23 +73,28 @@ public class UpdateUserPL extends AppCompatActivity {
         setContentView(R.layout.activity_update_userpl);
 
         update = (Button) findViewById(R.id.updateUserPL);
-        autoCompleteDistrito = (AutoCompleteTextView) findViewById(R.id.distritoPL);
-        autoCompletePostoAdministrativo = (AutoCompleteTextView) findViewById(R.id.postoadmnistrativoPL);
-        autoCompleteLocalidade = (AutoCompleteTextView) findViewById(R.id.localidadePl);
-        autoCompleteComunidade = (AutoCompleteTextView) findViewById(R.id.comunidadePL);
         editTextNome = (EditText) findViewById(R.id.nomePl) ;
         editSenha = (EditText) findViewById(R.id.passwordPl);
         editPhone = (EditText) findViewById(R.id.phonePl);
         editTextApelido = (EditText) findViewById(R.id.apelidoPl);
 
-        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_distrito, itemsDistrito);
-        autoCompleteDistrito.setAdapter(adapterItems);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_posto_administrativo, itemsPostoAdministrativo);
-        autoCompletePostoAdministrativo.setAdapter(adapterItems);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_localidade, itemsLocalidade);
-        autoCompleteLocalidade.setAdapter(adapterItems);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_comunidade, itemsComunidade);
-        autoCompleteComunidade.setAdapter(adapterItems);
+        autoCompleteDistrito = (AutoCompleteTextView) findViewById(R.id.distritoPL);
+        autoCompletePostoAdministrativo = (AutoCompleteTextView) findViewById(R.id.postoadmnistrativoPL);
+        autoCompleteLocalidade = (AutoCompleteTextView) findViewById(R.id.localidadePl);
+        autoCompleteComunidade = (AutoCompleteTextView) findViewById(R.id.comunidadePL);
+
+
+        adapterDistrito = new ArrayAdapter<String>(this, R.layout.list_item_distrito, itemsDistrito);
+        autoCompleteDistrito.setAdapter(adapterDistrito);
+
+        adapterPosto = new ArrayAdapter<String>(this, R.layout.list_item_posto_administrativo, itemsPostoAdministrativo);
+        autoCompletePostoAdministrativo.setAdapter(adapterPosto);
+
+        adapterLocalidade = new ArrayAdapter<String>(this, R.layout.list_item_localidade, itemsLocalidade);
+        autoCompleteLocalidade.setAdapter(adapterLocalidade);
+
+        adapterComunidade = new ArrayAdapter<String>(this, R.layout.list_item_comunidade, itemsComunidade);
+        autoCompleteComunidade.setAdapter(adapterComunidade);
 
         setAttributesFomPutExtra();
 
@@ -108,10 +113,9 @@ public class UpdateUserPL extends AppCompatActivity {
                                                         autoCompleteComunidade.getText().toString(),
                                                         getIntent().getStringExtra("key")), getIntent().getStringExtra("key"));
                 finish();
-                startActivity(new Intent(UpdateUserPL.this, ActivityUserAdmin.class));
+                startActivity(new Intent(UpdateUserPL.this, ActivityUserPL.class));
             }
         });
-
 
     }
 }
