@@ -37,10 +37,15 @@ import com.example.machambaapp.model.update.UpdateCultura;
 import com.example.machambaapp.ui.admin.views.ActivityUserPL;
 import com.example.machambaapp.ui.admin.views.ActivityViewAddCultura;
 import com.example.machambaapp.ui.produtorLider.ProdutorLiderFragment;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class AddUserActivity extends AppCompatActivity {
 
@@ -54,7 +59,6 @@ public class AddUserActivity extends AppCompatActivity {
     static Uri urlImageGaleria;
     static Uri urlImageCamera;
     static Uri urlImageCaptureFace;
-
     Button buttonRegisterUser;
     Button ok;
     Button cancel;
@@ -73,6 +77,9 @@ public class AddUserActivity extends AppCompatActivity {
     CheckBox generoMasc;
     CheckBox generoFem;
     Dialog dialog;
+
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
 
     ArrayAdapter<String> adapterItems;
     AutoCompleteTextView autoEtnias;
@@ -97,6 +104,8 @@ public class AddUserActivity extends AppCompatActivity {
         getIdView();
         Calendar c=Calendar.getInstance();
 
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
         editTextPhone=(EditText) findViewById(R.id.idPhoneUser);
         editTextNome = (EditText) findViewById(R.id.idFullNameClient);
         editTextApelido = (EditText) findViewById(R.id.idApelidoCli);
@@ -130,8 +139,6 @@ public class AddUserActivity extends AppCompatActivity {
 
         adapterItems = new ArrayAdapter<>(this, R.layout.list_item_etnia, etnias);
         autoEtnias.setAdapter(adapterItems);
-
-
 
         generoMasc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -304,8 +311,6 @@ public class AddUserActivity extends AppCompatActivity {
                     }
                 });
                 dialog.show();
-
-
             }
         });
 

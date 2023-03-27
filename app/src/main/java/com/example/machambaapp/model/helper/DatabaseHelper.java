@@ -444,8 +444,10 @@ public class DatabaseHelper extends AppCompatActivity{
         return e;
     }
 
-    public static void addUserPl(Cliente.UserPl u){
-         databaseReference.child("usuarios").child(getSha()).setValue(u);
+    public static String addUserPl(Cliente.UserPl u){
+         String key = getSha();
+         databaseReference.child("usuarios").child(key).setValue(u);
+         return key;
     }
 
     public static void  addClientes(Cliente c){

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.machambaapp.ActivitySelectClient;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.datamodel.Cliente;
@@ -22,7 +24,15 @@ import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
 import com.example.machambaapp.model.update.UpdateEtnia;
 import com.example.machambaapp.model.update.UpdateUserPL;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 
 public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder>{
@@ -35,7 +45,6 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
         mUserPl = userPls;
     }
 
-
     @NonNull
     @Override
     public UserPlAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
@@ -45,58 +54,74 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserPlAdapter.ViewHolder holder, int position) {
-        Cliente.UserPl userPl = mUserPl.get(position);
-        holder.nomeUserPl.setText(userPl.getNome()+" "+userPl.getApelido());
-        holder.imageView.setImageURI(userPl.getUriImage());
-        holder.distrito.setText(userPl.getDistrito());
+        try{
+            Cliente.UserPl userPl = mUserPl.get(position);
+            holder.nomeUserPl.setText(userPl.getNome()+" "+userPl.getApelido());
+            holder.imgPerfil.setImageURI(userPl.getUriImage());
+            holder.distrito.setText(userPl.getDistrito());
 
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference().child("imagens/"+userPl.getApelido()+"-"+userPl.getApelido());
 
-        holder.editar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, UpdateUserPL.class);
+            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(mContext)
+                            .load(uri)
+                            .into(holder.imgPerfil);
+                }
+            });
+
+            holder.editar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, UpdateUserPL.class);
                     /*Put some extra attribbutes of current user pl with intent putextra */
-                intent.putExtra("distrito", userPl.getDistrito());
-                intent.putExtra("posto",userPl.getPostoAdministrativo());
-                intent.putExtra("localidade",userPl.getLocalidade());
-                intent.putExtra("comunidade", userPl.getComunidade());
-                intent.putExtra("nome",userPl.getNome());
-                intent.putExtra("senha", userPl.getSenha());
-                intent.putExtra("phone",userPl.getPhone());
-                intent.putExtra("apelido", userPl.getApelido());
-                intent.putExtra("key", userPl.getKey());
+                    intent.putExtra("distrito", userPl.getDistrito());
+                    intent.putExtra("posto",userPl.getPostoAdministrativo());
+                    intent.putExtra("localidade",userPl.getLocalidade());
+                    intent.putExtra("comunidade", userPl.getComunidade());
+                    intent.putExtra("nome",userPl.getNome());
+                    intent.putExtra("senha", userPl.getSenha());
+                    intent.putExtra("phone",userPl.getPhone());
+                    intent.putExtra("apelido", userPl.getApelido());
+                    intent.putExtra("key", userPl.getKey());
 
-                ((Activity) mContext).finish();
-                ((Activity) mContext).startActivity(intent);
+                    ((Activity) mContext).finish();
+                    ((Activity) mContext).startActivity(intent);
 
-            }
-        });
+                }
+            });
 
-        holder.apagar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("Apagar Usuario PL");
-                builder.setMessage("Deseja mesmo apagar a o usuario "+ userPl.getNome()+" ?");
-                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        DatabaseHelper.deleteUserPL(userPl.getKey());
-                        Toast.makeText(mContext, "Apagado com sucesso!", Toast.LENGTH_SHORT).show();
-                        ((Activity) mContext).recreate();
-                    }
-                });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+            holder.apagar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("Apagar Usuario PL");
+                    builder.setMessage("Deseja mesmo apagar a o usuario "+ userPl.getNome()+" ?");
+                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DatabaseHelper.deleteUserPL(userPl.getKey());
+                            Toast.makeText(mContext, "Apagado com sucesso!", Toast.LENGTH_SHORT).show();
+                            ((Activity) mContext).recreate();
+                        }
+                    });
+                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
-            }
-        });
+                }
+            });
+
+        }catch (Exception e ){
+
+        }
 
     }
 
@@ -110,6 +135,7 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
         private final TextView nomeUserPl;
         private final TextView distrito;
         private final ImageView imageView;
+        private final ShapeableImageView imgPerfil;
         private IItemClickListener mItemClickListener;
 
         ImageView editar;
@@ -122,6 +148,7 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
             distrito=itemView.findViewById(R.id.idDistritoPl);
             editar = itemView.findViewById(R.id.editUserPl);
             apagar = itemView.findViewById(R.id.deleteUserPl);
+            imgPerfil = itemView.findViewById(R.id.imageClientView);
             itemView.setOnClickListener(this);
         }
 
