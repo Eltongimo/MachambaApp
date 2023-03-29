@@ -17,9 +17,6 @@
         android:theme="@style/Theme.MachambaApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.admin.TesteCarregarFoto"
-            android:exported="false" />
-        <activity
             android:name=".model.update.UpdatePosto"
             android:exported="false" />
         <activity

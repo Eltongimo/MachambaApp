@@ -3,14 +3,65 @@ package com.example.machambaapp.model.datamodel;
 import android.net.Uri;
 
 public class Cliente {
-    private String nome, apelido, numero, ano, etnia, genero;
-    public Cliente(String nome, String apelido, String numero, String ano, String genero,String etnia) {
+    private String nome, apelido, numero, ano, etnia, genero, key;
+    private String distrito, localidade, comunidade,posto;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
+    }
+
+    public String getLocalidade() {
+        return localidade;
+    }
+
+    public void setLocalidade(String localidade) {
+        this.localidade = localidade;
+    }
+
+    public String getComunidade() {
+        return comunidade;
+    }
+
+    public void setComunidade(String comunidade) {
+        this.comunidade = comunidade;
+    }
+
+    public String getPosto() {
+        return posto;
+    }
+
+    public void setPosto(String posto) {
+        this.posto = posto;
+    }
+
+    public Cliente(String nome, String apelido,
+                   String numero, String ano,
+                   String genero, String etnia,
+                   String distrito, String localidade,
+                   String comunidade, String posto
+    ) {
         this.nome = nome;
         this.apelido = apelido;
         this.numero = numero;
         this.ano = ano;
         this.etnia = etnia;
         this.genero = genero;
+        this.distrito = distrito;
+        this.localidade = localidade;
+        this.comunidade = comunidade;
+        this.posto = posto;
     }
 
     public String getGenero() {
@@ -57,14 +108,24 @@ public class Cliente {
         return etnia;
     }
 
+
     public void setEtnia(String etnia) {
         this.etnia = etnia;
     }
 
     public static class UserPl {
-        private Uri uriImage;
+        private String image;
         private String genero;
         private String distrito;
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
         private String localidade;
         private String postoAdministrativo;
         private String comunidade;
@@ -83,9 +144,8 @@ public class Cliente {
         }
 
         private String key;
-        public UserPl(String nome,String apelido, String senha,String genero,String phone, Uri uriImage, String distrito,String localidade,String postoAdministrativo, String comunidade, String key) {
+        public UserPl(String nome,String apelido, String senha,String genero,String phone, String distrito,String localidade,String postoAdministrativo, String comunidade, String key,String image) {
             this.nome = nome;
-            this.uriImage=uriImage;
             this.phone=phone;
             this.apelido=apelido;
             this.distrito=distrito;
@@ -95,6 +155,7 @@ public class Cliente {
             this.genero=genero;
             this.senha = senha;
             this.key = key;
+            this.image = image;
         }
 
         public String getSenha() {
@@ -159,14 +220,6 @@ public class Cliente {
 
         public void setApelido(String apelido) {
             this.apelido = apelido;
-        }
-
-        public Uri getUriImage() {
-            return uriImage;
-        }
-
-        public void setUriImage(Uri uriImage) {
-            this.uriImage = uriImage;
         }
 
         public UserPl() {}

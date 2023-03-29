@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -29,6 +30,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.machambaapp.ActivitySelectClient;
+import com.example.machambaapp.ActivityUserRegister;
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.helper.DatabaseHelper;
@@ -37,6 +40,8 @@ import com.example.machambaapp.model.update.UpdateCultura;
 import com.example.machambaapp.ui.admin.views.ActivityUserPL;
 import com.example.machambaapp.ui.admin.views.ActivityViewAddCultura;
 import com.example.machambaapp.ui.produtorLider.ProdutorLiderFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -77,10 +82,9 @@ public class AddUserActivity extends AppCompatActivity {
     CheckBox generoMasc;
     CheckBox generoFem;
     Dialog dialog;
-
+    static Uri urlImage;
     private FirebaseStorage storage;
     private StorageReference storageRef;
-
     ArrayAdapter<String> adapterItems;
     AutoCompleteTextView autoEtnias;
     AutoCompleteTextView autoCompleteDistrito;
@@ -161,19 +165,22 @@ public class AddUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String gen = generoFem.isChecked() ? "Feminino" : "Masculino";
-
                 String nome = editTextNome.getText().toString();
                 String apelido = editTextApelido.getText().toString();
                 String phone = editTextPhone.getText().toString();
                 String et = autoEtnias.getText().toString();
-
-                Cliente cliente = new Cliente(nome,apelido,phone, new String(numberPickerAno.getValue()+""),  gen, et);
+                String distrito = autoCompleteDistrito.getText().toString();
+                String comunidade = autoCompleteComunidade.getText().toString();
+                String localidade = autoCompleteLocalidade.getText().toString();
+                String posto = autoCompletePostoAdministrativo.getText().toString();
+                Cliente cliente = new Cliente(nome,apelido,phone,
+                        new String(numberPickerAno.getValue()+""),
+                        gen, et,distrito,localidade, posto,comunidade );
                 DatabaseHelper.addClientes(cliente);
                 finish();
-                startActivity(new Intent(AddUserActivity.this, ActivityUserPL.class));
+                startActivity(new Intent(AddUserActivity.this, ActivitySelectClient.class));
             }
         });
-
 
         ActivityResultLauncher<Intent> activityResultLauncherImageUsers = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -185,7 +192,6 @@ public class AddUserActivity extends AppCompatActivity {
                              Intent data=result.getData();
                              urlImageGaleria =data.getData();
                              imageUserUpload.setImageURI(urlImageGaleria);
-                             System.out.println(" Mario ="+ urlImageGaleria);
                          }else {
                              Toast.makeText(AddUserActivity.this, "Selecione a imagem", Toast.LENGTH_SHORT).show();
                          }
@@ -203,13 +209,13 @@ public class AddUserActivity extends AppCompatActivity {
                             Intent data=result.getData();
                             urlImageGaleria =data.getData();
                             imageDocumentUpload.setImageURI(urlImageGaleria);
-                            System.out.println(" Mario ="+ urlImageGaleria);
                         }else {
                             Toast.makeText(AddUserActivity.this, "Selecione a imagem", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
         );
+
 
         imageUserUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -291,8 +297,6 @@ public class AddUserActivity extends AppCompatActivity {
                     }
                 });
 
-
-
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -339,9 +343,42 @@ public class AddUserActivity extends AppCompatActivity {
 
             }
         }
-
     }
+    private void uploadImage(String key, Cliente.UserPl u) {
 
+        try {
+            // Cria e adiciona um novo usuário ao banco de dados
+
+            if (urlImage != null) {
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("clientes/"+editTextNome.getText().toString() +"-"+editTextApelido.getText().toString()+"/"+key);
+
+                UploadTask uploadTask = storageRef.putFile(urlImage);
+
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get the download URL of the uploaded image
+                        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri downloadUrl) {
+                                // Use the download URL to display the image
+                                u.setImage(downloadUrl.toString());
+                                Toast.makeText(getApplicationContext(), u.getImage(), Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Erro ao carregar imagem", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }catch (Exception e) {
+        }
+    }
     private void getIdView() {
 
         imageUserUpload =(ImageView) findViewById(R.id.imageAdd);

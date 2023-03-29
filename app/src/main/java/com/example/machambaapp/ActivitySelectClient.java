@@ -25,7 +25,6 @@ import java.util.ArrayList;
 public class ActivitySelectClient extends AppCompatActivity {
     RecyclerView recyclerView ;
     EditText editName;
-    ImageView imageFaceUser;
     TextView distrito;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
 
@@ -43,12 +42,18 @@ public class ActivitySelectClient extends AppCompatActivity {
                     String genero = clientesSnap.child("genero").getValue(String.class);
                     String numero = clientesSnap.child("numero").getValue(String.class);
                     String ano = clientesSnap.child("ano").getValue(String.class);
+                    String d = clientesSnap.child("distrito").getValue(String.class);
+                    String loc = clientesSnap.child("localidade").getValue(String.class);
+                    String pt = clientesSnap.child("posto").getValue(String.class);
+                    String com = clientesSnap.child("comunidade").getValue(String.class);
 
                     String nomePl = clientesSnap.child("pl").child("nome").getValue(String.class);
                     String numeroPl = clientesSnap.child("pl").child("phone").getValue(String.class);
 
                     if (nomePl.equals(SplashScreen.currentUser.getNome()) && numeroPl.equals(SplashScreen.currentUser.getPhone())){
-                        clients.add(new Cliente( nome,  apelido,  numero, ano, genero, etnia) );
+
+                        clients.add(new Cliente(nome,apelido,numero,
+                                ano,genero, etnia,d,loc, pt,com ));
                     }
                 }
                 setAdapter();

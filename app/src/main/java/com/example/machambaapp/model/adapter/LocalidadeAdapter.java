@@ -14,13 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import com.example.machambaapp.model.datamodel.Etnia;
+
+import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.datamodel.Localidade;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
-import com.example.machambaapp.model.update.UpdateEtnia;
 import com.example.machambaapp.model.update.UpdateLocalidade;
 
 import java.util.ArrayList;
@@ -51,6 +50,8 @@ public class LocalidadeAdapter extends RecyclerView.Adapter<LocalidadeAdapter.Vi
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(mContext.getApplicationContext());
         holder.Localidade.setText(Localidade.getNome());
+
+        SplashScreen.updateDistrito();
 
         holder.editar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +114,6 @@ public class LocalidadeAdapter extends RecyclerView.Adapter<LocalidadeAdapter.Vi
             Distrito = itemView.findViewById(R.id.idDistrito);
             apagar = itemView.findViewById(R.id.deletarLocalidade);
             editar = itemView.findViewById(R.id.atualizarLocalidade);
-
 
             itemView.setOnClickListener(this);
         }

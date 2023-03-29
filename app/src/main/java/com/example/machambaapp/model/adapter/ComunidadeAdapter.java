@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.machambaapp.R;
+import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Comunidade;
 import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.model.helper.DatabaseHelper;
@@ -48,6 +49,8 @@ public class ComunidadeAdapter extends RecyclerView.Adapter<ComunidadeAdapter.Vi
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(mContext.getApplicationContext());
         holder.Comunidade.setText(Comunidade.getNome());
+
+        SplashScreen.updateComunidade();
 
         holder.editar.setOnClickListener(new View.OnClickListener() {
             @Override

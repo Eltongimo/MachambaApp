@@ -77,6 +77,8 @@ public class ActivityLogin extends AppCompatActivity {
                                            Cliente.UserPl u = new Cliente.UserPl();
                                            u.setNome(userSnapshot.child("nome").getValue(String.class));
                                            u.setPhone(userSnapshot.child("phone").getValue(String.class));
+                                           u.setImage(userSnapshot.child("image").getValue(String.class));
+                                           u.setApelido(userSnapshot.child("apelido").getValue(String.class));
 
                                            SplashScreen.currentUser = u;
 

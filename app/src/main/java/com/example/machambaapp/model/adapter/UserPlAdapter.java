@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.machambaapp.ActivitySelectClient;
 import com.example.machambaapp.R;
+import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
@@ -27,12 +30,17 @@ import com.example.machambaapp.model.update.UpdateUserPL;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.net.URI;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder>{
@@ -57,18 +65,25 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
         try{
             Cliente.UserPl userPl = mUserPl.get(position);
             holder.nomeUserPl.setText(userPl.getNome()+" "+userPl.getApelido());
-            holder.imgPerfil.setImageURI(userPl.getUriImage());
             holder.distrito.setText(userPl.getDistrito());
 
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageRef = storage.getReference().child("imagens/"+userPl.getApelido()+"-"+userPl.getApelido());
+            SplashScreen.UpdateDataFromOnlineDatabase();
 
-            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+            Picasso.get().load(  userPl.getImage()).into(new Target(){
                 @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(mContext)
-                            .load(uri)
-                            .into(holder.imgPerfil);
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    holder.imgPerfil.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
                 }
             });
 
@@ -86,10 +101,10 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
                     intent.putExtra("phone",userPl.getPhone());
                     intent.putExtra("apelido", userPl.getApelido());
                     intent.putExtra("key", userPl.getKey());
+                    intent.putExtra("image", userPl.getImage());
 
                     ((Activity) mContext).finish();
                     ((Activity) mContext).startActivity(intent);
-
                 }
             });
 

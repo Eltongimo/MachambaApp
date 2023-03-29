@@ -54,9 +54,9 @@ public class ActivityUserPL extends AppCompatActivity {
                     String postoAdministrativo = userPLSnapshot.child("postoAdministrativo").getValue(String.class);
                     String genero = userPLSnapshot.child("genero").getValue(String.class);
                     String senha = userPLSnapshot.child("senha").getValue(String.class);
-                    Uri uriImage = userPLSnapshot.child("imagens").getValue(Uri.class);
+                    String imagem = userPLSnapshot.child("image").getValue(String.class);
 
-                    userPls.add(new Cliente.UserPl(nome, apelido, senha, genero, phone, uriImage, distrito, localidade, postoAdministrativo, comunidade, userPLSnapshot.getKey()));
+                    userPls.add(new Cliente.UserPl(nome, apelido, senha, genero, phone, distrito, localidade, postoAdministrativo, comunidade, userPLSnapshot.getKey(), imagem));
                 }
                 Collections.sort(userPls, new Comparator<Cliente.UserPl>() {
                     @Override

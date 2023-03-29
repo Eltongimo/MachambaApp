@@ -8,7 +8,6 @@ import android.os.Handler;
 
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
-import com.example.machambaapp.ui.admin.TesteCarregarFoto;
 
 import java.util.ArrayList;
 
@@ -23,7 +22,16 @@ public class SplashScreen extends AppCompatActivity {
 
     public static Cliente.UserPl currentUser = new Cliente.UserPl();
 
+    public static void updateComunidade(){
+        comunidades = DatabaseHelper.getLocation("comunidades");
+    }
+    public static void updateDistrito(){
+        distritos = DatabaseHelper.getLocation("distritos");
+    }
 
+    public static void updatePosto(){
+        postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
+    }
     public static void UpdateDataFromOnlineDatabase(){
         try{
             etnia = DatabaseHelper.getEtnia("etnias");
@@ -31,7 +39,6 @@ public class SplashScreen extends AppCompatActivity {
             localiadades = DatabaseHelper.getLocation("localidades");
             postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
             distritos = DatabaseHelper.getLocation("distritos");
-            Thread.sleep(5000);
         }catch (Exception e){
             System.out.println(e);
         }

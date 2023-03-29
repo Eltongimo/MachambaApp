@@ -7,18 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".ActivitySelectClient">
 
-
-    <androidx.appcompat.widget.ActionMenuView
-        android:id="@+id/menuBar"
-        android:layout_width="match_parent"
-        android:background="@drawable/img"
-        android:backgroundTint="#48b971"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_height="50dp">
-
-    </androidx.appcompat.widget.ActionMenuView>
+        <TextView
+            android:id="@+id/txtSelecionar"
+            android:textSize="20dp"
+            android:fontFamily="@font/poppinssemibold"
+            android:textColor="@color/white"
+            android:text="Selecionar Cliente"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     <androidx.appcompat.widget.SearchView
         android:backgroundTint="@color/white"
@@ -27,7 +25,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:id="@+id/idSearch"
-        android:layout_below="@id/menuBar"
+        android:layout_below="@id/txtSelecionar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:iconifiedByDefault="false"
@@ -45,7 +43,6 @@
         tools:listitem="@layout/list_select_clientes">
 
     </androidx.recyclerview.widget.RecyclerView>
-
 
     <Button
 

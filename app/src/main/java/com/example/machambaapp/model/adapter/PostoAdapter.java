@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.datamodel.Localidade;
@@ -49,6 +51,8 @@ public class PostoAdapter extends RecyclerView.Adapter<PostoAdapter.ViewHolder>{
         builder = new AlertDialog.Builder(mContext.getApplicationContext());
         holder.Posto.setText(Posto.getNome());
         holder.Localidade.setText(Posto.getLocalidade());
+
+        SplashScreen.updatePosto();
 
         holder.editar.setOnClickListener(new View.OnClickListener() {
             @Override

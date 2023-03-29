@@ -56,7 +56,9 @@ public class DatabaseHelper extends AppCompatActivity{
                     String postoAdministrativo=userPLSnapshot.child("postoAdministrativo").getValue(String.class);;
                     String genero=userPLSnapshot.child("genero").getValue(String.class);;
                     String senha=userPLSnapshot.child("senha").getValue(String.class);;
-                    users.add(new Cliente.UserPl( nome, apelido, senha,genero,phone,  null,  distrito, localidade, postoAdministrativo,  comunidade, userPLSnapshot.getKey()));
+                    String imagem=userPLSnapshot.child("image").getValue(String.class);;
+
+                    users.add(new Cliente.UserPl( nome, apelido, senha,genero,phone,  distrito, localidade, postoAdministrativo,  comunidade, userPLSnapshot.getKey(),imagem));
                 }
                 latch.countDown();
             }
@@ -291,7 +293,7 @@ public class DatabaseHelper extends AppCompatActivity{
                         ;
                         String senha = userPLSnapshot.child("senha").getValue(String.class);
                         ;
-                        users.add(new Cliente.UserPl(nome, apelido, senha, genero, phone, null, distrito, localidade, postoAdministrativo, comunidade, userPLSnapshot.getKey()));
+                        users.add(new Cliente.UserPl(nome, apelido, senha, genero, phone, distrito, localidade, postoAdministrativo, comunidade, userPLSnapshot.getKey(),""));
                     }
                 }
                 Collections.sort(users, new Comparator<Cliente.UserPl>() {
@@ -444,10 +446,9 @@ public class DatabaseHelper extends AppCompatActivity{
         return e;
     }
 
-    public static String addUserPl(Cliente.UserPl u){
-         String key = getSha();
-         databaseReference.child("usuarios").child(key).setValue(u);
-         return key;
+    public static void addUserPl(Cliente.UserPl u){
+        String key = getSha();
+        databaseReference.child("usuarios").child(key).setValue(u);
     }
 
     public static void  addClientes(Cliente c){

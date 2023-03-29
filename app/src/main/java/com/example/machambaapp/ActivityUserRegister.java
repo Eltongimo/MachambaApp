@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -29,6 +30,8 @@ import android.widget.Toast;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -38,6 +41,12 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.UUID;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class ActivityUserRegister extends AppCompatActivity {
 
@@ -68,12 +77,9 @@ public class ActivityUserRegister extends AppCompatActivity {
     ImageView imageViewUser;
     EditText editTextApelido;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    ProgressDialog loadingBar;
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_register);
-
+    private void setButtonsAndFields(){
         addUser = (Button) findViewById(R.id.registerUser);
 
         editTextNome = (EditText) findViewById(R.id.idNomePl);
@@ -97,10 +103,13 @@ public class ActivityUserRegister extends AppCompatActivity {
         adapterItems = new ArrayAdapter<String>(this, R.layout.list_item_comunidade, itemsComunidade);
         autoCompleteComunidade.setAdapter(adapterItems);
 
+    }
 
+    private void setButtonEvents(){
         addUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Cliente.UserPl u = new Cliente.UserPl();
                 u.setNome(editTextNome.getText().toString());
                 u.setPhone(editPhone.getText().toString());
@@ -110,9 +119,8 @@ public class ActivityUserRegister extends AppCompatActivity {
                 u.setDistrito(autoCompleteDistrito.getText().toString());
                 u.setComunidade(autoCompleteComunidade.getText().toString());
                 u.setPostoAdministrativo(autoCompletePostoAdministrativo.getText().toString());
-                u.setUriImage(urlImage);
-                DatabaseHelper.addUserPl(u);
-                uploadImage(u.getNome()+"-"+u.getApelido());
+
+                uploadImage(editTextNome.getText().toString()+"-"+editTextApelido.getText().toString(), u);
                 finish();
             }
         });
@@ -184,12 +192,23 @@ public class ActivityUserRegister extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_register);
+        setButtonsAndFields();
+
+        setButtonEvents();
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
 
         if (requestCode == 1 && resultCode == RESULT_OK) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
@@ -202,29 +221,49 @@ public class ActivityUserRegister extends AppCompatActivity {
 
     }
 
-    private void uploadImage(String key) {
+    private void uploadImage(String key, Cliente.UserPl u) {
 
-        if (urlImage != null) {
+        try {
+            // Cria e adiciona um novo usuário ao banco de dados
 
-            StorageReference reference = storage.getReference().child("imagens/" + key);
-            reference.putFile(urlImage).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "Imagem Carregada com Sucesso!",
-                                Toast.LENGTH_SHORT).show();
-                    } else {
+            if (urlImage != null) {
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("imagens/"+key);
 
-                        Toast.makeText(getApplicationContext(), task.getException().getMessage(),
-                                Toast.LENGTH_SHORT).show();
+                UploadTask uploadTask = storageRef.putFile(urlImage);
+
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get the download URL of the uploaded image
+                        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri downloadUrl) {
+                                // Use the download URL to display the image
+                                u.setImage(downloadUrl.toString());
+                                Toast.makeText(getApplicationContext(), u.getImage(), Toast.LENGTH_SHORT).show();
+
+                                //After Uploading the image now Im uploading the user to RTDB
+                                DatabaseHelper.addUserPl(u);
+
+                            }
+                        });
                     }
-                }
-            });
-        }}
-
-        @Override
-        public void onBackPressed () {
-            super.onBackPressed();
-            finish();
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Erro ao gravar usuario", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }catch (Exception e) {
         }
     }
+
+
+    @Override
+    public void onBackPressed () {
+        super.onBackPressed();
+        finish();
+    }
+}
+
