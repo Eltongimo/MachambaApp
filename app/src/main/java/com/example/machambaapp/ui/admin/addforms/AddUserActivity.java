@@ -31,15 +31,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.machambaapp.ActivitySelectClient;
-import com.example.machambaapp.ActivityUserRegister;
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.datamodel.Cliente;
-import com.example.machambaapp.model.update.UpdateCultura;
-import com.example.machambaapp.ui.admin.views.ActivityUserPL;
-import com.example.machambaapp.ui.admin.views.ActivityViewAddCultura;
-import com.example.machambaapp.ui.produtorLider.ProdutorLiderFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -47,10 +42,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class AddUserActivity extends AppCompatActivity {
 
@@ -61,9 +54,9 @@ public class AddUserActivity extends AppCompatActivity {
     static boolean isCamera;
     static boolean isPhotoCaptureForDocument;
     CheckBox checkBoxFeme;
-    static Uri urlImageGaleria;
-    static Uri urlImageCamera;
-    static Uri urlImageCaptureFace;
+    Uri urlImageGaleria;
+    Uri urlImageCamera;
+    Uri urlImageCaptureFace;
     Button buttonRegisterUser;
     Button ok;
     Button cancel;
@@ -175,8 +168,10 @@ public class AddUserActivity extends AppCompatActivity {
                 String posto = autoCompletePostoAdministrativo.getText().toString();
                 Cliente cliente = new Cliente(nome,apelido,phone,
                         new String(numberPickerAno.getValue()+""),
-                        gen, et,distrito,localidade, posto,comunidade );
-                DatabaseHelper.addClientes(cliente);
+                        gen, et,distrito,localidade, posto,comunidade,"", "" );
+                uploadImageDoc(cliente.getNome()+"-"+cliente.getApelido(),cliente);
+
+                uploadImage(cliente.getNome()+"-"+cliente.getApelido(),cliente);
                 finish();
                 startActivity(new Intent(AddUserActivity.this, ActivitySelectClient.class));
             }
@@ -188,7 +183,6 @@ public class AddUserActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                          if(result.getResultCode()== Activity.RESULT_OK){
-
                              Intent data=result.getData();
                              urlImageGaleria =data.getData();
                              imageUserUpload.setImageURI(urlImageGaleria);
@@ -207,8 +201,8 @@ public class AddUserActivity extends AppCompatActivity {
                         if(result.getResultCode()== Activity.RESULT_OK){
 
                             Intent data=result.getData();
-                            urlImageGaleria =data.getData();
-                            imageDocumentUpload.setImageURI(urlImageGaleria);
+                            urlImage =data.getData();
+                            imageDocumentUpload.setImageURI(urlImage);
                         }else {
                             Toast.makeText(AddUserActivity.this, "Selecione a imagem", Toast.LENGTH_SHORT).show();
                         }
@@ -220,10 +214,9 @@ public class AddUserActivity extends AppCompatActivity {
         imageUserUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 isPhotoCaptureForDocument=false;
+                isPhotoCaptureForDocument=false;
                 dialog =new Dialog(AddUserActivity.this);
                 dialog.setContentView(R.layout.alert_view_dialog_choose_camera);
-
 
                 if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
                     dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_alert));
@@ -323,34 +316,71 @@ public class AddUserActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         if(requestCode==1 && resultCode==RESULT_OK) {
             if (isCamera) {
                 Bitmap bitmap=(Bitmap) data.getExtras().get("data");
                 ByteArrayOutputStream bytes =new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes);
                 String path= MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(),bitmap,"val",null);
-                urlImageCamera = Uri.parse(path);
+
+                // if user opens camera and take a picture urlImageGaleria is assigned image Uri
+                urlImageGaleria = Uri.parse(path);
 
                 if (!isPhotoCaptureForDocument) {
                     urlImageCaptureFace=urlImageCamera;
-                    imageUserUpload.setImageURI(urlImageCamera);
+                    imageUserUpload.setImageURI(urlImageGaleria);
                 } else {
-
-                    imageDocumentUpload.setImageURI(urlImageCamera);
+                    imageDocumentUpload.setImageURI(urlImage);
                 }
 
             }
         }
     }
-    private void uploadImage(String key, Cliente.UserPl u) {
+    private void uploadImage(String key, Cliente u) {
+
+        try {
+            // Cria e adiciona um novo usuário ao banco de dados
+
+            if (urlImageGaleria != null) {
+
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("clientes/"+key+"/"+key);
+
+                UploadTask uploadTask = storageRef.putFile(urlImageGaleria);
+
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get the download URL of the uploaded image
+                        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri downloadUrl) {
+                                u.setImage(downloadUrl.toString());
+                                DatabaseHelper.addCliente(u);
+                                Toast.makeText(getApplicationContext(),"Usuario Adicionado com Sucesso", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Erro ao carregar imagem", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }else{
+                Toast.makeText(getApplicationContext(),"NULLL", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e) {
+        }
+    }
+
+    private void uploadImageDoc(String key, Cliente u) {
 
         try {
             // Cria e adiciona um novo usuário ao banco de dados
 
             if (urlImage != null) {
-                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("clientes/"+editTextNome.getText().toString() +"-"+editTextApelido.getText().toString()+"/"+key);
+
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("clientes/"+key+"/documento"+key);
 
                 UploadTask uploadTask = storageRef.putFile(urlImage);
 
@@ -361,11 +391,8 @@ public class AddUserActivity extends AppCompatActivity {
                         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri downloadUrl) {
-                                // Use the download URL to display the image
-                                u.setImage(downloadUrl.toString());
-                                Toast.makeText(getApplicationContext(), u.getImage(), Toast.LENGTH_SHORT).show();
-
-
+                                u.setDocumento(downloadUrl.toString());
+                                DatabaseHelper.addCliente(u);
                             }
                         });
                     }
@@ -375,6 +402,8 @@ public class AddUserActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Erro ao carregar imagem", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }else{
+                Toast.makeText(getApplicationContext(),"NULLL", Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e) {
         }
@@ -386,11 +415,8 @@ public class AddUserActivity extends AppCompatActivity {
         textApelido=(TextView) findViewById(R.id.idApelidoCli) ;
         imageDocumentUpload=(ImageView) findViewById(R.id.uploadImageDocument);
         buttonRegisterUser =(Button) findViewById(R.id.registerUser);
-
-        //txtIdade=(EditText) findViewById(R.id.idIdade);
         checkBoxFeme=(CheckBox) findViewById(R.id.idCheckBoxfeme);
         checkBoxMale=(CheckBox) findViewById(R.id.idCheckBoxMale);
-
         etniaInput=(AutoCompleteTextView) findViewById(R.id.etnia_select);
         adapterEtnia = new ArrayAdapter<String>(this, R.layout.list_item_etnia, new ArrayList<>());
         etniaInput.setAdapter(adapterEtnia);

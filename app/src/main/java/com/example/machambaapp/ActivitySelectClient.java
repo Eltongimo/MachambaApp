@@ -46,14 +46,16 @@ public class ActivitySelectClient extends AppCompatActivity {
                     String loc = clientesSnap.child("localidade").getValue(String.class);
                     String pt = clientesSnap.child("posto").getValue(String.class);
                     String com = clientesSnap.child("comunidade").getValue(String.class);
-
                     String nomePl = clientesSnap.child("pl").child("nome").getValue(String.class);
                     String numeroPl = clientesSnap.child("pl").child("phone").getValue(String.class);
+                    String image = clientesSnap.child("image").getValue(String.class);
+                    String documento = clientesSnap.child("documento").getValue(String.class);
+
 
                     if (nomePl.equals(SplashScreen.currentUser.getNome()) && numeroPl.equals(SplashScreen.currentUser.getPhone())){
 
                         clients.add(new Cliente(nome,apelido,numero,
-                                ano,genero, etnia,d,loc, pt,com ));
+                                ano,genero, etnia,d,loc, pt,com,image, documento));
                     }
                 }
                 setAdapter();

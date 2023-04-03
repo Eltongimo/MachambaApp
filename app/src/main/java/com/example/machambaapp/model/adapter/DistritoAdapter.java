@@ -48,6 +48,7 @@ public class DistritoAdapter extends RecyclerView.Adapter<DistritoAdapter.ViewHo
     public void onBindViewHolder(@NonNull DistritoAdapter.ViewHolder holder, int position) {
         Distrito Distrito = this.mDistrito.get(position);
         holder.Distrito.setText(Distrito.getNome());
+        holder.Provincia.setText(Distrito.getProvincia());
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(mContext.getApplicationContext());
         holder.Distrito.setText(Distrito.getNome());
@@ -58,6 +59,7 @@ public class DistritoAdapter extends RecyclerView.Adapter<DistritoAdapter.ViewHo
                 Intent intent = new Intent(mContext, UpdateDistrito.class);
                 intent.putExtra("distrito", Distrito.getNome());
                 intent.putExtra("key", Distrito.getKey());
+                intent.putExtra("provincia", Distrito.getProvincia());
                 ((Activity) mContext).finish();
                 ((Activity) mContext).startActivity(intent);
             }
@@ -103,7 +105,7 @@ public class DistritoAdapter extends RecyclerView.Adapter<DistritoAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private final TextView Distrito;
+        private final TextView Distrito, Provincia;
         private final ImageView apagar;
         private final ImageView editar;
 
@@ -112,6 +114,7 @@ public class DistritoAdapter extends RecyclerView.Adapter<DistritoAdapter.ViewHo
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             Distrito = itemView.findViewById(R.id.nomeClient);
+            Provincia = itemView.findViewById(R.id.nomeProvincia);
             apagar = itemView.findViewById(R.id.apagarDistrito);
             editar = itemView.findViewById(R.id.atualizarDistrito);
 

@@ -2,6 +2,8 @@ package com.example.machambaapp.model.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import com.example.machambaapp.ActivitySelectClient;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 
@@ -40,6 +44,22 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ClientAdapter.ViewHolder holder, int position) {
         Cliente client = mSpecies.get(position);
         holder.nomeClient.setText(client.getNome()+ " "+ client.getApelido());
+        Picasso.get().load(  client.getImage()).into(new Target(){
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                holder.foto.setImageBitmap(bitmap);
+            }
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
+
         //holder.foto.setImageURI(client.getFaceImage());
 
         holder.setItemClickListener(new IItemClickListener() {

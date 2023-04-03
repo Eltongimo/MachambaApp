@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Toast;
 
 public class ActivitySelect extends AppCompatActivity {
-
-
     CardView onClickVisitaLivre;
     CardView onClickSelectClient;
     @Override
@@ -20,7 +18,6 @@ public class ActivitySelect extends AppCompatActivity {
 
         onClickSelectClient =(CardView) findViewById(R.id.idCardClient);
         onClickVisitaLivre =(CardView) findViewById(R.id.idCardVisita);
-
 
         onClickVisitaLivre.setOnClickListener(new View.OnClickListener() {
             @Override

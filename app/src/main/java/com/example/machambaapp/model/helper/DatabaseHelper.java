@@ -19,12 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseError;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
@@ -213,10 +211,12 @@ public class DatabaseHelper extends AppCompatActivity{
                 distritos.clear();
                 for (DataSnapshot DistritosSnap : snapshot.getChildren()) {
                     String nomeDistrito = DistritosSnap.child("nome").getValue(String.class);
+                    String nomeProvincia = DistritosSnap.child("provincia").getValue(String.class);
 
                     if (nomeDistrito.toLowerCase().contains(query.toLowerCase())){
                         String chave = DistritosSnap.getKey().toString();
-                        distritos.add(new Distrito(nomeDistrito, chave));
+
+                        distritos.add(new Distrito(nomeDistrito, chave, nomeProvincia));
                     }
                 }
                 Collections.sort(distritos, new Comparator<Distrito>() {
@@ -355,11 +355,13 @@ public class DatabaseHelper extends AppCompatActivity{
         myRef.child(key).child("nome").setValue(et);
     }
 
-   public static void  updateDistrito(String distrito, String key){
+   public static void  updateDistrito(String distrito, String provincia, String key){
        FirebaseDatabase database = FirebaseDatabase.getInstance();
        DatabaseReference myRef = database.getReference("distritos");
        myRef.child(key).child("nome").setValue(distrito);
-    }
+       myRef.child(key).child("provincia").setValue(provincia);
+
+   }
 
     public static void deletePosto(String key){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("postosAdministrativos/" + key);
@@ -451,7 +453,7 @@ public class DatabaseHelper extends AppCompatActivity{
         databaseReference.child("usuarios").child(key).setValue(u);
     }
 
-    public static void  addClientes(Cliente c){
+    public static void addCliente(Cliente c){
 
         String key = getSha();
         databaseReference.child("clientes").child(key).setValue(c);

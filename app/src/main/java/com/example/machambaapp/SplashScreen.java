@@ -8,12 +8,15 @@ import android.os.Handler;
 
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
+import com.example.machambaapp.ui.admin.views.CriarFormularios;
 
 import java.util.ArrayList;
 
 public class SplashScreen extends AppCompatActivity {
 
     public static ArrayList<String> distritos = DatabaseHelper.getLocation("distritos");
+    public static ArrayList<String> provincias = new ArrayList<String>();
+
     public static ArrayList<String> postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
     public static ArrayList<String> localiadades = DatabaseHelper.getLocation("localidades");
     public static ArrayList<String> comunidades = DatabaseHelper.getLocation("comunidades");
@@ -48,12 +51,24 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        provincias.add("Maputo");
+        provincias.add("Gaza");
+        provincias.add("Inhambane");
+        provincias.add("Sofala");
+        provincias.add("Manica");
+        provincias.add("Tete");
+        provincias.add("Zambézia");
+        provincias.add("Nampula");
+        provincias.add("Cabo Delgado");
+        provincias.add("Niassa");
+
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-            //    startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
-               startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
+                startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
+              // startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
+               //startActivity(new Intent(SplashScreen.this, CriarFormularios.class));
                 finish();
             }
         }, 2000);

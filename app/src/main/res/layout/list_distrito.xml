@@ -37,8 +37,19 @@
             android:textSize="18dp"
             android:fontFamily="@font/poppinsregular"
             android:layout_toEndOf="@id/idCard"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp" />
+        <TextView
+            android:id="@+id/nomeProvincia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Província"
+            android:layout_below="@+id/nomeClient"
+            android:textSize="15dp"
+            android:fontFamily="@font/poppinsregular"
+            android:layout_toEndOf="@id/idCard"
+            android:layout_marginStart="10dp" />
+
 
 
         <LinearLayout

@@ -21,6 +21,7 @@ import com.example.machambaapp.ui.admin.views.ActivityViewEtnia;
 import com.example.machambaapp.ui.admin.views.ActivityViewLocalidade;
 import com.example.machambaapp.ui.admin.views.ActivityViewPostoAdmnistrativo;
 import com.example.machambaapp.R;
+import com.example.machambaapp.ui.admin.views.CriarFormularios;
 
 public class HomeFragment extends Fragment {
 
@@ -43,12 +44,11 @@ public class HomeFragment extends Fragment {
         CardView cardViewPostoAdministrativo=(CardView) view.findViewById(R.id.idCardPosto);
         CardView cardViewFormulario = (CardView) view.findViewById(R.id.idFormulario);
 
-
         cardViewFormulario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Indevelopment yet", Toast.LENGTH_SHORT).show();
-           //     startActivity(new Intent(getContex//));
+                Intent intent = new Intent(getContext(), CriarFormularios.class);
+                startActivity(intent);
             }
         });
         cardViewUserPl.setOnClickListener(new View.OnClickListener() {
