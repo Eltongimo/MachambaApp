@@ -60,18 +60,11 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
             }
         });
 
-        //holder.foto.setImageURI(client.getFaceImage());
-
         holder.setItemClickListener(new IItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
-//                Fragment fragmentViewEspecies= SubEspecieFragment.newInstance("ESTO AQUI BARATA");
-//                AppCompatActivity appCompatActivity=(AppCompatActivity) view.getContext();
-//                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragmentViewEspecies).commit();
-
                  Intent intent = new Intent(mContext, ActivitySelectClient.class);
-             //    intent.putExtra("Foto", client.getFaceImage());
                  intent.putExtra("fullName", client.getNome());
                  mContext.startActivity(intent);
             }

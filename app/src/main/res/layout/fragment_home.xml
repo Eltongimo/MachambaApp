@@ -35,7 +35,7 @@
              android:textColor="@color/white"
              android:layout_marginTop="39dp"
              android:textSize="18dp"
-             android:text="Assistência Tecnica"
+             android:text="Assistência Técnica"
              android:layout_marginStart="16dp"
              android:layout_marginEnd="16dp"
              android:layout_below="@id/title"
@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/poppinssemibold"
-                        android:text="Usuario"
+                        android:text="Usuários"
                         android:textAlignment="center"
                         android:textColor="#8E8484"
                         android:textSize="18sp" />
@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppinssemibold"
                         android:gravity="center"
-                        android:text="Cultura"
+                        android:text="Culturas"
                         android:textColor="#8E8484"
                         android:textSize="18dp" />
 
@@ -176,7 +176,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/poppinssemibold"
-                        android:text="Distrito"
+                        android:text="Distritos"
                         android:textAlignment="center"
                         android:textColor="#8E8484"
                         android:textSize="18sp" />
@@ -222,7 +222,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/poppinssemibold"
-                        android:text="Etnia"
+                        android:text="Etnias"
                         android:textAlignment="center"
                         android:textColor="#8E8484"
                         android:textSize="18sp" />
@@ -267,7 +267,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/poppinssemibold"
-                        android:text="Localidade"
+                        android:text="Localidades"
                         android:textAlignment="center"
                         android:textColor="#8E8484"
                         android:textSize="18sp" />
@@ -312,7 +312,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/poppinssemibold"
-                        android:text="Comunidade"
+                        android:text="Comunidades"
                         android:textAlignment="center"
                         android:textColor="#8E8484"
                         android:textSize="18sp" />
@@ -358,7 +358,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/poppinssemibold"
-                        android:text="Posto "
+                        android:text="Postos"
                         android:textAlignment="center"
                         android:textColor="#8E8484"
                         android:textSize="18sp" />
@@ -403,7 +403,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/poppinssemibold"
-                        android:text="Formularios"
+                        android:text="Formulários"
                         android:textAlignment="center"
                         android:textColor="#8E8484"
                         android:textSize="18sp" />

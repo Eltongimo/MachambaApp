@@ -11,7 +11,9 @@ import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -157,23 +159,39 @@ public class AddUserActivity extends AppCompatActivity {
         buttonRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String gen = generoFem.isChecked() ? "Feminino" : "Masculino";
-                String nome = editTextNome.getText().toString();
-                String apelido = editTextApelido.getText().toString();
-                String phone = editTextPhone.getText().toString();
-                String et = autoEtnias.getText().toString();
-                String distrito = autoCompleteDistrito.getText().toString();
-                String comunidade = autoCompleteComunidade.getText().toString();
-                String localidade = autoCompleteLocalidade.getText().toString();
-                String posto = autoCompletePostoAdministrativo.getText().toString();
-                Cliente cliente = new Cliente(nome,apelido,phone,
-                        new String(numberPickerAno.getValue()+""),
-                        gen, et,distrito,localidade, posto,comunidade,"", "" );
-                uploadImageDoc(cliente.getNome()+"-"+cliente.getApelido(),cliente);
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Adicionar cliente!");
+                builder.setMessage("Deseja mesmo adicionar o cliente?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String gen = generoFem.isChecked() ? "Feminino" : "Masculino";
+                        String nome = editTextNome.getText().toString();
+                        String apelido = editTextApelido.getText().toString();
+                        String phone = editTextPhone.getText().toString();
+                        String et = autoEtnias.getText().toString();
+                        String distrito = autoCompleteDistrito.getText().toString();
+                        String comunidade = autoCompleteComunidade.getText().toString();
+                        String localidade = autoCompleteLocalidade.getText().toString();
+                        String posto = autoCompletePostoAdministrativo.getText().toString();
+                        Cliente cliente = new Cliente(nome,apelido,phone,
+                                new String(numberPickerAno.getValue()+""),
+                                gen, et,distrito,localidade, posto,comunidade,"", "" );
+                        uploadImageDoc(cliente.getNome()+"-"+cliente.getApelido(),cliente);
 
-                uploadImage(cliente.getNome()+"-"+cliente.getApelido(),cliente);
-                finish();
-                startActivity(new Intent(AddUserActivity.this, ActivitySelectClient.class));
+                        uploadImage(cliente.getNome()+"-"+cliente.getApelido(),cliente);
+                        finish();
+                        startActivity(new Intent(AddUserActivity.this, ActivitySelectClient.class));                        Toast.makeText(getApplicationContext(), "Localidade adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
@@ -209,7 +227,6 @@ public class AddUserActivity extends AppCompatActivity {
                     }
                 }
         );
-
 
         imageUserUpload.setOnClickListener(new View.OnClickListener() {
             @Override

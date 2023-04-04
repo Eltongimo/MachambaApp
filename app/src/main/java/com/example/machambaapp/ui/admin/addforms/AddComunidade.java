@@ -2,13 +2,16 @@ package com.example.machambaapp.ui.admin.addforms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
@@ -52,18 +55,26 @@ public class AddComunidade extends AppCompatActivity {
         addComunidade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    loadingBar.setTitle("Adicionando Comunidade");
-                    loadingBar.setMessage("Aguarde por favor!");
-                    loadingBar.setCanceledOnTouchOutside(false);
-                    loadingBar.show();
-                    DatabaseHelper.addLocations(comunidade.getText().toString(),
-                            "comunidades",autoComunidade.getText().toString(),"postoAdministrativo");
-                    loadingBar.dismiss();
-                    finish();
-                }catch (Exception e) {
-                    System.out.println(" hj,fhjfmgfdm");
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Adicionar Comunidade!");
+                builder.setMessage("Deseja mesmo adicionar a comunidade?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseHelper.addLocations(comunidade.getText().toString(),
+                                "comunidades",autoComunidade.getText().toString(),"postoAdministrativo");
+                        finish();
+                        Toast.makeText(getApplicationContext(), "Adicionado com sucesso!!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }

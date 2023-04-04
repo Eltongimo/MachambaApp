@@ -3,11 +3,14 @@ package com.example.machambaapp.ui.admin.addforms;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.machambaapp.R;
 
@@ -43,11 +46,25 @@ public class AddEtnia extends AppCompatActivity {
                 databaseReference.child("etnias").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        databaseReference.child("etnias").child(DatabaseHelper.getSha()).child("nome").setValue(etnia.getText().toString());
-                        finish();
-                        //    startActivity(new Intent(AddEtnia.this, ActivityViewEtnia.class));
-
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                        builder.setTitle("Adicionar Etnia!");
+                        builder.setMessage("Deseja mesmo adicionar a etnia?");
+                        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                databaseReference.child("etnias").child(DatabaseHelper.getSha()).child("nome").setValue(etnia.getText().toString());
+                                Toast.makeText(getApplicationContext(), "Etnia adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
                     }
 
                     @Override

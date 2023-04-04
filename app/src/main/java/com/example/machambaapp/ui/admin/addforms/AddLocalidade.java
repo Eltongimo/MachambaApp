@@ -2,12 +2,15 @@ package com.example.machambaapp.ui.admin.addforms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
@@ -46,8 +49,25 @@ public class AddLocalidade extends AppCompatActivity {
         addLocalidade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseHelper.addLocations(localidade.getText().toString(), "localidades",autoDistritos.getText().toString(),"distrito");
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Adicionar Localidade!");
+                builder.setMessage("Deseja mesmo adicionar a localidade?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseHelper.addLocations(localidade.getText().toString(), "localidades",autoDistritos.getText().toString(),"distrito");
+                        Toast.makeText(getApplicationContext(), "Localidade adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }

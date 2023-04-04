@@ -10,8 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -110,18 +112,34 @@ public class ActivityUserRegister extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Cliente.UserPl u = new Cliente.UserPl();
-                u.setNome(editTextNome.getText().toString());
-                u.setPhone(editPhone.getText().toString());
-                u.setApelido(editTextApelido.getText().toString());
-                u.setSenha(editSenha.getText().toString());
-                u.setLocalidade(autoCompleteLocalidade.getText().toString());
-                u.setDistrito(autoCompleteDistrito.getText().toString());
-                u.setComunidade(autoCompleteComunidade.getText().toString());
-                u.setPostoAdministrativo(autoCompletePostoAdministrativo.getText().toString());
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Adicionar produtor líder");
+                builder.setMessage("Deseja mesmo adicionar o produtor líder?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                        Cliente.UserPl u = new Cliente.UserPl();
+                        u.setNome(editTextNome.getText().toString());
+                        u.setPhone(editPhone.getText().toString());
+                        u.setApelido(editTextApelido.getText().toString());
+                        u.setSenha(editSenha.getText().toString());
+                        u.setLocalidade(autoCompleteLocalidade.getText().toString());
+                        u.setDistrito(autoCompleteDistrito.getText().toString());
+                        u.setComunidade(autoCompleteComunidade.getText().toString());
+                        u.setPostoAdministrativo(autoCompletePostoAdministrativo.getText().toString());
 
-                uploadImage(editTextNome.getText().toString()+"-"+editTextApelido.getText().toString(), u);
-                finish();
+                        uploadImage(editTextNome.getText().toString()+"-"+editTextApelido.getText().toString(), u);
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
             }
         });
 

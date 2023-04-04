@@ -2,11 +2,14 @@ package com.example.machambaapp.ui.admin.addforms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.machambaapp.R;
 
@@ -33,9 +36,27 @@ public class AddCultura extends AppCompatActivity {
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                DatabaseHelper.addLocations(cultura.getText().toString(), "culturas","","");
-                finish();
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Adicionar Cultura!");
+                builder.setMessage("Deseja mesmo adicionar a cultura?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseHelper.addLocations(cultura.getText().toString(), "culturas","","");
+                        Toast.makeText(getApplicationContext(), "Cultura adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
             }
         });
 

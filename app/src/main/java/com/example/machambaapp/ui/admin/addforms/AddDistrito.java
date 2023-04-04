@@ -2,16 +2,21 @@ package com.example.machambaapp.ui.admin.addforms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.machambaapp.R;
 
 import com.example.machambaapp.SplashScreen;
+import com.example.machambaapp.model.datamodel.Distrito;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -52,10 +57,27 @@ public class AddDistrito extends AppCompatActivity {
         btnRegistar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Adicionar Distrito!");
+                builder.setMessage("Deseja mesmo adicionar o distrito?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseHelper.addLocations(nomeDistrito.getText().toString(), "distritos",
+                                autoProvincias.getText().toString(),"provincia");
+                        finish();
+                        Toast.makeText(getApplicationContext(), "Adicionado com sucesso!", Toast.LENGTH_SHORT).show();
 
-                DatabaseHelper.addLocations(nomeDistrito.getText().toString(), "distritos",autoProvincias.getText().toString(),"provincia");
-                finish();
-                //    startActivity(new Intent(AddDistrito.this, ActivityViewDistrito.class));
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }
