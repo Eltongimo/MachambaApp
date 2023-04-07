@@ -1,14 +1,15 @@
 package com.example.machambaapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.machambaapp.model.datamodel.Cliente;
+import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.helper.DatabaseHelper;
-import com.example.machambaapp.ui.admin.views.CriarFormularios;
+import com.example.machambaapp.ui.admin.views.CreateFormPergunta;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,8 @@ public class SplashScreen extends AppCompatActivity {
 
     public static ArrayList<String> distritos = DatabaseHelper.getLocation("distritos");
     public static ArrayList<String> provincias = new ArrayList<String>();
+
+    public static Formulario formulario = new Formulario();
 
     public static ArrayList<String> postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
     public static ArrayList<String> localiadades = DatabaseHelper.getLocation("localidades");
@@ -62,13 +65,10 @@ public class SplashScreen extends AppCompatActivity {
         provincias.add("Cabo Delgado");
         provincias.add("Niassa");
 
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
-              // startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
-               //startActivity(new Intent(SplashScreen.this, CriarFormularios.class));
+                startActivity(new Intent(SplashScreen.this, CreateFormPergunta.class));
                 finish();
             }
         }, 2000);

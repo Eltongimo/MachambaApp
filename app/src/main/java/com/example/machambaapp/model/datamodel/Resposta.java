@@ -3,30 +3,27 @@ package com.example.machambaapp.model.datamodel;
 import java.util.ArrayList;
 
 public class Resposta {
-    private String nomeResposta;
-    private ArrayList<String> outrasRespostas;
 
-    public ArrayList<String> getOutrasRespostas() {
-        return outrasRespostas;
-    }
+    private String tipoResposta;
+    private ArrayList<String> nRespostas;
 
-    public void setOutrasRespostas(ArrayList<String> outrasRespostas) {
-        this.outrasRespostas = outrasRespostas;
-    }
-
-    public Resposta(){
+    public Resposta() {
 
     }
 
-    public String getNomeResposta() {
-        return nomeResposta;
+    public String getTipoResposta() {
+        return tipoResposta;
     }
 
-    public Resposta(String nomeResposta) {
-        this.nomeResposta = nomeResposta;
+    public void setTipoResposta(String tipoResposta) {
+        this.tipoResposta = tipoResposta;
     }
 
-    public void setNomeResposta(String nomeResposta) {
-        this.nomeResposta = nomeResposta;
+    public ArrayList<String> getnRespostas() {
+        return nRespostas;
+    }
+
+    public void setnRespostas(ArrayList<String> nRespostas) {
+        this.nRespostas = nRespostas;
     }
 }

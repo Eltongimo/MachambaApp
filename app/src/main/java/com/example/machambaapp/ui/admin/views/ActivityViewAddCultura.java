@@ -33,8 +33,7 @@ import java.util.Comparator;
 public class ActivityViewAddCultura extends AppCompatActivity {
 
     Button addCultura;
-    ImageView apagar;
-    ImageView editar;
+
     SearchView searchView;
     ProgressDialog loadingBar;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");

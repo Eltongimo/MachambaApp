@@ -1,6 +1,7 @@
 package com.example.machambaapp.model.helper;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.machambaapp.Cultura;
 import com.example.machambaapp.SplashScreen;
@@ -8,19 +9,16 @@ import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.Comunidade;
 import com.example.machambaapp.model.datamodel.Distrito;
 import com.example.machambaapp.model.datamodel.Etnia;
+import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.datamodel.Localidade;
 import com.example.machambaapp.model.datamodel.Posto;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.DatabaseError;
-
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.UUID;
@@ -391,6 +389,12 @@ public class DatabaseHelper extends AppCompatActivity{
 
 
     }
+
+    public static void addForm(Formulario f){
+        String key = getSha();
+        databaseReference.child("formularios").child(key).setValue(f);
+    }
+
     public static void addLocations(String childValue, String childKey, String parentValue, String parentKey){
         databaseReference.child(childKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -403,8 +407,6 @@ public class DatabaseHelper extends AppCompatActivity{
                     databaseReference.child(childKey).child(key).child(parentKey).setValue(parentValue);
                 }
             }
-
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

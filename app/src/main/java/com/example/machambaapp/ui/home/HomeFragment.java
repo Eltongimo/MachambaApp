@@ -21,7 +21,7 @@ import com.example.machambaapp.ui.admin.views.ActivityViewEtnia;
 import com.example.machambaapp.ui.admin.views.ActivityViewLocalidade;
 import com.example.machambaapp.ui.admin.views.ActivityViewPostoAdmnistrativo;
 import com.example.machambaapp.R;
-import com.example.machambaapp.ui.admin.views.CriarFormularios;
+import com.example.machambaapp.ui.admin.views.CreateForm;
 
 public class HomeFragment extends Fragment {
 
@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
         cardViewFormulario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CriarFormularios.class);
+                Intent intent = new Intent(getContext(), CreateForm.class);
                 startActivity(intent);
             }
         });

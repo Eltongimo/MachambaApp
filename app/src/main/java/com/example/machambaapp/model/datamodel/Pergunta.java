@@ -2,7 +2,6 @@ package com.example.machambaapp.model.datamodel;
 
 public class Pergunta {
     private String nomeDaPergunta;
-    private String tipoPergunta;
     private Resposta resposta;
 
     public Pergunta (){
@@ -11,14 +10,6 @@ public class Pergunta {
 
     public Pergunta(String nomeDaPergunta) {
         this.nomeDaPergunta = nomeDaPergunta;
-    }
-
-    public String getTipoPergunta() {
-        return tipoPergunta;
-    }
-
-    public void setTipoPergunta(String tipoPergunta) {
-        this.tipoPergunta = tipoPergunta;
     }
 
     public Resposta getResposta() {
