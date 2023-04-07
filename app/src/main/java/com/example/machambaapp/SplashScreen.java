@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.helper.DatabaseHelper;
-import com.example.machambaapp.ui.admin.views.CreateFormPergunta;
+import com.example.machambaapp.ui.admin.forms.ResponderForm;
 
 import java.util.ArrayList;
 
@@ -17,9 +17,10 @@ public class SplashScreen extends AppCompatActivity {
 
     public static ArrayList<String> distritos = DatabaseHelper.getLocation("distritos");
     public static ArrayList<String> provincias = new ArrayList<String>();
+    public static int indexForm = 0;
 
+    public static Formulario formularioDeResposta = new Formulario();
     public static Formulario formulario = new Formulario();
-
     public static ArrayList<String> postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
     public static ArrayList<String> localiadades = DatabaseHelper.getLocation("localidades");
     public static ArrayList<String> comunidades = DatabaseHelper.getLocation("comunidades");
@@ -68,7 +69,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this, CreateFormPergunta.class));
+                startActivity(new Intent(SplashScreen.this, ResponderForm.class));
                 finish();
             }
         }, 2000);

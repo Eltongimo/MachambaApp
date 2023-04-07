@@ -98,7 +98,7 @@ public class CreateFormResposta extends AppCompatActivity {
                 return false;
             }
 
-            r.setTipoResposta(tipoResposta);
+            SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm++).setTipoPergunta(tipoResposta);
             SplashScreen.formulario.getRespostas().add(r);
             return true;
         }

@@ -26,6 +26,9 @@
             android:name=".ui.admin.views.CreateForm"
             android:exported="false" />
         <activity
+            android:name=".ui.admin.forms.ResponderForm"
+            android:exported="false" />
+        <activity
             android:name=".model.update.UpdatePosto"
             android:exported="false" />
         <activity

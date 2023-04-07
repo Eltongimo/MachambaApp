@@ -4,6 +4,16 @@ public class Pergunta {
     private String nomeDaPergunta;
     private Resposta resposta;
 
+    private String tipoPergunta;
+
+    public String getTipoPergunta() {
+        return tipoPergunta;
+    }
+
+    public void setTipoPergunta(String tipoPergunta) {
+        this.tipoPergunta = tipoPergunta;
+    }
+
     public Pergunta (){
         this.nomeDaPergunta = "";
     }

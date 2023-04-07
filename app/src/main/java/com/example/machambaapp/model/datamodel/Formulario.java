@@ -8,6 +8,17 @@ public class Formulario {
     private ArrayList<Pergunta> perguntas;
     private ArrayList<Resposta> respostas;
 
+    private String tipoResposta;
+
+
+    public String getTipoResposta() {
+        return tipoResposta;
+    }
+
+    public void setTipoResposta(String tipoResposta) {
+        this.tipoResposta = tipoResposta;
+    }
+
     public Formulario(){
         perguntas = new ArrayList<>();
         respostas = new ArrayList<>();
