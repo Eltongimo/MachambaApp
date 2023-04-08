@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.machambaapp.databinding.FragmentHomeBinding;
+import com.example.machambaapp.ui.admin.excelpack.MostrarDadosExcel;
 import com.example.machambaapp.ui.admin.views.ActivityUserPL;
 import com.example.machambaapp.ui.admin.views.ActivityViewAddCultura;
 import com.example.machambaapp.ui.admin.views.ActivityViewComunidade;
@@ -43,6 +44,16 @@ public class HomeFragment extends Fragment {
         CardView cardViewCultura=(CardView) view.findViewById(R.id.idCardCultura);
         CardView cardViewPostoAdministrativo=(CardView) view.findViewById(R.id.idCardPosto);
         CardView cardViewFormulario = (CardView) view.findViewById(R.id.idFormulario);
+        CardView idExcel = (CardView) view.findViewById(R.id.idExcel);
+
+
+        idExcel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MostrarDadosExcel.class);
+                startActivity(intent);
+            }
+        });
 
         cardViewFormulario.setOnClickListener(new View.OnClickListener() {
             @Override

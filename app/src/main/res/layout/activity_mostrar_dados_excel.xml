@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo"
+    tools:context=".ui.admin.excelpack.MostrarDadosExcel">
+
+    <TextView
+        android:drawablePadding="12dp"
+        android:layout_marginTop="300dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/text_doc"
+        android:fontFamily="@font/poppinssemibold"
+        android:layout_gravity="center"
+        android:text="Carregar ficheiro Excel"
+        android:textSize="18dp"
+        android:padding="10dp"
+        android:textColor="@color/cor_of_botton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <ImageView
+        android:id="@+id/docAdd"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="350dp"
+        android:background="#FBF6F6"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:src="@drawable/document" />
+    <Button
+        android:padding="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/docAdd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:id="@+id/btnCarregarExcel"
+        android:width="300dp"
+        android:fontFamily="@font/poppinsbold"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/cor_of_botton"
+        app:cornerRadius="15sp"
+        android:text="Carregar Ficheiro"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_marginTop="280dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>
