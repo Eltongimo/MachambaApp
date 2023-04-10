@@ -42,6 +42,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -152,7 +153,7 @@ public class ActivityUserRegister extends AppCompatActivity {
 
                             Intent data = result.getData();
                             urlImage = data.getData();
-                            imageViewUser.setImageURI(urlImage);
+
                         } else {
                             Toast.makeText(ActivityUserRegister.this, "Selecione a imagem", Toast.LENGTH_SHORT).show();
                         }
@@ -192,7 +193,7 @@ public class ActivityUserRegister extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent photoPicker = new Intent(Intent.ACTION_PICK);
-                        photoPicker.setType("image/*");
+                        photoPicker.setType("*/*");
                         activityResultLauncherImageUsers.launch(photoPicker);
                         dialog.dismiss();
                     }

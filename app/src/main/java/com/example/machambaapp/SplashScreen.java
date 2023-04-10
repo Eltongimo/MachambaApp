@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.helper.DatabaseHelper;
+import com.example.machambaapp.ui.admin.excelpack.MostrarDadosExcel;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,8 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
+               // startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
+                startActivity(new Intent(SplashScreen.this, MostrarDadosExcel.class));
                 finish();
             }
         }, 2000);
