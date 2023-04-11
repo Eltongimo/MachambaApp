@@ -10,7 +10,6 @@ public class Cliente {
     public String getDocumento() {
         return documento;
     }
-
     public void setDocumento(String documento) {
         this.documento = documento;
     }
@@ -19,9 +18,12 @@ public class Cliente {
         return key;
     }
 
+    public UserPl pl = new UserPl();
+
     public String getImage() {
         return image;
     }
+
 
     public void setImage(String image) {
         this.image = image;
@@ -63,6 +65,9 @@ public class Cliente {
         this.posto = posto;
     }
 
+    public Cliente(){
+
+    }
     public Cliente(String nome, String apelido,
                    String numero, String ano,
                    String genero, String etnia,

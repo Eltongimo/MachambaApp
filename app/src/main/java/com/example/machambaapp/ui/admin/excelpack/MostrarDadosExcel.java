@@ -1,7 +1,6 @@
 package com.example.machambaapp.ui.admin.excelpack;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -13,10 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.machambaapp.R;
+import com.example.machambaapp.model.datamodel.Cliente;
+import com.example.machambaapp.model.helper.DatabaseHelper;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -25,9 +24,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MostrarDadosExcel extends AppCompatActivity {
@@ -60,7 +58,6 @@ public class MostrarDadosExcel extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Cria uma intenção para selecionar um arquivo
-              //  Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("application/*"); // Somente arquivos Excel
 
@@ -77,9 +74,8 @@ public class MostrarDadosExcel extends AppCompatActivity {
 
         // Verifica se o resultado é do código de solicitação correto e se foi bem-sucedido
         if (requestCode == PICKFILE_RESULT_CODE && resultCode == RESULT_OK) {
+
             // Obtém o caminho do arquivo selecionado
-
-
             filePath = data.getData().getPath();
 
             // Exibe o caminho do arquivo selecionado em um TextView
@@ -99,17 +95,28 @@ public class MostrarDadosExcel extends AppCompatActivity {
         }
     }
 
-    private void readExcelData(String filePath) {
+    private List<String> readExcelData(String filePath) {
+        List<String> excelDataList = null;
         try {
             // Abre o arquivo Excel como uma planilha
             Workbook workbook = WorkbookFactory.create(new File(filePath));
             Sheet sheet = workbook.getSheetAt(0);
 
             // Lê as linhas da planilha e adiciona os dados a um ArrayList
-            List<String> excelDataList = new ArrayList<>();
+            excelDataList = new ArrayList<>();
+
+            int i = 0;
             for (Row row : sheet) {
+
+                if (i > 5){
+                    break;
+                }
+
+                i++;
+
                 String rowData = "";
                 for (Cell cell : row) {
+
                     rowData += cell.toString() + "\t";
                 }
                 excelDataList.add(rowData);
@@ -119,9 +126,57 @@ public class MostrarDadosExcel extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, excelDataList);
             ListView listView = (ListView) findViewById(R.id.listView);
             listView.setAdapter(adapter);
+            coletaDadosExcelpublic((ArrayList<String>) excelDataList);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        return excelDataList;
     }
+    public void coletaDadosExcelpublic(ArrayList<String> excelDataList) {
+
+        String distrito, localidade, comunidade, pl,pa, numero;
+
+        Cliente.UserPl userPl =  new Cliente.UserPl();
+
+        Cliente cliente = new Cliente();
+
+        HashMap<String, String> map = new HashMap<>();
+
+        for (int i=1; i<= excelDataList.size(); i++){
+
+            String celula = excelDataList.get(i);
+
+            distrito = celula.split("\t")[0];
+            localidade = celula.split("\t")[1];
+            comunidade = celula.split("\t")[2];
+            pl = celula.split("\t")[3];
+            pa = celula.split("\t")[4];
+            numero = celula.split("\t")[10];
+
+            userPl.setDistrito(distrito);
+            userPl.setLocalidade(localidade);
+            userPl.setComunidade(comunidade);
+            userPl.setPhone(numero);
+            userPl.setNome(pl);
+
+            cliente.setNome(pa);
+            cliente.setComunidade(comunidade);
+            cliente.setLocalidade(localidade);
+            cliente.setDistrito(distrito);
+            cliente.setNumero(numero);
+
+            Toast.makeText(getApplicationContext(),pl.toString(),Toast.LENGTH_LONG).show();
+
+            if (!map.containsKey(pl)){
+                DatabaseHelper.addUserPl(userPl);
+            }
+
+            DatabaseHelper.addClientFromExcel(cliente);
+
+            map.put(pl,"");
+        }
+    }
+
+
 }

@@ -455,12 +455,20 @@ public class DatabaseHelper extends AppCompatActivity{
         databaseReference.child("usuarios").child(key).setValue(u);
     }
 
+    public static void addClientFromExcel(Cliente c){
+        String key = getSha();
+
+        databaseReference.child("clientes").child(key).setValue(c);
+    }
+
     public static void addCliente(Cliente c){
 
         String key = getSha();
         databaseReference.child("clientes").child(key).setValue(c);
+
         databaseReference.child("clientes").child(key).child("pl").child("nome").setValue(SplashScreen.currentUser.getNome());
         databaseReference.child("clientes").child(key).child("pl").child("phone").setValue(SplashScreen.currentUser.getPhone());
+
     }
 
     public static ArrayList<Cultura> getCulturas(){
