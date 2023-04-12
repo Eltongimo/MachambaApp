@@ -84,8 +84,6 @@ public class MostrarDadosExcel extends AppCompatActivity {
 
             String fileName = data.getData().toString().split("Download%2F")[1];
 
-            System.out.println("MY FILE NAME =>>>>>>>>>>" + fileName);
-
             String a = Environment.getExternalStorageDirectory().getPath()+"/Download/"+fileName;
             // Lê os dados do arquivo Excel e os exibe em um ListView
             readExcelData(a);
@@ -105,18 +103,10 @@ public class MostrarDadosExcel extends AppCompatActivity {
             // Lê as linhas da planilha e adiciona os dados a um ArrayList
             excelDataList = new ArrayList<>();
 
-            int i = 0;
             for (Row row : sheet) {
-
-                if (i > 5){
-                    break;
-                }
-
-                i++;
 
                 String rowData = "";
                 for (Cell cell : row) {
-
                     rowData += cell.toString() + "\t";
                 }
                 excelDataList.add(rowData);
@@ -146,6 +136,7 @@ public class MostrarDadosExcel extends AppCompatActivity {
         for (int i=1; i<= excelDataList.size(); i++){
 
             String celula = excelDataList.get(i);
+            String password = "";
 
             distrito = celula.split("\t")[0];
             localidade = celula.split("\t")[1];
@@ -153,20 +144,26 @@ public class MostrarDadosExcel extends AppCompatActivity {
             pl = celula.split("\t")[3];
             pa = celula.split("\t")[4];
             numero = celula.split("\t")[10];
+            password = celula.split("\t")[11];
+
+            numero = numero.replaceAll("\\.", "");
+            numero = numero.replaceAll("E", "");
+            password = password.replaceAll("\\.","");
 
             userPl.setDistrito(distrito);
             userPl.setLocalidade(localidade);
             userPl.setComunidade(comunidade);
-            userPl.setPhone(numero);
+            userPl.setPhone(numero+"");
             userPl.setNome(pl);
+            userPl.setSenha(password);
 
             cliente.setNome(pa);
+            cliente.setNomePl(pl);
+            cliente.setNumeroPl(numero);
             cliente.setComunidade(comunidade);
             cliente.setLocalidade(localidade);
             cliente.setDistrito(distrito);
             cliente.setNumero(numero);
-
-            Toast.makeText(getApplicationContext(),pl.toString(),Toast.LENGTH_LONG).show();
 
             if (!map.containsKey(pl)){
                 DatabaseHelper.addUserPl(userPl);

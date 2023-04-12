@@ -4,7 +4,29 @@ import android.net.Uri;
 
 public class Cliente {
     private String nome, apelido, numero, ano, etnia, genero, key;
-    private String distrito, localidade, comunidade,posto;
+    private String distrito;
+    private String localidade;
+    private String comunidade;
+    private String posto;
+    private String nomePl;
+
+    public String getNomePl() {
+        return nomePl;
+    }
+
+    public void setNomePl(String nomePl) {
+        this.nomePl = nomePl;
+    }
+
+    public String getNumeroPl() {
+        return numeroPl;
+    }
+
+    public void setNumeroPl(String numeroPl) {
+        this.numeroPl = numeroPl;
+    }
+
+    private String numeroPl;
     private String image, documento;
 
     public String getDocumento() {
@@ -18,7 +40,6 @@ public class Cliente {
         return key;
     }
 
-    public UserPl pl = new UserPl();
 
     public String getImage() {
         return image;
@@ -72,7 +93,7 @@ public class Cliente {
                    String numero, String ano,
                    String genero, String etnia,
                    String distrito, String localidade,
-                   String comunidade, String posto,String image, String documento
+                   String comunidade, String posto,String image, String documento, String nomePl, String numeroPl
     ) {
         this.image = image;
         this.nome = nome;
@@ -86,6 +107,9 @@ public class Cliente {
         this.comunidade = comunidade;
         this.posto = posto;
         this.documento = documento;
+        this.numeroPl = "";
+        this.nomePl="";
+
     }
 
     public String getGenero() {

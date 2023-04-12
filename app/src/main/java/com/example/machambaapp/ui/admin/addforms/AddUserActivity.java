@@ -176,7 +176,7 @@ public class AddUserActivity extends AppCompatActivity {
                         String posto = autoCompletePostoAdministrativo.getText().toString();
                         Cliente cliente = new Cliente(nome,apelido,phone,
                                 new String(numberPickerAno.getValue()+""),
-                                gen, et,distrito,localidade, posto,comunidade,"", "" );
+                                gen, et,distrito,localidade, posto,comunidade,"", "","","" );
                         uploadImageDoc(cliente.getNome()+"-"+cliente.getApelido(),cliente);
 
                         uploadImage(cliente.getNome()+"-"+cliente.getApelido(),cliente);
