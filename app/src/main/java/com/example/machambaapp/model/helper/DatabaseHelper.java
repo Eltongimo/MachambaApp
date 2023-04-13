@@ -1,5 +1,7 @@
 package com.example.machambaapp.model.helper;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +13,7 @@ import com.example.machambaapp.model.datamodel.Distrito;
 import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.datamodel.Localidade;
+import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.datamodel.Posto;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -450,6 +453,30 @@ public class DatabaseHelper extends AppCompatActivity{
         return e;
     }
 
+    private static Formulario getForm(){
+
+        Formulario f = new Formulario();
+        ArrayList<Pergunta> perguntas = new ArrayList<>();
+
+        databaseReference.child("formularios").child("perguntas").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Formulario f = new Formulario();
+                for (DataSnapshot userSnapshot: snapshot.getChildren()) {
+                    Pergunta p = userSnapshot.child("perguntas").getValue(Pergunta.class);
+                    perguntas.add(p);
+                }
+
+                f.setPerguntas(perguntas);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return f;
+    }
     public static void addUserPl(Cliente.UserPl u){
         String key = getSha();
         databaseReference.child("usuarios").child(key).setValue(u);
@@ -457,7 +484,6 @@ public class DatabaseHelper extends AppCompatActivity{
 
     public static void addClientFromExcel(Cliente c){
         String key = getSha();
-
         databaseReference.child("clientes").child(key).setValue(c);
     }
 
@@ -465,10 +491,8 @@ public class DatabaseHelper extends AppCompatActivity{
 
         String key = getSha();
         databaseReference.child("clientes").child(key).setValue(c);
-
         databaseReference.child("clientes").child(key).child("pl").child("nome").setValue(SplashScreen.currentUser.getNome());
         databaseReference.child("clientes").child(key).child("pl").child("phone").setValue(SplashScreen.currentUser.getPhone());
-
     }
 
     public static ArrayList<Cultura> getCulturas(){

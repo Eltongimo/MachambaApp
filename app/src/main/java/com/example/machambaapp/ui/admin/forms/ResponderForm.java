@@ -4,6 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +21,7 @@ import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.datamodel.Pergunta;
+import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,56 +29,77 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResponderForm extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
     private CardView idRespForm;
     private ProgressDialog loadingBar;
-    private void getForm(){
+    private EditText edtResposta;
+    private CheckBox checkBox;
+    private RadioGroup radioGroup;
+    private ImageView imgResposta;
+    ArrayList<Pergunta> perguntas = new ArrayList<>();
+    TextView txtPergunta;
+    Button btnResponder;
 
-        databaseReference.child("formularios").child("perguntas").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Formulario f = new Formulario();
-                ArrayList<Pergunta> perguntas = new ArrayList<>();
+    private int perguntaAtual = 0;
 
-                for (DataSnapshot userSnapshot: snapshot.getChildren()) {
-                    Pergunta p = userSnapshot.child("perguntas").getValue(Pergunta.class);
-                    perguntas.add(p);
-                }
-
-                f.setPerguntas(perguntas);
-                SplashScreen.formularioDeResposta = f;
-                loadingBar.dismiss();
-                idRespForm.setVisibility(View.INVISIBLE);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_responder_form);
-        idRespForm = (CardView) findViewById(R.id.idRespForm);
 
-        loadingBar = new ProgressDialog(this);
+        btnResponder = findViewById(R.id.btnNext);
+        txtPergunta = findViewById(R.id.txtPergunta);
+        edtResposta = findViewById(R.id.edtResposta);
+        checkBox = findViewById(R.id.checkBox);
+        radioGroup = findViewById(R.id.radioGroup);
+        imgResposta = findViewById(R.id.imgResposta);
 
-        loadingBar.setTitle("Carregando Formulário");
-        loadingBar.setMessage("Aguarde por favor!");
-        loadingBar.setCanceledOnTouchOutside(false);
-        loadingBar.show();
+        ArrayList<Pergunta> perguntas = SplashScreen.formulario.getPerguntas();
+        Pergunta p = perguntas.get(SplashScreen.indexForm);
 
-        getForm();
+        // Exibir a pergunta na tela
+        txtPergunta.setText(p.getNomeDaPergunta());
 
-        startActivity(new Intent(getApplicationContext(), ResponderForm.class));
+        // Obter a resposta do usuário com base no tipo de pergunta
+
+        System.out.println(p.getNomeDaPergunta());
+
+        switch (p.getTipoPergunta()) {
+            case "EditText":
+                edtResposta.setVisibility(View.VISIBLE);
+
+
+//            case "Radio":
+//                    RadioGroup rgRespostas = findViewById(R.id.rgRespostas);
+//                    int opcaoSelecionadaId = rgRespostas.getCheckedRadioButtonId();
+//                    if (opcaoSelecionadaId != -1) {
+//                        RadioButton rbOpcaoSelecionada = findViewById(opcaoSelecionadaId);
+//                        rgRespostas.clearCheck();
+//                    }
+//                    break;
+               /* case "Checkbox":
+                    LinearLayout llRespostas = findViewById(R.id.llRespostas);
+                    for (int i = 0; i < llRespostas.getChildCount(); i++) {
+                        View view = llRespostas.getChildAt(i);
+                        if (view instanceof CheckBox) {
+                            CheckBox cbResposta = (CheckBox) view;
+                            if (cbResposta.isChecked()) {
+                                resposta += cbResposta.getText().toString() + ", ";
+                                cbResposta.setChecked(false);
+                            }
+                        }*/
+                   // }
+
+        btnResponder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
-}
+}}

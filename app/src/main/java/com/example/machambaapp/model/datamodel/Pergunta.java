@@ -22,6 +22,12 @@ public class Pergunta {
         this.nomeDaPergunta = nomeDaPergunta;
     }
 
+    public Pergunta(String nomeDaPergunta, String tipo) {
+
+        this.nomeDaPergunta = nomeDaPergunta;
+        this.tipoPergunta = tipo;
+    }
+
     public Resposta getResposta() {
         return resposta;
     }
