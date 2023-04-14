@@ -6,7 +6,8 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+
+import com.example.machambaapp.ui.clientes.ActivitySelectClient;
 
 public class ActivitySelect extends AppCompatActivity {
     CardView onClickVisitaLivre;

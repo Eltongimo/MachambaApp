@@ -70,9 +70,16 @@ public class SplashScreen extends AppCompatActivity {
 
         ArrayList<Pergunta> ps = new ArrayList<>();
 
-        ps.add(new Pergunta("?", "EditText"));
-        ps.add(new Pergunta("?", "CheckBox"));
-        ps.add(new Pergunta("?", "Radio"));
+        ps.add(new Pergunta("kjandjnaskdnakjsdnkajndakjanskdjnakdsnaksdjnakdnakjd", "EditText"));
+        ps.add(new Pergunta("aksndkajdsnkajsndkjansdkajndkasdkj?", "CheckBox"));
+        ps.add(new Pergunta("nakjdsnkajndsksajndkajndsknaskdjasnd?", "RadioGroup"));
+        ps.add(new Pergunta("nakjdsnkajndsksajndkajndsknaskdjasnd?", "ImageView"));
+        ps.add(new Pergunta("nakjdsnkajndsksajndkajndsknaskdjasnd?", "DatePicker"));
+        ps.add(new Pergunta("nakjdsnkajndsksajndkajndsknaskdjasnd?", "NumberPicker"));
+
+
+
+
 
         formulario.setPerguntas(ps);
 

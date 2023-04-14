@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/fundo"
     android:layout_height="match_parent"
-    tools:context=".ui.admin.views.ActivityViewAddCultura">
+    android:background="@drawable/fundo"
+    tools:context=".ui.clientes.SelecionarCulturas">
 
     <androidx.appcompat.widget.ActionMenuView
 
@@ -48,27 +48,7 @@
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/list_culturas">
+        tools:listitem="@layout/cultura_select">
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-
-        android:layout_marginBottom="18dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="22dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:width="300dp"
-        app:cornerRadius="15sp"
-        android:padding="12sp"
-        android:textSize="16dp"
-        android:fontFamily="@font/poppinsbold"
-        android:backgroundTint="#48b971"
-        android:text="Adicionar Cultura"
-        android:id="@+id/addCultura"/>
 </RelativeLayout>

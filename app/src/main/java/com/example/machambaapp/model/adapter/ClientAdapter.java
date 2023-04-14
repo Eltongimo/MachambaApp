@@ -13,10 +13,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.machambaapp.ActivitySelectClient;
+import com.example.machambaapp.ui.clientes.ActivitySelectClient;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
+import com.example.machambaapp.ui.clientes.SelecionarCulturas;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -64,7 +65,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
             @Override
             public void onItemClick(View view, int position) {
 
-                 Intent intent = new Intent(mContext, ActivitySelectClient.class);
+                 Intent intent = new Intent(mContext, SelecionarCulturas.class);
                  intent.putExtra("fullName", client.getNome());
                  mContext.startActivity(intent);
             }

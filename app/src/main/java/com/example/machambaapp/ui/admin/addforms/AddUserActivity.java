@@ -32,7 +32,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.machambaapp.ActivitySelectClient;
+import com.example.machambaapp.ui.clientes.ActivitySelectClient;
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.helper.DatabaseHelper;

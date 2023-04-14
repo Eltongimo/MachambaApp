@@ -1,4 +1,4 @@
-package com.example.machambaapp;
+package com.example.machambaapp.ui.clientes;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.machambaapp.R;
+import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.adapter.ClientAdapter;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
@@ -78,11 +80,10 @@ public class ActivitySelectClient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_client);
         getCliensFromDatabase();
+
         recyclerView = findViewById(R.id.idRecyclerviewClients2);
 
         distrito = (TextView) findViewById(R.id.nomeDistrito);
-
-
   }
 
     private void setAdapter(){

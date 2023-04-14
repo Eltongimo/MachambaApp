@@ -35,9 +35,7 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
     public CulturaAdapter(Context context, ArrayList<Cultura> culturas){
         mContext = context;
         mCultura = culturas;
-
     }
-
 
     @NonNull
     @Override
@@ -115,7 +113,7 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private final TextView cultura;
+        final TextView cultura;
         private  final TextView chave;
         private final ImageView apagar;
         private final ImageView editar;
@@ -128,9 +126,6 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
             apagar = itemView.findViewById(R.id.apagar);
             editar = itemView.findViewById(R.id.editar);
             chave = itemView.findViewById(R.id.chave);
-
-
-
             itemView.setOnClickListener(this);
         }
 
