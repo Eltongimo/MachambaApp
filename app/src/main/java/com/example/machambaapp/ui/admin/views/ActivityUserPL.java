@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.machambaapp.ActivityUserRegister;
 import com.example.machambaapp.Cultura;
@@ -20,6 +21,8 @@ import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.adapter.UserPlAdapter;
 import com.example.machambaapp.model.datamodel.Cliente;
+import com.example.machambaapp.model.datamodel.Formulario;
+import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.helper.CollectionOperations;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.firebase.database.DataSnapshot;

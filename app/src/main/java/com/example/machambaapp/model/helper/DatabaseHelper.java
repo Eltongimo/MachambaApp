@@ -21,9 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
@@ -453,6 +455,39 @@ public class DatabaseHelper extends AppCompatActivity{
         return e;
     }
 
+    public static ArrayList<Formulario> getForms(){
+
+        ArrayList<Formulario> forms = new ArrayList<>();
+
+        databaseReference.child("formularios").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Formulario f = new Formulario();
+                ArrayList<Pergunta> per = new ArrayList<>();
+
+                for (DataSnapshot formularioSnap : snapshot.getChildren()){
+                    for (DataSnapshot perguntasSnap : formularioSnap.getChildren()){
+                        for (DataSnapshot p : perguntasSnap.getChildren()){
+                            String nomePergunta = p.child("nomeDaPergunta").getValue(String.class);
+                            String tipoPergunta = p.child("tipoPergunta").getValue(String.class);
+                            per.add(new Pergunta(nomePergunta,tipoPergunta));
+
+                        }
+                        f = new Formulario();
+                        f.setPerguntas(per);
+                    }
+                    per = new ArrayList<>();
+                    forms.add(f);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return forms;
+    }
     private static Formulario getForm(){
 
         Formulario f = new Formulario();
@@ -466,7 +501,6 @@ public class DatabaseHelper extends AppCompatActivity{
                     Pergunta p = userSnapshot.child("perguntas").getValue(Pergunta.class);
                     perguntas.add(p);
                 }
-
                 f.setPerguntas(perguntas);
             }
 

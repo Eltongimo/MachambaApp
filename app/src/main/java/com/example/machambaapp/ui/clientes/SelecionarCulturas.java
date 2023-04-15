@@ -8,12 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.widget.Button;
 
 import com.example.machambaapp.Cultura;
 import com.example.machambaapp.R;
-import com.example.machambaapp.model.adapter.CulturaAdapter;
-import com.example.machambaapp.model.adapter.SelectAdapter;
+import com.example.machambaapp.model.adapter.SelectCulturaAdapter;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -70,7 +68,7 @@ public class SelecionarCulturas extends AppCompatActivity {
     }
     private void setAdapter(){
         RecyclerView recyclerView = findViewById(R.id.idViewCulturaR);
-        SelectAdapter selectAdapter = new SelectAdapter(this, culturas);
+        SelectCulturaAdapter selectAdapter = new SelectCulturaAdapter(this, culturas);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         loadingBar.dismiss();

@@ -61,7 +61,6 @@ public class ResponderForm extends AppCompatActivity {
         txtPergunta = findViewById(R.id.nomePergunta);
         btnResponder = findViewById(R.id.btnNext);
 
-
         if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size()) {
 
             ArrayList<Pergunta> perguntas = SplashScreen.formulario.getPerguntas();
@@ -156,9 +155,9 @@ public class ResponderForm extends AppCompatActivity {
                               container.addView(datePicker);
                 break;
             case "NumberPicker": numberPicker = new NumberPicker(getApplicationContext());
-                                numberPicker.setMinValue(0);
-                                numberPicker.setMaxValue(1000);
-                                container.addView(numberPicker);
+                                 numberPicker.setMinValue(0);
+                                 numberPicker.setMaxValue(1000);
+                                 container.addView(numberPicker);
 
                 break;
 

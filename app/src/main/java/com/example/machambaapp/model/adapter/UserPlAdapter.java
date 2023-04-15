@@ -155,7 +155,7 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
 
         @Override
         public void onClick(View view){
-            this.mItemClickListener.onItemClick(view, getAdapterPosition());
+         //   this.mItemClickListener.onItemClick(view, getAdapterPosition());
         }
 
         public void setItemClickListener(IItemClickListener itemClickListener){

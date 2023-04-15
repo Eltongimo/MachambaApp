@@ -1,43 +1,41 @@
 package com.example.machambaapp.model.adapter;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.machambaapp.ActivityPageStart;
 import com.example.machambaapp.Cultura;
 import com.example.machambaapp.R;
-import com.example.machambaapp.model.helper.DatabaseHelper;
+import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
-import com.example.machambaapp.model.update.UpdateCultura;
+import com.example.machambaapp.ui.admin.forms.ResponderForm;
 
 import java.util.ArrayList;
 
-public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.ViewHolder> {
+public class SelectCulturaAdapter extends RecyclerView.Adapter<SelectCulturaAdapter.ViewHolder> {
 
     private final Context mContext;
     private final ArrayList<Cultura> mCultura;
 
-    public SelectAdapter(Context context, ArrayList<Cultura> culturas){
+    public SelectCulturaAdapter(Context context, ArrayList<Cultura> culturas){
         mContext = context;
         mCultura = culturas;
     }
 
     @NonNull
     @Override
-    public SelectAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SelectCulturaAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cultura_select, parent, false);
-        return new SelectAdapter.ViewHolder(view);
+        return new SelectCulturaAdapter.ViewHolder(view);
     }
 
     @Override
@@ -51,7 +49,9 @@ public class SelectAdapter extends RecyclerView.Adapter<SelectAdapter.ViewHolder
         holder.setItemClickListener(new IItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                Intent intent = new Intent(mContext, ResponderForm.class);
+                intent.putExtra("cultura", cultura.getCultura());
+                mContext.startActivity(intent);
             }
         });
     }
