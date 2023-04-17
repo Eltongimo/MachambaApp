@@ -11,6 +11,7 @@ import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.ui.admin.forms.ResponderForm;
+import com.example.machambaapp.ui.clientes.ActivitySelectClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,12 +73,81 @@ public class SplashScreen extends AppCompatActivity {
 
         ArrayList<Pergunta> ps = new ArrayList<>();
 
-        ps.add(new Pergunta("kjandjnaskdnakjsdnkajndakjanskdjnakdsnaksdjnakdnakjd", "EditText"));
-        ps.add(new Pergunta("aksndkajdsnkajsndkjansdkajndkasdkj?", "CheckBox"));
-        ps.add(new Pergunta("nakjdsnkajndsksajndkajndsknaskdjasnd?", "RadioGroup"));
-        ps.add(new Pergunta("nakjdsnkajndsksajndkajndsknaskdjasnd?", "ImageView"));
-        ps.add(new Pergunta("nakjdsnkajndsksajndkajndsknaskdjasnd?", "DatePicker"));
-        ps.add(new Pergunta("nakjdsnkajndsksajndkajndsknaskdjasnd?", "NumberPicker"));
+        ArrayList<String> generos = new ArrayList<>();
+        generos.add("Masculino");
+        generos.add("Femenino");
+
+        Pergunta p = new Pergunta();
+        p.setNomeDaPergunta("Genero ?");
+        p.setTipoPergunta("RadioGroup");
+        p.setOpcoes(generos);
+
+        ps.add(p);
+
+        p = new Pergunta();
+        p.setNomeDaPergunta("Registar coordenadas geograficas");
+        p.setTipoPergunta("EditText");
+
+        ps.add(p);
+
+        p = new Pergunta();
+
+        p.setNomeDaPergunta("\n Canteiro \n \n Vamos comecar a avaliacao dum canteiro. Na pergunta seguinte pode selecionar uma ou mais culturas se o canteiro tiver consorciacao.");
+        p.setTipoPergunta("ImageView");
+
+        ps.add(p);
+
+        p = new Pergunta();
+
+        p.setNomeDaPergunta("Indicar a largura do Canteiro (metros)");
+        p.setTipoPergunta("NumberPicker");
+
+        ps.add(p);
+
+        p.setNomeDaPergunta("Indicar o cumprimento do Canteiro (metros)");
+        p.setTipoPergunta("NumberPicker");
+
+        ps.add(p);
+
+        p = new Pergunta();
+
+        p.setNomeDaPergunta("Selecionar as culturas do canteiro");
+        p.setTipoPergunta("CheckBox1");
+        ps.add(p);
+
+        p = new Pergunta();
+
+        p.setNomeDaPergunta("\nVamos a analizar um canteiro de metros por metros que tem plantas de\n" +
+                "\n"+ " O canteiro tem uma camada de estrume e uma de cobertura morta?"
+        );
+
+        p.setNomeDaPergunta("O canteiro tem uma camada de estrume e uma de cobertura morta?\n");
+        p.setTipoPergunta("CheckBox2");
+        ps.add(p);
+
+        p = new Pergunta();
+        p.setNomeDaPergunta("Medir a umidade do canteiro em varios pontos, perto da base das plantas. A humidade pode variar dependendo da area examinada");
+        p.setTipoPergunta("RadioGroup1");
+
+        ps.add(p);
+
+        p = new Pergunta();
+        p.setNomeDaPergunta("Medir a umidade do canteiro em varios pontos, perto da base das plantas. A humidade pode variar dependendo da area examinada");
+        p.setTipoPergunta("RadioGroup1");
+
+        ps.add(p);
+
+        p = new Pergunta();
+        p.setNomeDaPergunta("Foi aplicado Bokashi neste canteiro?");
+        p.setTipoPergunta("RadioGroup2");
+
+        ps.add(p);
+
+        p = new Pergunta();
+        p.setNomeDaPergunta("O produtor esta a aplicar pesticida botanico neste canteiro?");
+        p.setTipoPergunta("RadioGroup2");
+
+        ps.add(p);
 
 
         formulario.setPerguntas(ps);
@@ -87,7 +157,7 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
                 startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
-                //startActivity(new Intent(SplashScreen.this, ResponderForm.class));
+                //startActivity(new Intent(SplashScreen.this, ActivitySelectClient.class));
                 finish();
             }
         }, 2000);

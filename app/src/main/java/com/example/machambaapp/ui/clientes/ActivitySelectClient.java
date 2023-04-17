@@ -57,6 +57,10 @@ public class ActivitySelectClient extends AppCompatActivity {
                     String image = clientesSnap.child("image").getValue(String.class);
                     String documento = clientesSnap.child("documento").getValue(String.class);
 
+//                    if (nomePl.equals("Albino")){
+//                        clients.add(new Cliente(nome,apelido,numero,ano,genero, etnia,d,loc, pt,com,image, documento, nomePl, numeroPl));
+//                    }
+
                     if (nomePl.equals(SplashScreen.currentUser.getNome())){
                         clients.add(new Cliente(nome,apelido,numero,ano,genero, etnia,d,loc, pt,com,image, documento, nomePl, numeroPl));
                     }
