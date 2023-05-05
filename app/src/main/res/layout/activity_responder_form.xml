@@ -2,49 +2,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/fundo"
+    android:background="@drawable/fundoform"
     android:layout_height="match_parent"
     tools:context=".ui.admin.forms.ResponderForm">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:padding="16dp"
         android:orientation="vertical">
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/idCard"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:cardCornerRadius="30dp"
+            android:layout_marginLeft="290dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/material_dynamic_tertiary90"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imagePL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img" />
+        </androidx.cardview.widget.CardView>
+
         <TextView
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="Questions"
+            android:textColor="@color/white"
             android:fontFamily="@font/poppinssemibold"
             android:id="@+id/nomePergunta" />
 
         <LinearLayout
+
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="150dp"
             android:orientation="vertical" />
 
-        <Button
-            android:id="@+id/btnNext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="20dp"
-            android:width="300dp"
-            android:backgroundTint="@color/cor_of_botton"
-            android:fontFamily="@font/poppinsbold"
-            android:gravity="center"
-            android:padding="12sp"
-            android:text="Proxima Pergunta"
-            android:textSize="16dp"
-            app:cornerRadius="15sp" />
-    </LinearLayout>
+        <VideoView
+            android:id="@+id/videoview"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:visibility="invisible"
+            />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:width="300dp"
+                android:backgroundTint="@color/cor_of_botton"
+                android:fontFamily="@font/poppinsbold"
+                android:gravity="center"
+                android:padding="12sp"
+                android:text="Proxima Pergunta"
+                android:textSize="16dp"
+                app:cornerRadius="15sp" />
+
+        </LinearLayout>
 
 </ScrollView>

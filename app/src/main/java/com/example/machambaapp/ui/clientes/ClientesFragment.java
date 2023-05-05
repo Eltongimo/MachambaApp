@@ -43,7 +43,6 @@ public class ClientesFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_clientes, container, false);
         CardView cardViewVisita=view.findViewById(R.id.idCardVisitaF);
         CardView cardViewClientes=view.findViewById(R.id.idCardClientF);
-
         imageProfile = view.findViewById(R.id.imagePL);
         name = view.findViewById(R.id.namePL);
 

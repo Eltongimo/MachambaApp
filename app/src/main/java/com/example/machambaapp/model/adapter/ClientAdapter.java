@@ -17,6 +17,7 @@ import com.example.machambaapp.ui.clientes.ActivitySelectClient;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
+import com.example.machambaapp.ui.clientes.SelecionarCanteiroAlfobre;
 import com.example.machambaapp.ui.clientes.SelecionarCulturas;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -65,7 +66,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
             @Override
             public void onItemClick(View view, int position) {
 
-                 Intent intent = new Intent(mContext, SelecionarCulturas.class);
+                 Intent intent = new Intent(mContext, SelecionarCanteiroAlfobre.class);
                  intent.putExtra("fullName", client.getNome());
                  mContext.startActivity(intent);
             }

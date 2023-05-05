@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Pergunta {
     private String nomeDaPergunta;
     private Resposta resposta;
-
     private ArrayList<String> opcoes;
     private String tipoPergunta;
     public String getTipoPergunta() {
         return tipoPergunta;
     }
 
+    public PerguntaCondicional conditionalQuestion;
     public void setTipoPergunta(String tipoPergunta) {
         this.tipoPergunta = tipoPergunta;
     }
@@ -20,6 +20,7 @@ public class Pergunta {
         return opcoes;
     }
 
+    public ArrayList<Pergunta> perguntasCondicionais;
     public void setOpcoes(ArrayList<String> opcoes) {
         this.opcoes = opcoes;
     }
@@ -29,13 +30,30 @@ public class Pergunta {
         this.nomeDaPergunta = "";
     }
 
+    public ArrayList<Pergunta> getPerguntasCondicionais() {
+        return perguntasCondicionais;
+    }
+
+    public void setPerguntasCondicionais(ArrayList<Pergunta> perguntasCondicionais) {
+        this.perguntasCondicionais = perguntasCondicionais;
+    }
+
     public Pergunta(String nomeDaPergunta) {
         this.opcoes = new ArrayList<>();
         this.nomeDaPergunta = nomeDaPergunta;
+        this.conditionalQuestion = new PerguntaCondicional();
+    }
+
+    public PerguntaCondicional getConditionalQuestion() {
+        return conditionalQuestion;
+    }
+
+    public void setConditionalQuestion(PerguntaCondicional conditionalQuestion) {
+        this.conditionalQuestion = conditionalQuestion;
     }
 
     public Pergunta(String nomeDaPergunta, String tipo) {
-
+        this.conditionalQuestion = new PerguntaCondicional();
         this.nomeDaPergunta = nomeDaPergunta;
         this.tipoPergunta = tipo;
     }

@@ -35,23 +35,6 @@ public class CreateForm extends AppCompatActivity {
     RadioGroup radioGroup;
     private boolean canShowFormName = true;
 
-    private void showPossibleAnswers(){
-        String[] options = {"Campo de Texto", "Checkbox", "Radio Button", "Imagem"};
-        for (int i = 0; i < options.length; i++) {
-            RadioButton radioButton = new RadioButton(this);
-            radioButton.setText(options[i]);
-            radioButton.setId(i); // Define um ID único para cada RadioButton
-            radioGroup.addView(radioButton);
-        }
-        tipoRespostaInserido = true;
-        answersInserted = true;
-    }
-
-    private void show(){
-        if (canShowFormName){
-
-        }
-    }
     private EditText editText;
     private Button continuar;
     private boolean tipoRespostaInserido = false;
@@ -59,15 +42,6 @@ public class CreateForm extends AppCompatActivity {
 
     private void showQuestion(){
 
-        if (mostrarPerguntaHint){
-            editText.setHint("Escreva a pergunta ");
-            editText.setText("");
-            mLayout.addView(editText);
-            mostrarPerguntaHint = false;
-        }
-    }
-
-    private void showAnswers(){
         if (mostrarPerguntaHint){
             editText.setHint("Escreva a pergunta ");
             editText.setText("");

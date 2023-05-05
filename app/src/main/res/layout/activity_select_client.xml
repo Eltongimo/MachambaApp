@@ -13,14 +13,30 @@
             android:fontFamily="@font/poppinssemibold"
             android:textColor="@color/white"
             android:text="Selecionar Cliente"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/idCard"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:cardCornerRadius="30dp"
+        android:layout_marginLeft="320dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/material_dynamic_tertiary90"
+        >
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imagePL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img" />
+    </androidx.cardview.widget.CardView>
 
     <androidx.appcompat.widget.SearchView
         android:backgroundTint="@color/white"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="45dp"
         android:background="@drawable/button_sape"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"

@@ -26,6 +26,22 @@
             android:layout_height="wrap_content"/>
 
     </androidx.appcompat.widget.ActionMenuView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/idCard"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:cardCornerRadius="30dp"
+        android:layout_marginLeft="320dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/material_dynamic_tertiary90"
+        >
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imagePL"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img" />
+    </androidx.cardview.widget.CardView>
 
     <androidx.appcompat.widget.SearchView
         android:backgroundTint="@color/white"

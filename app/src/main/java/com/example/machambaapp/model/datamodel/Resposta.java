@@ -6,8 +6,12 @@ public class Resposta {
 
     private String tipoResposta;
     private ArrayList<String> nRespostas;
+    public ArrayList<String> perguntas;
+    public ArrayList<String> respostas;
 
     public Resposta() {
+        perguntas = new ArrayList<>();
+        respostas = new ArrayList<>();
 
     }
 

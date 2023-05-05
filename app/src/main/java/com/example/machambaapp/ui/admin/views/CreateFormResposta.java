@@ -67,6 +67,8 @@ public class CreateFormResposta extends AppCompatActivity {
         addResposta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if (inserirResposta()){
                     startActivity(new Intent(CreateFormResposta.this, CreateFormPergunta.class));
                 }else{

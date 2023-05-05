@@ -34,8 +34,6 @@ public class ActivityLogin extends AppCompatActivity {
         editTextPhone =(EditText) findViewById(R.id.idEditUserName);
         textViewAlert=(TextView) findViewById(R.id.idAlert);
 
-
-
            buttonLogar=(Button) findViewById(R.id.idButtonlogar);
            buttonLogar.setOnClickListener(new View.OnClickListener() {
                @Override
