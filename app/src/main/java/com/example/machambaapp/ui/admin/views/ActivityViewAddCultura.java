@@ -45,9 +45,11 @@ public class ActivityViewAddCultura extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 culturas.clear();
                 for (DataSnapshot comunidadesSnap : snapshot.getChildren()) {
-                    String cultura = comunidadesSnap.child("nome").getValue(String.class);
+                    String cultura = comunidadesSnap.child("cultura").getValue(String.class);
                     String chave = comunidadesSnap.getKey().toString();
-                    culturas.add(new Cultura(cultura, chave));
+                    String imagem = comunidadesSnap.child("imagem").getValue(String.class);
+
+                    culturas.add(new Cultura(cultura, chave, imagem));
                 }
                 Collections.sort(culturas, new Comparator<Cultura>() {
                     @Override

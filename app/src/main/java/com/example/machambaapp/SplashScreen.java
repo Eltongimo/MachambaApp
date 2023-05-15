@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.DatePicker;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.Formulario;
@@ -13,6 +14,9 @@ import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.ui.admin.addforms.AddCultura;
 import com.example.machambaapp.ui.admin.forms.ResponderForm;
 import com.example.machambaapp.ui.clientes.ActivitySelectClient;
+
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +24,7 @@ public class SplashScreen extends AppCompatActivity {
 
     public static ArrayList<String> distritos = DatabaseHelper.getLocation("distritos");
     public static ArrayList<String> provincias = new ArrayList<String>();
-    public static int indexForm = 9;
+    public static int indexForm = 0;
     public static boolean showingConditional = false;
 
     public static View v;
@@ -28,6 +32,7 @@ public class SplashScreen extends AppCompatActivity {
     public static boolean displayPopUp = false;
     public static Pergunta currentQuestion = new Pergunta();
     public static int indexCondicional = 0;
+
     public static Resposta respostas = new Resposta();
 
     public static ArrayList<Formulario> formularios =  DatabaseHelper.getForms();
@@ -57,6 +62,7 @@ public class SplashScreen extends AppCompatActivity {
             localiadades = DatabaseHelper.getLocation("localidades");
             postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
             distritos = DatabaseHelper.getLocation("distritos");
+
         }catch (Exception e){
             System.out.println(e);
         }
@@ -76,9 +82,6 @@ public class SplashScreen extends AppCompatActivity {
         provincias.add("Nampula");
         provincias.add("Cabo Delgado");
         provincias.add("Niassa");
-
-        culturas.add("Mapira");
-        culturas.add("Alface");
 
         formulario =  new Formulario();
 
@@ -170,6 +173,9 @@ public class SplashScreen extends AppCompatActivity {
         p.setOpcoes(opcoes);
         ps.add(p);
 
+
+        // Sobre pesticida Botanico
+
         p = new Pergunta();
         p.setNomeDaPergunta("O produtor esta a aplicar pesticida botanico neste canteiro?");
 
@@ -177,13 +183,20 @@ public class SplashScreen extends AppCompatActivity {
 
         opcoes.add("sim");
         opcoes.add("Não");
+
         p.setOpcoes(opcoes);
 
         p.setTipoPergunta("RadioGroup");
 
+        // ******************************
+
+        // condicional - se o agricultor esta a usar pestiida Botanico
+
         p.setPerguntasCondicionais(new ArrayList<Pergunta>());
 
         Pergunta condicional = new Pergunta();
+        condicional.setNomeDaPergunta("Qual plantas usa ?");
+        condicional.setTipoPergunta("CheckBox");
 
         ArrayList<String> plantas = new ArrayList<>();
 
@@ -199,9 +212,8 @@ public class SplashScreen extends AppCompatActivity {
         plantas.add("Newawi");
         plantas.add("Outra");
 
-        condicional.setTipoPergunta("CheckBox");
-
         condicional.setOpcoes(plantas);
+
         p.perguntasCondicionais.add(condicional);
 
         condicional = new Pergunta();
@@ -211,11 +223,14 @@ public class SplashScreen extends AppCompatActivity {
 
         p.perguntasCondicionais.add(condicional);
 
+        condicional = new Pergunta();
+
         condicional.setNomeDaPergunta("Quantos dias consecutivos pulveriza");
         condicional.setTipoPergunta("EditText");
 
         p.perguntasCondicionais.add(condicional);
 
+        condicional = new Pergunta();
         condicional.setNomeDaPergunta("Quantos dias de pausa entre pulverizaçoes ?");
         condicional.setTipoPergunta("EditText");
 
@@ -223,14 +238,77 @@ public class SplashScreen extends AppCompatActivity {
 
         ps.add(p);
 
+        p = new Pergunta();
+
+        p.setNomeDaPergunta("Indicar data do transplante para alface");
+        p.setTipoPergunta("DatePicker");
+        ps.add(p);
+
+
+        p = new Pergunta();
+        p.setNomeDaPergunta("Indicar a fase de crescimento do Alface");
+        p.setTipoPergunta("Slider");
+
+        ps.add(p);
+
+        p = new Pergunta();
+        p.setNomeDaPergunta("Indicar o espaçamento entre as plantas ");
+        p.setTipoPergunta("EditText");
+
+        ps.add(p);
+
+        p = new Pergunta();
+        p.setNomeDaPergunta("Indicar o espaçamento entre linhas para alface em centimetros");
+        p.setTipoPergunta("NumberPicker");
+
+        ps.add(p);
+
+        p = new Pergunta();
+        p.setNomeDaPergunta("Quais são as inhas de alface em centimetros ?");
+        p.setTipoPergunta("NumberPicker");
+
+        ps.add(p);
+
+        p = new Pergunta();
+        p.setNomeDaPergunta("As plantas de alface tem incidencia de pragas e doenças?");
+        p.setTipoPergunta("RadioGroup");
+
+        ArrayList<String> op = new ArrayList<>();
+        op.add("Sim");
+        op.add("Não");
+        p.setOpcoes(op);
+
+        p.setCondicaoTexto("Sim");
+
+        Pergunta per = new Pergunta();
+        per.setNomeDaPergunta("Tirar foto da praga ou doenca");
+        per.setTipoPergunta("ImageView");
+
+        ArrayList<Pergunta> perguntasCondicionais = new ArrayList<>();
+        perguntasCondicionais.add(per);
+
+        per = new Pergunta();
+        per.setNomeDaPergunta("Esta praga ou doenca e' muito diffusa?");
+        per.setTipoPergunta("RadioGroup");
+
+        ArrayList<String> oo = new ArrayList<>();
+        oo.add("Sim");
+        oo.add("Não");
+
+        per.setOpcoes(oo);
+
+        perguntasCondicionais.add(per);
+
+        p.setPerguntasCondicionais(perguntasCondicionais);
+        ps.add(p);
+
         formulario.setPerguntas(ps);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
-               // startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
-                startActivity(new Intent(SplashScreen.this, ResponderForm.class));
+                startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
+              //  startActivity(new Intent(SplashScreen.this, ResponderForm.class));
                 finish();
             }
         }, 2000);

@@ -23,14 +23,6 @@ public class SelecionarCanteiroAlfobre extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selecionar_canteiro_alfobre);
         canteiro = findViewById(R.id.cardCanteiro);
-        cardAlfobre = findViewById(R.id.cardAlfobre);
-
-        cardAlfobre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Ainda não implementado", Toast.LENGTH_LONG).show();
-            }
-        });
 
         canteiro.setOnClickListener(new View.OnClickListener() {
             @Override

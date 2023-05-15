@@ -82,7 +82,8 @@ public class SelecionarCulturas extends AppCompatActivity {
                 for (DataSnapshot comunidadesSnap : snapshot.getChildren()) {
                     String cultura = comunidadesSnap.child("nome").getValue(String.class);
                     String chave = comunidadesSnap.getKey().toString();
-                    culturas.add(new Cultura(cultura, chave));
+                    String imagem = comunidadesSnap.child("image").getValue(String.class);
+                    culturas.add(new Cultura(cultura, chave,imagem));
                 }
                 Collections.sort(culturas, new Comparator<Cultura>() {
                     @Override

@@ -1,7 +1,5 @@
 package com.example.machambaapp.model.helper;
 
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,11 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
@@ -250,7 +246,9 @@ public class DatabaseHelper extends AppCompatActivity{
 
                     if (cultura.toLowerCase().contains(query.toLowerCase())){
                         String chave = comunidadesSnap.getKey().toString();
-                        c.add(new Cultura(cultura, chave));
+                        String imagem=comunidadesSnap.child("image").getValue(String.class);;
+
+                        c.add(new Cultura(cultura, chave,imagem));
                     }
                  }
                 Collections.sort(c, new Comparator<Cultura>() {
@@ -515,6 +513,10 @@ public class DatabaseHelper extends AppCompatActivity{
         String key = getSha();
         databaseReference.child("usuarios").child(key).setValue(u);
     }
+    public static void addCultura(Cultura c){
+        String key = getSha();
+        databaseReference.child("culturas").child(key).setValue(c);
+    }
 
     public static void addClientFromExcel(Cliente c){
         String key = getSha();
@@ -540,7 +542,7 @@ public class DatabaseHelper extends AppCompatActivity{
                 culturas.clear();
                 for (DataSnapshot culturasSnap : snapshot.getChildren()) {
                     String nomeCultura = culturasSnap.child("nome").getValue(String.class);
-                    culturas.add(new Cultura(nomeCultura));
+                    culturas.add(new Cultura());
                 }
             }
             @Override

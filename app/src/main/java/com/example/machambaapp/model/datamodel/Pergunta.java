@@ -25,6 +25,16 @@ public class Pergunta {
         this.opcoes = opcoes;
     }
 
+    public String condicaoTexto = "";
+
+    public String getCondicaoTexto() {
+        return condicaoTexto;
+    }
+
+    public void setCondicaoTexto(String condicaoTexto) {
+        this.condicaoTexto = condicaoTexto;
+    }
+
     public Pergunta (){
         this.opcoes = new ArrayList<>();
         this.nomeDaPergunta = "";

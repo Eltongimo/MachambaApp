@@ -3,10 +3,18 @@ package com.example.machambaapp;
 public class Cultura {
 
     String cultura;
+    String imagem;
     String Key;
 
-    public Cultura(String cultura) {
-        this.cultura = cultura;
+    public Cultura() {
+        this.cultura = cultura;}
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
     public String getKey() {
@@ -17,9 +25,10 @@ public class Cultura {
         Key = key;
     }
 
-    public Cultura(String cultura, String key) {
+    public Cultura(String cultura, String key, String imagem) {
         this.cultura = cultura;
         this.Key = key;
+        this.imagem = imagem;
     }
 
     public String getCultura() {

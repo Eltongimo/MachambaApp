@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,9 @@ import com.example.machambaapp.R;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
 import com.example.machambaapp.model.update.UpdateCultura;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -50,7 +55,25 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(mContext.getApplicationContext());
 
-        holder.cultura.setText(cultura.getCultura());
+        holder.nomecultura.setText(cultura.getCultura());
+
+        Picasso.get().load(cultura.getImagem()).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                holder.imgCultura.setImageBitmap(bitmap);
+
+            }
+
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
 
         holder.editar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,19 +136,22 @@ public class CulturaAdapter extends RecyclerView.Adapter<CulturaAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        final TextView cultura;
+        final TextView nomecultura;
         private  final TextView chave;
         private final ImageView apagar;
         private final ImageView editar;
+        private final ShapeableImageView imgCultura;
+
 
         private IItemClickListener mItemClickListener;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
-            cultura = itemView.findViewById(R.id.nomeCultura);
+            nomecultura = itemView.findViewById(R.id.nomeCultura);
             apagar = itemView.findViewById(R.id.apagar);
             editar = itemView.findViewById(R.id.editar);
             chave = itemView.findViewById(R.id.chave);
+            imgCultura = itemView.findViewById(R.id.imageClientcultura);
             itemView.setOnClickListener(this);
         }
 

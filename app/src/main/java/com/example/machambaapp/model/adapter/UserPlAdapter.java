@@ -56,7 +56,7 @@ public class UserPlAdapter extends RecyclerView.Adapter<UserPlAdapter.ViewHolder
             SplashScreen.UpdateDataFromOnlineDatabase();
 
 
-            Picasso.get().load(  userPl.getImage()).into(new Target(){
+            Picasso.get().load( userPl.getImage()).into(new Target(){
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                     holder.imgPerfil.setImageBitmap(bitmap);

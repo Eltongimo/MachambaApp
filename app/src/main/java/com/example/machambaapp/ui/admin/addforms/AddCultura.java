@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -25,13 +26,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.machambaapp.Cultura;
 import com.example.machambaapp.R;
 
+import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.ui.admin.views.ActivityUserPL;
 import com.example.machambaapp.ui.admin.views.ActivityViewAddCultura;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
@@ -73,7 +81,10 @@ public class AddCultura extends AppCompatActivity {
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        DatabaseHelper.addLocations(cultura.getText().toString(), "culturas","","");
+                        //DatabaseHelper.addLocations(cultura.getText().toString(), "culturas","","");
+                        Cultura c = new Cultura();
+                        c.setCultura(cultura.getText().toString());
+                        uploadImage(cultura.getText().toString().toString(), c);
                         Toast.makeText(getApplicationContext(), "Cultura adicionada com sucesso!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -86,7 +97,6 @@ public class AddCultura extends AppCompatActivity {
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-
             }
         });
         ActivityResultLauncher<Intent> activityResultLauncherImageUsers = registerForActivityResult(
@@ -176,6 +186,43 @@ public class AddCultura extends AppCompatActivity {
                 }
 
             }
+        }
+    }
+    private void uploadImage(String key, Cultura c) {
+
+        try {
+            // Cria e adiciona uma nova cultura
+
+            if (urlImageGaleria != null) {
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("culturas/"+key);
+
+                UploadTask uploadTask = storageRef.putFile(urlImageGaleria);
+
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get the download URL of the uploaded image
+                        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri downloadUrl) {
+                                // Use the download URL to display the image
+                                c.setImagem(downloadUrl.toString());
+                                Toast.makeText(getApplicationContext(), c.getImagem(), Toast.LENGTH_SHORT).show();
+
+                                //After Uploading the image now Im uploading the Culture to RTDB
+                                DatabaseHelper.addCultura(c);
+
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Erro ao gravar cultura", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }catch (Exception e) {
         }
     }
 
