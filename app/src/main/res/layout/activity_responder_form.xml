@@ -31,7 +31,6 @@
                     android:id="@+id/nomePergunta"
                     />
 
-
                 <androidx.cardview.widget.CardView
                     android:id="@+id/idCard"
                     android:layout_width="60dp"
