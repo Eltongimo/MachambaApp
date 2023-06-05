@@ -56,7 +56,6 @@
             android:layout_height="wrap_content"
             android:padding="20dp"
             >
-
             <LinearLayout
 
                 android:id="@+id/container"
@@ -70,6 +69,22 @@
                 android:visibility="invisible"
                 />
 
+            <Button
+                android:id="@+id/btnvideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:width="100dp"
+                android:layout_marginLeft="60dp"
+                android:backgroundTint="@color/cor_of_botton"
+                android:fontFamily="@font/poppinsbold"
+                android:gravity="center"
+                android:padding="12sp"
+                android:text="Ver Video"
+                android:textSize="15dp"
+                app:cornerRadius="12sp"
+                android:visibility="invisible"
+                />
 
         </LinearLayout>
 
@@ -78,6 +93,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             >
+
             <Button
                 android:id="@+id/btnNext"
                 android:layout_width="wrap_content"

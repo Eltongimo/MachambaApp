@@ -1,5 +1,4 @@
 package com.example.machambaapp.ui.admin.forms;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
@@ -19,6 +17,7 @@ import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -32,7 +31,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -43,18 +41,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
-
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Pergunta;
+import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.material.slider.Slider;
-
-import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class ResponderForm extends AppCompatActivity {
 
@@ -141,9 +135,22 @@ public class ResponderForm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SplashScreen.v = v;
+                collectAnswers(pergunta.getTipoPergunta());
 
                 if (SplashScreen.showingConditional) {
+
+                    if (pergunta.getNomeDaPergunta().contains("Quantos dias deixou mergulhar o pesticida")){
+
+                        if (resposta.isEmpty()){
+                            Toast.makeText(ResponderForm.this, "Por favor, preencha o campo de resposta", Toast.LENGTH_LONG).show();
+                            return ;
+                        }
+                        int res = Integer.parseInt(resposta);
+                        if (res < 7){
+                            displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                            return ;
+                        }
+                    }
 
                     SplashScreen.indexCondicional++;
 
@@ -152,12 +159,9 @@ public class ResponderForm extends AppCompatActivity {
                         SplashScreen.indexCondicional = 0;
                         SplashScreen.indexForm++;
                     }
-
                     startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                 } else {
                     // So here the question do not have conditions
-
-                    collectAnswers(pergunta.getTipoPergunta());
 
                     if (pergunta.perguntasCondicionais != null) {
 
@@ -169,12 +173,47 @@ public class ResponderForm extends AppCompatActivity {
                         }
                     }
 
-                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("incidencia de praga")) {
+                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("culturas do canteiro")){
+
+                        for (String s : resposta.split(",")){
+                            if ( !s.contains(",") && !s.isEmpty())
+                                SplashScreen.selectedCultures.add(s);
+                        }
+                    }
+
+                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida")){
+                        if (resposta.toLowerCase().contains("não")){
+                            displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                        }else{
+                          //  SplashScreen.indexForm++;
+                            SplashScreen.showingConditional = true;
+                            startActivity(new Intent(ResponderForm.this,ResponderForm.class));
+                        }
+                        return;
+                    }
+
+                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("bokashi")){
+
+                        if (resposta.toLowerCase().contains("não")){
+                            displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                            return ;
+                        }else{
+                            SplashScreen.indexForm++;
+                            startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                        }
+                    }
+
+                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("incidência de praga")) {
                         if (resposta.toLowerCase().contains("sim")) {
                             SplashScreen.showingConditional = true;
                             startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                             return;
                         }
+                    }
+
+                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("mergulhar o pesticida")){
+
+                        Toast.makeText(ResponderForm.this,"dias de mergulho", Toast.LENGTH_LONG).show();
                     }
 
                     if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botanico")) {
@@ -184,18 +223,6 @@ public class ResponderForm extends AppCompatActivity {
                             SplashScreen.showingConditional = true;
                             startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                             return;
-                        }
-                    }
-
-                    if (pergunta.getNomeDaPergunta().equals("O canteiro tem uma camada de estrume e uma de cobertura morta?\n")
-                            || pergunta.getNomeDaPergunta().contains("Foi aplicado Bokashi neste canteiro?")
-                    ) {
-
-                        if (!resposta.contains("Camada de Estrume") || !resposta.contains("Camada de Cobertura Morta")) {
-                            enteredConditional = true;
-                            displayPopUp(v, pergunta.getNomeDaPergunta());
-                        } else {
-                            enteredConditional = false;
                         }
                     }
 
@@ -220,60 +247,6 @@ public class ResponderForm extends AppCompatActivity {
         });
     }
 
-    private void displayPopUp(View v, String pergunta) {
-
-        ImageView img = new ImageView(v.getContext());
-
-        if (pergunta.toLowerCase().contains("camada de estrume")) {
-            img.setImageResource(R.drawable.checkbox2_1);
-
-        } else if (pergunta.toLowerCase().contains("bokashi")) {
-            img.setImageResource(R.drawable.bokashi_1);
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-        builder.setView(img);
-
-        builder.setTitle("Informação Importante");
-        builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ImageView img = new ImageView(v.getContext());
-
-                if (pergunta.toLowerCase().contains("camada de estrume")) {
-                    img.setImageResource(R.drawable.checkbox2_2);
-                } else if (pergunta.toLowerCase().contains("bokashi")) {
-                    img.setImageResource(R.drawable.bokashi__2);
-                }
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setView(img);
-
-                builder.setTitle("Informação Importante");
-                builder.setView(img);
-
-                builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
-                        SplashScreen.indexForm++;
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-        });
-
-        builder.setNegativeButton("Rever Escolha", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                isDisplayPopUp = false;
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String collectAnswers(String typeOfQuestion) {
 
@@ -281,8 +254,17 @@ public class ResponderForm extends AppCompatActivity {
 
         if (typeOfQuestion.contains("CheckBox")) {
             for (int i = 0; i < container.getChildCount(); i++) {
-                CheckBox c = (CheckBox) container.getChildAt(i);
-                resposta = c.getText() + ",";
+
+                if (container.getChildAt(i).getClass() == CheckBox.class){
+                    CheckBox c = (CheckBox) container.getChildAt(i);
+                    if (c.isChecked())
+                        resposta += c.getText() + ",";
+
+                }else if (container.getChildAt(i).getClass() == EditText.class){
+                    EditText edt = (EditText) container.getChildAt(i);
+                    resposta += " "+ edt.getText().toString();
+                }
+
             }
 
         } else if (typeOfQuestion.contains("Slider")) {
@@ -328,15 +310,273 @@ public class ResponderForm extends AppCompatActivity {
         return resposta;
     }
 
+    private void displayConditionalPopUp(String per){
+
+        if (per.contains("mergulhar o pesticida")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
+            builder.setTitle("Informação Importante");
+            builder.setMessage("Parabens "+SplashScreen.currentUser.getNome()+" por preparar o seu pesticida natural. Embora, o tempo de mergulho deveria aumentar." +
+                    " Para aumentar a forca do produto, se aconselha mergulhar minimo 5 plantas differentes e deixar mergulhar minimo 7" +
+                    " dias misturando todos os dias! VEJA O MANUAL DE PESTICIDAS NATURAIS DA IDE");
+            builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SplashScreen.indexCondicional++;
+                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+        }else if (per.toLowerCase().contains("pesticida botanico")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
+            builder.setTitle("Informação Importante");
+            builder.setMessage("E' muito importante proteger a propia machamba com pesticida natural.\n" +
+                    " O produtor sabe que tem muitas plantas disponiveis e vale a pena investir num pulverizador?\n" +
+                    " VEJA O MANUAL DA IDE SOBRE PESTICIDAS NATURAIS \n\n"+
+                    "E' muito importante proteger a propia machamba com pesticida natural. \nO produtor sabe que tem muitas plantas disponiveis e vale a pena investir num pulverizador? VEJA O MANUAL DA IDE SOBRE PESTICIDAS NATURAIS"
+            );
+            builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SplashScreen.indexForm++;
+                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }else if (per.toLowerCase().contains("bokashi")){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
+            builder.setTitle("Informação Importante");
+            builder.setMessage("O bokashi e\' vida! com um custo limitado o produtor pode aumentar a produtividade e melhorar a qualidade" +
+                    " do seu solo. Veja o manual de bokashi da iDE\n");
+
+            builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SplashScreen.indexForm++;
+                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+    }
+
+    private void mostrarBotaoVideo(String per){
+
+        Button btnVideo = findViewById(R.id.btnvideo);
+
+        ImageView img = new ImageView(ResponderForm.this);
+
+        Button btnVerPopUp = findViewById(R.id.btnvideo);
+
+        if (per.toLowerCase().contains("pesticida botanico")) {
+            img.setImageResource(R.drawable.pesticida1);
+            btnVideo.setVisibility(View.VISIBLE);
+            btnVideo.setText("Dica");
+        }else if (per.toLowerCase().contains("bokashi")) {
+            img.setImageResource(R.drawable.bokashi_1);
+            btnVideo.setVisibility(View.VISIBLE);
+            btnVideo.setText("Dica");
+        }else if (per.toLowerCase().contains("cobertura morta")){
+            img.setImageResource(R.drawable.checkbox2_1);
+            btnVideo.setVisibility(View.VISIBLE);
+            btnVideo.setText("Dica");
+        }
+
+        if (per.toLowerCase().contains("pesticida")){
+            btnVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnVerPopUp.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder.setView(img);
+
+                            builder.setTitle("Informação Importante");
+                            builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ImageView img = new ImageView(v.getContext());
+
+                                    img.setImageResource(R.drawable.pesticida1);
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                    builder.setView(img);
+
+                                    builder.setTitle("Informação Importante");
+                                    builder.setView(img);
+
+                                    builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
+                                    AlertDialog alertDialog = builder.create();
+                                    alertDialog.show();
+                                }
+                            });
+
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
+                    });
+                }
+            });
+        }
+
+        if (per.toLowerCase().contains("bokashi")){
+            btnVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnVerPopUp.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder.setView(img);
+
+                            builder.setTitle("Informação Importante");
+                            builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ImageView img = new ImageView(v.getContext());
+
+                                    if (per.toLowerCase().contains("camada de estrume")) {
+                                        img.setImageResource(R.drawable.checkbox2_2);
+                                    } else if (per.toLowerCase().contains("bokashi")) {
+                                        img.setImageResource(R.drawable.bokashi__2);
+                                    }
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                    builder.setView(img);
+
+                                    builder.setTitle("Informação Importante");
+                                    builder.setView(img);
+
+                                    builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
+                                    AlertDialog alertDialog = builder.create();
+                                    alertDialog.show();
+                                }
+                            });
+
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
+                    });
+                }
+            });
+        }
+
+        if (per.toLowerCase().contains("cobertura morta")){
+
+            btnVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnVerPopUp.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                builder.setView(img);
+
+                                builder.setTitle("Informação Importante");
+                                builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ImageView img = new ImageView(v.getContext());
+
+                                        if (per.toLowerCase().contains("camada de estrume")) {
+                                            img.setImageResource(R.drawable.checkbox2_2);
+                                        } else if (per.toLowerCase().contains("bokashi")) {
+                                            img.setImageResource(R.drawable.bokashi__2);
+                                        }
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                                        builder.setView(img);
+
+                                        builder.setTitle("Informação Importante");
+                                        builder.setView(img);
+
+                                        builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        });
+                                        AlertDialog alertDialog = builder.create();
+                                        alertDialog.show();
+                                    }
+                                });
+
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                        }
+                    });
+                }
+            });
+        }
+
+        if (per.toLowerCase().contains("humidade")){
+
+            btnVideo.setText("Mostrar Video");
+            btnVideo.setVisibility(View.VISIBLE);
+
+            btnVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    VideoView videoView = findViewById(R.id.videoview);
+
+                    ViewGroup.LayoutParams params = videoView.getLayoutParams();
+
+                    params.height = 2000; // ou outra altura desejada em pixels
+
+                    videoView.setLayoutParams(params);
+
+                    videoView.setVisibility(View.VISIBLE);
+
+                    videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.humidade));
+                    MediaController mediaController = new MediaController(ResponderForm.this);
+                    videoView.setMediaController(mediaController);
+                    mediaController.setAnchorView(videoView);
+                    videoView.start();
+
+                    videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            Toast.makeText(getApplicationContext(), "Parabens, voce ja sabe verificar a humidade do solo!", Toast.LENGTH_LONG).show();
+                            ViewGroup.LayoutParams paramsx = videoView.getLayoutParams();
+
+                            paramsx.height = 0; // ou outra altura desejada em pixels
+                            videoView.setLayoutParams(paramsx);
+                            videoView.setVisibility(View.INVISIBLE);
+                            container.setVisibility(View.VISIBLE);
+                            btnResponder.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            });
+        }
+    }
+
     private void mostrarCampo(Pergunta p) {
 
         String tipoResposta = p.getTipoPergunta();
+
+        mostrarBotaoVideo(p.getNomeDaPergunta());
 
         switch (tipoResposta) {
 
             case "Slider":
                 Slider slider = new Slider(ResponderForm.this);
-
                 slider.setId(View.generateViewId()); // set a unique ID for the slider
                 slider.setValueFrom(1); // set the minimum value of the slider
                 slider.setValueTo(4); // set the maximum value of the slider
@@ -379,13 +619,13 @@ public class ResponderForm extends AppCompatActivity {
                 editText.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         130));
+                editText.setInputType(EditorInfo.TYPE_CLASS_PHONE);
                 editText.setPadding(16, 0, 16, 0);
                 editText.setHint("Digite aqui...");
                 editText.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
                 editText.setTypeface(ResourcesCompat.getFont(this, R.font.poppinsregular));
                 editText.setBackground(getResources().getDrawable(R.drawable.button_sape));
                 container.addView(editText);
-
                 break;
 
             case "CheckBox":
@@ -402,6 +642,20 @@ public class ResponderForm extends AppCompatActivity {
                     checkBox.setText(c);
                     container.addView(checkBox);
                 }
+
+                if (p.getNomeDaPergunta().contains("Qual plantas usa")){
+                    editText = new EditText(this);
+                    editText.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            130));
+                    editText.setPadding(16, 0, 16, 0);
+                    editText.setHint("Outra ...");
+                    editText.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+                    editText.setTypeface(ResourcesCompat.getFont(this, R.font.poppinsregular));
+                    editText.setBackground(getResources().getDrawable(R.drawable.button_sape));
+                    container.addView(editText);
+                }
+
                 break;
 
             case "ImageView":
@@ -477,25 +731,6 @@ public class ResponderForm extends AppCompatActivity {
                 break;
             case "RadioGroup1": {
                 radioGroup = new RadioGroup(getApplicationContext());
-                container.setVisibility(View.INVISIBLE);
-                btnResponder.setVisibility(View.INVISIBLE);
-
-                VideoView videoView = findViewById(R.id.videoview);
-
-                ViewGroup.LayoutParams params = videoView.getLayoutParams();
-
-                params.height = 2000; // ou outra altura desejada em pixels
-
-                videoView.setLayoutParams(params);
-
-                videoView.setVisibility(View.VISIBLE);
-
-
-                videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.humidade));
-                MediaController mediaController = new MediaController(this);
-                videoView.setMediaController(mediaController);
-                mediaController.setAnchorView(videoView);
-                videoView.start();
 
                 for (String op : p.getOpcoes()) {
 
@@ -505,21 +740,6 @@ public class ResponderForm extends AppCompatActivity {
                 }
 
                 container.addView(radioGroup);
-
-                videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        Toast.makeText(getApplicationContext(), "Parabens, voce ja sabe verificar a humidade do solo!", Toast.LENGTH_LONG).show();
-                        ViewGroup.LayoutParams paramsx = videoView.getLayoutParams();
-
-                        paramsx.height = 0; // ou outra altura desejada em pixels
-                        videoView.setLayoutParams(paramsx);
-                        videoView.setVisibility(View.INVISIBLE);
-                        container.setVisibility(View.VISIBLE);
-                        btnResponder.setVisibility(View.VISIBLE);
-                    }
-                });
-
                 radioGroup = new RadioGroup(getApplicationContext());
 
             }
@@ -590,3 +810,4 @@ public class ResponderForm extends AppCompatActivity {
         }
     }
 }
+

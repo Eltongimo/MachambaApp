@@ -18,6 +18,7 @@ import com.example.machambaapp.ui.clientes.ActivitySelectClient;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SplashScreen extends AppCompatActivity {
@@ -25,15 +26,10 @@ public class SplashScreen extends AppCompatActivity {
     public static ArrayList<String> distritos = DatabaseHelper.getLocation("distritos");
     public static ArrayList<String> provincias = new ArrayList<String>();
     public static int indexForm = 0;
+    public static int repeate1 = 9;
     public static boolean showingConditional = false;
-
-    public static View v;
-
-    public static boolean displayPopUp = false;
     public static Pergunta currentQuestion = new Pergunta();
     public static int indexCondicional = 0;
-
-    public static Resposta respostas = new Resposta();
 
     public static ArrayList<Formulario> formularios =  DatabaseHelper.getForms();
     public static Formulario formulario = new Formulario();
@@ -45,6 +41,8 @@ public class SplashScreen extends AppCompatActivity {
     public static ArrayList<String> etnia = DatabaseHelper.getEtnia("etnias");
     public static Cliente.UserPl currentUser = new Cliente.UserPl();
 
+    public static int indexCulturas = 0 ;
+
     public static void updateComunidade(){
         comunidades = DatabaseHelper.getLocation("comunidades");
     }
@@ -55,6 +53,10 @@ public class SplashScreen extends AppCompatActivity {
     public static void updatePosto(){
         postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
     }
+
+    public static ArrayList<String> selectedCultures = new ArrayList<>();
+
+    public static HashMap<String , Pergunta> groupQuestions = new HashMap<>();
     public static void UpdateDataFromOnlineDatabase(){
         try{
             etnia = DatabaseHelper.getEtnia("etnias");
@@ -98,14 +100,20 @@ public class SplashScreen extends AppCompatActivity {
 
         currentQuestion = p;
 
-        ps.add(p);
+        culturas.add("Alface");
+        culturas.add("Cebola");
+        culturas.add("Couve");
+        culturas.add("Tomate");
 
+
+        ps.add(p);
+/*
         p = new Pergunta();
         p.setNomeDaPergunta("Registar coordenadas geograficas");
         p.setTipoPergunta("EditText");
 
         ps.add(p);
-
+*/
         p = new Pergunta();
 
         p.setNomeDaPergunta("\n Canteiro \n \n Vamos comecar a avaliacao dum canteiro. Na pergunta seguinte pode selecionar uma ou mais culturas se o canteiro tiver consorciacao.");
@@ -121,7 +129,7 @@ public class SplashScreen extends AppCompatActivity {
         ps.add(p);
 
         p.setNomeDaPergunta("Indicar o cumprimento do Canteiro (metros)");
-        p.setTipoPergunta("NumberPicker");
+        p.setTipoPergunta("EditText");
 
         ps.add(p);
 
@@ -162,8 +170,7 @@ public class SplashScreen extends AppCompatActivity {
         ps.add(p);
 
         p = new Pergunta();
-        p.setNomeDaPergunta("Foi aplicado Bokashi neste canteiro?" + "\n\n" +
-                "O bokashi e' vida! com um custo limitado o produtor pode aumentar a produtividade e melhorar a qualidade do seu solo. Veja o manual de bokashi da iDE");
+        p.setNomeDaPergunta("Foi aplicado Bokashi neste canteiro?" );
 
         opcoes = new ArrayList<>();
         opcoes.add("Sim");
@@ -172,7 +179,6 @@ public class SplashScreen extends AppCompatActivity {
         p.setTipoPergunta("RadioGroup");
         p.setOpcoes(opcoes);
         ps.add(p);
-
 
         // Sobre pesticida Botanico
 
@@ -187,6 +193,7 @@ public class SplashScreen extends AppCompatActivity {
         p.setOpcoes(opcoes);
 
         p.setTipoPergunta("RadioGroup");
+        ps.add(p);
 
         // ******************************
 
@@ -238,6 +245,8 @@ public class SplashScreen extends AppCompatActivity {
 
         ps.add(p);
 
+        /***************************************Alface**********************************************/
+
         p = new Pergunta();
 
         p.setNomeDaPergunta("Indicar data do transplante para alface");
@@ -247,9 +256,18 @@ public class SplashScreen extends AppCompatActivity {
 
         p = new Pergunta();
         p.setNomeDaPergunta("Indicar a fase de crescimento do Alface");
-        p.setTipoPergunta("Slider");
+        opcoes = new ArrayList<>();
 
-        ps.add(p);
+        opcoes.add("Pequeno");
+        opcoes.add("Medio");
+        opcoes.add("Grande");
+        opcoes.add("Muito Grande");
+
+        p.setOpcoes(opcoes);
+
+        p.setTipoPergunta("RadioGroup");
+        groupQuestions.put("Alface", p);
+        //ps.add(p);
 
         p = new Pergunta();
         p.setNomeDaPergunta("Indicar o espaçamento entre as plantas ");
@@ -259,13 +277,13 @@ public class SplashScreen extends AppCompatActivity {
 
         p = new Pergunta();
         p.setNomeDaPergunta("Indicar o espaçamento entre linhas para alface em centimetros");
-        p.setTipoPergunta("NumberPicker");
+        p.setTipoPergunta("EditText");
 
         ps.add(p);
 
         p = new Pergunta();
         p.setNomeDaPergunta("Quais são as inhas de alface em centimetros ?");
-        p.setTipoPergunta("NumberPicker");
+        p.setTipoPergunta("EditText");
 
         ps.add(p);
 
@@ -288,7 +306,7 @@ public class SplashScreen extends AppCompatActivity {
         perguntasCondicionais.add(per);
 
         per = new Pergunta();
-        per.setNomeDaPergunta("Esta praga ou doenca e' muito diffusa?");
+        per.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
         per.setTipoPergunta("RadioGroup");
 
         ArrayList<String> oo = new ArrayList<>();
@@ -302,15 +320,247 @@ public class SplashScreen extends AppCompatActivity {
         p.setPerguntasCondicionais(perguntasCondicionais);
         ps.add(p);
 
+        /***************************************Fim alface**********************************************/
+
         formulario.setPerguntas(ps);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
-              //  startActivity(new Intent(SplashScreen.this, ResponderForm.class));
+                //startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
+                startActivity(new Intent(SplashScreen.this, ResponderForm.class));
                 finish();
             }
         }, 2000);
     }
+
+//    private void assignQuestionsToCultures(){
+//
+//        /***************************************Cebola**********************************************/
+//        Pergunta p =
+//        p = new Pergunta();
+//
+//        p.setNomeDaPergunta("Indicar data do transplante para cebola");
+//        p.setTipoPergunta("DatePicker");
+//        ps.add(p);
+//
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Indicar a fase de crescimento do Cebola");
+//        opcoes.clear();
+//
+//        opcoes.add("Pequeno");
+//        opcoes.add("Medio");
+//        opcoes.add("Grande");
+//        opcoes.add("Muito Grande");
+//
+//        p.setOpcoes(opcoes);
+//
+//        p.setTipoPergunta("RadioGroup");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Indicar o espaçamento entre as plantas ");
+//        p.setTipoPergunta("EditText");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Indicar o espaçamento entre linhas para cebola em centimetros");
+//        p.setTipoPergunta("EditText");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Quais são as inhas de cebola em centimetros ?");
+//        p.setTipoPergunta("EditText");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("As plantas de alface tem incidencia de pragas e doenças?");
+//        p.setTipoPergunta("RadioGroup");
+//
+//        op.clear();
+//        op.add("Sim");
+//        op.add("Não");
+//        p.setOpcoes(op);
+//
+//        p.setCondicaoTexto("Sim");
+//
+//        per = new Pergunta();
+//        per.setNomeDaPergunta("Tirar foto da praga ou doenca");
+//        per.setTipoPergunta("ImageView");
+//
+//        perguntasCondicionais.clear();
+//        perguntasCondicionais.add(per);
+//
+//        per = new Pergunta();
+//        per.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
+//        per.setTipoPergunta("RadioGroup");
+//
+//        oo.clear();
+//        oo.add("Sim");
+//        oo.add("Não");
+//
+//        per.setOpcoes(oo);
+//
+//        perguntasCondicionais.add(per);
+//
+//        p.setPerguntasCondicionais(perguntasCondicionais);
+//        ps.add(p);
+//        /****************************************************Fim Cebola***************************************************/
+//
+//        /***************************************Couve**********************************************/
+//        p = new Pergunta();
+//
+//        p.setNomeDaPergunta("Indicar data do transplante para couve");
+//        p.setTipoPergunta("DatePicker");
+//        ps.add(p);
+//
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Indicar a fase de crescimento da couve");
+//        opcoes.clear();
+//
+//        opcoes.add("Pequeno");
+//        opcoes.add("Medio");
+//        opcoes.add("Grande");
+//        opcoes.add("Muito Grande");
+//        opcoes.add("*");
+//
+//        p.setOpcoes(opcoes);
+//
+//        p.setTipoPergunta("RadioGroup");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Indicar o espaçamento entre as plantas ");
+//        p.setTipoPergunta("EditText");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Indicar o espaçamento entre linhas para couve em centimetros");
+//        p.setTipoPergunta("EditText");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Quais são as inhas de couve em centimetros ?");
+//        p.setTipoPergunta("EditText");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("As plantas de alface tem incidencia de pragas e doenças?");
+//        p.setTipoPergunta("RadioGroup");
+//
+//        op.clear();
+//        op.add("Sim");
+//        op.add("Não");
+//        p.setOpcoes(op);
+//
+//        p.setCondicaoTexto("Sim");
+//
+//        per = new Pergunta();
+//        per.setNomeDaPergunta("Tirar foto da praga ou doenca");
+//        per.setTipoPergunta("ImageView");
+//
+//        perguntasCondicionais.clear();
+//        perguntasCondicionais.add(per);
+//
+//        per = new Pergunta();
+//        per.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
+//        per.setTipoPergunta("RadioGroup");
+//
+//        oo.clear();
+//        oo.add("Sim");
+//        oo.add("Não");
+//
+//        per.setOpcoes(oo);
+//
+//        perguntasCondicionais.add(per);
+//
+//        p.setPerguntasCondicionais(perguntasCondicionais);
+//        ps.add(p);
+//        /****************************************************Fim Couve***************************************************/
+//
+//        /***************************************Tomate**********************************************/
+//        p = new Pergunta();
+//
+//        p.setNomeDaPergunta("Indicar data do transplante para o tomate");
+//        p.setTipoPergunta("DatePicker");
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Indicar a fase de crescimento do tomate");
+//        opcoes.clear();
+//
+//        opcoes.add("Pequeno");
+//        opcoes.add("Medio");
+//        opcoes.add("Grande");
+//        opcoes.add("Muito Grande");
+//
+//        p.setOpcoes(opcoes);
+//
+//        p.setTipoPergunta("RadioGroup");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Indicar o espaçamento entre as plantas ");
+//        p.setTipoPergunta("EditText");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Indicar o espaçamento entre linhas para tomate em centimetros");
+//        p.setTipoPergunta("EditText");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("Quais são as inhas de tomate em centimetros ?");
+//        p.setTipoPergunta("EditText");
+//
+//        ps.add(p);
+//
+//        p = new Pergunta();
+//        p.setNomeDaPergunta("As plantas de tomate tem incidencia de pragas e doenças?");
+//        p.setTipoPergunta("RadioGroup");
+//
+//        op.clear();
+//        op.add("Sim");
+//        op.add("Não");
+//        p.setOpcoes(op);
+//
+//        p.setCondicaoTexto("Sim");
+//
+//        per = new Pergunta();
+//        per.setNomeDaPergunta("Tirar foto da praga ou doenca");
+//        per.setTipoPergunta("ImageView");
+//
+//        perguntasCondicionais.clear();
+//        perguntasCondicionais.add(per);
+//
+//        per = new Pergunta();
+//        per.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
+//        per.setTipoPergunta("RadioGroup");
+//
+//        oo.clear();
+//        oo.add("Sim");
+//        oo.add("Não");
+//
+//        per.setOpcoes(oo);
+//
+//        perguntasCondicionais.add(per);
+//
+//        p.setPerguntasCondicionais(perguntasCondicionais);
+//        ps.add(p);
+//        /****************************************************Fim Tomate***************************************************/
+//
+//    }
 }
