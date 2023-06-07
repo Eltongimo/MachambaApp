@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -48,7 +49,9 @@ import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.material.slider.Slider;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class ResponderForm extends AppCompatActivity {
 
@@ -103,148 +106,194 @@ public class ResponderForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_responder_form);
 
-        txtPergunta = findViewById(R.id.nomePergunta);
-        container = findViewById(R.id.container);
-        btnResponder = findViewById(R.id.btnNext);
+        try{
 
-        if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size()) {
-            pergunta = SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm);
-        } else {
-            Toast.makeText(ResponderForm.this, "Fim do formulario", Toast.LENGTH_SHORT).show();
-            btnResponder.setText("Submeter Formulario");
+            txtPergunta = findViewById(R.id.nomePergunta);
+            container = findViewById(R.id.container);
+            btnResponder = findViewById(R.id.btnNext);
+          //  ProgressBar progressBar = findViewById(R.id.progressBar);
+
+            if (SplashScreen.runGroup){
+
+                if (SplashScreen.groupIndex < SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
+                        get(SplashScreen.selectedCulturesIndex)).size()){
+                        pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
+                                get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
+                }else{
+                    SplashScreen.groupIndex = 0;
+                    SplashScreen.selectedCulturesIndex++;
+                    pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
+                            get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
+                }
+
+                if (pergunta == null){
+                    SplashScreen.runGroup = false;
+                    // Just to end the form
+                    SplashScreen.indexForm = 15;
+                }
+                mostrarCampo(pergunta);
+            }else{
+                if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size()) {
+                    pergunta = SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm);
+                } else if (SplashScreen.finishGroup){
+                    Toast.makeText(ResponderForm.this, "Fim do formulario", Toast.LENGTH_SHORT).show();
+                    btnResponder.setText("Submeter Formulario");
+                    btnResponder.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(ResponderForm.this, "Submetendo Formulario", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }
+
+                if (!SplashScreen.showingConditional) {
+                    if (pergunta != null){
+                        mostrarCampo(pergunta);
+                    }
+                    else{
+                        SplashScreen.runGroup = true;
+                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                        return ;
+                        // pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
+                    //    mostrarCampo(pergunta);
+                    }
+                }
+                else
+                {
+                    pergunta = pergunta.getPerguntasCondicionais().get(SplashScreen.indexCondicional);
+                    mostrarCampo(pergunta);
+                }
+            }
+
+            txtPergunta.setText(pergunta.getNomeDaPergunta());
+
             btnResponder.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(ResponderForm.this, "Submetendo Formulario", Toast.LENGTH_SHORT).show();
-                }
-            });
-            return;
-        }
 
-        if (!SplashScreen.showingConditional) {
-            mostrarCampo(pergunta);
-        } else {
-            pergunta = pergunta.getPerguntasCondicionais().get(SplashScreen.indexCondicional);
-            mostrarCampo(pergunta);
-        }
+                    collectAnswers(pergunta.getTipoPergunta());
 
-        txtPergunta.setText(pergunta.getNomeDaPergunta());
-
-        btnResponder.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View v) {
-
-                collectAnswers(pergunta.getTipoPergunta());
-
-                if (SplashScreen.showingConditional) {
-
-                    if (pergunta.getNomeDaPergunta().contains("Quantos dias deixou mergulhar o pesticida")){
-
-                        if (resposta.isEmpty()){
-                            Toast.makeText(ResponderForm.this, "Por favor, preencha o campo de resposta", Toast.LENGTH_LONG).show();
-                            return ;
-                        }
-                        int res = Integer.parseInt(resposta);
-                        if (res < 7){
-                            displayConditionalPopUp(pergunta.getNomeDaPergunta());
-                            return ;
-                        }
-                    }
-
-                    SplashScreen.indexCondicional++;
-
-                    if (SplashScreen.indexCondicional >= SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm).perguntasCondicionais.size()) {
-                        SplashScreen.showingConditional = false;
-                        SplashScreen.indexCondicional = 0;
-                        SplashScreen.indexForm++;
-                    }
-                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
-                } else {
-                    // So here the question do not have conditions
-
-                    if (pergunta.perguntasCondicionais != null) {
-
-                        if (SplashScreen.indexCondicional >= pergunta.perguntasCondicionais.size()) {
-                            SplashScreen.indexCondicional = 0;
-                            SplashScreen.showingConditional = false;
-                            SplashScreen.indexForm++;
-                            return;
-                        }
-                    }
-
-                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("culturas do canteiro")){
-
-                        for (String s : resposta.split(",")){
-                            if ( !s.contains(",") && !s.isEmpty())
-                                SplashScreen.selectedCultures.add(s);
-                        }
-                    }
-
-                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida")){
-                        if (resposta.toLowerCase().contains("não")){
-                            displayConditionalPopUp(pergunta.getNomeDaPergunta());
-                        }else{
-                          //  SplashScreen.indexForm++;
-                            SplashScreen.showingConditional = true;
-                            startActivity(new Intent(ResponderForm.this,ResponderForm.class));
-                        }
+                    if (SplashScreen.runGroup){
+                        SplashScreen.groupIndex++;
+                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                         return;
                     }
 
-                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("bokashi")){
+                    if (SplashScreen.showingConditional) {
 
-                        if (resposta.toLowerCase().contains("não")){
-                            displayConditionalPopUp(pergunta.getNomeDaPergunta());
-                            return ;
-                        }else{
-                            SplashScreen.indexForm++;
-                            startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                        if (pergunta.getNomeDaPergunta().contains("Quantos dias deixou mergulhar o pesticida")){
+
+                            if (resposta.isEmpty()){
+                                Toast.makeText(ResponderForm.this, "Por favor, preencha o campo de resposta", Toast.LENGTH_LONG).show();
+                                return ;
+                            }
+                            int res = Integer.parseInt(resposta);
+                            if (res < 7){
+                                displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                                return ;
+                            }
                         }
-                    }
 
-                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("incidência de praga")) {
-                        if (resposta.toLowerCase().contains("sim")) {
-                            SplashScreen.showingConditional = true;
-                            startActivity(new Intent(ResponderForm.this, ResponderForm.class));
-                            return;
+                        SplashScreen.indexCondicional++;
+
+                        if (SplashScreen.indexCondicional >= SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm).perguntasCondicionais.size()) {
+                            SplashScreen.showingConditional = false;
+                            SplashScreen.indexCondicional = 0;
+                            SplashScreen.indexForm += 1;
                         }
-                    }
-
-                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("mergulhar o pesticida")){
-
-                        Toast.makeText(ResponderForm.this,"dias de mergulho", Toast.LENGTH_LONG).show();
-                    }
-
-                    if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botanico")) {
-
-                        // Show conditional question
-                        if (resposta.toLowerCase().contains("sim")) {
-                            SplashScreen.showingConditional = true;
-                            startActivity(new Intent(ResponderForm.this, ResponderForm.class));
-                            return;
-                        }
-                    }
-
-                    // User did not respond form and pressed next buttom
-                    if (resposta.equals("")) {
-                        Toast.makeText(getApplicationContext(), "Por favor, preencha o campo de respostas ", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                     } else {
+                        // So here the question do not have conditions
 
-                        if (!enteredConditional && !SplashScreen.showingConditional) {
-                            // See if this question have a conditional flow
-                            if (pergunta.conditionalQuestion == null) {
+                        if (SplashScreen.indexForm <= 9){
+                            if (pergunta.perguntasCondicionais != null) {
 
-                                // Then Follow the Flow Normaly
-                                SplashScreen.indexForm++;
+                                if (SplashScreen.indexCondicional >= pergunta.perguntasCondicionais.size()) {
+                                    SplashScreen.indexCondicional = 0;
+                                    SplashScreen.showingConditional = false;
+                                    SplashScreen.indexForm += 1;
+                                    return;
+                                }
+                            }
 
-                                startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("culturas do canteiro")){
+
+                                for (String s : resposta.split(",")){
+                                    if ( !s.contains(",") && !s.isEmpty())
+                                        SplashScreen.selectedCultures.add(s.toLowerCase());
+                                }
+                            }
+
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida")){
+                                if (resposta.toLowerCase().contains("não")){
+                                    displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                                }else{
+                                    //  SplashScreen.indexForm++;
+                                    SplashScreen.showingConditional = true;
+                                    startActivity(new Intent(ResponderForm.this,ResponderForm.class));
+                                }
+                                return;
+                            }
+
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("bokashi")){
+
+                                if (resposta.toLowerCase().contains("não")){
+                                    displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                                    return ;
+                                }else{
+                                    SplashScreen.indexForm++;
+                                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                                }
+                            }
+
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("incidência de praga")) {
+                                if (resposta.toLowerCase().contains("sim")) {
+                                    SplashScreen.showingConditional = true;
+                                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                                    return;
+                                }
+                            }
+
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("mergulhar o pesticida")){
+
+                                Toast.makeText(ResponderForm.this,"dias de mergulho", Toast.LENGTH_LONG).show();
+                            }
+
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botanico")) {
+
+                                // Show conditional question
+                                if (resposta.toLowerCase().contains("sim")) {
+                                    SplashScreen.showingConditional = true;
+                                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                                    return;
+                                }
+                            }
+
+                            // User did not respond form and pressed next buttom
+                            if (resposta.equals("")) {
+                                Toast.makeText(getApplicationContext(), "Por favor, preencha o campo de respostas ", Toast.LENGTH_LONG).show();
+                            } else {
+
+                                if (!enteredConditional && !SplashScreen.showingConditional) {
+                                    // See if this question have a conditional flow
+                                    if (pergunta.conditionalQuestion == null) {
+
+                                        // Then Follow the Flow Normaly
+                                        SplashScreen.indexForm++;
+
+                                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                                    }
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -310,6 +359,7 @@ public class ResponderForm extends AppCompatActivity {
         return resposta;
     }
 
+    // Aqui mostra popup condicional para algumas perguntas
     private void displayConditionalPopUp(String per){
 
         if (per.contains("mergulhar o pesticida")){
@@ -329,6 +379,7 @@ public class ResponderForm extends AppCompatActivity {
             alertDialog.show();
 
         }else if (per.toLowerCase().contains("pesticida botanico")){
+            Toast.makeText(ResponderForm.this, SplashScreen.indexForm+"", Toast.LENGTH_SHORT).show();
             AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
             builder.setTitle("Informação Importante");
             builder.setMessage("E' muito importante proteger a propia machamba com pesticida natural.\n" +
@@ -364,6 +415,9 @@ public class ResponderForm extends AppCompatActivity {
         }
     }
 
+
+    // Neste metodo o sw verifica se a na pergunta corrente tem video, caso sim ele mostra o video
+    // E tambem se a pergunta tem algum tipo de popup condicional, como a pergunta sobre bokashi, pesticida
     private void mostrarBotaoVideo(String per){
 
         Button btnVideo = findViewById(R.id.btnvideo);
@@ -447,7 +501,7 @@ public class ResponderForm extends AppCompatActivity {
 
                                     if (per.toLowerCase().contains("camada de estrume")) {
                                         img.setImageResource(R.drawable.checkbox2_2);
-                                    } else if (per.toLowerCase().contains("bokashi")) {
+                                    }else if (per.toLowerCase().contains("bokashi")) {
                                         img.setImageResource(R.drawable.bokashi__2);
                                     }
 
@@ -567,6 +621,8 @@ public class ResponderForm extends AppCompatActivity {
         }
     }
 
+    // Este metodo mostra o tipo de input baseado na pergunta.
+
     private void mostrarCampo(Pergunta p) {
 
         String tipoResposta = p.getTipoPergunta();
@@ -649,7 +705,7 @@ public class ResponderForm extends AppCompatActivity {
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             130));
                     editText.setPadding(16, 0, 16, 0);
-                    editText.setHint("Outra ...");
+                    editText.setHint("Caso outra indique ...");
                     editText.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
                     editText.setTypeface(ResourcesCompat.getFont(this, R.font.poppinsregular));
                     editText.setBackground(getResources().getDrawable(R.drawable.button_sape));
