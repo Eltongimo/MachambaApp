@@ -3,16 +3,19 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
@@ -22,6 +25,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
@@ -79,6 +83,7 @@ public class ResponderForm extends AppCompatActivity {
     Uri urlImageGaleria;
     Uri urlImageCamera;
     EditText editText;
+    ProgressDialog loadingBar;
     CheckBox checkBox;
     RadioGroup radioGroup;
     DatePicker datePicker;
@@ -105,9 +110,22 @@ public class ResponderForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_responder_form);
+        ProgressDialog loadingBar = new ProgressDialog(this);
+        loadingBar.setTitle("Carregando o formulário...");
+        loadingBar.setMessage("Aguarde por favor!");
+        loadingBar.setCanceledOnTouchOutside(false);
+        loadingBar.show();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingBar.dismiss();
+            }
+        }, 500); // Tempo em milissegundos (1 segundo)
+
 
         try{
-
             txtPergunta = findViewById(R.id.nomePergunta);
             container = findViewById(R.id.container);
             btnResponder = findViewById(R.id.btnNext);
@@ -119,11 +137,14 @@ public class ResponderForm extends AppCompatActivity {
                         get(SplashScreen.selectedCulturesIndex)).size()){
                         pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
                                 get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
+
                 }else{
                     SplashScreen.groupIndex = 0;
                     SplashScreen.selectedCulturesIndex++;
                     pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
                             get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
+                    loadingBar.dismiss();
+
                 }
 
                 if (pergunta == null){
@@ -715,12 +736,32 @@ public class ResponderForm extends AppCompatActivity {
                 break;
 
             case "ImageView":
+//                imageView = new ImageView(getApplicationContext());
+//                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
+//                layoutParams.setMargins(200, 10, 16, 100);
+//                imageView.setLayoutParams(layoutParams);
+//                imageView.setImageResource(R.drawable.baseline_photo_camera_24);
+//                container.addView(imageView);
+
                 imageView = new ImageView(getApplicationContext());
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
                 layoutParams.setMargins(200, 10, 16, 100);
                 imageView.setLayoutParams(layoutParams);
                 imageView.setImageResource(R.drawable.baseline_photo_camera_24);
                 container.addView(imageView);
+
+// Adicionar a legenda
+                TextView legend = new TextView(getApplicationContext());
+                legend.setText("Clique para tirar uma foto");
+                LinearLayout.LayoutParams legendaParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                legendaParams.setMargins(200, 0, 16, 0);
+                legend.setLayoutParams(legendaParams);
+                container.addView(legend);
+
+
                 ActivityResultLauncher<Intent> activityResultLauncherImageUsers = registerForActivityResult(
                         new ActivityResultContracts.StartActivityForResult(),
                         new ActivityResultCallback<ActivityResult>() {

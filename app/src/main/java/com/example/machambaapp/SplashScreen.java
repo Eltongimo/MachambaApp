@@ -21,12 +21,12 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 public class SplashScreen extends AppCompatActivity {
 
     public static ArrayList<String> distritos = DatabaseHelper.getLocation("distritos");
     public static ArrayList<String> provincias = new ArrayList<String>();
-
     public static boolean runGroup = false;
     public static int groupIndex = 0;
     public static int selectedCulturesIndex = 0;
@@ -49,9 +49,8 @@ public class SplashScreen extends AppCompatActivity {
     public static int indexCulturas = 0 ;
 
     public static boolean finishGroup = false;
-
     public static HashMap<String, ArrayList<Pergunta>>  groupQuestions = new HashMap<>();
-
+    public static HashMap<String, Pergunta> perguntas = new HashMap<>();
 
     public static void updateComunidade(){
         comunidades = DatabaseHelper.getLocation("comunidades");
@@ -110,8 +109,6 @@ public class SplashScreen extends AppCompatActivity {
         p.setTipoPergunta("RadioGroup");
         p.setOpcoes(generos);
 
-        currentQuestion = p;
-
         culturas.add("Alface");
         culturas.add("Cebola");
         culturas.add("Couve");
@@ -120,7 +117,7 @@ public class SplashScreen extends AppCompatActivity {
         selectedCultures.add("alface");
         selectedCultures.add("cebola");
 
-
+        perguntas.put("1", p);
         ps.add(p);
 /*
         p = new Pergunta();
@@ -136,25 +133,29 @@ public class SplashScreen extends AppCompatActivity {
         p.setTipoPergunta("ImageView");
 
         ps.add(p);
-
+        perguntas.put("2", p);
         p = new Pergunta();
 
         p.setNomeDaPergunta("Indicar a largura do Canteiro (metros)");
         p.setTipoPergunta("NumberPicker");
 
         ps.add(p);
+        perguntas.put("3", p);
 
         p.setNomeDaPergunta("Indicar o cumprimento do Canteiro (metros)");
         p.setTipoPergunta("EditText");
 
         ps.add(p);
 
+        perguntas.put("4", p);
         p = new Pergunta();
 
         p.setNomeDaPergunta("Selecionar as culturas do canteiro");
         p.setTipoPergunta("CheckBox");
-        p.setOpcoes(SplashScreen.culturas);
+        p.setOpcoes(culturas);
         ps.add(p);
+
+        perguntas.put("5", p);
 
         p = new Pergunta();
 
@@ -171,6 +172,7 @@ public class SplashScreen extends AppCompatActivity {
 
         ps.add(p);
 
+        perguntas.put("6", p);
         ArrayList<String> opcoes = new ArrayList<>();
         opcoes.add("Nao tem humidade");
         opcoes.add("tem mas o bolo não fica bem firme");
@@ -182,6 +184,7 @@ public class SplashScreen extends AppCompatActivity {
         p.setNomeDaPergunta("Medir a umidade do canteiro em varios pontos, perto da base das plantas. A humidade pode variar dependendo da area examinada");
         p.setTipoPergunta("RadioGroup1");
         p.setOpcoes(opcoes);
+        Stack s = new Stack();
 
         ps.add(p);
 
