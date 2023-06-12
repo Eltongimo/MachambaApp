@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
@@ -20,12 +19,12 @@ import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
@@ -41,6 +40,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+import androidx.annotation.Px;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -50,18 +50,21 @@ import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.helper.DatabaseHelper;
+import com.example.machambaapp.model.helper.OfflineDB;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.material.slider.Slider;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Random;
 
 public class ResponderForm extends AppCompatActivity {
 
     TextView txtPergunta;
     Button btnResponder;
     LinearLayout container;
+    LinearLayout progressViewContainer;
     ImageView imageAddCultura;
     static Uri urlImage;
     Dialog dialog;
@@ -88,7 +91,6 @@ public class ResponderForm extends AppCompatActivity {
     RadioGroup radioGroup;
     DatePicker datePicker;
     ImageView imageView;
-
     private String resposta = "";
     boolean enteredConditional = false;
 
@@ -99,38 +101,114 @@ public class ResponderForm extends AppCompatActivity {
         super.onBackPressed();
 
         if (SplashScreen.showingConditional) {
-            SplashScreen.indexCondicional--;
+            backConditionalQuestion();
         } else {
-            SplashScreen.indexForm--;
+            backToPreviousQuestion();
         }
+    }
+
+    private void nextQuestion(){
+        SplashScreen.indexForm += 1;
+        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+    }
+
+    private void nextConditionalQuestion(){
+        SplashScreen.indexCondicional += 1;
+        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+    }
+
+    private void backToPreviousQuestion(){
+        SplashScreen.indexForm -= 1;
         finish();
+    }
+
+    private void backConditionalQuestion(){
+        SplashScreen.indexCondicional -= 1;
+        finish();
+    }
+
+    private void enterConditionalQuestion(){
+        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+    }
+
+    private void increaseProgressBar(){
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.horizontalprogressBar);
+        progressBar.setMax(SplashScreen.formulario.getPerguntas().size());
+        progressBar.setProgress(SplashScreen.indexForm);
+    }
+
+    private AlphaAnimation getAlphaAnimation(){
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation.setDuration(1000);
+        return alphaAnimation;
+    }
+
+    private void initiateCircularProgressBar(){
+
+        try {
+            Random random = new Random();
+            int min = 2000;
+
+            ProgressBar progressBar = new ProgressBar(this);
+            progressBar.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+
+// Set ProgressBar layout gravity to center
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = Gravity.CENTER;
+
+            progressBar.setLayoutParams(layoutParams);
+
+            progressViewContainer.addView(progressBar);
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressViewContainer.removeView(progressBar);
+                    container.setVisibility(View.VISIBLE);
+                    btnResponder.setVisibility(View.VISIBLE);
+                }
+            },1000 ); // Tempo em milissegundos (1 segundo)
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void animateElements(){
+        txtPergunta.startAnimation(getAlphaAnimation());
+        btnResponder.startAnimation(getAlphaAnimation());
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        btnResponder.setVisibility(View.INVISIBLE);
+
+        container.setVisibility(View.INVISIBLE);
+
+        increaseProgressBar();
+        initiateCircularProgressBar();
+        animateElements();
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_responder_form);
-        ProgressDialog loadingBar = new ProgressDialog(this);
-        loadingBar.setTitle("Carregando o formulário...");
-        loadingBar.setMessage("Aguarde por favor!");
-        loadingBar.setCanceledOnTouchOutside(false);
-        loadingBar.show();
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadingBar.dismiss();
-            }
-        }, 500); // Tempo em milissegundos (1 segundo)
-
 
         try{
             txtPergunta = findViewById(R.id.nomePergunta);
             container = findViewById(R.id.container);
             btnResponder = findViewById(R.id.btnNext);
-          //  ProgressBar progressBar = findViewById(R.id.progressBar);
+            btnResponder.setVisibility(View.INVISIBLE);
 
+            progressViewContainer = findViewById(R.id.circularProgressContainer);
             if (SplashScreen.runGroup){
 
                 if (SplashScreen.groupIndex < SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
@@ -144,7 +222,6 @@ public class ResponderForm extends AppCompatActivity {
                     pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
                             get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
                     loadingBar.dismiss();
-
                 }
 
                 if (pergunta == null){
@@ -210,6 +287,7 @@ public class ResponderForm extends AppCompatActivity {
                                 Toast.makeText(ResponderForm.this, "Por favor, preencha o campo de resposta", Toast.LENGTH_LONG).show();
                                 return ;
                             }
+                            // se os dias de mergulho do pesticids forem menores que 7 entao o app mostra um popup
                             int res = Integer.parseInt(resposta);
                             if (res < 7){
                                 displayConditionalPopUp(pergunta.getNomeDaPergunta());
@@ -222,9 +300,10 @@ public class ResponderForm extends AppCompatActivity {
                         if (SplashScreen.indexCondicional >= SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm).perguntasCondicionais.size()) {
                             SplashScreen.showingConditional = false;
                             SplashScreen.indexCondicional = 0;
-                            SplashScreen.indexForm += 1;
+                            nextQuestion();
+                            return ;
                         }
-                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+
                     } else {
                         // So here the question do not have conditions
 
@@ -234,11 +313,12 @@ public class ResponderForm extends AppCompatActivity {
                                 if (SplashScreen.indexCondicional >= pergunta.perguntasCondicionais.size()) {
                                     SplashScreen.indexCondicional = 0;
                                     SplashScreen.showingConditional = false;
-                                    SplashScreen.indexForm += 1;
+                                    nextQuestion();
                                     return;
                                 }
                             }
 
+                            // se a pergunta for sobre culturas do canteiro a app capta todas as culturas seleciondas e armazena em selected cultures
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("culturas do canteiro")){
 
                                 for (String s : resposta.split(",")){
@@ -251,9 +331,8 @@ public class ResponderForm extends AppCompatActivity {
                                 if (resposta.toLowerCase().contains("não")){
                                     displayConditionalPopUp(pergunta.getNomeDaPergunta());
                                 }else{
-                                    //  SplashScreen.indexForm++;
                                     SplashScreen.showingConditional = true;
-                                    startActivity(new Intent(ResponderForm.this,ResponderForm.class));
+                                    nextQuestion();
                                 }
                                 return;
                             }
@@ -264,16 +343,16 @@ public class ResponderForm extends AppCompatActivity {
                                     displayConditionalPopUp(pergunta.getNomeDaPergunta());
                                     return ;
                                 }else{
-                                    SplashScreen.indexForm++;
-                                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                                    nextQuestion();
+                                    return;
                                 }
                             }
 
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("incidência de praga")) {
                                 if (resposta.toLowerCase().contains("sim")) {
                                     SplashScreen.showingConditional = true;
-                                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
-                                    return;
+                                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                                        return;
                                 }
                             }
 
@@ -287,7 +366,7 @@ public class ResponderForm extends AppCompatActivity {
                                 // Show conditional question
                                 if (resposta.toLowerCase().contains("sim")) {
                                     SplashScreen.showingConditional = true;
-                                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                                    nextQuestion();
                                     return;
                                 }
                             }
@@ -362,7 +441,7 @@ public class ResponderForm extends AppCompatActivity {
                 RadioButton rb = (RadioButton) r.getChildAt(i);
 
                 if (rb.isChecked()) {
-                    resposta += rb.getText() + ",";
+                    resposta += rb.getText();
                 }
             }
         } else if (typeOfQuestion.contains("EditText")) {
@@ -392,15 +471,13 @@ public class ResponderForm extends AppCompatActivity {
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    SplashScreen.indexCondicional++;
-                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                    nextQuestion();
                 }
             });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
 
         }else if (per.toLowerCase().contains("pesticida botanico")){
-            Toast.makeText(ResponderForm.this, SplashScreen.indexForm+"", Toast.LENGTH_SHORT).show();
             AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
             builder.setTitle("Informação Importante");
             builder.setMessage("E' muito importante proteger a propia machamba com pesticida natural.\n" +
@@ -411,8 +488,7 @@ public class ResponderForm extends AppCompatActivity {
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    SplashScreen.indexForm++;
-                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                    nextQuestion();
                 }
             });
             AlertDialog alertDialog = builder.create();
@@ -427,8 +503,7 @@ public class ResponderForm extends AppCompatActivity {
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    SplashScreen.indexForm++;
-                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                    nextQuestion();
                 }
             });
             AlertDialog alertDialog = builder.create();
@@ -488,7 +563,7 @@ public class ResponderForm extends AppCompatActivity {
                                     builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
+                                            dialog.cancel();
                                         }
                                     });
                                     AlertDialog alertDialog = builder.create();
@@ -535,7 +610,7 @@ public class ResponderForm extends AppCompatActivity {
                                     builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
+                                            dialog.cancel();
                                         }
                                     });
                                     AlertDialog alertDialog = builder.create();
@@ -559,14 +634,23 @@ public class ResponderForm extends AppCompatActivity {
                     btnVerPopUp.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
                                 builder.setView(img);
 
                                 builder.setTitle("Informação Importante");
                                 builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        ImageView img = new ImageView(v.getContext());
+                                        ImageView img = new ImageView(ResponderForm.this);
+
+                                        ViewGroup viewGroup = (ViewGroup) v.getParent();
+
+                                        if (viewGroup != null){
+                                            viewGroup.removeView(v);
+                                        }
+
+
 
                                         if (per.toLowerCase().contains("camada de estrume")) {
                                             img.setImageResource(R.drawable.checkbox2_2);
@@ -583,7 +667,7 @@ public class ResponderForm extends AppCompatActivity {
                                         builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-
+                                                dialog.cancel();
                                             }
                                         });
                                         AlertDialog alertDialog = builder.create();
@@ -702,6 +786,7 @@ public class ResponderForm extends AppCompatActivity {
                 editText.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
                 editText.setTypeface(ResourcesCompat.getFont(this, R.font.poppinsregular));
                 editText.setBackground(getResources().getDrawable(R.drawable.button_sape));
+                editText.startAnimation(getAlphaAnimation());
                 container.addView(editText);
                 break;
 
@@ -717,6 +802,7 @@ public class ResponderForm extends AppCompatActivity {
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT));
                     checkBox.setText(c);
+                    checkBox.startAnimation(getAlphaAnimation());
                     container.addView(checkBox);
                 }
 
@@ -730,6 +816,7 @@ public class ResponderForm extends AppCompatActivity {
                     editText.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
                     editText.setTypeface(ResourcesCompat.getFont(this, R.font.poppinsregular));
                     editText.setBackground(getResources().getDrawable(R.drawable.button_sape));
+                    editText.startAnimation(getAlphaAnimation());
                     container.addView(editText);
                 }
 
@@ -743,23 +830,45 @@ public class ResponderForm extends AppCompatActivity {
 //                imageView.setImageResource(R.drawable.baseline_photo_camera_24);
 //                container.addView(imageView);
 
+//                imageView = new ImageView(getApplicationContext());
+//                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
+//                layoutParams.setMargins(200, 10, 16, 100);
+//                imageView.setLayoutParams(layoutParams);
+//                imageView.setImageResource(R.drawable.baseline_photo_camera_24);
+//                imageView.startAnimation(getAlphaAnimation());
+//                container.addView(imageView);
+
                 imageView = new ImageView(getApplicationContext());
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
-                layoutParams.setMargins(200, 10, 16, 100);
+                layoutParams.gravity = Gravity.CENTER; // Adicione esta linha para centralizar
                 imageView.setLayoutParams(layoutParams);
                 imageView.setImageResource(R.drawable.baseline_photo_camera_24);
+                imageView.startAnimation(getAlphaAnimation());
                 container.addView(imageView);
 
+
 // Adicionar a legenda
+//                TextView legend = new TextView(getApplicationContext());
+//                legend.setText("Clique para tirar uma foto");
+//                LinearLayout.LayoutParams legendaParams = new LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.WRAP_CONTENT,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT
+//                );
+//                legendaParams.setMargins(200, 0, 16, 0);
+//                legend.setLayoutParams(legendaParams);
+//                container.addView(legend);
+
                 TextView legend = new TextView(getApplicationContext());
                 legend.setText("Clique para tirar uma foto");
                 LinearLayout.LayoutParams legendaParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
-                legendaParams.setMargins(200, 0, 16, 0);
+                legendaParams.setMargins(200, 0, 200, 0);
+                legendaParams.gravity = Gravity.CENTER;
                 legend.setLayoutParams(legendaParams);
                 container.addView(legend);
+
 
 
                 ActivityResultLauncher<Intent> activityResultLauncherImageUsers = registerForActivityResult(
@@ -833,6 +942,7 @@ public class ResponderForm extends AppCompatActivity {
 
                     RadioButton r = new RadioButton(getApplicationContext());
                     r.setText(op);
+                    r.startAnimation(getAlphaAnimation());
                     radioGroup.addView(r);
                 }
 
@@ -848,6 +958,7 @@ public class ResponderForm extends AppCompatActivity {
                 for (String op : p.getOpcoes()) {
 
                     RadioButton r = new RadioButton(getApplicationContext());
+                    r.startAnimation(getAlphaAnimation());
                     r.setText(op);
                     radioGroup.addView(r);
                 }
@@ -856,8 +967,17 @@ public class ResponderForm extends AppCompatActivity {
                 break;
 
             case "DatePicker":
+//                datePicker = new DatePicker(getApplicationContext());
+//                datePicker.startAnimation(getAlphaAnimation());
+//                container.addView(datePicker);
+                layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.gravity = Gravity.CENTER;
+
                 datePicker = new DatePicker(getApplicationContext());
-                container.addView(datePicker);
+                datePicker.startAnimation(getAlphaAnimation());
+                container.addView(datePicker, layoutParams);
+
+
                 break;
             case "NumberPicker":
                 LinearLayout linearLayout = findViewById(R.id.container); // seu layout onde você quer adicionar o NumberPicker
@@ -871,7 +991,7 @@ public class ResponderForm extends AppCompatActivity {
                 NumberPicker numberPicker = new NumberPicker(this);
 
                 numberPicker.setGravity(Gravity.CENTER);
-
+                numberPicker.startAnimation(getAlphaAnimation());
                 numberPicker.setMinValue(0);
                 numberPicker.setMaxValue(1000);
                 numberPicker.setFormatter(new NumberPicker.Formatter() {

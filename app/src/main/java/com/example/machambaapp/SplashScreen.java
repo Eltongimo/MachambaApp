@@ -20,6 +20,7 @@ import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -64,6 +65,8 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     public static ArrayList<String> selectedCultures = new ArrayList<>();
+
+    LinkedList a = new LinkedList( );
     public static void UpdateDataFromOnlineDatabase(){
         try{
             etnia = DatabaseHelper.getEtnia("etnias");
@@ -236,7 +239,6 @@ public class SplashScreen extends AppCompatActivity {
         plantas.add("Tabaco");
         plantas.add("Nthavaka");
         plantas.add("Newawi");
-        plantas.add("Outra");
 
         condicional.setOpcoes(plantas);
 
@@ -269,7 +271,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
+               // startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
                 startActivity(new Intent(SplashScreen.this, ResponderForm.class));
 
                 finish();

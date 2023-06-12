@@ -50,24 +50,46 @@
 
         </LinearLayout>
 
+
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
             >
+            <ProgressBar
+                android:id="@+id/horizontalprogressBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="13dp"
+                android:progress="0"
+                android:max="100"
+                android:layout_marginBottom="15dp"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:progressBackgroundTintMode="add"
+                />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/circularProgressContainer"
+                >
+
+            </LinearLayout>
             <LinearLayout
 
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-            <VideoView
-                android:id="@+id/videoview"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:visibility="invisible"
-                />
+                <VideoView
+                    android:id="@+id/videoview"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="invisible"
+                    />
 
             <Button
                 android:id="@+id/btnvideo"
@@ -110,13 +132,17 @@
                 app:cornerRadius="15sp" />
 
         </LinearLayout>
-<!--        <ProgressBar-->
-<!--            android:id="@+id/progressBar"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:visibility="visible"-->
-<!--            style="@android:style/Widget.ProgressBar.Large" />-->
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            />
 
     </LinearLayout>
 

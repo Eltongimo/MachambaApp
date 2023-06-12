@@ -35,6 +35,7 @@ import com.example.machambaapp.ui.admin.views.ActivityUserPL;
 import com.example.machambaapp.ui.admin.views.ActivityViewAddCultura;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -71,6 +72,8 @@ public class AddCultura extends AppCompatActivity {
         button=(Button) findViewById(R.id.addCultura);
         cultura=(EditText) findViewById(R.id.idAddCultura);
         imageAddCultura = (ImageView) findViewById(R.id.imageAddCultura);
+
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

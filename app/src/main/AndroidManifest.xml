@@ -23,6 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MachambaApp"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.clientes.SelecionarCanteiroAlfobre"
             android:exported="false" />

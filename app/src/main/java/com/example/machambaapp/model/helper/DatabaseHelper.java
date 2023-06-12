@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -509,6 +510,7 @@ public class DatabaseHelper extends AppCompatActivity{
         });
         return f;
     }
+
     public static void addUserPl(Cliente.UserPl u){
         String key = getSha();
         databaseReference.child("usuarios").child(key).setValue(u);
