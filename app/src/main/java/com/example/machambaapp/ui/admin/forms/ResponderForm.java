@@ -535,8 +535,53 @@ public class ResponderForm extends AppCompatActivity {
             btnVideo.setVisibility(View.VISIBLE);
             btnVideo.setText("Dica");
         }
+//
+//        if (per.toLowerCase().contains("pesticida")){
+//            btnVideo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    btnVerPopUp.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+//                            builder.setView(img);
+//
+//                            builder.setTitle("Informação Importante");
+//                            builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    ImageView img = new ImageView(v.getContext());
+//
+//                                    img.setImageResource(R.drawable.pesticida1);
+//
+//                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+//                                    builder.setView(img);
+//
+//                                    builder.setTitle("Informação Importante");
+//                                    builder.setView(img);
+//
+//                                    builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog, int which) {
+//                                            dialog.cancel();
+//                                        }
+//                                    });
+//                                    AlertDialog alertDialog = builder.create();
+//                                    alertDialog.show();
+//                                }
+//                            });
+//
+//                            AlertDialog alertDialog = builder.create();
+//                            alertDialog.show();
+//                        }
+//                    });
+//                }
+//            });
+//        }
 
-        if (per.toLowerCase().contains("pesticida")){
+
+
+        if (per.toLowerCase().contains("pesticida")) {
             btnVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -544,33 +589,36 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setView(img);
-
                             builder.setTitle("Informação Importante");
+
+                            // First AlertDialog
+                            ImageView img1 = new ImageView(v.getContext());
+                            img1.setImageResource(R.drawable.pesticida1);
+
+                            builder.setView(img1);
                             builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    ImageView img = new ImageView(v.getContext());
+                                    dialog.dismiss();
 
-                                    img.setImageResource(R.drawable.pesticida1);
+                                    // Second AlertDialog
+                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(v.getContext());
+                                    builder2.setTitle("Informação Importante");
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                    builder.setView(img);
+                                    ImageView img2 = new ImageView(v.getContext());
+                                    img2.setImageResource(R.drawable.pesticida2);
 
-                                    builder.setTitle("Informação Importante");
-                                    builder.setView(img);
-
-                                    builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
+                                    builder2.setView(img2);
+                                    builder2.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
+                                            dialog.dismiss();
                                         }
                                     });
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
+                                    AlertDialog alertDialog2 = builder2.create();
+                                    alertDialog2.show();
                                 }
                             });
-
                             AlertDialog alertDialog = builder.create();
                             alertDialog.show();
                         }
@@ -579,7 +627,55 @@ public class ResponderForm extends AppCompatActivity {
             });
         }
 
-        if (per.toLowerCase().contains("bokashi")){
+//
+//        if (per.toLowerCase().contains("bokashi")){
+//            btnVideo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    btnVerPopUp.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+//                            builder.setView(img);
+//
+//                            builder.setTitle("Informação Importante");
+//                            builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    ImageView img = new ImageView(v.getContext());
+//
+//                                    if (per.toLowerCase().contains("camada de estrume")) {
+//                                        img.setImageResource(R.drawable.checkbox2_2);
+//                                    }else if (per.toLowerCase().contains("bokashi")) {
+//                                        img.setImageResource(R.drawable.bokashi__2);
+//                                    }
+//
+//                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+//                                    builder.setView(img);
+//
+//                                    builder.setTitle("Informação Importante");
+//                                    builder.setView(img);
+//
+//                                    builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog, int which) {
+//                                            dialog.cancel();
+//                                        }
+//                                    });
+//                                    AlertDialog alertDialog = builder.create();
+//                                    alertDialog.show();
+//                                }
+//                            });
+//
+//                            AlertDialog alertDialog = builder.create();
+//                            alertDialog.show();
+//                        }
+//                    });
+//                }
+//            });
+//        }
+
+        if (per.toLowerCase().contains("bokashi")) {
             btnVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -587,37 +683,36 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                            builder.setView(img);
-
                             builder.setTitle("Informação Importante");
+
+                            // First AlertDialog
+                            ImageView img1 = new ImageView(v.getContext());
+                            img1.setImageResource(R.drawable.bokashi_1);
+
+                            builder.setView(img1);
                             builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    ImageView img = new ImageView(v.getContext());
+                                    dialog.dismiss();
 
-                                    if (per.toLowerCase().contains("camada de estrume")) {
-                                        img.setImageResource(R.drawable.checkbox2_2);
-                                    }else if (per.toLowerCase().contains("bokashi")) {
-                                        img.setImageResource(R.drawable.bokashi__2);
-                                    }
+                                    // Second AlertDialog
+                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(v.getContext());
+                                    builder2.setTitle("Informação Importante");
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                    builder.setView(img);
+                                    ImageView img2 = new ImageView(v.getContext());
+                                    img2.setImageResource(R.drawable.bokashi__2);
 
-                                    builder.setTitle("Informação Importante");
-                                    builder.setView(img);
-
-                                    builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
+                                    builder2.setView(img2);
+                                    builder2.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
+                                            dialog.dismiss();
                                         }
                                     });
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
+                                    AlertDialog alertDialog2 = builder2.create();
+                                    alertDialog2.show();
                                 }
                             });
-
                             AlertDialog alertDialog = builder.create();
                             alertDialog.show();
                         }
@@ -625,6 +720,7 @@ public class ResponderForm extends AppCompatActivity {
                 }
             });
         }
+
 
         if (per.toLowerCase().contains("cobertura morta")){
 
