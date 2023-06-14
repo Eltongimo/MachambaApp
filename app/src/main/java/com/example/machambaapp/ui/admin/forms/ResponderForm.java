@@ -48,6 +48,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
+import com.example.machambaapp.model.datamodel.OfflineDBModelForm;
 import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.helper.OfflineDB;
@@ -95,6 +96,7 @@ public class ResponderForm extends AppCompatActivity {
     boolean enteredConditional = false;
 
     private Pergunta pergunta;
+    ArrayList<OfflineDBModelForm> a ;
 
     @Override
     public void onBackPressed() {
@@ -209,6 +211,7 @@ public class ResponderForm extends AppCompatActivity {
             btnResponder.setVisibility(View.INVISIBLE);
 
             progressViewContainer = findViewById(R.id.circularProgressContainer);
+
             if (SplashScreen.runGroup){
 
                 if (SplashScreen.groupIndex < SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
@@ -253,8 +256,6 @@ public class ResponderForm extends AppCompatActivity {
                         SplashScreen.runGroup = true;
                         startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                         return ;
-                        // pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
-                    //    mostrarCampo(pergunta);
                     }
                 }
                 else
@@ -273,7 +274,13 @@ public class ResponderForm extends AppCompatActivity {
 
                     collectAnswers(pergunta.getTipoPergunta());
 
-                    if (SplashScreen.runGroup){
+                    ArrayList<OfflineDBModelForm> a = new ArrayList<>();
+
+                    a.add(new OfflineDBModelForm("1",pergunta.getNomeDaPergunta(),resposta));
+
+                    long i = new OfflineDB(ResponderForm.this).insertForm(a);
+
+                if (SplashScreen.runGroup){
                         SplashScreen.groupIndex++;
                         startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                         return;
@@ -535,51 +542,6 @@ public class ResponderForm extends AppCompatActivity {
             btnVideo.setVisibility(View.VISIBLE);
             btnVideo.setText("Dica");
         }
-//
-//        if (per.toLowerCase().contains("pesticida")){
-//            btnVideo.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    btnVerPopUp.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                            builder.setView(img);
-//
-//                            builder.setTitle("Informação Importante");
-//                            builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    ImageView img = new ImageView(v.getContext());
-//
-//                                    img.setImageResource(R.drawable.pesticida1);
-//
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                                    builder.setView(img);
-//
-//                                    builder.setTitle("Informação Importante");
-//                                    builder.setView(img);
-//
-//                                    builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            dialog.cancel();
-//                                        }
-//                                    });
-//                                    AlertDialog alertDialog = builder.create();
-//                                    alertDialog.show();
-//                                }
-//                            });
-//
-//                            AlertDialog alertDialog = builder.create();
-//                            alertDialog.show();
-//                        }
-//                    });
-//                }
-//            });
-//        }
-
-
 
         if (per.toLowerCase().contains("pesticida")) {
             btnVideo.setOnClickListener(new View.OnClickListener() {
@@ -626,54 +588,6 @@ public class ResponderForm extends AppCompatActivity {
                 }
             });
         }
-
-//
-//        if (per.toLowerCase().contains("bokashi")){
-//            btnVideo.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    btnVerPopUp.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                            builder.setView(img);
-//
-//                            builder.setTitle("Informação Importante");
-//                            builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    ImageView img = new ImageView(v.getContext());
-//
-//                                    if (per.toLowerCase().contains("camada de estrume")) {
-//                                        img.setImageResource(R.drawable.checkbox2_2);
-//                                    }else if (per.toLowerCase().contains("bokashi")) {
-//                                        img.setImageResource(R.drawable.bokashi__2);
-//                                    }
-//
-//                                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                                    builder.setView(img);
-//
-//                                    builder.setTitle("Informação Importante");
-//                                    builder.setView(img);
-//
-//                                    builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            dialog.cancel();
-//                                        }
-//                                    });
-//                                    AlertDialog alertDialog = builder.create();
-//                                    alertDialog.show();
-//                                }
-//                            });
-//
-//                            AlertDialog alertDialog = builder.create();
-//                            alertDialog.show();
-//                        }
-//                    });
-//                }
-//            });
-//        }
 
         if (per.toLowerCase().contains("bokashi")) {
             btnVideo.setOnClickListener(new View.OnClickListener() {
@@ -722,57 +636,95 @@ public class ResponderForm extends AppCompatActivity {
         }
 
 
-        if (per.toLowerCase().contains("cobertura morta")){
+//        if (per.toLowerCase().contains("cobertura morta")){
+//
+//            btnVideo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    btnVerPopUp.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//
+//                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+//                                builder.setView(img);
+//
+//                                builder.setTitle("Informação Importante");
+//                                builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        ImageView img = new ImageView(ResponderForm.this);
+//
+//                                        if (per.toLowerCase().contains("camada de estrume")) {
+//                                            img.setImageResource(R.drawable.checkbox2_2);
+//                                        } else if (per.toLowerCase().contains("bokashi")) {
+//                                            img.setImageResource(R.drawable.bokashi__2);
+//                                        }
+//
+//                                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+//                                        builder.setView(img);
+//
+//                                        builder.setTitle("Informação Importante");
+//                                        builder.setView(img);
+//
+//                                        builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                dialog.cancel();
+//                                            }
+//                                        });
+//                                        AlertDialog alertDialog = builder.create();
+//                                        alertDialog.show();
+//                                    }
+//                                });
+//
+//                                AlertDialog alertDialog = builder.create();
+//                                alertDialog.show();
+//                        }
+//                    });
+//                }
+//            });
+//        }
 
+        if (per.toLowerCase().contains("cobertura morta")) {
             btnVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     btnVerPopUp.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                            builder.setTitle("Informação Importante");
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
-                                builder.setView(img);
+                            // First AlertDialog
+                            ImageView img1 = new ImageView(v.getContext());
+                            img1.setImageResource(R.drawable.checkbox2_1);
 
-                                builder.setTitle("Informação Importante");
-                                builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        ImageView img = new ImageView(ResponderForm.this);
+                            builder.setView(img1);
+                            builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
 
-                                        ViewGroup viewGroup = (ViewGroup) v.getParent();
+                                    // Second AlertDialog
+                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(v.getContext());
+                                    builder2.setTitle("Informação Importante");
 
-                                        if (viewGroup != null){
-                                            viewGroup.removeView(v);
+                                    ImageView img2 = new ImageView(v.getContext());
+                                    img2.setImageResource(R.drawable.checkbox2_2);
+
+                                    builder2.setView(img2);
+                                    builder2.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
                                         }
-
-
-
-                                        if (per.toLowerCase().contains("camada de estrume")) {
-                                            img.setImageResource(R.drawable.checkbox2_2);
-                                        } else if (per.toLowerCase().contains("bokashi")) {
-                                            img.setImageResource(R.drawable.bokashi__2);
-                                        }
-
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                        builder.setView(img);
-
-                                        builder.setTitle("Informação Importante");
-                                        builder.setView(img);
-
-                                        builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.cancel();
-                                            }
-                                        });
-                                        AlertDialog alertDialog = builder.create();
-                                        alertDialog.show();
-                                    }
-                                });
-
-                                AlertDialog alertDialog = builder.create();
-                                alertDialog.show();
+                                    });
+                                    AlertDialog alertDialog2 = builder2.create();
+                                    alertDialog2.show();
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
                         }
                     });
                 }
@@ -831,45 +783,6 @@ public class ResponderForm extends AppCompatActivity {
         mostrarBotaoVideo(p.getNomeDaPergunta());
 
         switch (tipoResposta) {
-
-            case "Slider":
-                Slider slider = new Slider(ResponderForm.this);
-                slider.setId(View.generateViewId()); // set a unique ID for the slider
-                slider.setValueFrom(1); // set the minimum value of the slider
-                slider.setValueTo(4); // set the maximum value of the slider
-                slider.setStepSize(1); // set the step size of the slider
-                slider.setValue(1);
-
-                container.addView(slider);
-                TextView txt1 = new TextView(getApplicationContext());
-                txt1.setText("1 - Pequeno\n");
-
-                TextView txt2 = new TextView(getApplicationContext());
-                txt1.setText("2 - Normal\n");
-
-                TextView txt3 = new TextView(getApplicationContext());
-                txt1.setText("3 - Acima do Normal\n");
-
-                TextView txt4 = new TextView(getApplicationContext());
-                txt1.setText("4 - Grande\n");
-
-                TextView legenda = new TextView(getApplicationContext());
-                legenda.setText("Legenda");
-                legenda.setTextSize(30);
-                container.addView(legenda);
-                container.addView(txt1);
-                container.addView(txt2);
-                container.addView(txt3);
-                container.addView(txt4);
-
-                slider.addOnChangeListener(new Slider.OnChangeListener() {
-                    @Override
-                    public void onValueChange(Slider slider, float value, boolean fromUser) {
-                        resposta = value + "";
-                    }
-                });
-                resposta = " ";
-                break;
 
             case "EditText":
                 editText = new EditText(this);
@@ -1035,7 +948,6 @@ public class ResponderForm extends AppCompatActivity {
                 radioGroup = new RadioGroup(getApplicationContext());
 
                 for (String op : p.getOpcoes()) {
-
                     RadioButton r = new RadioButton(getApplicationContext());
                     r.setText(op);
                     r.startAnimation(getAlphaAnimation());

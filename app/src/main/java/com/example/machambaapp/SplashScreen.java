@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.datamodel.Resposta;
 import com.example.machambaapp.model.helper.DatabaseHelper;
+import com.example.machambaapp.model.helper.OfflineDB;
 import com.example.machambaapp.ui.admin.addforms.AddCultura;
 import com.example.machambaapp.ui.admin.forms.ResponderForm;
 import com.example.machambaapp.ui.clientes.ActivitySelectClient;
@@ -66,7 +69,6 @@ public class SplashScreen extends AppCompatActivity {
 
     public static ArrayList<String> selectedCultures = new ArrayList<>();
 
-    LinkedList a = new LinkedList( );
     public static void UpdateDataFromOnlineDatabase(){
         try{
             etnia = DatabaseHelper.getEtnia("etnias");
@@ -94,7 +96,6 @@ public class SplashScreen extends AppCompatActivity {
         provincias.add("Nampula");
         provincias.add("Cabo Delgado");
         provincias.add("Niassa");
-
 
         formulario =  new Formulario();
 
@@ -267,7 +268,6 @@ public class SplashScreen extends AppCompatActivity {
         ps.add(p);
 
         formulario.setPerguntas(ps);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -324,7 +324,8 @@ public class SplashScreen extends AppCompatActivity {
         p.setNomeDaPergunta("As plantas de alface tem incidencia de pragas e doenças?");
         p.setTipoPergunta("RadioGroup");
 
-        opcoes.clear();
+        opcoes = new ArrayList<>();
+
         opcoes.add("Sim");
         opcoes.add("Não");
         p.setOpcoes(op);
@@ -340,7 +341,9 @@ public class SplashScreen extends AppCompatActivity {
         p = new Pergunta();
         p.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
         p.setTipoPergunta("RadioGroup");
-        opcoes.clear();
+
+        opcoes = new ArrayList<>();
+
         opcoes.add("Sim");
         opcoes.add("Não");
         p.setOpcoes(opcoes);
@@ -359,7 +362,9 @@ public class SplashScreen extends AppCompatActivity {
 
         p = new Pergunta();
         p.setNomeDaPergunta("Indicar a fase de crescimento do Cebola");
-        opcoes.clear();
+
+        opcoes = new ArrayList<>();
+
         opcoes.add("Pequeno");
         opcoes.add("Medio");
         opcoes.add("Grande");
@@ -424,12 +429,13 @@ public class SplashScreen extends AppCompatActivity {
 
         p = new Pergunta();
         p.setNomeDaPergunta("Indicar a fase de crescimento da couve");
-        opcoes.clear();
-        opcoes.add("Pequeno");
-        opcoes.add("Medio");
-        opcoes.add("Grande");
-        opcoes.add("Muito Grande");
-        p.setOpcoes(opcoes);
+
+        ArrayList<String> crescimento = new ArrayList();
+        crescimento.add("Pequeno");
+        crescimento.add("Medio");
+        crescimento.add("Grande");
+        crescimento.add("Muito Grande");
+        p.setOpcoes(crescimento);
         p.setTipoPergunta("RadioGroup");
         ps.add(p);
 
@@ -470,7 +476,9 @@ public class SplashScreen extends AppCompatActivity {
         p = new Pergunta();
         p.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
         p.setTipoPergunta("RadioGroup");
-        opcoes.clear();
+
+        opcoes = new ArrayList<>();
+
         opcoes.add("Sim");
         opcoes.add("Não");
         p.setOpcoes(opcoes);
@@ -490,7 +498,9 @@ public class SplashScreen extends AppCompatActivity {
 
         p = new Pergunta();
         p.setNomeDaPergunta("Indicar a fase de crescimento do tomate");
-        opcoes.clear();
+
+        opcoes = new ArrayList<>();
+
         opcoes.add("Pequeno");
         opcoes.add("Medio");
         opcoes.add("Grande");
@@ -534,7 +544,9 @@ public class SplashScreen extends AppCompatActivity {
         p = new Pergunta();
         p.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
         p.setTipoPergunta("RadioGroup");
-        opcoes.clear();
+
+        opcoes = new ArrayList<>();
+
         opcoes.add("Sim");
         opcoes.add("Não");
         p.setOpcoes(opcoes);
