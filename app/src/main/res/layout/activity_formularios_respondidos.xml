@@ -4,36 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fundo"
-    tools:context=".ui.produtorLider.ProdutorLiderFragment">
+    tools:context=".FormulariosRespondidos">
+
+    <androidx.appcompat.widget.ActionMenuView
+
+        android:id="@+id/menuBar"
+        android:layout_width="match_parent"
+        android:background="@drawable/img_21"
+        android:backgroundTint="#48b971"
+        android:layout_alignParentTop="true"
+        android:layout_height="50dp">
+
+        <TextView
+            android:textSize="18dp"
+            android:fontFamily="@font/poppinssemibold"
+            android:textColor="@color/white"
+            android:text="Formulários Respondidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.ActionMenuView>
 
     <androidx.appcompat.widget.SearchView
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/button_sape"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:id="@+id/idSearch"
+        android:layout_below="@id/menuBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/white"
-        android:focusable="false"
         app:iconifiedByDefault="false"
-        app:queryHint=" Buscar Usuário"
-
-        />
-
+        app:queryHint=" Buscar Formulario Preenchido"
+        android:focusable="false"/>
     <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/idRecyclerviewUserPl"
+        android:id="@+id/idRecyclerviewEtnia"
         android:layout_below="@id/idSearch"
         android:layout_marginTop="10dp"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/list_edit_user_pl">
+        tools:listitem="@layout/list_etnia">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
+
         android:layout_marginBottom="18dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
@@ -50,9 +68,7 @@
         android:textSize="16dp"
         android:fontFamily="@font/poppinsbold"
         android:backgroundTint="#48b971"
-        android:text="Registar usuario"
-        android:id="@+id/registerUserLp"/>
-
-
+        android:text="Upload dos formulários"
+        android:id="@+id/registerEtnia"/>
 
 </RelativeLayout>

@@ -22,7 +22,6 @@ import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
 import com.example.machambaapp.model.update.UpdateComunidade;
-import com.example.machambaapp.model.update.UpdateCultura;
 
 import java.util.ArrayList;
 

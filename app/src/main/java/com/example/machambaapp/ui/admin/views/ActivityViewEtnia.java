@@ -2,6 +2,7 @@ package com.example.machambaapp.ui.admin.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +14,13 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.machambaapp.model.datamodel.Comunidade;
-import com.example.machambaapp.model.datamodel.Distrito;
+import com.example.machambaapp.ActivityLogin;
+import com.example.machambaapp.MainActivity;
+import com.example.machambaapp.model.adapter.EtniaAdapter;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.ui.admin.addforms.AddEtnia;
 import com.example.machambaapp.R;
-import com.example.machambaapp.model.adapter.EtniaAdapter;
+import com.example.machambaapp.model.adapter.OfflineDBModelAdapter;
 import com.example.machambaapp.model.datamodel.Etnia;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -83,7 +85,10 @@ public class ActivityViewEtnia extends AppCompatActivity {
         registerEtnia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivityViewEtnia.this, AddEtnia.class));
+                //startActivity(new Intent(ActivityViewEtnia.this, AddEtnia.class));
+                Intent intent = new Intent(ActivityViewEtnia.this, AddEtnia.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation(ActivityViewEtnia.this).toBundle();
+                startActivity(intent, b);
 
             }
         });

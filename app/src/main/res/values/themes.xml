@@ -13,6 +13,10 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:windowAnimationStyle">@style/animation</item>
         <!-- Customize your theme here. -->
+
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@transition/trans_anim</item>
+        <item name="android:windowExitTransition">@transition/trans_anim</item>
     </style>
 
     <style name="Theme.MachambaApp.NoActionBar">

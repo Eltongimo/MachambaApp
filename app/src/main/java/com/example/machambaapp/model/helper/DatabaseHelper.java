@@ -11,6 +11,7 @@ import com.example.machambaapp.model.datamodel.Distrito;
 import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.datamodel.Localidade;
+import com.example.machambaapp.model.datamodel.OfflineDBModelForm;
 import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.datamodel.Posto;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,8 +35,6 @@ public class DatabaseHelper extends AppCompatActivity{
 
     private static CountDownLatch counter = new CountDownLatch(1);
     public static ArrayList<Cliente.UserPl> getUsers(){
-
-        final CountDownLatch latch = new CountDownLatch(2);
 
         ArrayList<Cliente.UserPl> users = new ArrayList<>();
 
@@ -58,15 +56,13 @@ public class DatabaseHelper extends AppCompatActivity{
 
                     users.add(new Cliente.UserPl( nome, apelido, senha,genero,phone,  distrito, localidade, postoAdministrativo,  comunidade, userPLSnapshot.getKey(),imagem));
                 }
-                latch.countDown();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                latch.countDown();
+                ;
             }
         });
-        System.out.println("Returning");
         return users;
     }
     public static ArrayList<Posto>getPostosAdministrativos(String query){
@@ -169,6 +165,10 @@ public class DatabaseHelper extends AppCompatActivity{
             }
         });
         return localidades;
+    }
+
+    public static void uploadOfflineForm(ArrayList<OfflineDBModelForm> data){
+
     }
     public static ArrayList<Etnia> getEtnias(String query){
         ArrayList<Etnia> etnias = new ArrayList<>();

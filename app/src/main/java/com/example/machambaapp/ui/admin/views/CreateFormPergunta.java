@@ -1,5 +1,6 @@
 package com.example.machambaapp.ui.admin.views;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Pergunta;
+import com.example.machambaapp.ui.admin.addforms.AddEtnia;
 
 public class CreateFormPergunta extends AppCompatActivity {
 
@@ -45,7 +47,10 @@ public class CreateFormPergunta extends AppCompatActivity {
 
                 SplashScreen.formulario.getPerguntas().add(p);
 
-                startActivity(new Intent(CreateFormPergunta.this, CreateFormResposta.class));
+//                startActivity(new Intent(CreateFormPergunta.this, CreateFormResposta.class));
+                Intent intent = new Intent(CreateFormPergunta.this, CreateFormResposta.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation(CreateFormPergunta.this).toBundle();
+                startActivity(intent, b);
             }
         });
     }

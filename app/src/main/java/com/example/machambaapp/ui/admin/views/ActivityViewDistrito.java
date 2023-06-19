@@ -6,12 +6,15 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.machambaapp.ActivityLogin;
+import com.example.machambaapp.ActivityPageStart;
 import com.example.machambaapp.Cultura;
 import com.example.machambaapp.model.datamodel.Comunidade;
 import com.example.machambaapp.model.helper.DatabaseHelper;
@@ -83,7 +86,11 @@ public class ActivityViewDistrito extends AppCompatActivity {
         registarDistrito.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(ActivityViewDistrito.this, AddDistrito.class));
+//                    startActivity(new Intent(ActivityViewDistrito.this, AddDistrito.class));
+
+                    Intent intent = new Intent(ActivityViewDistrito.this, AddDistrito.class);
+                    Bundle b = ActivityOptions.makeSceneTransitionAnimation(ActivityViewDistrito.this).toBundle();
+                    startActivity(intent, b);
                 }
             });
         }

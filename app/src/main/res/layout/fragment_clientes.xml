@@ -32,7 +32,7 @@
         android:layout_marginTop="70dp"
         android:fontFamily="@font/poppinssemibold"
         android:textColor="@color/white"
-        android:text="Elton Gimo"
+        android:text="Nome Apelido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
@@ -175,6 +175,50 @@
                        android:fontFamily="@font/poppinssemibold"
                        android:textColor="#8E8484"
                        android:text="Visão geral "
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"/>
+
+               </LinearLayout>
+
+           </androidx.cardview.widget.CardView>
+
+           <androidx.cardview.widget.CardView
+               android:foreground="?attr/selectableItemBackground"
+               android:clickable="true"
+               android:id="@+id/formRespondido"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               app:cardElevation="8dp"
+               android:layout_row="1"
+               android:layout_column="1"
+               android:layout_gravity="fill"
+               android:layout_margin="8dp"
+               android:layout_rowWeight="1"
+               android:layout_columnWeight="1"
+               android:backgroundTint="@color/white"
+               app:cardCornerRadius="8dp">
+
+               <LinearLayout
+
+                   android:orientation="vertical"
+                   android:gravity="center"
+                   android:layout_gravity="center_vertical|center_horizontal"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+
+                   <ImageView
+                       android:id="@+id/respForm"
+                       android:src="@drawable/formfill"
+                       android:layout_width="70dp"
+                       android:layout_height="70dp"/>
+
+                   <TextView
+                       android:layout_marginStart="16dp"
+                       android:layout_marginEnd="16dp"
+                       android:textSize="18dp"
+                       android:fontFamily="@font/poppinssemibold"
+                       android:textColor="#8E8484"
+                       android:text="Formúlarios \nRespondidos"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"/>
 

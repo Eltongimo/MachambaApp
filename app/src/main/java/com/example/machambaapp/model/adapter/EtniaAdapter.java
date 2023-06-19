@@ -13,14 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
-import com.example.machambaapp.model.update.UpdateCultura;
 import com.example.machambaapp.model.update.UpdateEtnia;
 
 import java.util.ArrayList;
@@ -41,6 +38,7 @@ public class EtniaAdapter extends RecyclerView.Adapter<EtniaAdapter.ViewHolder>{
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_etnia, parent, false);
         return new EtniaAdapter.ViewHolder(view);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull EtniaAdapter.ViewHolder holder, int position) {
@@ -104,7 +102,6 @@ public class EtniaAdapter extends RecyclerView.Adapter<EtniaAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView Etnia;
-
         private IItemClickListener mItemClickListener;
         private final ImageView apagar;
         private final ImageView editar;

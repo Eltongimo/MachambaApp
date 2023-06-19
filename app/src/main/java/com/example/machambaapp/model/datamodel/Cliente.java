@@ -1,7 +1,5 @@
 package com.example.machambaapp.model.datamodel;
 
-import android.net.Uri;
-
 public class Cliente {
     private String nome, apelido, numero, ano, etnia, genero, key;
     private String distrito;

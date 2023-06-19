@@ -1,41 +1,32 @@
 package com.example.machambaapp;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.DatePicker;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.datamodel.Pergunta;
-import com.example.machambaapp.model.datamodel.Resposta;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.helper.OfflineDB;
-import com.example.machambaapp.ui.admin.addforms.AddCultura;
-import com.example.machambaapp.ui.admin.forms.ResponderForm;
-import com.example.machambaapp.ui.clientes.ActivitySelectClient;
-import com.example.machambaapp.ui.home.HomeFragment;
-
-import org.checkerframework.checker.units.qual.A;
+import com.example.machambaapp.ui.admin.addforms.AddEtnia;
+import com.example.machambaapp.ui.admin.views.ActivityViewEtnia;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 
 public class SplashScreen extends AppCompatActivity {
 
     public static ArrayList<String> distritos = DatabaseHelper.getLocation("distritos");
+    public static ArrayList<Cliente.UserPl> users = DatabaseHelper.getUsers();
     public static ArrayList<String> provincias = new ArrayList<String>();
     public static boolean runGroup = false;
     public static int groupIndex = 0;
     public static int selectedCulturesIndex = 0;
-    public static int indexForm = 0;
-    public static int repeate1 = 9;
+    public static int indexForm = 8;
     public static boolean showingConditional = false;
     public static Pergunta currentQuestion = new Pergunta();
     public static int indexCondicional = 0;
@@ -49,13 +40,9 @@ public class SplashScreen extends AppCompatActivity {
     public static ArrayList<String> comunidades = DatabaseHelper.getLocation("comunidades");
     public static ArrayList<String> etnia = DatabaseHelper.getEtnia("etnias");
     public static Cliente.UserPl currentUser = new Cliente.UserPl();
-
-    public static int indexCulturas = 0 ;
-
     public static boolean finishGroup = false;
     public static HashMap<String, ArrayList<Pergunta>>  groupQuestions = new HashMap<>();
     public static HashMap<String, Pergunta> perguntas = new HashMap<>();
-
     public static void updateComunidade(){
         comunidades = DatabaseHelper.getLocation("comunidades");
     }
@@ -66,9 +53,7 @@ public class SplashScreen extends AppCompatActivity {
     public static void updatePosto(){
         postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
     }
-
     public static ArrayList<String> selectedCultures = new ArrayList<>();
-
     public static void UpdateDataFromOnlineDatabase(){
         try{
             etnia = DatabaseHelper.getEtnia("etnias");
@@ -97,12 +82,16 @@ public class SplashScreen extends AppCompatActivity {
         provincias.add("Cabo Delgado");
         provincias.add("Niassa");
 
+
+
+
         formulario =  new Formulario();
+
+        selectedCultures.add("Alface");
 
         ArrayList<Pergunta> ps = new ArrayList<>();
 
         /*Adding questions to the dictionary*/
-        assignQuestionsToCultures();
 
         ArrayList<String> generos = new ArrayList<>();
         generos.add("Masculino");
@@ -117,9 +106,6 @@ public class SplashScreen extends AppCompatActivity {
         culturas.add("Cebola");
         culturas.add("Couve");
         culturas.add("Tomate");
-
-        selectedCultures.add("alface");
-        selectedCultures.add("cebola");
 
         perguntas.put("1", p);
         ps.add(p);
@@ -267,294 +253,108 @@ public class SplashScreen extends AppCompatActivity {
 
         ps.add(p);
 
+        assignQuestionsToCultures();
+
         formulario.setPerguntas(ps);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-               // startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
-                startActivity(new Intent(SplashScreen.this, ResponderForm.class));
 
+                Intent intent = new Intent(SplashScreen.this, ActivityPageStart.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this).toBundle();
+                startActivity(intent, b);
+                //startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
+                //startActivity(new Intent(SplashScreen.this, ResponderForm.class));
                 finish();
             }
         }, 2000);
+
     }
 
     private void assignQuestionsToCultures(){
 
-        ArrayList<Pergunta> ps = new ArrayList<>();
         ArrayList<String> opcoes = new ArrayList<>();
         ArrayList<String> op = new ArrayList<>();
         ArrayList<Pergunta> perguntasCondicionais = new ArrayList<>();
         Pergunta p = new Pergunta();
 
-        /******************************Inicio Alface**********************************/
+        culturas.clear();
+        culturas.add("Alface");
+        culturas.add("Tomate");
+        culturas.add("Couve");
+        ArrayList<Pergunta> ps;
 
-        p.setNomeDaPergunta("Indicar data do transplante para alface");
-        p.setTipoPergunta("DatePicker");
-        ps.add(p);
+        for (String c : culturas){
 
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar a fase de crescimento do Alface");
-        opcoes = new ArrayList<>();
 
-        opcoes.add("Pequeno");
-        opcoes.add("Medio");
-        opcoes.add("Grande");
-        opcoes.add("Muito Grande");
-        p.setOpcoes(opcoes);
-        p.setTipoPergunta("RadioGroup");
-        ps.add(p);
+            ps = new ArrayList<>();
 
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar o espaçamento entre as plantas ");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
+            p = new Pergunta();
+            p.setNomeDaPergunta("Indicar data do transplante para "+ c);
+            p.setTipoPergunta("DatePicker");
+            ps.add(p);
 
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar o espaçamento entre linhas para alface em centimetros");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
+            p = new Pergunta();
+            p.setNomeDaPergunta("Indicar a fase de crescimento do "+ c);
+            opcoes = new ArrayList<>();
 
-        p = new Pergunta();
-        p.setNomeDaPergunta("Quais são as inhas de alface em centimetros ?");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
+            opcoes.add("Pequeno");
+            opcoes.add("Medio");
+            opcoes.add("Grande");
+            opcoes.add("Muito Grande");
+            p.setOpcoes(opcoes);
+            p.setTipoPergunta("RadioGroup");
+            ps.add(p);
 
-        p = new Pergunta();
-        p.setNomeDaPergunta("As plantas de alface tem incidencia de pragas e doenças?");
-        p.setTipoPergunta("RadioGroup");
+            p = new Pergunta();
+            p.setNomeDaPergunta("Indicar o espaçamento entre as plantas de "+ c);
+            p.setTipoPergunta("EditText");
+            ps.add(p);
 
-        opcoes = new ArrayList<>();
+            p = new Pergunta();
+            p.setNomeDaPergunta("Indicar o espaçamento entre linhas para "+c+" em centimetros");
+            p.setTipoPergunta("EditText");
+            ps.add(p);
 
-        opcoes.add("Sim");
-        opcoes.add("Não");
-        p.setOpcoes(op);
-        p.setCondicaoTexto("Sim");
-        ps.add(p);
+            p = new Pergunta();
+            p.setNomeDaPergunta("Quais são as inhas de "+ c +" em centimetros ?");
+            p.setTipoPergunta("EditText");
+            ps.add(p);
 
-        p = new Pergunta();
-        p.setNomeDaPergunta("Tirar foto da praga ou doenca");
-        p.setTipoPergunta("ImageView");
-        perguntasCondicionais.add(p);
-        ps.add(p);
+            p = new Pergunta();
+            p.setNomeDaPergunta("As plantas de "+ c +" tem incidencia de pragas e doenças?");
+            p.setTipoPergunta("RadioGroup");
+            opcoes = new ArrayList<>();
+            opcoes.add("Sim");
+            opcoes.add("Não");
+            p.setOpcoes(opcoes);
+            p.setCondicaoTexto("Sim");
+            ps.add(p);
 
-        p = new Pergunta();
-        p.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
-        p.setTipoPergunta("RadioGroup");
+            p = new Pergunta();
+            p.setNomeDaPergunta("Tirar foto da praga ou doenca");
+            p.setTipoPergunta("ImageView");
+            perguntasCondicionais.add(p);
+            ps.add(p);
 
-        opcoes = new ArrayList<>();
+            p = new Pergunta();
+            p.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
+            p.setTipoPergunta("RadioGroup");
 
-        opcoes.add("Sim");
-        opcoes.add("Não");
-        p.setOpcoes(opcoes);
-        perguntasCondicionais.add(p);
-        p.setPerguntasCondicionais(perguntasCondicionais);
-        ps.add(p);
+            opcoes = new ArrayList<>();
 
-        groupQuestions.put("alface", ps);
-        /***************************************Alface**********************************************/
-        /***************************************Cebola**********************************************/
+            opcoes.add("Sim");
+            opcoes.add("Não");
+            p.setOpcoes(opcoes);
+            perguntasCondicionais.add(p);
+            p.setPerguntasCondicionais(perguntasCondicionais);
+            ps.add(p);
 
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar data do transplante para cebola");
-        p.setTipoPergunta("DatePicker");
-        ps.add(p);
 
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar a fase de crescimento do Cebola");
-
-        opcoes = new ArrayList<>();
-
-        opcoes.add("Pequeno");
-        opcoes.add("Medio");
-        opcoes.add("Grande");
-        opcoes.add("Muito Grande");
-        p.setOpcoes(opcoes);
-        p.setTipoPergunta("RadioGroup");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar o espaçamento entre as plantas ");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar o espaçamento entre linhas para cebola em centimetros");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Quais são as inhas de cebola em centimetros ?");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("As plantas de alface tem incidencia de pragas e doenças?");
-        p.setTipoPergunta("RadioGroup");
-        op.clear();
-        op.add("Sim");
-        op.add("Não");
-        p.setOpcoes(op);
-        p.setCondicaoTexto("Sim");
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Tirar foto da praga ou doenca");
-        p.setTipoPergunta("ImageView");
-
-        perguntasCondicionais.clear();
-        perguntasCondicionais.add(p);
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
-        p.setTipoPergunta("RadioGroup");
-        op.clear();
-        op.add("Sim");
-        op.add("Não");
-        p.setOpcoes(op);
-        perguntasCondicionais.add(p);
-        p.setPerguntasCondicionais(perguntasCondicionais);
-        ps.add(p);
-        groupQuestions.put("cebola", ps);
-
-        /****************************************************Fim Cebola***************************************************/
-
-        /***************************************Couve**********************************************/
-        ps = new ArrayList<>();
-        p = new Pergunta();
-
-        p.setNomeDaPergunta("Indicar data do transplante para couve");
-        p.setTipoPergunta("DatePicker");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar a fase de crescimento da couve");
-
-        ArrayList<String> crescimento = new ArrayList();
-        crescimento.add("Pequeno");
-        crescimento.add("Medio");
-        crescimento.add("Grande");
-        crescimento.add("Muito Grande");
-        p.setOpcoes(crescimento);
-        p.setTipoPergunta("RadioGroup");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar o espaçamento entre as plantas ");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar o espaçamento entre linhas para couve em centimetros");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Quais são as inhas de couve em centimetros ?");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("As plantas de couve tem incidencia de pragas e doenças?");
-        p.setTipoPergunta("RadioGroup");
-        op.clear();
-        op.add("Sim");
-        op.add("Não");
-        p.setOpcoes(op);
-
-        p.setCondicaoTexto("Sim");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Tirar foto da praga ou doenca");
-        p.setTipoPergunta("ImageView");
-
-        perguntasCondicionais.clear();
-        perguntasCondicionais.add(p);
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
-        p.setTipoPergunta("RadioGroup");
-
-        opcoes = new ArrayList<>();
-
-        opcoes.add("Sim");
-        opcoes.add("Não");
-        p.setOpcoes(opcoes);
-        perguntasCondicionais.add(p);
-        p.setPerguntasCondicionais(perguntasCondicionais);
-        ps.add(p);
-        groupQuestions.put("couve", ps);
-        /****************************************************Fim Couve***************************************************/
-
-        /***************************************Tomate**********************************************/
-        p = new Pergunta();
-        ps = new ArrayList<>();
-
-        p.setNomeDaPergunta("Indicar data do transplante para o tomate");
-        p.setTipoPergunta("DatePicker");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar a fase de crescimento do tomate");
-
-        opcoes = new ArrayList<>();
-
-        opcoes.add("Pequeno");
-        opcoes.add("Medio");
-        opcoes.add("Grande");
-        opcoes.add("Muito Grande");
-        p.setOpcoes(opcoes);
-        p.setTipoPergunta("RadioGroup");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar o espaçamento entre as plantas ");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Indicar o espaçamento entre linhas para tomate em centimetros");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Quais são as inhas de tomate em centimetros ?");
-        p.setTipoPergunta("EditText");
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("As plantas de tomate tem incidencia de pragas e doenças?");
-        p.setTipoPergunta("RadioGroup");
-        op.clear();
-        op.add("Sim");
-        op.add("Não");
-        p.setOpcoes(op);
-        p.setCondicaoTexto("Sim");
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Tirar foto da praga ou doenca");
-        p.setTipoPergunta("ImageView");
-
-        perguntasCondicionais.clear();
-        perguntasCondicionais.add(p);
-        ps.add(p);
-
-        p = new Pergunta();
-        p.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
-        p.setTipoPergunta("RadioGroup");
-
-        opcoes = new ArrayList<>();
-
-        opcoes.add("Sim");
-        opcoes.add("Não");
-        p.setOpcoes(opcoes);
-        perguntasCondicionais.add(p);
-        p.setPerguntasCondicionais(perguntasCondicionais);
-        ps.add(p);
-
-        groupQuestions.put("tomate", ps);
-        /****************************************************Fim Tomate***************************************************/
+            groupQuestions.put(c, ps);
+            ps = new ArrayList<>();
+            ps.clear();
+        }
     }
 }

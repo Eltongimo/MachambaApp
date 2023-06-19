@@ -39,25 +39,26 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
-import androidx.annotation.Px;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
+import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.OfflineDBModelForm;
 import com.example.machambaapp.model.datamodel.Pergunta;
-import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.helper.OfflineDB;
+import com.example.machambaapp.ui.clientes.SelecionarCanteiroAlfobre;
 import com.google.android.gms.location.LocationListener;
-import com.google.android.material.slider.Slider;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Random;
 
 public class ResponderForm extends AppCompatActivity {
@@ -87,16 +88,13 @@ public class ResponderForm extends AppCompatActivity {
     Uri urlImageGaleria;
     Uri urlImageCamera;
     EditText editText;
-    ProgressDialog loadingBar;
     CheckBox checkBox;
     RadioGroup radioGroup;
     DatePicker datePicker;
     ImageView imageView;
     private String resposta = "";
     boolean enteredConditional = false;
-
     private Pergunta pergunta;
-    ArrayList<OfflineDBModelForm> a ;
 
     @Override
     public void onBackPressed() {
@@ -107,6 +105,10 @@ public class ResponderForm extends AppCompatActivity {
         } else {
             backToPreviousQuestion();
         }
+//        SelecionarCanteiroAlfobre.offlineDB.remove(new OfflineDBModelForm(SelecionarCanteiroAlfobre.formKey,
+//                pergunta.getNomeDaPergunta(),resposta));
+
+        finish();
     }
 
     private void nextQuestion(){
@@ -148,15 +150,12 @@ public class ResponderForm extends AppCompatActivity {
     private void initiateCircularProgressBar(){
 
         try {
-            Random random = new Random();
-            int min = 2000;
-
             ProgressBar progressBar = new ProgressBar(this);
             progressBar.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
-// Set ProgressBar layout gravity to center
+            // Set ProgressBar layout gravity to center
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -199,12 +198,57 @@ public class ResponderForm extends AppCompatActivity {
 
     }
 
+    private void nextQuestionGroup(){
+        SplashScreen.groupIndex++;
+        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+    }
+
+    private void resetAllIndexes(){
+        SplashScreen.indexForm = 0;
+        SplashScreen.indexCondicional = 0;
+        SplashScreen.selectedCulturesIndex = 0;
+        SplashScreen.groupIndex = 0;
+        SplashScreen.runGroup = false;
+        SplashScreen.finishGroup = false;
+        SplashScreen.showingConditional = false;
+    }
+
+    private void finishForm(){
+        Toast.makeText(this, "Parabens, Voce conseguiu completar o formulario!", Toast.LENGTH_LONG).show();
+
+        txtPergunta.setText("Fim!");
+        txtPergunta.setTextSize(100);
+        btnResponder.setText("Submeter Formulario");
+        btnResponder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initiateCircularProgressBar();
+                resetAllIndexes();
+                long id = new OfflineDB(ResponderForm.this).insertForm(SelecionarCanteiroAlfobre.offlineDB);
+
+                if (id >= 1) {
+                    Toast.makeText(ResponderForm.this, "Dados gravados offline com sucesso", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(ResponderForm.this, "Falha ao gravar os dados offline", Toast.LENGTH_SHORT).show();
+                }
+
+                Intent intent = new Intent(ResponderForm.this, SelecionarCanteiroAlfobre.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                for (int i = 0; i< SplashScreen.indexForm ;i++){
+                    finish();
+                }
+                finish();
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_responder_form);
-
         try{
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_responder_form);
+
             txtPergunta = findViewById(R.id.nomePergunta);
             container = findViewById(R.id.container);
             btnResponder = findViewById(R.id.btnNext);
@@ -214,37 +258,42 @@ public class ResponderForm extends AppCompatActivity {
 
             if (SplashScreen.runGroup){
 
-                if (SplashScreen.groupIndex < SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
-                        get(SplashScreen.selectedCulturesIndex)).size()){
-                        pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
-                                get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
+                if (SplashScreen.finishGroup){
+                    finishForm();
+                    return ;
+                }
+
+                int indexGroup = SplashScreen.groupIndex;
+                int groupQuestionSize = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
+                        get(SplashScreen.selectedCulturesIndex)).size();
+
+                if (indexGroup < groupQuestionSize ){
+                    String culture = SplashScreen.selectedCultures.get(SplashScreen.selectedCulturesIndex);
+
+                    ArrayList<Pergunta> ps = SplashScreen.groupQuestions.get(culture);
+
+                    pergunta = ps.get(SplashScreen.groupIndex);
 
                 }else{
                     SplashScreen.groupIndex = 0;
                     SplashScreen.selectedCulturesIndex++;
-                    pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
-                            get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
-                    loadingBar.dismiss();
+
+                    if (SplashScreen.selectedCulturesIndex < SplashScreen.selectedCultures.size()){
+                        pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
+                                get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
+                    }
                 }
 
                 if (pergunta == null){
-                    SplashScreen.runGroup = false;
-                    // Just to end the form
-                    SplashScreen.indexForm = 15;
+                    finishForm();
+                    return ;
                 }
                 mostrarCampo(pergunta);
             }else{
                 if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size()) {
                     pergunta = SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm);
                 } else if (SplashScreen.finishGroup){
-                    Toast.makeText(ResponderForm.this, "Fim do formulario", Toast.LENGTH_SHORT).show();
-                    btnResponder.setText("Submeter Formulario");
-                    btnResponder.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(ResponderForm.this, "Submetendo Formulario", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    finishForm();
                     return;
                 }
 
@@ -274,26 +323,32 @@ public class ResponderForm extends AppCompatActivity {
 
                     collectAnswers(pergunta.getTipoPergunta());
 
-                    ArrayList<OfflineDBModelForm> a = new ArrayList<>();
+                    String a = "";
+                    a = getIntent().getStringExtra("fullName");
+                    //  Collecting data to perist on SQLite Database
+                    SelecionarCanteiroAlfobre.offlineDB.add(new OfflineDBModelForm(SelecionarCanteiroAlfobre.formKey,pergunta.getNomeDaPergunta(),resposta));
 
-                    a.add(new OfflineDBModelForm("1",pergunta.getNomeDaPergunta(),resposta));
-
-                    long i = new OfflineDB(ResponderForm.this).insertForm(a);
-
-                if (SplashScreen.runGroup){
-                        SplashScreen.groupIndex++;
-                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                    getIntent().putExtra("fullName", a);
+                    if (SplashScreen.runGroup){
+                        if (SplashScreen.selectedCulturesIndex < SplashScreen.selectedCultures.size()){
+                            nextQuestionGroup();
+                        }else{
+                            SplashScreen.runGroup = false;
+                            SplashScreen.finishGroup = true;
+                            startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                        }
                         return;
                     }
 
                     if (SplashScreen.showingConditional) {
 
+                        if (resposta.isEmpty()){
+                            Toast.makeText(ResponderForm.this, "Por favor, preencha o campo de resposta", Toast.LENGTH_LONG).show();
+                            return ;
+                        }
+
                         if (pergunta.getNomeDaPergunta().contains("Quantos dias deixou mergulhar o pesticida")){
 
-                            if (resposta.isEmpty()){
-                                Toast.makeText(ResponderForm.this, "Por favor, preencha o campo de resposta", Toast.LENGTH_LONG).show();
-                                return ;
-                            }
                             // se os dias de mergulho do pesticids forem menores que 7 entao o app mostra um popup
                             int res = Integer.parseInt(resposta);
                             if (res < 7){
@@ -302,21 +357,23 @@ public class ResponderForm extends AppCompatActivity {
                             }
                         }
 
-                        SplashScreen.indexCondicional++;
-
-                        if (SplashScreen.indexCondicional >= SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm).perguntasCondicionais.size()) {
+                        //if (SplashScreen.indexCondicional >= SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm).perguntasCondicionais.size()) {
+                        if (SplashScreen.indexCondicional == 3) {
                             SplashScreen.showingConditional = false;
                             SplashScreen.indexCondicional = 0;
-                            nextQuestion();
-                            return ;
+                            //nextQuestion();
+                            SplashScreen.runGroup = true;
+                            startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                            return;
                         }
+
+                        nextConditionalQuestion();
 
                     } else {
                         // So here the question do not have conditions
-
-                        if (SplashScreen.indexForm <= 9){
+                        //if (SplashScreen.indexForm <= 9){
+                        if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size()){
                             if (pergunta.perguntasCondicionais != null) {
-
                                 if (SplashScreen.indexCondicional >= pergunta.perguntasCondicionais.size()) {
                                     SplashScreen.indexCondicional = 0;
                                     SplashScreen.showingConditional = false;
@@ -327,14 +384,10 @@ public class ResponderForm extends AppCompatActivity {
 
                             // se a pergunta for sobre culturas do canteiro a app capta todas as culturas seleciondas e armazena em selected cultures
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("culturas do canteiro")){
-
-                                for (String s : resposta.split(",")){
-                                    if ( !s.contains(",") && !s.isEmpty())
-                                        SplashScreen.selectedCultures.add(s.toLowerCase());
-                                }
+                                catchSelectedCultures(resposta);
                             }
 
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida")){
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botanico")){
                                 if (resposta.toLowerCase().contains("não")){
                                     displayConditionalPopUp(pergunta.getNomeDaPergunta());
                                 }else{
@@ -403,6 +456,12 @@ public class ResponderForm extends AppCompatActivity {
         }
     }
 
+    private void catchSelectedCultures(String resposta){
+        for (String s : resposta.split(",")){
+            if ( !s.contains(",") && !s.isEmpty())
+                SplashScreen.selectedCultures.add(s.toLowerCase());
+        }
+    }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String collectAnswers(String typeOfQuestion) {
 
@@ -436,10 +495,9 @@ public class ResponderForm extends AppCompatActivity {
                 @Override
                 public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                     resposta = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                    Toast.makeText(ResponderForm.this, resposta, Toast.LENGTH_LONG).show();
                 }
             });
-            resposta = "   ";
+            resposta += "";
         } else if (typeOfQuestion.contains("Radio")) {
 
             RadioGroup r = (RadioGroup) container.getChildAt(0);
@@ -478,7 +536,7 @@ public class ResponderForm extends AppCompatActivity {
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    nextQuestion();
+                    nextConditionalQuestion();
                 }
             });
             AlertDialog alertDialog = builder.create();
@@ -496,6 +554,8 @@ public class ResponderForm extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     nextQuestion();
+                    // Run group of question
+                    SplashScreen.runGroup = true;
                 }
             });
             AlertDialog alertDialog = builder.create();
@@ -855,18 +915,6 @@ public class ResponderForm extends AppCompatActivity {
                 imageView.startAnimation(getAlphaAnimation());
                 container.addView(imageView);
 
-
-// Adicionar a legenda
-//                TextView legend = new TextView(getApplicationContext());
-//                legend.setText("Clique para tirar uma foto");
-//                LinearLayout.LayoutParams legendaParams = new LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT
-//                );
-//                legendaParams.setMargins(200, 0, 16, 0);
-//                legend.setLayoutParams(legendaParams);
-//                container.addView(legend);
-
                 TextView legend = new TextView(getApplicationContext());
                 legend.setText("Clique para tirar uma foto");
                 LinearLayout.LayoutParams legendaParams = new LinearLayout.LayoutParams(
@@ -975,18 +1023,14 @@ public class ResponderForm extends AppCompatActivity {
                 break;
 
             case "DatePicker":
-//                datePicker = new DatePicker(getApplicationContext());
-//                datePicker.startAnimation(getAlphaAnimation());
-//                container.addView(datePicker);
                 layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 layoutParams.gravity = Gravity.CENTER;
 
                 datePicker = new DatePicker(getApplicationContext());
                 datePicker.startAnimation(getAlphaAnimation());
                 container.addView(datePicker, layoutParams);
-
-
                 break;
+
             case "NumberPicker":
                 LinearLayout linearLayout = findViewById(R.id.container); // seu layout onde você quer adicionar o NumberPicker
                 layoutParams = new LinearLayout.LayoutParams(

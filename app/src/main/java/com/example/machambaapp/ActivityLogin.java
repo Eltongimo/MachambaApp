@@ -2,20 +2,29 @@ package com.example.machambaapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.example.machambaapp.model.Privilegios;
 import com.example.machambaapp.model.UserAdmin;
+import com.example.machambaapp.model.adapter.UserPlAdapter;
 import com.example.machambaapp.model.datamodel.Cliente;
+import com.example.machambaapp.model.helper.OfflineDB;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class ActivityLogin extends AppCompatActivity {
 
@@ -23,8 +32,10 @@ public class ActivityLogin extends AppCompatActivity {
     EditText editTextPhone;
     EditText editTextPassword;
     TextView textViewAlert;
+    ProgressDialog loadingBar;
 
-   private Button buttonLogar;
+
+    private Button buttonLogar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +44,15 @@ public class ActivityLogin extends AppCompatActivity {
         editTextPassword=(EditText) findViewById(R.id.idEditPassword);
         editTextPhone =(EditText) findViewById(R.id.idEditUserName);
         textViewAlert=(TextView) findViewById(R.id.idAlert);
+        loadingBar = new ProgressDialog(this);
 
-           buttonLogar=(Button) findViewById(R.id.idButtonlogar);
+
+        buttonLogar=(Button) findViewById(R.id.idButtonlogar);
            buttonLogar.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
+
+                   ArrayList<Cliente.UserPl> u =  new OfflineDB(getApplicationContext()).getUsers();
 
                    if(editTextPhone.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()){
                        editTextPassword.setError("Campo Vazio");
@@ -48,59 +63,64 @@ public class ActivityLogin extends AppCompatActivity {
                            editTextPassword.setText("");
                            editTextPhone.setText("");
                            textViewAlert.setText("");
-                           Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
-                           startActivity(intent);
+
+
+                           loadingBar.setTitle("Entrando como Administrador...");
+                           loadingBar.setMessage("Aguarde por favor!");
+                           loadingBar.setCanceledOnTouchOutside(false);
+                           loadingBar.show();
+
+                           new Handler().postDelayed(new Runnable() {
+                               @Override
+                               public void run() {
+                                   Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
+                                   Bundle b = ActivityOptions.makeSceneTransitionAnimation(ActivityLogin.this).toBundle();
+                                   startActivity(intent, b);
+
+
+
+
+                                   loadingBar.dismiss();
+                               }
+                           }, 2000); // 2000 milissegundos = 2 segundos
+
                        } else {
 
-                           databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
-                               @Override
-                               public void onDataChange(@NonNull DataSnapshot snapshot) {
+                           for (Cliente.UserPl uu : u){
+                               if (uu.getNome() != null){
+                                   if (uu.getPhone().equals(editTextPhone.getText().toString()) && uu.getSenha().equalsIgnoreCase(editTextPassword.getText().toString())){
 
-                                   // Este método é chamado uma vez com o valor inicial e novamente sempre que os dados no nó "users" são alterados.
+                                       Privilegios privilegios= new Privilegios();
 
-                                   // Percorra todos os nós filhos do nó "users"
+                                       privilegios.setAllAcessView(false);
 
-                                   for (DataSnapshot userSnapshot: snapshot.getChildren()) {
-                                       String phone = userSnapshot.child("phone").getValue(String.class);
-                                       String password = userSnapshot.child("senha").getValue(String.class);
+                                       SplashScreen.currentUser = uu;
+                                       loadingBar.setTitle("Entrando como PL...");
+                                       loadingBar.setMessage("Aguarde por favor!");
+                                       loadingBar.setCanceledOnTouchOutside(false);
+                                       loadingBar.show();
 
-                                       if(phone.equals(editTextPhone.getText().toString()) &&
-                                               password.equalsIgnoreCase(editTextPassword.getText().toString())){
+                                       new Handler().postDelayed(new Runnable() {
+                                           @Override
+                                           public void run() {
+                                               startActivity(new Intent(ActivityLogin.this,MainActivity.class));
+                                               overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                                               loadingBar.dismiss();
+                                           }
+                                       }, 2000); // 2000 milissegundos = 2 segundos
 
-                                           Privilegios privilegios= new Privilegios();
-                                           privilegios.setAllAcessView(false);
 
-                                           Cliente.UserPl u = new Cliente.UserPl();
-                                           u.setNome(userSnapshot.child("nome").getValue(String.class));
-                                           u.setPhone(userSnapshot.child("phone").getValue(String.class));
-                                           u.setImage(userSnapshot.child("image").getValue(String.class));
-                                           u.setApelido(userSnapshot.child("apelido").getValue(String.class));
-
-                                           SplashScreen.currentUser = u;
-
-                                           startActivity(new Intent(ActivityLogin.this,MainActivity.class));
-                                       }
-
+                                       return ;
                                    }
-
                                }
-
-                               @Override
-                               public void onCancelled(@NonNull DatabaseError error) {
-
-                               }
-
-                           });
-
+                           }
                        }
+
                    }
-
-
                }
 
            });
-           }
-
+    }
 
     boolean verificationPasswordAndUserNameAdmin(){
 

@@ -7,6 +7,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.machambaapp.ActivityLogin;
+import com.example.machambaapp.ActivityPageStart;
 import com.example.machambaapp.ActivityUserRegister;
 import com.example.machambaapp.Cultura;
 import com.example.machambaapp.R;
@@ -118,8 +121,12 @@ public class ActivityUserPL extends AppCompatActivity {
             /*Should provide a List of PL and his clients*/
             @Override
             public void onClick(View view) {
+//                Intent intent = new Intent(ActivityUserPL.this, ActivityUserRegister.class);
+//                startActivity(intent);
+
                 Intent intent = new Intent(ActivityUserPL.this, ActivityUserRegister.class);
-                startActivity(intent);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation(ActivityUserPL.this).toBundle();
+                startActivity(intent, b);
             }
         });
     }

@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.example.machambaapp.ui.admin.addforms.AddComunidade;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.adapter.ComunidadeAdapter;
 import com.example.machambaapp.model.datamodel.Comunidade;
+import com.example.machambaapp.ui.admin.addforms.AddCultura;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -77,7 +79,11 @@ public class ActivityViewComunidade extends AppCompatActivity {
         addComunidade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivityViewComunidade.this, AddComunidade.class));
+//                startActivity(new Intent(ActivityViewComunidade.this, AddComunidade.class));
+
+                Intent intent = new Intent(ActivityViewComunidade.this, AddComunidade.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation(ActivityViewComunidade.this).toBundle();
+                startActivity(intent, b);
             }
         });
     }

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.machambaapp.ActivitySelect;
+import com.example.machambaapp.FormulariosRespondidos;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.ui.admin.addforms.AddUserActivity;
 import com.example.machambaapp.R;
@@ -43,6 +44,7 @@ public class ClientesFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_clientes, container, false);
         CardView cardViewVisita=view.findViewById(R.id.idCardVisitaF);
         CardView cardViewClientes=view.findViewById(R.id.idCardClientF);
+        CardView cardViewForm = view.findViewById(R.id.formRespondido);
         imageProfile = view.findViewById(R.id.imagePL);
         name = view.findViewById(R.id.namePL);
 
@@ -73,6 +75,14 @@ public class ClientesFragment extends Fragment {
             }
         });
 
+        cardViewForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), FormulariosRespondidos.class));
+
+            }
+        });
+
         cardViewVisita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +91,8 @@ public class ClientesFragment extends Fragment {
         });
         return view;
     }
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

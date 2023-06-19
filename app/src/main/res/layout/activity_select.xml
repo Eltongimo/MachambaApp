@@ -42,7 +42,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="wrap_content"
         android:rowCount="3"
         android:columnCount="2"
         >
@@ -62,6 +62,7 @@
             android:layout_columnWeight="1"
             android:backgroundTint="@color/white"
             app:cardCornerRadius="8dp">
+
 
             <LinearLayout
 
@@ -132,8 +133,6 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-
     </GridLayout>
 
 

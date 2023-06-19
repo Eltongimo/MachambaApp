@@ -14,16 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.R;
-import com.example.machambaapp.model.datamodel.Localidade;
 import com.example.machambaapp.model.datamodel.Posto;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.interfaces.IItemClickListener;
-import com.example.machambaapp.model.update.UpdateLocalidade;
 import com.example.machambaapp.model.update.UpdatePosto;
 
 import java.util.ArrayList;

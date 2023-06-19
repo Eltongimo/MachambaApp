@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.machambaapp.ActivityUserRegister;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
@@ -117,7 +119,11 @@ public class ActivityViewAddCultura extends AppCompatActivity {
         addCultura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ActivityViewAddCultura.this, AddCultura.class));
+//                startActivity(new Intent(ActivityViewAddCultura.this, AddCultura.class));
+
+                Intent intent = new Intent(ActivityViewAddCultura.this, AddCultura.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation(ActivityViewAddCultura.this).toBundle();
+                startActivity(intent, b);
             }
         });
     }

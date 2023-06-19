@@ -1,5 +1,6 @@
 package com.example.machambaapp.ui.admin.views;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -70,7 +71,10 @@ public class CreateFormResposta extends AppCompatActivity {
 
 
                 if (inserirResposta()){
-                    startActivity(new Intent(CreateFormResposta.this, CreateFormPergunta.class));
+//                    startActivity(new Intent(CreateFormResposta.this, CreateFormPergunta.class));
+                    Intent intent = new Intent(CreateFormResposta.this, CreateFormPergunta.class);
+                    Bundle b = ActivityOptions.makeSceneTransitionAnimation(CreateFormResposta.this).toBundle();
+                    startActivity(intent, b);
                 }else{
                     Toast.makeText(getApplicationContext(), "Por favor selecione um tipo de resposta ", Toast.LENGTH_LONG).show();
                 }

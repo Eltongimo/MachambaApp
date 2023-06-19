@@ -5,6 +5,16 @@ public class OfflineDBModelForm {
     private String pergunta;
     private String resposta;
 
+//    private String formName;
+
+//    public String getFormName() {
+//        return formName;
+//    }
+
+//    public void setFormName(String formName) {
+//        this.formName = formName;
+//    }
+
     public String getFormId() {
         return formId;
     }
@@ -32,7 +42,6 @@ public class OfflineDBModelForm {
     public void setPergunta(String pergunta) {
         this.pergunta = pergunta;
     }
-
     public String getResposta() {
         return resposta;
     }

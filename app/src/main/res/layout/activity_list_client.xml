@@ -63,9 +63,4 @@
         android:backgroundTint="#48b971"
         android:text="Registar Usuário"
         android:id="@+id/registerClientPl"/>
-
-
-
-
-
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.example.machambaapp.ui.admin.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.machambaapp.model.datamodel.Comunidade;
 import com.example.machambaapp.model.datamodel.Distrito;
 import com.example.machambaapp.model.helper.DatabaseHelper;
+import com.example.machambaapp.ui.admin.addforms.AddEtnia;
 import com.example.machambaapp.ui.admin.addforms.AddPosto;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.adapter.PostoAdapter;
@@ -82,7 +84,11 @@ public class ActivityViewPostoAdmnistrativo extends AppCompatActivity {
         registerPosto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivityViewPostoAdmnistrativo.this, AddPosto.class));
+//                startActivity(new Intent(ActivityViewPostoAdmnistrativo.this, AddPosto.class));
+
+                Intent intent = new Intent(ActivityViewPostoAdmnistrativo.this, AddPosto.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation(ActivityViewPostoAdmnistrativo.this).toBundle();
+                startActivity(intent, b);
             }
         });
     }

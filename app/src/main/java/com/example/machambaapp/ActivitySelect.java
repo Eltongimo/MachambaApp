@@ -12,6 +12,8 @@ import com.example.machambaapp.ui.clientes.ActivitySelectClient;
 public class ActivitySelect extends AppCompatActivity {
     CardView onClickVisitaLivre;
     CardView onClickSelectClient;
+
+    CardView onClickFormRespondido;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,7 @@ public class ActivitySelect extends AppCompatActivity {
 
         onClickSelectClient =(CardView) findViewById(R.id.idCardClient);
         onClickVisitaLivre =(CardView) findViewById(R.id.idCardVisita);
+
 
         onClickVisitaLivre.setOnClickListener(new View.OnClickListener() {
             @Override
