@@ -3,6 +3,8 @@ package com.example.machambaapp.ui.clientes;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.machambaapp.ActivityPageStart;
 import com.example.machambaapp.ActivitySelect;
 import com.example.machambaapp.FormulariosRespondidos;
 import com.example.machambaapp.SplashScreen;
@@ -71,14 +74,22 @@ public class ClientesFragment extends Fragment {
         cardViewClientes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), AddUserActivity.class));
+//                startActivity(new Intent(getContext(), AddUserActivity.class));
+
+                Intent intent = new Intent(getContext(), AddUserActivity.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext()).toBundle();
+                startActivity(intent, b);
             }
         });
 
         cardViewForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), FormulariosRespondidos.class));
+//                startActivity(new Intent(getContext(), FormulariosRespondidos.class));
+
+                Intent intent = new Intent(getContext(), FormulariosRespondidos.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext()).toBundle();
+                startActivity(intent, b);
 
             }
         });
@@ -86,7 +97,12 @@ public class ClientesFragment extends Fragment {
         cardViewVisita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), ActivitySelect.class));
+//                startActivity(new Intent(getContext(), ActivitySelect.class));
+
+                Intent intent = new Intent(getContext(), ActivitySelect.class);
+//                Intent intent = new Intent(SplashScreen.this, ResponderForm.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext()).toBundle();
+                startActivity(intent, b);
             }
         });
         return view;

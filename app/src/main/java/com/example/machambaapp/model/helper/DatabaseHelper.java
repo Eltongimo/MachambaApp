@@ -1,5 +1,7 @@
 package com.example.machambaapp.model.helper;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,7 +40,7 @@ public class DatabaseHelper extends AppCompatActivity{
 
         ArrayList<Cliente.UserPl> users = new ArrayList<>();
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -60,10 +62,47 @@ public class DatabaseHelper extends AppCompatActivity{
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                ;
             }
         });
+
         return users;
+    }
+
+    public static ArrayList<Cliente> getClientes(){
+        ArrayList<Cliente> clients = new ArrayList<>();
+
+            databaseReference.child("clientes").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    for (DataSnapshot clientesSnap : snapshot.getChildren()) {
+                        String nome = clientesSnap.child("nome").getValue(String.class);
+                        String apelido = clientesSnap.child("apelido").getValue(String.class);
+                        String etnia = clientesSnap.child("etnia").getValue(String.class);
+                        String genero = clientesSnap.child("genero").getValue(String.class);
+                        String numero = clientesSnap.child("numero").getValue(String.class);
+                        String ano = clientesSnap.child("ano").getValue(String.class);
+                        String d = clientesSnap.child("distrito").getValue(String.class);
+                        String loc = clientesSnap.child("localidade").getValue(String.class);
+                        String pt = clientesSnap.child("posto").getValue(String.class);
+                        String com = clientesSnap.child("comunidade").getValue(String.class);
+                        String nomePl = clientesSnap.child("nomePl").getValue(String.class);
+                        String numeroPl = clientesSnap.child("numeroPl").getValue(String.class);
+                        String image = clientesSnap.child("image").getValue(String.class);
+                        String documento = clientesSnap.child("documento").getValue(String.class);
+
+                        if (nomePl.equals(SplashScreen.currentUser.getNome())){
+                            clients.add(new Cliente(nome,apelido,numero,ano,genero, etnia,d,loc, pt,com,image, documento, nomePl, numeroPl));
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        return clients;
     }
     public static ArrayList<Posto>getPostosAdministrativos(String query){
         ArrayList<Posto> postos = new ArrayList<>();

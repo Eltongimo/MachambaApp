@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.adapter.ClientAdapter;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.helper.DatabaseHelper;
+import com.example.machambaapp.model.helper.OfflineDB;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +37,7 @@ public class ActivitySelectClient extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
 
     ArrayList<Cliente> clients = new ArrayList<>();
+    ProgressDialog loadingBar;
 
     private void getCliensFromDatabase(){
         databaseReference.child("clientes").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,7 +86,16 @@ public class ActivitySelectClient extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_client);
-        getCliensFromDatabase();
+
+        loadingBar = new ProgressDialog(this);
+
+        loadingBar.setTitle("Carregando clientes");
+        loadingBar.setMessage("Aguarde por favor!");
+        loadingBar.setCanceledOnTouchOutside(false);
+        loadingBar.show();
+        //getCliensFromDatabase();
+       ArrayList<Cliente> c = new OfflineDB(this).getClientesOffline();
+       c = null;
 
         recyclerView = findViewById(R.id.idRecyclerviewClients2);
 
@@ -94,6 +106,7 @@ public class ActivitySelectClient extends AppCompatActivity {
         ClientAdapter clientAdapter = new ClientAdapter(this, clients);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+        loadingBar.dismiss();
         recyclerView.setAdapter(clientAdapter);
     }
     @Override

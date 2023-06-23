@@ -47,6 +47,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.machambaapp.ActivityListClient;
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Cliente;
@@ -112,7 +113,8 @@ public class ResponderForm extends AppCompatActivity {
     }
 
     private void nextQuestion(){
-        SplashScreen.indexForm += 1;
+        if (!SplashScreen.showingConditional)
+            SplashScreen.indexForm += 1;
         startActivity(new Intent(ResponderForm.this, ResponderForm.class));
     }
 
@@ -122,7 +124,9 @@ public class ResponderForm extends AppCompatActivity {
     }
 
     private void backToPreviousQuestion(){
-        SplashScreen.indexForm -= 1;
+        if (SplashScreen.indexForm > 0){
+            SplashScreen.indexForm -= 1;
+        }
         finish();
     }
 
@@ -160,6 +164,7 @@ public class ResponderForm extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.gravity = Gravity.CENTER;
+
 
             progressBar.setLayoutParams(layoutParams);
 
@@ -211,6 +216,7 @@ public class ResponderForm extends AppCompatActivity {
         SplashScreen.runGroup = false;
         SplashScreen.finishGroup = false;
         SplashScreen.showingConditional = false;
+        SplashScreen.selectedCultures = new ArrayList<>();
     }
 
     private void finishForm(){
@@ -266,6 +272,7 @@ public class ResponderForm extends AppCompatActivity {
                 int indexGroup = SplashScreen.groupIndex;
                 int groupQuestionSize = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
                         get(SplashScreen.selectedCulturesIndex)).size();
+
 
                 if (indexGroup < groupQuestionSize ){
                     String culture = SplashScreen.selectedCultures.get(SplashScreen.selectedCulturesIndex);
@@ -387,8 +394,8 @@ public class ResponderForm extends AppCompatActivity {
                                 catchSelectedCultures(resposta);
                             }
 
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botanico")){
-                                if (resposta.toLowerCase().contains("não")){
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botânico")){
+                                if (resposta.contains("Não")){
                                     displayConditionalPopUp(pergunta.getNomeDaPergunta());
                                 }else{
                                     SplashScreen.showingConditional = true;
@@ -399,7 +406,7 @@ public class ResponderForm extends AppCompatActivity {
 
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("bokashi")){
 
-                                if (resposta.toLowerCase().contains("não")){
+                                if (resposta.contains("Não")){
                                     displayConditionalPopUp(pergunta.getNomeDaPergunta());
                                     return ;
                                 }else{
@@ -409,11 +416,15 @@ public class ResponderForm extends AppCompatActivity {
                             }
 
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("incidência de praga")) {
-                                if (resposta.toLowerCase().contains("sim")) {
+                                if (resposta.contains("Sim")) {
                                     SplashScreen.showingConditional = true;
-                                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
-                                        return;
+                                    nextQuestion();
+                                        //startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+
+                                }else{
+                                    nextQuestion();
                                 }
+                                return;
                             }
 
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("mergulhar o pesticida")){
@@ -421,10 +432,10 @@ public class ResponderForm extends AppCompatActivity {
                                 Toast.makeText(ResponderForm.this,"dias de mergulho", Toast.LENGTH_LONG).show();
                             }
 
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botanico")) {
 
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botânico")) {
                                 // Show conditional question
-                                if (resposta.toLowerCase().contains("sim")) {
+                                if (resposta.contains("Sim")) {
                                     SplashScreen.showingConditional = true;
                                     nextQuestion();
                                     return;
@@ -458,8 +469,10 @@ public class ResponderForm extends AppCompatActivity {
 
     private void catchSelectedCultures(String resposta){
         for (String s : resposta.split(",")){
-            if ( !s.contains(",") && !s.isEmpty())
-                SplashScreen.selectedCultures.add(s.toLowerCase());
+            if ( !s.contains(",") && !s.isEmpty()) {
+                SplashScreen.selectedCultures.add(s);
+
+            }
         }
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -467,22 +480,24 @@ public class ResponderForm extends AppCompatActivity {
 
         resposta = "";
 
-        if (typeOfQuestion.contains("CheckBox")) {
+        if (typeOfQuestion.equalsIgnoreCase("CheckBox")) {
             for (int i = 0; i < container.getChildCount(); i++) {
 
                 if (container.getChildAt(i).getClass() == CheckBox.class){
                     CheckBox c = (CheckBox) container.getChildAt(i);
                     if (c.isChecked())
-                        resposta += c.getText() + ",";
+                        resposta += c.getText()+ ",";
 
-                }else if (container.getChildAt(i).getClass() == EditText.class){
+                }
+                else if (container.getChildAt(i).getClass() == EditText.class){
                     EditText edt = (EditText) container.getChildAt(i);
                     resposta += " "+ edt.getText().toString();
                 }
 
             }
 
-        } else if (typeOfQuestion.contains("Slider")) {
+        }
+        else if (typeOfQuestion.contains("Slider")) {
             resposta = "  ";
 
         } else if (typeOfQuestion.contains("DatePicker")) {
@@ -530,8 +545,8 @@ public class ResponderForm extends AppCompatActivity {
         if (per.contains("mergulhar o pesticida")){
             AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
             builder.setTitle("Informação Importante");
-            builder.setMessage("Parabens "+SplashScreen.currentUser.getNome()+" por preparar o seu pesticida natural. Embora, o tempo de mergulho deveria aumentar." +
-                    " Para aumentar a forca do produto, se aconselha mergulhar minimo 5 plantas differentes e deixar mergulhar minimo 7" +
+            builder.setMessage("Parabéns "+SplashScreen.currentUser.getNome()+" por preparar o seu pesticida natural. Embora, o tempo de mergulho deveria aumentar." +
+                    " Para aumentar a força do produto, se aconselha mergulhar no minimo 5 dias plantas diferentes e deixar mergulhar minimo 7" +
                     " dias misturando todos os dias! VEJA O MANUAL DE PESTICIDAS NATURAIS DA IDE");
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
@@ -542,20 +557,19 @@ public class ResponderForm extends AppCompatActivity {
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
 
-        }else if (per.toLowerCase().contains("pesticida botanico")){
+        }else if (per.toLowerCase().contains("pesticida botânico")){
             AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
             builder.setTitle("Informação Importante");
-            builder.setMessage("E' muito importante proteger a propia machamba com pesticida natural.\n" +
-                    " O produtor sabe que tem muitas plantas disponiveis e vale a pena investir num pulverizador?\n" +
-                    " VEJA O MANUAL DA IDE SOBRE PESTICIDAS NATURAIS \n\n"+
-                    "E' muito importante proteger a propia machamba com pesticida natural. \nO produtor sabe que tem muitas plantas disponiveis e vale a pena investir num pulverizador? VEJA O MANUAL DA IDE SOBRE PESTICIDAS NATURAIS"
+            builder.setMessage("\n \n É muito importante proteger a própria machamba com pesticida natural.\n" +
+                            " O produtor sabe que tem muitas plantas disponíveis e vale a pena investir num pulverizador?\n" +
+                            " VEJA O MANUAL DA IDE SOBRE PESTICIDAS NATURAIS \n\n"
             );
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    SplashScreen.runGroup = true;
                     nextQuestion();
                     // Run group of question
-                    SplashScreen.runGroup = true;
                 }
             });
             AlertDialog alertDialog = builder.create();
@@ -564,8 +578,8 @@ public class ResponderForm extends AppCompatActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
             builder.setTitle("Informação Importante");
-            builder.setMessage("O bokashi e\' vida! com um custo limitado o produtor pode aumentar a produtividade e melhorar a qualidade" +
-                    " do seu solo. Veja o manual de bokashi da iDE\n");
+            builder.setMessage("O Bokashi é vida! com um custo limitado o produtor pode aumentar a produtividade e melhorar a qualidade" +
+                    " do seu solo. Veja o manual de Bokashi da iDE\n");
 
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
@@ -589,7 +603,7 @@ public class ResponderForm extends AppCompatActivity {
 
         Button btnVerPopUp = findViewById(R.id.btnvideo);
 
-        if (per.toLowerCase().contains("pesticida botanico")) {
+        if (per.toLowerCase().contains("pesticida botânico")) {
             img.setImageResource(R.drawable.pesticida1);
             btnVideo.setVisibility(View.VISIBLE);
             btnVideo.setText("Dica");
@@ -694,56 +708,6 @@ public class ResponderForm extends AppCompatActivity {
                 }
             });
         }
-
-
-//        if (per.toLowerCase().contains("cobertura morta")){
-//
-//            btnVideo.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    btnVerPopUp.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//
-//                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                                builder.setView(img);
-//
-//                                builder.setTitle("Informação Importante");
-//                                builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        ImageView img = new ImageView(ResponderForm.this);
-//
-//                                        if (per.toLowerCase().contains("camada de estrume")) {
-//                                            img.setImageResource(R.drawable.checkbox2_2);
-//                                        } else if (per.toLowerCase().contains("bokashi")) {
-//                                            img.setImageResource(R.drawable.bokashi__2);
-//                                        }
-//
-//                                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-//                                        builder.setView(img);
-//
-//                                        builder.setTitle("Informação Importante");
-//                                        builder.setView(img);
-//
-//                                        builder.setPositiveButton("Comprendi", new DialogInterface.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(DialogInterface dialog, int which) {
-//                                                dialog.cancel();
-//                                            }
-//                                        });
-//                                        AlertDialog alertDialog = builder.create();
-//                                        alertDialog.show();
-//                                    }
-//                                });
-//
-//                                AlertDialog alertDialog = builder.create();
-//                                alertDialog.show();
-//                        }
-//                    });
-//                }
-//            });
-//        }
 
         if (per.toLowerCase().contains("cobertura morta")) {
             btnVideo.setOnClickListener(new View.OnClickListener() {
@@ -892,21 +856,6 @@ public class ResponderForm extends AppCompatActivity {
                 break;
 
             case "ImageView":
-//                imageView = new ImageView(getApplicationContext());
-//                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
-//                layoutParams.setMargins(200, 10, 16, 100);
-//                imageView.setLayoutParams(layoutParams);
-//                imageView.setImageResource(R.drawable.baseline_photo_camera_24);
-//                container.addView(imageView);
-
-//                imageView = new ImageView(getApplicationContext());
-//                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
-//                layoutParams.setMargins(200, 10, 16, 100);
-//                imageView.setLayoutParams(layoutParams);
-//                imageView.setImageResource(R.drawable.baseline_photo_camera_24);
-//                imageView.startAnimation(getAlphaAnimation());
-//                container.addView(imageView);
-
                 imageView = new ImageView(getApplicationContext());
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
                 layoutParams.gravity = Gravity.CENTER; // Adicione esta linha para centralizar

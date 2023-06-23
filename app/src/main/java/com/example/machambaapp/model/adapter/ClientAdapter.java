@@ -1,9 +1,12 @@
 package com.example.machambaapp.model.adapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.machambaapp.ActivitySelect;
 import com.example.machambaapp.ui.clientes.ActivitySelectClient;
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.datamodel.Cliente;
@@ -66,9 +70,12 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
             @Override
             public void onItemClick(View view, int position) {
 
-                 Intent intent = new Intent(mContext, SelecionarCanteiroAlfobre.class);
+//                 Intent intent = new Intent(mContext, SelecionarCanteiroAlfobre.class);
+
+                Intent intent = new Intent(mContext, SelecionarCanteiroAlfobre.class);
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation((Activity) mContext).toBundle();
                  intent.putExtra("fullName", client.getNome());
-                 mContext.startActivity(intent);
+                mContext.startActivity(intent, b);
             }
         });
     }

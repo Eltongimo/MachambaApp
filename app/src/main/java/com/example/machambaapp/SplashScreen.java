@@ -12,6 +12,7 @@ import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.helper.OfflineDB;
 import com.example.machambaapp.ui.admin.addforms.AddEtnia;
+import com.example.machambaapp.ui.admin.forms.ResponderForm;
 import com.example.machambaapp.ui.admin.views.ActivityViewEtnia;
 
 import java.util.ArrayList;
@@ -23,10 +24,13 @@ public class SplashScreen extends AppCompatActivity {
     public static ArrayList<String> distritos = DatabaseHelper.getLocation("distritos");
     public static ArrayList<Cliente.UserPl> users = DatabaseHelper.getUsers();
     public static ArrayList<String> provincias = new ArrayList<String>();
+
+    public static ArrayList<Cliente> clientes = DatabaseHelper.getClientes();
     public static boolean runGroup = false;
     public static int groupIndex = 0;
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     public static int selectedCulturesIndex = 0;
-    public static int indexForm = 8;
+    public static int indexForm = 0;
     public static boolean showingConditional = false;
     public static Pergunta currentQuestion = new Pergunta();
     public static int indexCondicional = 0;
@@ -82,13 +86,9 @@ public class SplashScreen extends AppCompatActivity {
         provincias.add("Cabo Delgado");
         provincias.add("Niassa");
 
-
-
+        new OfflineDB(this).uploadClientesFromRTDB();
 
         formulario =  new Formulario();
-
-        selectedCultures.add("Alface");
-
         ArrayList<Pergunta> ps = new ArrayList<>();
 
         /*Adding questions to the dictionary*/
@@ -102,12 +102,14 @@ public class SplashScreen extends AppCompatActivity {
         p.setTipoPergunta("RadioGroup");
         p.setOpcoes(generos);
 
+
+        culturas = new ArrayList<>();
+
         culturas.add("Alface");
         culturas.add("Cebola");
         culturas.add("Couve");
         culturas.add("Tomate");
 
-        perguntas.put("1", p);
         ps.add(p);
 /*
         p = new Pergunta();
@@ -164,18 +166,16 @@ public class SplashScreen extends AppCompatActivity {
 
         perguntas.put("6", p);
         ArrayList<String> opcoes = new ArrayList<>();
-        opcoes.add("Nao tem humidade");
+        opcoes.add("Não tem humidade");
         opcoes.add("tem mas o bolo não fica bem firme");
         opcoes.add("O bolo fica bem firme, a humidade é boa!");
-        opcoes.add("Esta a escorrer agua, esta molhado demais!");
+        opcoes.add("Esta a escorrer água, esta molhado demais!");
 
         p = new Pergunta();
 
-        p.setNomeDaPergunta("Medir a umidade do canteiro em varios pontos, perto da base das plantas. A humidade pode variar dependendo da area examinada");
+        p.setNomeDaPergunta("Medir a umidade do canteiro em vários pontos, perto da base das plantas. A humidade pode variar dependendo da área examinada");
         p.setTipoPergunta("RadioGroup1");
         p.setOpcoes(opcoes);
-        Stack s = new Stack();
-
         ps.add(p);
 
         p = new Pergunta();
@@ -192,7 +192,7 @@ public class SplashScreen extends AppCompatActivity {
         // Sobre pesticida Botanico
 
         p = new Pergunta();
-        p.setNomeDaPergunta("O produtor esta a aplicar pesticida botanico neste canteiro?");
+        p.setNomeDaPergunta("O produtor esta a aplicar pesticida botânico neste canteiro?");
 
         opcoes = new ArrayList<>();
 
@@ -233,7 +233,7 @@ public class SplashScreen extends AppCompatActivity {
 
         condicional = new Pergunta();
 
-        condicional.setNomeDaPergunta("Quantos dias deixou mergulhar o pesticida ? (Indicar o numero de dias)");
+        condicional.setNomeDaPergunta("Quantos dias deixou mergulhar o pesticida ? (Indicar o número de dias)");
         condicional.setTipoPergunta("EditText");
 
         p.perguntasCondicionais.add(condicional);
@@ -246,7 +246,7 @@ public class SplashScreen extends AppCompatActivity {
         p.perguntasCondicionais.add(condicional);
 
         condicional = new Pergunta();
-        condicional.setNomeDaPergunta("Quantos dias de pausa entre pulverizaçoes ?");
+        condicional.setNomeDaPergunta("Quantos dias de pausa entre pulverizações ?");
         condicional.setTipoPergunta("EditText");
 
         p.perguntasCondicionais.add(condicional);
@@ -260,12 +260,10 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 Intent intent = new Intent(SplashScreen.this, ActivityPageStart.class);
+//                Intent intent = new Intent(SplashScreen.this, ResponderForm.class);
                 Bundle b = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this).toBundle();
                 startActivity(intent, b);
-                //startActivity(new Intent(SplashScreen.this, ActivityPageStart.class));
-                //startActivity(new Intent(SplashScreen.this, ResponderForm.class));
                 finish();
             }
         }, 2000);
@@ -279,10 +277,6 @@ public class SplashScreen extends AppCompatActivity {
         ArrayList<Pergunta> perguntasCondicionais = new ArrayList<>();
         Pergunta p = new Pergunta();
 
-        culturas.clear();
-        culturas.add("Alface");
-        culturas.add("Tomate");
-        culturas.add("Couve");
         ArrayList<Pergunta> ps;
 
         for (String c : culturas){
@@ -300,7 +294,7 @@ public class SplashScreen extends AppCompatActivity {
             opcoes = new ArrayList<>();
 
             opcoes.add("Pequeno");
-            opcoes.add("Medio");
+            opcoes.add("Médio");
             opcoes.add("Grande");
             opcoes.add("Muito Grande");
             p.setOpcoes(opcoes);
@@ -313,33 +307,33 @@ public class SplashScreen extends AppCompatActivity {
             ps.add(p);
 
             p = new Pergunta();
-            p.setNomeDaPergunta("Indicar o espaçamento entre linhas para "+c+" em centimetros");
+            p.setNomeDaPergunta("Indicar o espaçamento entre linhas para "+c+" em centímetros");
             p.setTipoPergunta("EditText");
             ps.add(p);
 
             p = new Pergunta();
-            p.setNomeDaPergunta("Quais são as inhas de "+ c +" em centimetros ?");
+            p.setNomeDaPergunta("Quantas linhas de "+ c +" tem o canteiro?");
             p.setTipoPergunta("EditText");
             ps.add(p);
 
             p = new Pergunta();
-            p.setNomeDaPergunta("As plantas de "+ c +" tem incidencia de pragas e doenças?");
+            p.setNomeDaPergunta("As plantas de "+ c +" tem incidência de pragas e doenças?");
             p.setTipoPergunta("RadioGroup");
             opcoes = new ArrayList<>();
             opcoes.add("Sim");
             opcoes.add("Não");
             p.setOpcoes(opcoes);
-            p.setCondicaoTexto("Sim");
+//            p.setCondicaoTexto("Não");
             ps.add(p);
 
             p = new Pergunta();
-            p.setNomeDaPergunta("Tirar foto da praga ou doenca");
+            p.setNomeDaPergunta("Tirar foto da praga ou doença");
             p.setTipoPergunta("ImageView");
             perguntasCondicionais.add(p);
             ps.add(p);
 
             p = new Pergunta();
-            p.setNomeDaPergunta("Esta praga ou doenca e' muito difusa?");
+            p.setNomeDaPergunta("Esta praga ou doença é muito difusa?");
             p.setTipoPergunta("RadioGroup");
 
             opcoes = new ArrayList<>();
@@ -357,4 +351,5 @@ public class SplashScreen extends AppCompatActivity {
             ps.clear();
         }
     }
+
 }

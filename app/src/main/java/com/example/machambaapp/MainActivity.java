@@ -10,6 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.machambaapp.model.Privilegios;
+import com.example.machambaapp.model.datamodel.Cliente;
+import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.ui.clientes.ClientesFragment;
 import com.example.machambaapp.ui.home.HomeFragment;
 import com.example.machambaapp.ui.produtorLider.ProdutorLiderFragment;
@@ -26,6 +28,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -36,11 +40,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar=(Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
-
         drawer =(DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView=(findViewById(R.id.nav_view));
         navigationView.setNavigationItemSelectedListener(this);

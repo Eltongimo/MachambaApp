@@ -6,15 +6,18 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.machambaapp.ActivityLogin;
 import com.example.machambaapp.MainActivity;
+import com.example.machambaapp.Network.NetworkUtils;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.Privilegios;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.OfflineDBModelForm;
+import com.google.android.gms.common.api.Api;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,17 +25,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class OfflineDB extends  SQLiteOpenHelper{
     private static final String DBNAME =  "Formularios.db";
     private static final int DBVERSION = 1;
 
     private String tableName = "Formulario";
-
-    public OfflineDB(Context context){
-        super(context, DBNAME, null, DBVERSION);
-        createTable(this.getWritableDatabase());
-    }
 
     private static final String DATABASE_NAME = "mydatabase.db";
     private static final int DATABASE_VERSION = 1;
@@ -52,6 +52,125 @@ public class OfflineDB extends  SQLiteOpenHelper{
     private static String  USERID = "Id";
     private static String NOMEFORMULARIO = "NomeFormulario";
 
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    private Context context;
+
+
+    public OfflineDB(Context context){
+        super(context, DBNAME, null, DBVERSION);
+        createTable(this.getWritableDatabase());
+        createUsersTable();
+        setContext(context);
+    }
+
+
+    public long insertClient(Cliente c ){
+
+        long i = -1;
+
+
+
+        ContentValues values = null;
+        values = new ContentValues();
+        values.put("Nome", c.getNome());
+        values.put("Apelido", c.getApelido());
+        values.put("Etnia", c.getEtnia());
+        values.put("Genero", c.getGenero());
+        values.put("Numero", c.getNumero());
+        values.put("Ano", c.getAno());
+        values.put("Distrito", c.getDistrito());
+        values.put("Localidade", c.getLocalidade());
+        values.put("Posto", c.getPosto());
+        values.put("Comunidade", c.getComunidade());
+        values.put("NomePL", c.getNomePl());
+        values.put("NumeroPL", c.getNumeroPl());
+        values.put("Imagem", c.getImage());
+        values.put("Documento", c.getDocumento());
+
+        i = this.getWritableDatabase().insert("Clientes", null, values);
+
+        return i;
+
+    }
+
+    public ArrayList<Cliente> getClientesOffline(){
+        ArrayList<Cliente> data = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Clientes", null);
+
+        // here we test if there are some data on the
+
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("Nome"));
+                @SuppressLint("Range") String apelido = cursor.getString(cursor.getColumnIndex("Apelido"));
+                @SuppressLint("Range") String etnia = cursor.getString(cursor.getColumnIndex("Etnia"));
+                @SuppressLint("Range") String genero = cursor.getString(cursor.getColumnIndex("Genero"));
+                @SuppressLint("Range") String numero = cursor.getString(cursor.getColumnIndex("Numero"));
+                @SuppressLint("Range") String ano = cursor.getString(cursor.getColumnIndex("Ano"));
+                @SuppressLint("Range") String distrito = cursor.getString(cursor.getColumnIndex("Distrito"));
+                @SuppressLint("Range") String localidade = cursor.getString(cursor.getColumnIndex("Localidade"));
+                @SuppressLint("Range") String posto = cursor.getString(cursor.getColumnIndex("Posto"));
+                @SuppressLint("Range") String comunidade = cursor.getString(cursor.getColumnIndex("Comunidade"));
+                @SuppressLint("Range") String nomePL = cursor.getString(cursor.getColumnIndex("NomePL"));
+                @SuppressLint("Range") String imagem = cursor.getString(cursor.getColumnIndex("Imagem"));
+                @SuppressLint("Range") String documento = cursor.getString(cursor.getColumnIndex("Documento"));
+
+
+                Cliente cl = new Cliente();
+                cl.setNome(nome);
+                cl.setImage(imagem);
+                cl.setNumeroPl(nomePL);
+                cl.setNumero(numero);
+                cl.setDistrito(distrito);
+                cl.setAno(ano);
+                cl.setApelido(apelido);
+                cl.setEtnia(etnia);
+                cl.setGenero(genero);
+                cl.setLocalidade(localidade);
+                cl.setPosto(posto);
+                cl.setComunidade(comunidade);
+                cl.setDocumento(documento);
+
+                data.add(cl);
+            } while (cursor.moveToNext());
+        }
+        return data;
+
+    }
+    public long uploadClientesFromRTDB(){
+
+        long a = 0;
+        String createTableClientes = "CREATE TABLE IF NOT EXISTS " + "Clientes" + "(" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Nome" + " TEXT," + "Apelido" + " TEXT,"
+                + "Etnia" + " TEXT," + "Genero"+ " TEXT," +"Numero"+ " TEXT," + "Ano "+
+                " TEXT," + " Distrito "+ " TEXT," +"Localidade "+" TEXT,"+ "Posto"+ " TEXT,"+
+                " Comunidade " +" TEXT,"+ "NomePL"+ " TEXT," + "NumeroPL"+ " TEXT,"+ "Imagem" + " TEXT,"+
+                "Documento" + " TEXT)";
+        ;
+
+        this.getWritableDatabase().execSQL(createTableClientes);
+
+        if ( NetworkUtils.isNetworkAvailable(getContext()) ){
+            if (!SplashScreen.clientes.isEmpty()){
+                for (Cliente c : SplashScreen.clientes){
+                   a = insertClient(c);
+                }
+            }
+        }
+        return a;
+    }
+
+
     private void createUsersTable(){
 
         String createTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLEUSERS+ "(" +
@@ -60,19 +179,75 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
     }
 
+    private void createTableCulturas(){
+
+        String createTableQuery = "CREATE TABLE IF NOT EXISTS " + "Culturas"+ "(" +
+                "Id" + " TEXT," + "Nome " + "TEXT)";
+                this.getWritableDatabase().execSQL(createTableQuery);
+
+    }
+
     @Override
-    public void onCreate(SQLiteDatabase db){
+    public void onCreate(@NonNull SQLiteDatabase db){
         String createTableQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 IDFORMULARIO + " TEXT," + PERGUNTA+ " TEXT," + RESPOSTA + " TEXT,"+ NOMEFORMULARIO + "TEXT)";
         db.execSQL(createTableQuery);
     }
 
+    public long saveCulturas(){
+        long id = 0;
+
+        createTableCulturas();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        for (String c : SplashScreen.culturas){
+
+            if (!NetworkUtils.isNetworkAvailable(context)){
+                Toast.makeText(context, "Por favor conecte o despositivo a Internet para sincronizar as culturas", Toast.LENGTH_SHORT).show();
+                return -1;
+            }else{
+                ContentValues values = null;
+                    values = new ContentValues();
+                    values.put("Id", DatabaseHelper.getSha());
+                    values.put("Nome", c);
+                    id = db.insert("Culturas", null, values);
+                }
+                db.close();
+            }
+        return id;
+    }
     public ArrayList<Cliente.UserPl> getUsers(){
+
+        ArrayList<Cliente.UserPl> users = selectAllUsersFromDB();
+
+        if (users.isEmpty() || users.get(0) == null ){
+            // if the offline DB dont have users we donwload them from the RTDB
+            if(NetworkUtils.isNetworkAvailable(getContext())){
+
+                Toast.makeText(context, "Sincronizando dados com o RTDB online", Toast.LENGTH_LONG).show();
+
+                long a = saveUsers();
+
+                if (a >= 1){
+                    users = selectAllUsersFromDB();
+                    Toast.makeText(context, "Usuarios sincronizados com sucesso", Toast.LENGTH_LONG).show();
+                }
+            }else{
+                Toast.makeText(context, "Sem registos, ligue a internet para sincronizar", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        return users ;
+    }
+    public ArrayList<Cliente.UserPl> selectAllUsersFromDB(){
         ArrayList<Cliente.UserPl> data = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Usuarios", null);
+
+        // here we test if there are some data on the
 
         if (cursor.moveToFirst()) {
             do {
@@ -100,12 +275,13 @@ public class OfflineDB extends  SQLiteOpenHelper{
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 IDFORMULARIO + " TEXT," + PERGUNTA+ " TEXT," + RESPOSTA + " TEXT)";
         db.execSQL(createTableQuery);
-
     }
 
     public void cleanDatabase(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE "+ TABLE_NAME);
+        db.execSQL("DROP TABLE "+ TABLEUSERS);
+        db.close();
     }
 
     @Override
@@ -154,43 +330,26 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
     public long saveUsers(){
 
-
         SQLiteDatabase db = this.getWritableDatabase();
 
         createUsersTable();
 
-        long rowId = 0;
+        final long[] rowId = {0};
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://machambaapp-default-rtdb.firebaseio.com/");
+        ContentValues values = null;
 
-        databaseReference.child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ContentValues values = null;
+        for (Cliente.UserPl u : SplashScreen.users) {
+            values = new ContentValues();
+            values.put(NOME,u.getNome());
+            values.put(COMUNIDADE,u.getComunidade());
+            values.put(DISTRITO,u.getComunidade());
+            values.put(PHONE,u.getPhone());
+            values.put(SENHA, u.getSenha());
+            rowId[0] = db.insert(TABLEUSERS, null, values);
+        }
+        db.close();
 
-                for (DataSnapshot userSnapshot: snapshot.getChildren()) {
-                    values = new ContentValues();
-                    values.put(NOME,userSnapshot.child("nome").getValue(String.class));
-                    values.put(COMUNIDADE, userSnapshot.child("comunidade").getValue(String.class));
-                    values.put(DISTRITO, userSnapshot.child("distrito").getValue(String.class));
-                    values.put(PHONE,userSnapshot.child("phone").getValue(String.class));
-                    values.put(SENHA, userSnapshot.child("senha").getValue(String.class));
-
-                    long rowId = db.insert(TABLEUSERS, null, values);
-
-                }
-                db.close();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-
-        return rowId;
+        return rowId[0];
     }
 
     public ArrayList<OfflineDBModelForm> getDataFromFormId(String formId){
