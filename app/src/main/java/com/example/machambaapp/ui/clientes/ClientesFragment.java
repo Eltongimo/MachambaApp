@@ -51,7 +51,8 @@ public class ClientesFragment extends Fragment {
         imageProfile = view.findViewById(R.id.imagePL);
         name = view.findViewById(R.id.namePL);
 
-        name.setText(SplashScreen.currentUser.getNome()+" "+SplashScreen.currentUser.getApelido());
+//        name.setText(SplashScreen.currentUser.getNome()+" "+SplashScreen.currentUser.getApelido());
+        name.setText(SplashScreen.currentUser.getNome());
 
         Picasso.get().load(SplashScreen.currentUser.getImage()).into(new Target(){
             @Override

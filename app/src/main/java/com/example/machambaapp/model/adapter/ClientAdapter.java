@@ -49,7 +49,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ClientAdapter.ViewHolder holder, int position) {
         Cliente client = mSpecies.get(position);
-        holder.nomeClient.setText(client.getNome()+ " "+ client.getApelido());
+        holder.nomeClient.setText(client.getNome()+ " "+ (client.getApelido() == null ? " " : client.getApelido()));
         Picasso.get().load(  client.getImage()).into(new Target(){
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {

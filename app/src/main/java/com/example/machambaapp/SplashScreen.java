@@ -86,8 +86,6 @@ public class SplashScreen extends AppCompatActivity {
         provincias.add("Cabo Delgado");
         provincias.add("Niassa");
 
-        new OfflineDB(this).uploadClientesFromRTDB();
-
         formulario =  new Formulario();
         ArrayList<Pergunta> ps = new ArrayList<>();
 

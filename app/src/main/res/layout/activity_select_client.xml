@@ -57,7 +57,6 @@
         android:layout_marginTop="53dp"
         android:scrollbars="vertical"
         tools:listitem="@layout/list_select_clientes">
-
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button

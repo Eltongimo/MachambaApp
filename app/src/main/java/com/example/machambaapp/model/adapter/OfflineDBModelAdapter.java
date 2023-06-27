@@ -56,7 +56,7 @@ public class OfflineDBModelAdapter extends RecyclerView.Adapter<OfflineDBModelAd
         return forms.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView form;
 
         private IItemClickListener mItemClickListener;

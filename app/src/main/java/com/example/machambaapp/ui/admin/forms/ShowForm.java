@@ -1,6 +1,8 @@
 package com.example.machambaapp.ui.admin.forms;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -8,14 +10,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.machambaapp.R;
+import com.example.machambaapp.model.adapter.ClientAdapter;
+import com.example.machambaapp.model.adapter.FormAdapter;
+import com.example.machambaapp.model.adapter.OfflineDBModelAdapter;
 import com.example.machambaapp.model.datamodel.OfflineDBModelForm;
 import com.example.machambaapp.model.helper.OfflineDB;
 
 import java.util.ArrayList;
 
 public class ShowForm extends AppCompatActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +27,17 @@ public class ShowForm extends AppCompatActivity {
         String formId = getIntent().getStringExtra("formId");
 
         ArrayList<OfflineDBModelForm>  data = new OfflineDB(this).getDataFromFormId(formId);
-        LinearLayout parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
 
-       // new OfflineDB(this).getUsers();
+       setAdapter(data);
 
-        for (OfflineDBModelForm d : data){
-            parentLayout.addView(generateTextView(d.getPergunta()));
-            parentLayout.addView(generateTextView(d.getResposta()));
-        }
+    }
+
+    private void setAdapter(ArrayList<OfflineDBModelForm> d){
+        RecyclerView recyclerView = findViewById(R.id.idRecyclerviewClient);
+        FormAdapter formAdapter = new FormAdapter(this, d);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(formAdapter);
     }
 
     private TextView generateTextView(String text){

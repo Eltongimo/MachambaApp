@@ -4,17 +4,25 @@ public class OfflineDBModelForm {
     private String formId;
     private String pergunta;
     private String resposta;
+    private String nomePA;
 
-//    private String formName;
+    public String getNomePA() {
+        return nomePA;
+    }
 
-//    public String getFormName() {
-//        return formName;
-//    }
+    public void setNomePA(String nomePA) {
+        this.nomePA = nomePA;
+    }
 
-//    public void setFormName(String formName) {
-//        this.formName = formName;
-//    }
+    public String getDataVisita() {
+        return dataVisita;
+    }
 
+    public void setDataVisita(String dataVisita) {
+        this.dataVisita = dataVisita;
+    }
+
+    private String dataVisita;
     public String getFormId() {
         return formId;
     }

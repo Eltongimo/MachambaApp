@@ -595,4 +595,8 @@ public class DatabaseHelper extends AppCompatActivity{
         myLatch.countDown();
         return culturas;
     }
+
+    public static void uploadForm(ArrayList<OfflineDBModelForm> d) {
+        databaseReference.child("formularios").child(getSha()).setValue(d);
+    }
 }

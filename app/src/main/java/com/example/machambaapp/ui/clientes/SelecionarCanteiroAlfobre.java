@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.machambaapp.R;
 import com.example.machambaapp.model.datamodel.Cliente;
@@ -14,6 +15,7 @@ import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.ui.admin.forms.ResponderForm;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class SelecionarCanteiroAlfobre extends AppCompatActivity {
 
@@ -27,7 +29,11 @@ public class SelecionarCanteiroAlfobre extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        formKey = DatabaseHelper.getSha();
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+        formKey = getIntent().getStringExtra("fullName") + hour + ":" + minute + ":" + second;
     }
 
     @Override
@@ -40,7 +46,7 @@ public class SelecionarCanteiroAlfobre extends AppCompatActivity {
         canteiro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clientName = getIntent().getStringExtra("fullName");
+                clientName = getIntent().getStringExtra("fullName") + " ";
                 startActivity(new Intent(SelecionarCanteiroAlfobre.this, ResponderForm.class));
             }
         });

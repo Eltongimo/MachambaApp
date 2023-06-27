@@ -70,6 +70,10 @@ public class OfflineDB extends  SQLiteOpenHelper{
         setContext(context);
     }
 
+    public void removeAllRowsFromTable(String tableName) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + tableName);
+    }
 
     public long insertClient(Cliente c ){
 
@@ -77,8 +81,7 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
 
 
-        ContentValues values = null;
-        values = new ContentValues();
+        ContentValues values = new ContentValues();
         values.put("Nome", c.getNome());
         values.put("Apelido", c.getApelido());
         values.put("Etnia", c.getEtnia());
@@ -98,6 +101,27 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
         return i;
 
+    }
+
+    public boolean isTableExists(String tableName) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name=?", new String[]{tableName});
+        boolean exists = (cursor != null && cursor.getCount() > 0);
+        if (cursor != null) {
+            cursor.close();
+        }
+        return exists;
+    }
+
+    public int getTableLength(String tableName) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tableName, null);
+        int count = 0;
+        if (cursor != null && cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+            cursor.close();
+        }
+        return count;
     }
 
     public ArrayList<Cliente> getClientesOffline(){
@@ -146,7 +170,7 @@ public class OfflineDB extends  SQLiteOpenHelper{
         return data;
 
     }
-    public long uploadClientesFromRTDB(){
+    public void uploadClientesFromRTDB(){
 
         long a = 0;
         String createTableClientes = "CREATE TABLE IF NOT EXISTS " + "Clientes" + "(" +
@@ -160,14 +184,15 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
         this.getWritableDatabase().execSQL(createTableClientes);
 
-        if ( NetworkUtils.isNetworkAvailable(getContext()) ){
-            if (!SplashScreen.clientes.isEmpty()){
-                for (Cliente c : SplashScreen.clientes){
-                   a = insertClient(c);
-                }
+        if ( NetworkUtils.isNetworkAvailable(getContext()) ) {
+            for (Cliente c : SplashScreen.clientes) {
+                insertClient(c);
             }
         }
-        return a;
+        else  {
+            Toast.makeText(context, "Por favor conecte o despositivo a internet para poder sincronizar com os dados online", Toast.LENGTH_SHORT).show();
+        }
+        return ;
     }
 
 

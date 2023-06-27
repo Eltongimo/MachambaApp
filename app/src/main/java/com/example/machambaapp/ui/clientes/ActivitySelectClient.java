@@ -88,17 +88,25 @@ public class ActivitySelectClient extends AppCompatActivity {
         setContentView(R.layout.activity_select_client);
 
         loadingBar = new ProgressDialog(this);
+        recyclerView = findViewById(R.id.idRecyclerviewClients2);
 
         loadingBar.setTitle("Carregando clientes");
         loadingBar.setMessage("Aguarde por favor!");
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
-        //getCliensFromDatabase();
-       ArrayList<Cliente> c = new OfflineDB(this).getClientesOffline();
-       c = null;
+
+        getCliensFromDatabase();
+
+        OfflineDB db =  new OfflineDB(this);
+
+        boolean tb = db.isTableExists("Clientes");
+        int cc = db.getTableLength("Clientes");
+
+        clients = new OfflineDB(this).getClientesOffline();
+
+        setAdapter();
 
         recyclerView = findViewById(R.id.idRecyclerviewClients2);
-
         distrito = (TextView) findViewById(R.id.nomeDistrito);
   }
 

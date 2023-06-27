@@ -506,12 +506,6 @@ public class ResponderForm extends AppCompatActivity {
 
             datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), null);
 
-            datePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
-                @Override
-                public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    resposta = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                }
-            });
             resposta += "";
         } else if (typeOfQuestion.contains("Radio")) {
 
@@ -977,6 +971,15 @@ public class ResponderForm extends AppCompatActivity {
 
                 datePicker = new DatePicker(getApplicationContext());
                 datePicker.startAnimation(getAlphaAnimation());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    datePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+                        @Override
+                        public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            resposta = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        }
+                    });
+                }
+
                 container.addView(datePicker, layoutParams);
                 break;
 

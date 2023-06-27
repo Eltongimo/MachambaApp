@@ -7,12 +7,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.machambaapp.Network.NetworkUtils;
 import com.example.machambaapp.model.adapter.OfflineDBModelAdapter;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.Etnia;
 import com.example.machambaapp.model.datamodel.OfflineDBModelForm;
+import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.helper.OfflineDB;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -39,7 +43,6 @@ public class FormulariosRespondidos extends AppCompatActivity {
     private ArrayList<OfflineDBModelForm> removeDuplicates(ArrayList<OfflineDBModelForm> data){
 
         ArrayList<OfflineDBModelForm> newArray = new ArrayList<>();
-
 
         for (OfflineDBModelForm d : data){
             boolean a = false;
@@ -70,6 +73,50 @@ public class FormulariosRespondidos extends AppCompatActivity {
         ArrayList<OfflineDBModelForm> forms = db.readForms();
 
         forms = removeDuplicates(forms);
+
+
+        registerEtnia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if ( db.getTableLength("Formulario") > 0){
+                    if (!NetworkUtils.isNetworkAvailable(getApplicationContext())){
+                        Toast.makeText(FormulariosRespondidos.this, "Por favor conecte se a Internet para faser UPLOAD dos formulatios", Toast.LENGTH_SHORT).show();
+                        return;
+                    }else{
+
+                        ArrayList<OfflineDBModelForm> d = new ArrayList<>();
+
+                        boolean first = true;
+                        String formId = "";
+
+                        for (OfflineDBModelForm dd : db.readForms()){
+
+                            if (first){
+                                d.add(dd);
+                                first = false;
+                                formId = dd.getFormId();
+                            }
+
+                            if (!dd.getFormId().equals(formId)){
+                                DatabaseHelper.uploadForm(d);
+                                d = new ArrayList<>();
+                                first = true;
+                            }else{
+                                d.add(dd);
+                            }
+                        }
+                        Toast.makeText(FormulariosRespondidos.this, "Formularios Carregados com sucesso", Toast.LENGTH_LONG).show();
+                    //
+                        new OfflineDB(getApplicationContext()).removeAllRowsFromTable("Formulario");
+                        finish();
+                    }
+                }else{
+                    Toast.makeText(FormulariosRespondidos.this, "Sem dados para upload ", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         setAdapter(forms);
     }
