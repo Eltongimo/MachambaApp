@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -113,63 +115,173 @@ public class OfflineDB extends  SQLiteOpenHelper{
         return exists;
     }
 
+//    public int getTableLength(String tableName) {
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tableName, null);
+//        int count = 0;
+//        if (cursor != null && cursor.moveToFirst()) {
+//            count = cursor.getInt(0);
+//            cursor.close();
+//        }
+//        return count;
+//    }
+
     public int getTableLength(String tableName) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tableName, null);
+        Cursor cursor = null;
         int count = 0;
-        if (cursor != null && cursor.moveToFirst()) {
-            count = cursor.getInt(0);
-            cursor.close();
+
+        try {
+            cursor = db.rawQuery("SELECT COUNT(*) FROM " + tableName, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+        } catch (SQLiteException e) {
+            // Handle the exception appropriately
+            Log.e("SQLiteException", e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
+
         return count;
     }
 
-    public ArrayList<Cliente> getClientesOffline(){
+
+//    public ArrayList<Cliente> getClientesOffline(){
+//        ArrayList<Cliente> data = new ArrayList<>();
+//
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT * FROM Clientes", null);
+//
+//        // here we test if there are some data on the
+//
+//        if (cursor.moveToFirst()) {
+//            do {
+//                @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("Nome"));
+//                @SuppressLint("Range") String apelido = cursor.getString(cursor.getColumnIndex("Apelido"));
+//                @SuppressLint("Range") String etnia = cursor.getString(cursor.getColumnIndex("Etnia"));
+//                @SuppressLint("Range") String genero = cursor.getString(cursor.getColumnIndex("Genero"));
+//                @SuppressLint("Range") String numero = cursor.getString(cursor.getColumnIndex("Numero"));
+//                @SuppressLint("Range") String ano = cursor.getString(cursor.getColumnIndex("Ano"));
+//                @SuppressLint("Range") String distrito = cursor.getString(cursor.getColumnIndex("Distrito"));
+//                @SuppressLint("Range") String localidade = cursor.getString(cursor.getColumnIndex("Localidade"));
+//                @SuppressLint("Range") String posto = cursor.getString(cursor.getColumnIndex("Posto"));
+//                @SuppressLint("Range") String comunidade = cursor.getString(cursor.getColumnIndex("Comunidade"));
+//                @SuppressLint("Range") String nomePL = cursor.getString(cursor.getColumnIndex("NomePL"));
+//                @SuppressLint("Range") String imagem = cursor.getString(cursor.getColumnIndex("Imagem"));
+//                @SuppressLint("Range") String documento = cursor.getString(cursor.getColumnIndex("Documento"));
+//
+//
+//                Cliente cl = new Cliente();
+//                cl.setNome(nome);
+//                cl.setImage(imagem);
+//                cl.setNumeroPl(nomePL);
+//                cl.setNumero(numero);
+//                cl.setDistrito(distrito);
+//                cl.setAno(ano);
+//                cl.setApelido(apelido);
+//                cl.setEtnia(etnia);
+//                cl.setGenero(genero);
+//                cl.setLocalidade(localidade);
+//                cl.setPosto(posto);
+//                cl.setComunidade(comunidade);
+//                cl.setDocumento(documento);
+//
+//                data.add(cl);
+//            } while (cursor.moveToNext());
+//        }
+//        return data;
+//
+//    }
+
+
+
+
+    //Codigo melhorado para buscar clientes na base de dados offline
+    public ArrayList<Cliente> getClientesOffline() {
         ArrayList<Cliente> data = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Clientes", null);
+        Cursor cursor = null;
 
-        // here we test if there are some data on the
+        try {
+            // Check if the "Clientes" table exists
+            if (isTableExists(db, "Clientes")) {
+                cursor = db.rawQuery("SELECT * FROM Clientes", null);
 
-        if (cursor.moveToFirst()) {
-            do {
-                @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("Nome"));
-                @SuppressLint("Range") String apelido = cursor.getString(cursor.getColumnIndex("Apelido"));
-                @SuppressLint("Range") String etnia = cursor.getString(cursor.getColumnIndex("Etnia"));
-                @SuppressLint("Range") String genero = cursor.getString(cursor.getColumnIndex("Genero"));
-                @SuppressLint("Range") String numero = cursor.getString(cursor.getColumnIndex("Numero"));
-                @SuppressLint("Range") String ano = cursor.getString(cursor.getColumnIndex("Ano"));
-                @SuppressLint("Range") String distrito = cursor.getString(cursor.getColumnIndex("Distrito"));
-                @SuppressLint("Range") String localidade = cursor.getString(cursor.getColumnIndex("Localidade"));
-                @SuppressLint("Range") String posto = cursor.getString(cursor.getColumnIndex("Posto"));
-                @SuppressLint("Range") String comunidade = cursor.getString(cursor.getColumnIndex("Comunidade"));
-                @SuppressLint("Range") String nomePL = cursor.getString(cursor.getColumnIndex("NomePL"));
-                @SuppressLint("Range") String imagem = cursor.getString(cursor.getColumnIndex("Imagem"));
-                @SuppressLint("Range") String documento = cursor.getString(cursor.getColumnIndex("Documento"));
+                if (cursor.moveToFirst()) {
+                    do {
+                        // Retrieve column values using column names
+                        @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("Nome"));
+                        @SuppressLint("Range")String apelido = cursor.getString(cursor.getColumnIndex("Apelido"));
+                        @SuppressLint("Range")String etnia = cursor.getString(cursor.getColumnIndex("Etnia"));
+                        @SuppressLint("Range")String genero = cursor.getString(cursor.getColumnIndex("Genero"));
+                        @SuppressLint("Range")String numero = cursor.getString(cursor.getColumnIndex("Numero"));
+                        @SuppressLint("Range")String ano = cursor.getString(cursor.getColumnIndex("Ano"));
+                        @SuppressLint("Range")String distrito = cursor.getString(cursor.getColumnIndex("Distrito"));
+                        @SuppressLint("Range")String localidade = cursor.getString(cursor.getColumnIndex("Localidade"));
+                        @SuppressLint("Range")String posto = cursor.getString(cursor.getColumnIndex("Posto"));
+                        @SuppressLint("Range")String comunidade = cursor.getString(cursor.getColumnIndex("Comunidade"));
+                        @SuppressLint("Range")String nomePL = cursor.getString(cursor.getColumnIndex("NomePL"));
+                        @SuppressLint("Range")String imagem = cursor.getString(cursor.getColumnIndex("Imagem"));
+                        @SuppressLint("Range")String documento = cursor.getString(cursor.getColumnIndex("Documento"));
 
+                        // Create a Cliente object and set the values
+                        Cliente cl = new Cliente();
+                        cl.setNome(nome);
+                        cl.setImage(imagem);
+                        cl.setNumeroPl(nomePL);
+                        cl.setNumero(numero);
+                        cl.setDistrito(distrito);
+                        cl.setAno(ano);
+                        cl.setApelido(apelido);
+                        cl.setEtnia(etnia);
+                        cl.setGenero(genero);
+                        cl.setLocalidade(localidade);
+                        cl.setPosto(posto);
+                        cl.setComunidade(comunidade);
+                        cl.setDocumento(documento);
 
-                Cliente cl = new Cliente();
-                cl.setNome(nome);
-                cl.setImage(imagem);
-                cl.setNumeroPl(nomePL);
-                cl.setNumero(numero);
-                cl.setDistrito(distrito);
-                cl.setAno(ano);
-                cl.setApelido(apelido);
-                cl.setEtnia(etnia);
-                cl.setGenero(genero);
-                cl.setLocalidade(localidade);
-                cl.setPosto(posto);
-                cl.setComunidade(comunidade);
-                cl.setDocumento(documento);
-
-                data.add(cl);
-            } while (cursor.moveToNext());
+                        data.add(cl);
+                    } while (cursor.moveToNext());
+                }
+            } else {
+                Log.e("Table Not Found", "The 'Clientes' table does not exist in the database.");
+            }
+        } catch (SQLiteException e) {
+            // Handle the exception appropriately
+            Log.e("SQLiteException", e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        return data;
 
+        return data;
     }
+
+    // Metodo para verificar se a tabela existe na base de dados
+    private boolean isTableExists(SQLiteDatabase db, String tableName) {
+        Cursor cursor = db.rawQuery("SELECT DISTINCT tbl_name FROM sqlite_master WHERE tbl_name = '" + tableName + "'", null);
+        boolean tableExists = false;
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                tableExists = true;
+            }
+            cursor.close();
+        }
+        return tableExists;
+    }
+
+
+
+
+
+
+
+
     public void uploadClientesFromRTDB(){
 
         long a = 0;

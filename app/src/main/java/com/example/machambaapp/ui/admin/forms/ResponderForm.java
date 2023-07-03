@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
@@ -101,6 +102,15 @@ public class ResponderForm extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
+        if (pergunta.getNomeDaPergunta().contains("pesticida bo")){
+            SplashScreen.showingConditional = false;
+            SplashScreen.indexCondicional = 0;
+            SplashScreen.groupIndex = 0;
+            SplashScreen.runGroup = false;
+        }
+        if(SplashScreen.runGroup){
+            SplashScreen.groupIndex--;
+        }
         if (SplashScreen.showingConditional) {
             backConditionalQuestion();
         } else {
@@ -113,7 +123,7 @@ public class ResponderForm extends AppCompatActivity {
     }
 
     private void nextQuestion(){
-        if (!SplashScreen.showingConditional)
+        if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size())
             SplashScreen.indexForm += 1;
         startActivity(new Intent(ResponderForm.this, ResponderForm.class));
     }
@@ -124,15 +134,16 @@ public class ResponderForm extends AppCompatActivity {
     }
 
     private void backToPreviousQuestion(){
-        if (SplashScreen.indexForm > 0){
-            SplashScreen.indexForm -= 1;
-        }
+        SplashScreen.indexForm -= 1;
         finish();
     }
 
     private void backConditionalQuestion(){
-        SplashScreen.indexCondicional -= 1;
-        finish();
+
+        if (SplashScreen.indexCondicional >= 0){
+            SplashScreen.indexCondicional -= 1;
+            finish();
+        }
     }
 
     private void enterConditionalQuestion(){
@@ -152,7 +163,6 @@ public class ResponderForm extends AppCompatActivity {
     }
 
     private void initiateCircularProgressBar(){
-
         try {
             ProgressBar progressBar = new ProgressBar(this);
             progressBar.setLayoutParams(new LinearLayout.LayoutParams(
@@ -200,7 +210,6 @@ public class ResponderForm extends AppCompatActivity {
         increaseProgressBar();
         initiateCircularProgressBar();
         animateElements();
-
     }
 
     private void nextQuestionGroup(){
@@ -220,11 +229,10 @@ public class ResponderForm extends AppCompatActivity {
     }
 
     private void finishForm(){
-        Toast.makeText(this, "Parabens, Voce conseguiu completar o formulario!", Toast.LENGTH_LONG).show();
-
+        Toast.makeText(this, "Parabéns, Você conseguiu completar o formulário!", Toast.LENGTH_LONG).show();
         txtPergunta.setText("Fim!");
         txtPergunta.setTextSize(100);
-        btnResponder.setText("Submeter Formulario");
+        btnResponder.setText("Submeter Formulário");
         btnResponder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,6 +248,7 @@ public class ResponderForm extends AppCompatActivity {
 
                 Intent intent = new Intent(ResponderForm.this, SelecionarCanteiroAlfobre.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
                 for (int i = 0; i< SplashScreen.indexForm ;i++){
                     finish();
                 }
@@ -251,7 +260,7 @@ public class ResponderForm extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try{
+//        try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_responder_form);
 
@@ -272,7 +281,6 @@ public class ResponderForm extends AppCompatActivity {
                 int indexGroup = SplashScreen.groupIndex;
                 int groupQuestionSize = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
                         get(SplashScreen.selectedCulturesIndex)).size();
-
 
                 if (indexGroup < groupQuestionSize ){
                     String culture = SplashScreen.selectedCultures.get(SplashScreen.selectedCulturesIndex);
@@ -316,6 +324,10 @@ public class ResponderForm extends AppCompatActivity {
                 }
                 else
                 {
+                    if (SplashScreen.indexForm > 8){
+                        SplashScreen.indexForm = 8;
+                        pergunta = SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm);
+                    }
                     pergunta = pergunta.getPerguntasCondicionais().get(SplashScreen.indexCondicional);
                     mostrarCampo(pergunta);
                 }
@@ -331,7 +343,9 @@ public class ResponderForm extends AppCompatActivity {
                     collectAnswers(pergunta.getTipoPergunta());
 
                     String a = "";
+
                     a = getIntent().getStringExtra("fullName");
+
                     //  Collecting data to perist on SQLite Database
                     SelecionarCanteiroAlfobre.offlineDB.add(new OfflineDBModelForm(SelecionarCanteiroAlfobre.formKey,pergunta.getNomeDaPergunta(),resposta));
 
@@ -419,8 +433,7 @@ public class ResponderForm extends AppCompatActivity {
                                 if (resposta.contains("Sim")) {
                                     SplashScreen.showingConditional = true;
                                     nextQuestion();
-                                        //startActivity(new Intent(ResponderForm.this, ResponderForm.class));
-
+                                    //startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                                 }else{
                                     nextQuestion();
                                 }
@@ -428,15 +441,23 @@ public class ResponderForm extends AppCompatActivity {
                             }
 
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("mergulhar o pesticida")){
-
                                 Toast.makeText(ResponderForm.this,"dias de mergulho", Toast.LENGTH_LONG).show();
                             }
-
 
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botânico")) {
                                 // Show conditional question
                                 if (resposta.contains("Sim")) {
                                     SplashScreen.showingConditional = true;
+                                    nextQuestion();
+                                    return;
+                                }
+                            }
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("cobertura morta")) {
+                                // Show conditional question
+                                if (resposta.contains("Nenhuma")){
+                                    displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                                    return ;
+                                }else{
                                     nextQuestion();
                                     return;
                                 }
@@ -462,9 +483,9 @@ public class ResponderForm extends AppCompatActivity {
                     }
                 }
             });
-        }catch (Exception e){
-            System.out.println(e);
-        }
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
     }
 
     private void catchSelectedCultures(String resposta){
@@ -574,6 +595,23 @@ public class ResponderForm extends AppCompatActivity {
             builder.setTitle("Informação Importante");
             builder.setMessage("O Bokashi é vida! com um custo limitado o produtor pode aumentar a produtividade e melhorar a qualidade" +
                     " do seu solo. Veja o manual de Bokashi da iDE\n");
+
+            builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    nextQuestion();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }else if (per.toLowerCase().contains("cobertura morta")){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
+            builder.setTitle("Informação Importante");
+            builder.setMessage("A cobertura tem que ser espessa e regular no canteiro todo para preservar bem a humidade." +
+                    " É importante lembrar a importância de uma boa cobertura morta para limitar as necessidades de rega e ter plantas bem produtivas!\n\n" +
+                    "O canteiro tem que ter 3 camadas. A primeira camada é de terra, a segunda é de estrume e a terceira é de cobertura morta.\n" +
+                    "Esquecer uma destas 3 camadas vai comprometer o ciclo de produção inteiro");
 
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
@@ -777,7 +815,7 @@ public class ResponderForm extends AppCompatActivity {
                     videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mediaPlayer) {
-                            Toast.makeText(getApplicationContext(), "Parabens, voce ja sabe verificar a humidade do solo!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Parabéns, você já sabe verificar a humidade do solo!", Toast.LENGTH_LONG).show();
                             ViewGroup.LayoutParams paramsx = videoView.getLayoutParams();
 
                             paramsx.height = 0; // ou outra altura desejada em pixels
@@ -851,7 +889,7 @@ public class ResponderForm extends AppCompatActivity {
 
             case "ImageView":
                 imageView = new ImageView(getApplicationContext());
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 500);
                 layoutParams.gravity = Gravity.CENTER; // Adicione esta linha para centralizar
                 imageView.setLayoutParams(layoutParams);
                 imageView.setImageResource(R.drawable.baseline_photo_camera_24);
@@ -869,8 +907,27 @@ public class ResponderForm extends AppCompatActivity {
                 legend.setLayoutParams(legendaParams);
                 container.addView(legend);
 
+                //Esse é um activity result launcher para quando tirar foto com a camera
 
+                ActivityResultLauncher<Intent> activityResultLauncherCamera;
+                activityResultLauncherCamera = registerForActivityResult(
+                        new ActivityResultContracts.StartActivityForResult(),
+                        new ActivityResultCallback<ActivityResult>() {
+                            @Override
+                            public void onActivityResult(ActivityResult result) {
+                                if (result.getResultCode() == Activity.RESULT_OK) {
+                                    Intent data = result.getData();
+                                    Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                                    legend.setVisibility(View.INVISIBLE);
+                                    imageView.setImageBitmap(imageBitmap);
+                                } else {
+                                    Toast.makeText(ResponderForm.this, "Falha ao capturar imagem", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                );
 
+                //Esse é um activity result launcher para quando selecionar foto da galeria
                 ActivityResultLauncher<Intent> activityResultLauncherImageUsers = registerForActivityResult(
                         new ActivityResultContracts.StartActivityForResult(),
                         new ActivityResultCallback<ActivityResult>() {
@@ -879,6 +936,7 @@ public class ResponderForm extends AppCompatActivity {
                                 if (result.getResultCode() == Activity.RESULT_OK) {
                                     Intent data = result.getData();
                                     urlImageGaleria = data.getData();
+                                    legend.setVisibility(View.INVISIBLE);
                                     imageView.setImageURI(urlImageGaleria);
                                 } else {
                                     Toast.makeText(ResponderForm.this, "Selecione a imagem", Toast.LENGTH_SHORT).show();
@@ -926,7 +984,7 @@ public class ResponderForm extends AppCompatActivity {
                             public void onClick(View view) {
                                 isCamera = true;
                                 Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                startActivityForResult(openCamera, 1);
+                                activityResultLauncherCamera.launch(openCamera);
                                 dialog.dismiss();
                             }
                         });
