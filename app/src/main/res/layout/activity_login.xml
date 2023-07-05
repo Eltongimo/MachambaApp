@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fundo"
+    android:background="@drawable/fundo2"
     tools:context=".ActivityLogin">
 
 
@@ -28,7 +28,7 @@
            android:id="@+id/idTitle"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="Bem-vindo a Assistência Tecnica"
+           android:text="Bem-vindo a Assistência Técnica"
            android:layout_marginTop="12dp"
            android:fontFamily="@font/poppinssemibold"/>
 
@@ -41,15 +41,15 @@
            android:layout_below="@id/idTitle"
            android:layout_centerHorizontal="true"
            android:layout_marginTop="10dp"
-           android:text="Insira as credenciais para poder entar"
-           android:textSize="12sp" />
+           android:text="Insira as credenciais para puder entar"
+           android:textSize="15sp" />
 
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:orientation="vertical"
            android:layout_below="@id/subTitle"
-           android:layout_marginTop="10dp"
+           android:layout_marginTop="53dp"
            android:padding="30dp"
            android:id="@+id/linearlayout_1"
            >
@@ -59,7 +59,7 @@
                android:layout_width="match_parent"
                android:layout_height="58dp"
                android:inputType="phone"
-               android:hint=" O numero do telemovel"
+               android:hint=" O número do telemóvel"
                android:paddingLeft="10dp"
                android:textSize="16dp"
                android:drawablePadding="10dp"
@@ -105,7 +105,7 @@
            android:layout_height="wrap_content"
            android:layout_below="@id/linearlayout_1"
            android:layout_centerHorizontal="true"
-           android:layout_marginTop="40dp"
+           android:layout_marginTop="30dp"
            android:id="@+id/idButtonlogar"
            android:width="300dp"
            android:fontFamily="@font/poppinsbold"
@@ -145,10 +145,6 @@
                android:layout_height="wrap_content"
                android:text=" clique aqui " />
        </LinearLayout>
-
-
-
-
 
    </RelativeLayout>
 </ScrollView>

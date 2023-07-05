@@ -51,23 +51,7 @@ public class ActivityLogin extends AppCompatActivity {
         textViewAlert=(TextView) findViewById(R.id.idAlert);
         loadingBar = new ProgressDialog(this);
 
-        //Aqui é feiate a solicitação para usar a câmera
-        int MY_PERMISSIONS_REQUEST_CAMERA=0;
-// Here, this is the current activity
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-        {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA))
-            {
 
-            }
-            else
-            {
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA );
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        }
 
         buttonLogar=(Button) findViewById(R.id.idButtonlogar);
            buttonLogar.setOnClickListener(new View.OnClickListener() {
@@ -76,65 +60,6 @@ public class ActivityLogin extends AppCompatActivity {
 
                    ArrayList<Cliente.UserPl> u = new OfflineDB(getApplicationContext()).getUsers();
 
-//                   if (editTextPhone.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()) {
-//                       editTextPassword.setError("Campo Vazio");
-//                       editTextPhone.setError("Campo Vazio");
-//                       textViewAlert.setText("Entrada inválida!");
-//                   } else {
-//                       if (verificationPasswordAndUserNameAdmin()) {
-//                           editTextPassword.setText("");
-//                           editTextPhone.setText("");
-//                           textViewAlert.setText("");
-//
-//
-//                           loadingBar.setTitle("Entrando como Administrador...");
-//                           loadingBar.setMessage("Aguarde por favor!");
-//                           loadingBar.setCanceledOnTouchOutside(false);
-//                           loadingBar.show();
-//
-//                           new Handler().postDelayed(new Runnable() {
-//                               @Override
-//                               public void run() {
-//                                   Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
-//                                   Bundle b = ActivityOptions.makeSceneTransitionAnimation(ActivityLogin.this).toBundle();
-//                                   startActivity(intent, b);
-//                                   loadingBar.dismiss();
-//                               }
-//                           }, 2000); // 2000 milissegundos = 2 segundos
-//
-//                       } else if (!verificationPasswordAndUserNameAdmin()) {
-//                           textViewAlert.setText("Password ou número inválido, tente de novo!");
-//                       }
-//                   } else{
-//
-//                       for (Cliente.UserPl uu : u) {
-//                           if (uu.getNome() != null) {
-//                               if (uu.getPhone().equals(editTextPhone.getText().toString()) && uu.getSenha().equalsIgnoreCase(editTextPassword.getText().toString())) {
-//
-//                                   Privilegios privilegios = new Privilegios();
-//
-//                                   privilegios.setAllAcessView(false);
-//
-//                                   SplashScreen.currentUser = uu;
-//                                   loadingBar.setTitle("Entrando como PL...");
-//                                   loadingBar.setMessage("Aguarde por favor!");
-//                                   loadingBar.setCanceledOnTouchOutside(false);
-//                                   loadingBar.show();
-//
-//                                   new Handler().postDelayed(new Runnable() {
-//                                       @Override
-//                                       public void run() {
-//                                           startActivity(new Intent(ActivityLogin.this, MainActivity.class));
-//                                           overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-//                                           loadingBar.dismiss();
-//                                       }
-//                                   }, 2000); // 2000 milissegundos = 2 segundos
-//
-//                                   return;
-//                               }
-//                           }
-//                       }
-//                   }
 
                    if (editTextPhone.getText().toString().isEmpty() || editTextPassword.getText().toString().isEmpty()) {
                        editTextPassword.setError("Campo Vazio");

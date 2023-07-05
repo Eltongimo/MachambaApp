@@ -89,6 +89,7 @@ public class ActivitySelectClient extends AppCompatActivity {
 
         loadingBar = new ProgressDialog(this);
         recyclerView = findViewById(R.id.idRecyclerviewClients2);
+        distrito = (TextView) findViewById(R.id.nomeDistrito);
 
         loadingBar.setTitle("Carregando clientes");
         loadingBar.setMessage("Aguarde por favor!");
@@ -106,8 +107,7 @@ public class ActivitySelectClient extends AppCompatActivity {
 
         setAdapter();
 
-        recyclerView = findViewById(R.id.idRecyclerviewClients2);
-        distrito = (TextView) findViewById(R.id.nomeDistrito);
+
   }
 
     private void setAdapter(){

@@ -10,14 +10,10 @@ import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.helper.DatabaseHelper;
-import com.example.machambaapp.model.helper.OfflineDB;
-import com.example.machambaapp.ui.admin.addforms.AddEtnia;
-import com.example.machambaapp.ui.admin.forms.ResponderForm;
-import com.example.machambaapp.ui.admin.views.ActivityViewEtnia;
+import com.example.machambaapp.ui.TestesSQLlite.Teste;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -33,7 +29,6 @@ public class SplashScreen extends AppCompatActivity {
     public static int selectedCulturesIndex = 0;
     public static int indexForm = 0;
     public static boolean showingConditional = false;
-    public static Pergunta currentQuestion = new Pergunta();
     public static int indexCondicional = 0;
 
     public static ArrayList<Formulario> formularios =  DatabaseHelper.getForms();
@@ -259,7 +254,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, ActivityPageStart.class);
+                Intent intent = new Intent(SplashScreen.this, Teste.class);
 //                Intent intent = new Intent(SplashScreen.this, ResponderForm.class);
                 Bundle b = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this).toBundle();
                 startActivity(intent, b);
@@ -289,7 +284,7 @@ public class SplashScreen extends AppCompatActivity {
             ps.add(p);
 
             p = new Pergunta();
-            p.setNomeDaPergunta("Indicar a fase de crescimento do "+ c);
+            p.setNomeDaPergunta("Indicar a fase de crescimento do "+ c + ". \n\n Atenção:  Selectione uma Imagem que a descreva");
             opcoes = new ArrayList<>();
 
             opcoes.add("Pequeno");
@@ -297,7 +292,7 @@ public class SplashScreen extends AppCompatActivity {
             opcoes.add("Grande");
             opcoes.add("Muito Grande");
             p.setOpcoes(opcoes);
-            p.setTipoPergunta("RadioGroup");
+            p.setTipoPergunta("RadioGroupImage");
             ps.add(p);
 
             p = new Pergunta();
@@ -322,7 +317,7 @@ public class SplashScreen extends AppCompatActivity {
             opcoes.add("Sim");
             opcoes.add("Não");
             p.setOpcoes(opcoes);
-//            p.setCondicaoTexto("Não");
+//          Caso seja não, tira foto e termina o formulario
             ps.add(p);
 
             p = new Pergunta();
@@ -343,7 +338,6 @@ public class SplashScreen extends AppCompatActivity {
             perguntasCondicionais.add(p);
             p.setPerguntasCondicionais(perguntasCondicionais);
             ps.add(p);
-
 
             groupQuestions.put(c, ps);
             ps = new ArrayList<>();

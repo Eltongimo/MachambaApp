@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo2"
+    tools:context=".ui.TestesSQLlite.TesteSqlImagem">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/idCardOpcao"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="8dp"
+        android:layout_margin="30dp"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="8dp">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:drawablePadding="12dp"
+                android:layout_marginTop="40dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/text_foto"
+                android:fontFamily="@font/poppinssemibold"
+                android:layout_gravity="center"
+                android:text="Selecionar a foto"
+                android:textSize="18dp"
+                android:padding="10dp"
+                android:textColor="@color/cor_of_botton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <ImageView
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:id="@+id/image"
+                android:background="#FBF6F6"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/baseline_photo_camera_24"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"/>
+
+            <Button
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="22dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="300dp"
+                app:cornerRadius="15sp"
+                android:padding="12sp"
+                android:textSize="16dp"
+                android:fontFamily="@font/poppinsbold"
+                android:backgroundTint="@color/cor_of_botton"
+                android:text="Carregar Imagem"
+                android:id="@+id/btImagem"/>
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

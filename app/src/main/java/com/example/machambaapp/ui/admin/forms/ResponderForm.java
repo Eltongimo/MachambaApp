@@ -1,5 +1,6 @@
 package com.example.machambaapp.ui.admin.forms;
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -44,6 +46,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -102,12 +105,15 @@ public class ResponderForm extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        if (pergunta.getNomeDaPergunta().contains("pesticida bo")){
-            SplashScreen.showingConditional = false;
-            SplashScreen.indexCondicional = 0;
-            SplashScreen.groupIndex = 0;
-            SplashScreen.runGroup = false;
+        if (pergunta != null){
+            if (pergunta.getNomeDaPergunta().contains("pesticida bo")){
+                SplashScreen.showingConditional = false;
+                SplashScreen.indexCondicional = 0;
+                SplashScreen.groupIndex = 0;
+                SplashScreen.runGroup = false;
+            }
         }
+
         if(SplashScreen.runGroup){
             SplashScreen.groupIndex--;
         }
@@ -271,6 +277,24 @@ public class ResponderForm extends AppCompatActivity {
 
             progressViewContainer = findViewById(R.id.circularProgressContainer);
 
+        //Aqui é feiate a solicitação para usar a câmera
+        int MY_PERMISSIONS_REQUEST_CAMERA=0;
+// Here, this is the current activity
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA))
+            {
+
+            }
+            else
+            {
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA );
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
             if (SplashScreen.runGroup){
 
                 if (SplashScreen.finishGroup){
@@ -329,6 +353,7 @@ public class ResponderForm extends AppCompatActivity {
                         pergunta = SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm);
                     }
                     pergunta = pergunta.getPerguntasCondicionais().get(SplashScreen.indexCondicional);
+
                     mostrarCampo(pergunta);
                 }
             }
@@ -454,7 +479,8 @@ public class ResponderForm extends AppCompatActivity {
                             }
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("cobertura morta")) {
                                 // Show conditional question
-                                if (resposta.contains("Nenhuma")){
+                                if (resposta.contains("Nenhuma") || resposta.contains("Camada de Cobertura Morta") || resposta.contains("Camada de Estrume")){
+
                                     displayConditionalPopUp(pergunta.getNomeDaPergunta());
                                     return ;
                                 }else{
@@ -982,10 +1008,14 @@ public class ResponderForm extends AppCompatActivity {
                         camera.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                isCamera = true;
-                                Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                activityResultLauncherCamera.launch(openCamera);
-                                dialog.dismiss();
+                                try{
+                                    isCamera = true;
+                                    Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    activityResultLauncherCamera.launch(openCamera);
+                                    dialog.dismiss();
+                                }catch(Exception e){
+                                    Toast.makeText(ResponderForm.this, "Por favor conceda as permissoes de acesso a camera nas definiçoes", Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
 
@@ -993,6 +1023,254 @@ public class ResponderForm extends AppCompatActivity {
                     }
                 });
                 break;
+
+            case "RadioGroupImage":
+
+                LinearLayout.LayoutParams lpr = new LinearLayout.LayoutParams(400, 300);
+                lpr.gravity = Gravity.CENTER; // Adicione esta linha para centralizar
+
+                if (pergunta.getNomeDaPergunta().contains("Alface")){
+                        ImageView img1 = new ImageView(ResponderForm.this);
+
+                        img1.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        img1.setLayoutParams(lpr);
+                        img1.setImageResource(R.drawable.alface_stage_1);
+
+                        img1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "1";
+                                OfflineDBModelForm m = new OfflineDBModelForm();
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        ImageView img2 = new ImageView(ResponderForm.this);
+                        img2.setImageResource(R.drawable.alface_stage_2);
+                        img2.setLayoutParams(lpr);
+                        img2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "2";
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        ImageView img3 = new ImageView(ResponderForm.this);
+                        img3.setLayoutParams(lpr);
+                        img3.setImageResource(R.drawable.alface_stage_3);
+                        img3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "3";
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        ImageView img4 = new ImageView(ResponderForm.this);
+                        img4.setImageResource(R.drawable.alface_stage_4);
+                        img4.setLayoutParams(lpr);
+                        img4.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "4";
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        container.addView(img1);
+                        container.addView(img2);
+                        container.addView(img3);
+                        container.addView(img4);
+                }
+
+                 if (pergunta.getNomeDaPergunta().contains("Cebola")){
+                        ImageView img1 = new ImageView(ResponderForm.this);
+                        img1.setImageResource(R.drawable.cebola_stage_1);
+                        img1.setLayoutParams(lpr);
+
+                        img1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "1";
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        ImageView img2 = new ImageView(ResponderForm.this);
+                        img2.setImageResource(R.drawable.cebola_stage_2);
+                        img2.setLayoutParams(lpr);
+
+                        img2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "2";
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        ImageView img3 = new ImageView(ResponderForm.this);
+                        img3.setImageResource(R.drawable.cebola_stage_3);
+                        img3.setLayoutParams(lpr);
+
+                        img3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "3";
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        ImageView img4 = new ImageView(ResponderForm.this);
+                        img4.setImageResource(R.drawable.cebola_stage_4);
+                        img4.setLayoutParams(lpr);
+                        img4.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "4";
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        ImageView img5 = new ImageView(ResponderForm.this);
+                        img5.setImageResource(R.drawable.cebola_stage_5);
+                        img5.setLayoutParams(lpr);
+                        img5.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "5";
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        ImageView img6 = new ImageView(ResponderForm.this);
+                        img6.setImageResource(R.drawable.cebola_stage_6);
+                        img6.setLayoutParams(lpr);
+                        img6.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "6";
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        container.addView(img1);
+                        container.addView(img2);
+                        container.addView(img3);
+                        container.addView(img4);
+                        container.addView(img5);
+                        container.addView(img6);
+
+                 }
+
+                 if (pergunta.getNomeDaPergunta().contains("Tomate")){
+                    ImageView img1 = new ImageView(ResponderForm.this);
+
+                    img1.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    img1.setLayoutParams(lpr);
+                    img1.setImageResource(R.drawable.tomate_stage_1);
+
+                    img1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "1";
+                            nextQuestionGroup();
+                        }
+                    });
+
+                    ImageView img2 = new ImageView(ResponderForm.this);
+                    img2.setLayoutParams(lpr);
+                    img2.setImageResource(R.drawable.tomate_stage_2);
+                    img2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "2";
+                            nextQuestionGroup();
+                        }
+                    });
+
+                    ImageView img3 = new ImageView(ResponderForm.this);
+                    img3.setLayoutParams(lpr);
+                    img3.setImageResource(R.drawable.tomate_stage_3);
+                    img3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "3";
+                            nextQuestionGroup();
+                        }
+                    });
+
+                    ImageView img4 = new ImageView(ResponderForm.this);
+                    img4.setLayoutParams(lpr);
+                    img4.setImageResource(R.drawable.tomate_stage_4);
+                    img4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "4";
+                            nextQuestionGroup();
+                        }
+                    });
+
+                    ImageView img5 = new ImageView(ResponderForm.this);
+                    img5.setImageResource(R.drawable.tomate_stage_5);
+                    img5.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "5";
+                            nextQuestionGroup();
+                        }
+                    });
+
+                    container.addView(img1);
+                    container.addView(img2);
+                    container.addView(img3);
+                    container.addView(img4);
+                    container.addView(img5);
+
+                 }
+
+                 if (pergunta.getNomeDaPergunta().contains("Couve")){
+                        ImageView img1 = new ImageView(ResponderForm.this);
+                        img1.setLayoutParams(lpr);
+                        img1.setImageResource(R.drawable.couve_stage_1);
+                        img1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                resposta = "1";
+                                nextQuestionGroup();
+                            }
+                        });
+
+                        ImageView img2 = new ImageView(ResponderForm.this);
+                         img2.setLayoutParams(lpr);
+
+                         img2.setImageResource(R.drawable.couve_stage_2);
+                            img2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    resposta = "2";
+                                    nextQuestionGroup();
+                                }
+                            });
+
+                        ImageView img3 = new ImageView(ResponderForm.this);
+                         img3.setLayoutParams(lpr);
+
+                         img3.setImageResource(R.drawable.couve_stage_3);
+                            img3.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    resposta = "3";
+                                    nextQuestionGroup();
+                                }
+                            });
+                        container.addView(img1);
+                        container.addView(img2);
+                        container.addView(img3);
+                }
+
+                break;
+
             case "RadioGroup1": {
                 radioGroup = new RadioGroup(getApplicationContext());
 

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="33" />
+
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -13,11 +17,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-sdk
-        android:minSdkVersion="21"
-        android:targetSdkVersion="33" />
-
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -28,158 +27,159 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MachambaApp"
         tools:targetApi="21">
-
-
         <activity
-            android:name=".ui.clientes.FormSelectList"
+            android:name="com.example.machambaapp.ui.TestesSQLlite.Teste"
             android:exported="false" />
         <activity
-            android:name=".ui.admin.forms.ShowForm"
+            android:name="com.example.machambaapp.ui.clientes.FormSelectList"
+            android:exported="false" />
+        <activity
+            android:name="com.example.machambaapp.ui.admin.forms.ShowForm"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FormulariosRespondidos"
+            android:name="com.example.machambaapp.FormulariosRespondidos"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.clientes.SelecionarCanteiroAlfobre"
+            android:name="com.example.machambaapp.ui.clientes.SelecionarCanteiroAlfobre"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.clientes.SelecionarCulturas"
+            android:name="com.example.machambaapp.ui.clientes.SelecionarCulturas"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.excelpack.MostrarDadosExcel"
+            android:name="com.example.machambaapp.ui.admin.excelpack.MostrarDadosExcel"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.CreateFormPergunta"
+            android:name="com.example.machambaapp.ui.admin.views.CreateFormPergunta"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.CreateFormResposta"
+            android:name="com.example.machambaapp.ui.admin.views.CreateFormResposta"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.CreateForm"
+            android:name="com.example.machambaapp.ui.admin.views.CreateForm"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.forms.ResponderForm"
+            android:name="com.example.machambaapp.ui.admin.forms.ResponderForm"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".model.update.UpdatePosto"
+            android:name="com.example.machambaapp.model.update.UpdatePosto"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".model.update.UpdateComunidade"
+            android:name="com.example.machambaapp.model.update.UpdateComunidade"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".model.update.UpdateLocalidade"
+            android:name="com.example.machambaapp.model.update.UpdateLocalidade"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".model.update.UpdateEtnia"
+            android:name="com.example.machambaapp.model.update.UpdateEtnia"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".model.update.UpdateUserPL"
+            android:name="com.example.machambaapp.model.update.UpdateUserPL"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".model.update.UpdateCultura"
+            android:name="com.example.machambaapp.model.update.UpdateCultura"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".model.update.UpdateDistrito"
+            android:name="com.example.machambaapp.model.update.UpdateDistrito"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.addforms.AddPosto"
+            android:name="com.example.machambaapp.ui.admin.addforms.AddPosto"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.addforms.AddComunidade"
+            android:name="com.example.machambaapp.ui.admin.addforms.AddComunidade"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.addforms.AddLocalidade"
+            android:name="com.example.machambaapp.ui.admin.addforms.AddLocalidade"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.addforms.AddEtnia"
+            android:name="com.example.machambaapp.ui.admin.addforms.AddEtnia"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.addforms.AddDistrito"
+            android:name="com.example.machambaapp.ui.admin.addforms.AddDistrito"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.addforms.AddCultura"
+            android:name="com.example.machambaapp.ui.admin.addforms.AddCultura"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.ActivityViewPostoAdmnistrativo"
+            android:name="com.example.machambaapp.ui.admin.views.ActivityViewPostoAdmnistrativo"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.ActivityViewComunidade"
+            android:name="com.example.machambaapp.ui.admin.views.ActivityViewComunidade"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.ActivityViewEtnia"
+            android:name="com.example.machambaapp.ui.admin.views.ActivityViewEtnia"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.ActivityViewLocalidade"
+            android:name="com.example.machambaapp.ui.admin.views.ActivityViewLocalidade"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.ActivityViewDistrito"
+            android:name="com.example.machambaapp.ui.admin.views.ActivityViewDistrito"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.ActivityViewAddCultura"
+            android:name="com.example.machambaapp.ui.admin.views.ActivityViewAddCultura"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.ActivityCulturaAdmin"
+            android:name="com.example.machambaapp.ui.admin.views.ActivityCulturaAdmin"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.ActivityUserPL"
+            android:name="com.example.machambaapp.ui.admin.views.ActivityUserPL"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.views.ActivityUserAdmin"
+            android:name="com.example.machambaapp.ui.admin.views.ActivityUserAdmin"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivitySelectCultura"
+            android:name="com.example.machambaapp.ActivitySelectCultura"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.clientes.ActivitySelectClient"
+            android:name="com.example.machambaapp.ui.clientes.ActivitySelectClient"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.admin.addforms.AddUserActivity"
+            android:name="com.example.machambaapp.ui.admin.addforms.AddUserActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityListClient"
+            android:name="com.example.machambaapp.ActivityListClient"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivitySelectVisit"
+            android:name="com.example.machambaapp.ActivitySelectVisit"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity android:name=".ActivitySelect" />
+        <activity android:name="com.example.machambaapp.ActivitySelect" />
         <activity
-            android:name=".SplashScreen"
+            android:name="com.example.machambaapp.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -189,23 +189,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityChooseAction"
+            android:name="com.example.machambaapp.ActivityChooseAction"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityUserRegister"
+            android:name="com.example.machambaapp.ActivityUserRegister"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityLogin"
+            android:name="com.example.machambaapp.ActivityLogin"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityPageStart"
+            android:name="com.example.machambaapp.ActivityPageStart"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.machambaapp.MainActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

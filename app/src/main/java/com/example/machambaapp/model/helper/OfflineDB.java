@@ -51,6 +51,7 @@ public class OfflineDB extends  SQLiteOpenHelper{
     private static String PHONE = "Phone";
     private static String SENHA = "Senha";
     private static String TABLEUSERS = "Usuarios";
+    private static String TABLECLIENTES = "Clientes";
     private static String  USERID = "Id";
     private static String NOMEFORMULARIO = "NomeFormulario";
 
@@ -246,8 +247,11 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
                         data.add(cl);
                     } while (cursor.moveToNext());
+                    uploadClientesFromRTDB();
                 }
+
             } else {
+
                 Log.e("Table Not Found", "The 'Clientes' table does not exist in the database.");
             }
         } catch (SQLiteException e) {
@@ -275,17 +279,10 @@ public class OfflineDB extends  SQLiteOpenHelper{
         return tableExists;
     }
 
-
-
-
-
-
-
-
     public void uploadClientesFromRTDB(){
 
         long a = 0;
-        String createTableClientes = "CREATE TABLE IF NOT EXISTS " + "Clientes" + "(" +
+        String createTableClientes = "CREATE TABLE IF NOT EXISTS " + TABLECLIENTES + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Nome" + " TEXT," + "Apelido" + " TEXT,"
                 + "Etnia" + " TEXT," + "Genero"+ " TEXT," +"Numero"+ " TEXT," + "Ano "+
@@ -330,6 +327,8 @@ public class OfflineDB extends  SQLiteOpenHelper{
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 IDFORMULARIO + " TEXT," + PERGUNTA+ " TEXT," + RESPOSTA + " TEXT,"+ NOMEFORMULARIO + "TEXT)";
         db.execSQL(createTableQuery);
+
+        
     }
 
     public long saveCulturas(){
@@ -355,6 +354,8 @@ public class OfflineDB extends  SQLiteOpenHelper{
             }
         return id;
     }
+
+
     public ArrayList<Cliente.UserPl> getUsers(){
 
         ArrayList<Cliente.UserPl> users = selectAllUsersFromDB();
@@ -464,6 +465,8 @@ public class OfflineDB extends  SQLiteOpenHelper{
         }
         return data;
     }
+
+
 
     public long saveUsers(){
 
