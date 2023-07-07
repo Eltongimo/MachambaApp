@@ -102,9 +102,12 @@ public class ActivitySelectClient extends AppCompatActivity {
 
         clients = new OfflineDB(this).getClientesOffline();
 
+        if (clients == null){
+            finish();
+            return ;
+        }
+
         setAdapter();
-
-
   }
 
     private void setAdapter(){

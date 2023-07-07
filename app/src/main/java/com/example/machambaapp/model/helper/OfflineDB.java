@@ -63,14 +63,15 @@ public class OfflineDB extends  SQLiteOpenHelper{
         this.context = context;
     }
 
+    public ArrayList<Cliente> clientes;
     private Context context;
-
 
     public OfflineDB(Context context){
         super(context, DBNAME, null, DBVERSION);
         createTable(this.getWritableDatabase());
         createUsersTable();
         setContext(context);
+        clientes = new ArrayList<>();
     }
 
     public void removeAllRowsFromTable(String tableName) {
@@ -78,11 +79,11 @@ public class OfflineDB extends  SQLiteOpenHelper{
         db.execSQL("DELETE FROM " + tableName);
     }
 
+
+
     public long insertClient(Cliente c ){
 
         long i = -1;
-
-
 
         ContentValues values = new ContentValues();
         values.put("Nome", c.getNome());
@@ -116,16 +117,6 @@ public class OfflineDB extends  SQLiteOpenHelper{
         return exists;
     }
 
-//    public int getTableLength(String tableName) {
-//        SQLiteDatabase db = getReadableDatabase();
-//        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + tableName, null);
-//        int count = 0;
-//        if (cursor != null && cursor.moveToFirst()) {
-//            count = cursor.getInt(0);
-//            cursor.close();
-//        }
-//        return count;
-//    }
 
     public int getTableLength(String tableName) {
         SQLiteDatabase db = getReadableDatabase();
@@ -150,54 +141,43 @@ public class OfflineDB extends  SQLiteOpenHelper{
     }
 
 
-//    public ArrayList<Cliente> getClientesOffline(){
-//        ArrayList<Cliente> data = new ArrayList<>();
-//
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.rawQuery("SELECT * FROM Clientes", null);
-//
-//        // here we test if there are some data on the
-//
-//        if (cursor.moveToFirst()) {
-//            do {
-//                @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("Nome"));
-//                @SuppressLint("Range") String apelido = cursor.getString(cursor.getColumnIndex("Apelido"));
-//                @SuppressLint("Range") String etnia = cursor.getString(cursor.getColumnIndex("Etnia"));
-//                @SuppressLint("Range") String genero = cursor.getString(cursor.getColumnIndex("Genero"));
-//                @SuppressLint("Range") String numero = cursor.getString(cursor.getColumnIndex("Numero"));
-//                @SuppressLint("Range") String ano = cursor.getString(cursor.getColumnIndex("Ano"));
-//                @SuppressLint("Range") String distrito = cursor.getString(cursor.getColumnIndex("Distrito"));
-//                @SuppressLint("Range") String localidade = cursor.getString(cursor.getColumnIndex("Localidade"));
-//                @SuppressLint("Range") String posto = cursor.getString(cursor.getColumnIndex("Posto"));
-//                @SuppressLint("Range") String comunidade = cursor.getString(cursor.getColumnIndex("Comunidade"));
-//                @SuppressLint("Range") String nomePL = cursor.getString(cursor.getColumnIndex("NomePL"));
-//                @SuppressLint("Range") String imagem = cursor.getString(cursor.getColumnIndex("Imagem"));
-//                @SuppressLint("Range") String documento = cursor.getString(cursor.getColumnIndex("Documento"));
-//
-//
-//                Cliente cl = new Cliente();
-//                cl.setNome(nome);
-//                cl.setImage(imagem);
-//                cl.setNumeroPl(nomePL);
-//                cl.setNumero(numero);
-//                cl.setDistrito(distrito);
-//                cl.setAno(ano);
-//                cl.setApelido(apelido);
-//                cl.setEtnia(etnia);
-//                cl.setGenero(genero);
-//                cl.setLocalidade(localidade);
-//                cl.setPosto(posto);
-//                cl.setComunidade(comunidade);
-//                cl.setDocumento(documento);
-//
-//                data.add(cl);
-//            } while (cursor.moveToNext());
-//        }
-//        return data;
-//
-//    }
+    public void getClientes(){
 
+        clientes = new ArrayList<>();
 
+        DatabaseHelper.databaseReference.child("clientes").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot clientesSnap : snapshot.getChildren()) {
+                    String nome = clientesSnap.child("nome").getValue(String.class);
+                    String apelido = clientesSnap.child("apelido").getValue(String.class);
+                    String etnia = clientesSnap.child("etnia").getValue(String.class);
+                    String genero = clientesSnap.child("genero").getValue(String.class);
+                    String numero = clientesSnap.child("numero").getValue(String.class);
+                    String ano = clientesSnap.child("ano").getValue(String.class);
+                    String d = clientesSnap.child("distrito").getValue(String.class);
+                    String loc = clientesSnap.child("localidade").getValue(String.class);
+                    String pt = clientesSnap.child("posto").getValue(String.class);
+                    String com = clientesSnap.child("comunidade").getValue(String.class);
+                    String nomePl = clientesSnap.child("nomePl").getValue(String.class);
+                    String numeroPl = clientesSnap.child("numeroPl").getValue(String.class);
+                    String image = clientesSnap.child("image").getValue(String.class);
+                    String documento = clientesSnap.child("documento").getValue(String.class);
+
+                    if (nomePl.equals(SplashScreen.currentUser.getNome())){
+                     long a =  insertClient(new Cliente(nome,apelido,numero,ano,genero, etnia,d,loc, pt,com,image, documento, nomePl, numeroPl));
+                     a = 0;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 
     //Codigo melhorado para buscar clientes na base de dados offline
@@ -213,6 +193,19 @@ public class OfflineDB extends  SQLiteOpenHelper{
             if (b) {
                 cursor = db.rawQuery("SELECT * FROM Clientes", null);
 
+                if (cursor.getCount() == 0){
+
+                    // Here we should see if the internet connection is online then download Clients from RTDB
+
+                    if (NetworkUtils.isNetworkAvailable(context)){
+                        // Download the clients from RTDB and persist to SQLite
+                        getClientes();
+                    }else {
+                        Toast.makeText(context, "Por favor conecte o despositivo a Intenet para baixar os clientes do Usuario "+ SplashScreen.currentUser.getNome(), Toast.LENGTH_SHORT).show();
+                        // Calling method should know that it should pop one activity from Stack Navigation
+                        return null;
+                    }
+                }
                 if (cursor.moveToFirst()) {
                     do {
                         // Retrieve column values using column names
@@ -253,7 +246,7 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
             } else {
                 uploadClientesFromRTDB();
-               data = getClientesOffline();
+                data = getClientesOffline();
                 Log.e("Table Not Found", "The 'Clientes' table does not exist in the database.");
             }
         } catch (SQLiteException e) {
@@ -299,8 +292,6 @@ public class OfflineDB extends  SQLiteOpenHelper{
             for (Cliente c : SplashScreen.clientes) {
                 insertClient(c);
             }
-            Toast.makeText(context, "ACERTEIIIIIIII EMMMMM CHEIOOOOOOO", Toast.LENGTH_LONG).show();
-
         }
         else  {
             Toast.makeText(context, "Por favor conecte o despositivo a internet para poder sincronizar com os dados online", Toast.LENGTH_SHORT).show();
