@@ -93,6 +93,8 @@ public class Cliente {
                    String distrito, String localidade,
                    String comunidade, String posto,String image, String documento, String nomePl, String numeroPl
     ) {
+        this.nomePl = nomePl;
+        this.numeroPl = numeroPl;
         this.image = image;
         this.nome = nome;
         this.apelido = apelido;
@@ -105,9 +107,6 @@ public class Cliente {
         this.comunidade = comunidade;
         this.posto = posto;
         this.documento = documento;
-        this.numeroPl = "";
-        this.nomePl="";
-
     }
 
     public String getGenero() {

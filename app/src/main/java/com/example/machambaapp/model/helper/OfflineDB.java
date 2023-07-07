@@ -227,7 +227,7 @@ public class OfflineDB extends  SQLiteOpenHelper{
                         Cliente cl = new Cliente();
                         cl.setNome(nome);
                         cl.setImage(imagem);
-                        cl.setNumeroPl(nomePL);
+                        cl.setNomePl(nomePL);
                         cl.setNumero(numero);
                         cl.setDistrito(distrito);
                         cl.setAno(ano);
@@ -239,9 +239,10 @@ public class OfflineDB extends  SQLiteOpenHelper{
                         cl.setComunidade(comunidade);
                         cl.setDocumento(documento);
 
-                        data.add(cl);
+                        if (SplashScreen.currentUser.getNome().equals(nomePL)){
+                            data.add(cl);
+                        }
                     } while (cursor.moveToNext());
-
                 }
 
             } else {
@@ -284,7 +285,6 @@ public class OfflineDB extends  SQLiteOpenHelper{
                 " TEXT," + " Distrito "+ " TEXT," +"Localidade "+" TEXT,"+ "Posto"+ " TEXT,"+
                 " Comunidade " +" TEXT,"+ "NomePL"+ " TEXT," + "NumeroPL"+ " TEXT,"+ "Imagem" + " TEXT,"+
                 "Documento" + " TEXT)";
-        ;
 
         this.getWritableDatabase().execSQL(createTableClientes);
 
@@ -322,8 +322,6 @@ public class OfflineDB extends  SQLiteOpenHelper{
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 IDFORMULARIO + " TEXT," + PERGUNTA+ " TEXT," + RESPOSTA + " TEXT,"+ NOMEFORMULARIO + "TEXT)";
         db.execSQL(createTableQuery);
-
-
     }
 
     public long saveCulturas(){
@@ -363,8 +361,10 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
                 long a = saveUsers();
 
+
                 if (a >= 1){
                     users = selectAllUsersFromDB();
+                    getClientes();
                     Toast.makeText(context, "Usuarios sincronizados com sucesso", Toast.LENGTH_LONG).show();
                 }
             }else{
@@ -430,7 +430,19 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
         createTable(db);
 
+        String createTableClientes = "CREATE TABLE IF NOT EXISTS " + TABLECLIENTES + "(" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Nome" + " TEXT," + "Apelido" + " TEXT,"
+                + "Etnia" + " TEXT," + "Genero"+ " TEXT," +"Numero"+ " TEXT," + "Ano "+
+                " TEXT," + " Distrito "+ " TEXT," +"Localidade "+" TEXT,"+ "Posto"+ " TEXT,"+
+                " Comunidade " +" TEXT,"+ "NomePL"+ " TEXT," + "NumeroPL"+ " TEXT,"+ "Imagem" + " TEXT,"+
+                "Documento" + " TEXT)";
+
+        db.execSQL(createTableClientes);
+
+
         long rowId = 0;
+
         ContentValues values = null;
         for (OfflineDBModelForm data : offLineData) {
             values = new ContentValues();
@@ -448,6 +460,7 @@ public class OfflineDB extends  SQLiteOpenHelper{
         ArrayList<OfflineDBModelForm> data = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
+
         Cursor cursor = db.rawQuery("SELECT * FROM Formulario", null);
 
         if (cursor.moveToFirst()) {
@@ -460,8 +473,6 @@ public class OfflineDB extends  SQLiteOpenHelper{
         }
         return data;
     }
-
-
 
     public long saveUsers(){
 
@@ -498,3 +509,4 @@ public class OfflineDB extends  SQLiteOpenHelper{
         return data;
     }
 }
+
