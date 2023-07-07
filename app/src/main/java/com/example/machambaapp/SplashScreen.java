@@ -11,6 +11,7 @@ import com.example.machambaapp.model.datamodel.Formulario;
 import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.ui.TestesSQLlite.Teste;
+import com.example.machambaapp.ui.admin.forms.ResponderForm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -254,7 +255,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, Teste.class);
+                Intent intent = new Intent(SplashScreen.this, ActivityPageStart.class);
 //                Intent intent = new Intent(SplashScreen.this, ResponderForm.class);
                 Bundle b = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this).toBundle();
                 startActivity(intent, b);

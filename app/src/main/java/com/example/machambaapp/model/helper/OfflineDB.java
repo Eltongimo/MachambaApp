@@ -208,14 +208,15 @@ public class OfflineDB extends  SQLiteOpenHelper{
         Cursor cursor = null;
 
         try {
+            boolean b = isTableExists(db, "Clientes") ;
             // Check if the "Clientes" table exists
-            if (isTableExists(db, "Clientes")) {
+            if (b) {
                 cursor = db.rawQuery("SELECT * FROM Clientes", null);
 
                 if (cursor.moveToFirst()) {
                     do {
                         // Retrieve column values using column names
-                        @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("Nome"));
+                        @SuppressLint("Range")String nome = cursor.getString(cursor.getColumnIndex("Nome"));
                         @SuppressLint("Range")String apelido = cursor.getString(cursor.getColumnIndex("Apelido"));
                         @SuppressLint("Range")String etnia = cursor.getString(cursor.getColumnIndex("Etnia"));
                         @SuppressLint("Range")String genero = cursor.getString(cursor.getColumnIndex("Genero"));
@@ -247,11 +248,12 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
                         data.add(cl);
                     } while (cursor.moveToNext());
-                    uploadClientesFromRTDB();
+
                 }
 
             } else {
-
+                uploadClientesFromRTDB();
+               data = getClientesOffline();
                 Log.e("Table Not Found", "The 'Clientes' table does not exist in the database.");
             }
         } catch (SQLiteException e) {
@@ -297,6 +299,8 @@ public class OfflineDB extends  SQLiteOpenHelper{
             for (Cliente c : SplashScreen.clientes) {
                 insertClient(c);
             }
+            Toast.makeText(context, "ACERTEIIIIIIII EMMMMM CHEIOOOOOOO", Toast.LENGTH_LONG).show();
+
         }
         else  {
             Toast.makeText(context, "Por favor conecte o despositivo a internet para poder sincronizar com os dados online", Toast.LENGTH_SHORT).show();
@@ -328,7 +332,7 @@ public class OfflineDB extends  SQLiteOpenHelper{
                 IDFORMULARIO + " TEXT," + PERGUNTA+ " TEXT," + RESPOSTA + " TEXT,"+ NOMEFORMULARIO + "TEXT)";
         db.execSQL(createTableQuery);
 
-        
+
     }
 
     public long saveCulturas(){

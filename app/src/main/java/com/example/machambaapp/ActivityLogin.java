@@ -18,10 +18,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.machambaapp.model.Privilegios;
 import com.example.machambaapp.model.UserAdmin;
 import com.example.machambaapp.model.adapter.UserPlAdapter;
 import com.example.machambaapp.model.datamodel.Cliente;
+import com.example.machambaapp.model.helper.DatabaseHelper;
 import com.example.machambaapp.model.helper.OfflineDB;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,7 +41,6 @@ public class ActivityLogin extends AppCompatActivity {
     EditText editTextPassword;
     TextView textViewAlert;
     ProgressDialog loadingBar;
-
 
     private Button buttonLogar;
     @Override

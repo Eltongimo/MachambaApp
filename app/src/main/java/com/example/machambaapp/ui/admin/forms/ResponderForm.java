@@ -1032,7 +1032,7 @@ public class ResponderForm extends AppCompatActivity {
                 if (pergunta.getNomeDaPergunta().contains("Alface")){
                         ImageView img1 = new ImageView(ResponderForm.this);
 
-                        img1.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//                        img1.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         img1.setLayoutParams(lpr);
                         img1.setImageResource(R.drawable.alface_stage_1);
 
@@ -1040,6 +1040,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "1";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_LONG).show();
                                 OfflineDBModelForm m = new OfflineDBModelForm();
                                 nextQuestionGroup();
                             }
@@ -1052,6 +1053,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "2";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_LONG).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1063,6 +1065,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "3";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_LONG).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1074,6 +1077,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "4";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_LONG).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1093,6 +1097,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "1";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_LONG).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1105,6 +1110,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "2";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_LONG).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1117,6 +1123,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "3";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_LONG).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1128,6 +1135,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "4";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_LONG).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1139,6 +1147,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "5";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 5", Toast.LENGTH_LONG).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1150,6 +1159,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "6";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 6", Toast.LENGTH_LONG).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1174,6 +1184,7 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             resposta = "1";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_LONG).show();
                             nextQuestionGroup();
                         }
                     });
@@ -1185,6 +1196,7 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             resposta = "2";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_LONG).show();
                             nextQuestionGroup();
                         }
                     });
@@ -1196,6 +1208,7 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             resposta = "3";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_LONG).show();
                             nextQuestionGroup();
                         }
                     });
@@ -1207,6 +1220,7 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             resposta = "4";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_LONG).show();
                             nextQuestionGroup();
                         }
                     });
@@ -1217,6 +1231,7 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             resposta = "5";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 5", Toast.LENGTH_LONG).show();
                             nextQuestionGroup();
                         }
                     });
@@ -1237,6 +1252,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "1";
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_LONG).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1249,6 +1265,7 @@ public class ResponderForm extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     resposta = "2";
+                                    Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_LONG).show();
                                     nextQuestionGroup();
                                 }
                             });
@@ -1261,6 +1278,7 @@ public class ResponderForm extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     resposta = "3";
+                                    Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_LONG).show();
                                     nextQuestionGroup();
                                 }
                             });
