@@ -52,12 +52,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.machambaapp.ActivityListClient;
+import com.example.machambaapp.MainActivity;
 import com.example.machambaapp.R;
 import com.example.machambaapp.SplashScreen;
 import com.example.machambaapp.model.datamodel.Cliente;
 import com.example.machambaapp.model.datamodel.OfflineDBModelForm;
 import com.example.machambaapp.model.datamodel.Pergunta;
 import com.example.machambaapp.model.helper.OfflineDB;
+import com.example.machambaapp.ui.clientes.ClientesFragment;
 import com.example.machambaapp.ui.clientes.SelecionarCanteiroAlfobre;
 import com.google.android.gms.location.LocationListener;
 
@@ -80,6 +82,7 @@ public class ResponderForm extends AppCompatActivity {
     ImageView image;
 
     private String data = "";
+    int contar;
 
     private boolean displayedPopup = false;
     Button cancel;
@@ -252,7 +255,7 @@ public class ResponderForm extends AppCompatActivity {
                     Toast.makeText(ResponderForm.this, "Falha ao gravar os dados offline", Toast.LENGTH_SHORT).show();
                 }
 
-                Intent intent = new Intent(ResponderForm.this, SelecionarCanteiroAlfobre.class);
+                Intent intent = new Intent(ResponderForm.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                 for (int i = 0; i< SplashScreen.indexForm ;i++){
@@ -402,8 +405,17 @@ public class ResponderForm extends AppCompatActivity {
                                 return ;
                             }
                         }
+                        if (pergunta.getNomeDaPergunta().contains("plantas usa")){
 
-                        //if (SplashScreen.indexCondicional >= SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm).perguntasCondicionais.size()) {
+                            // se mergulhou menos de 5 plantas mostra o pop-Up
+
+                            if (contar < 5){
+                                displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                                return ;
+                            }
+                        }
+
+
                         if (SplashScreen.indexCondicional == 3) {
                             SplashScreen.showingConditional = false;
                             SplashScreen.indexCondicional = 0;
@@ -417,7 +429,6 @@ public class ResponderForm extends AppCompatActivity {
 
                     } else {
                         // So here the question do not have conditions
-                        //if (SplashScreen.indexForm <= 9){
                         if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size()){
                             if (pergunta.perguntasCondicionais != null) {
                                 if (SplashScreen.indexCondicional >= pergunta.perguntasCondicionais.size()) {
@@ -432,6 +443,10 @@ public class ResponderForm extends AppCompatActivity {
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("culturas do canteiro")){
                                 catchSelectedCultures(resposta);
                             }
+                            //  app capta todas as plantas seleciondas e armazena em selectedPlantas
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("plantas usa ")){
+                                catchSelectedPlantas(resposta);
+                            }
 
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botânico")){
                                 if (resposta.contains("Não")){
@@ -443,9 +458,9 @@ public class ResponderForm extends AppCompatActivity {
                                 return;
                             }
 
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("bokashi")){
+                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("aplicar adubo natural neste")){
 
-                                if (resposta.contains("Não")){
+                                if (resposta.contains("Não") || resposta.contains("Estrume") || resposta.contains("Bokashi")){
                                     displayConditionalPopUp(pergunta.getNomeDaPergunta());
                                     return ;
                                 }else{
@@ -457,6 +472,7 @@ public class ResponderForm extends AppCompatActivity {
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("incidência de praga")) {
                                 if (resposta.contains("Sim")) {
                                     SplashScreen.showingConditional = true;
+                                    displayConditionalPopUp(pergunta.getNomeDaPergunta());
                                     nextQuestion();
                                     //startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                                 }else{
@@ -464,6 +480,7 @@ public class ResponderForm extends AppCompatActivity {
                                 }
                                 return;
                             }
+
 
                             if (pergunta.getNomeDaPergunta().toLowerCase().contains("mergulhar o pesticida")){
                                 Toast.makeText(ResponderForm.this,"dias de mergulho", Toast.LENGTH_LONG).show();
@@ -522,25 +539,35 @@ public class ResponderForm extends AppCompatActivity {
             }
         }
     }
+    private void catchSelectedPlantas(String resposta){
+        for (String s : resposta.split(",")){
+            if ( !s.contains(",") && !s.isEmpty()) {
+                SplashScreen.selectedPlantas.add(s);
+
+            }
+        }
+    }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String collectAnswers(String typeOfQuestion) {
 
         resposta = "";
+        contar = 0;
 
         if (typeOfQuestion.equalsIgnoreCase("CheckBox")) {
             for (int i = 0; i < container.getChildCount(); i++) {
 
                 if (container.getChildAt(i).getClass() == CheckBox.class){
                     CheckBox c = (CheckBox) container.getChildAt(i);
-                    if (c.isChecked())
-                        resposta += c.getText()+ ",";
+                    if (c.isChecked()) {
+                        resposta += c.getText() + ",";
+                        contar++;
+                    }
 
                 }
                 else if (container.getChildAt(i).getClass() == EditText.class){
                     EditText edt = (EditText) container.getChildAt(i);
                     resposta += " "+ edt.getText().toString();
                 }
-
             }
 
         }
@@ -587,7 +614,7 @@ public class ResponderForm extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
             builder.setTitle("Informação Importante");
             builder.setMessage("Parabéns "+SplashScreen.currentUser.getNome()+" por preparar o seu pesticida natural. Embora, o tempo de mergulho deveria aumentar." +
-                    " Para aumentar a força do produto, se aconselha mergulhar no minimo 5 dias plantas diferentes e deixar mergulhar minimo 7" +
+                    " Para aumentar a força do produto, se aconselha mergulhar no mínimo 5 plantas diferentes e deixar mergulhar mínimo 7" +
                     " dias misturando todos os dias! VEJA O MANUAL DE PESTICIDAS NATURAIS DA IDE");
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
@@ -615,12 +642,13 @@ public class ResponderForm extends AppCompatActivity {
             });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
-        }else if (per.toLowerCase().contains("bokashi")){
+        }        else if (per.toLowerCase().contains("aplicar adubo natural neste")){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
             builder.setTitle("Informação Importante");
-            builder.setMessage("O Bokashi é vida! com um custo limitado o produtor pode aumentar a produtividade e melhorar a qualidade" +
-                    " do seu solo. Veja o manual de Bokashi da iDE\n");
+            builder.setMessage("É Importante AUMENTAR BOKASHI OU ESTRUME no canteiro a cada 2 ou 3 " +
+                    "semanas. (UM PUNHO POR PLANTA) No caso da cebola espalhar no canteiro.\n\n" +
+                    "O BOKASHI É A MELHOR FORMA DE MANTER O CANTEIRO FÉRTIL E AUMENTAR A PRODUTIVIDADE\n");
 
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
@@ -630,7 +658,10 @@ public class ResponderForm extends AppCompatActivity {
             });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
-        }else if (per.toLowerCase().contains("cobertura morta")){
+        }
+
+
+        else if (per.toLowerCase().contains("cobertura morta")){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
             builder.setTitle("Informação Importante");
@@ -643,6 +674,36 @@ public class ResponderForm extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     nextQuestion();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+        else if (per.toLowerCase().contains("plantas usa")){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
+            builder.setTitle("Informação Importante");
+            builder.setMessage("Parabéns "+SplashScreen.currentUser.getNome()+" por preparar o seu pesticida natural." +
+                    " Para aumentar a força do produto, se aconselha mergulhar no mínimo 5 plantas diferentes.");
+            builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    nextConditionalQuestion();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }else if (per.toLowerCase().contains("incidência de praga")){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
+            builder.setTitle("Informação Importante");
+            builder.setMessage("Contactar um técnico / mentor e enviar as fotos de todas as pragas e doenças por whatsapp!\n\n" +
+                    " NO ENTANTO AUMENTAR A FREQUÊNCIA DE PULVERIZAÇÃO (MANHÃ E TARDE), E REDUZIR A " +
+                    "DILUIÇÃO (POR MAS PESTICIDA E MENOS ÁGUA)");
+            builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    nextConditionalQuestion();
                 }
             });
             AlertDialog alertDialog = builder.create();
@@ -665,7 +726,7 @@ public class ResponderForm extends AppCompatActivity {
             img.setImageResource(R.drawable.pesticida1);
             btnVideo.setVisibility(View.VISIBLE);
             btnVideo.setText("Dica");
-        }else if (per.toLowerCase().contains("bokashi")) {
+        }else if (per.toLowerCase().contains("aplicar adubo natural neste")) {
             img.setImageResource(R.drawable.bokashi_1);
             btnVideo.setVisibility(View.VISIBLE);
             btnVideo.setText("Dica");
@@ -720,8 +781,7 @@ public class ResponderForm extends AppCompatActivity {
                 }
             });
         }
-
-        if (per.toLowerCase().contains("bokashi")) {
+        if (per.toLowerCase().contains("aplicar adubo natural neste")) {
             btnVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -733,7 +793,7 @@ public class ResponderForm extends AppCompatActivity {
 
                             // First AlertDialog
                             ImageView img1 = new ImageView(v.getContext());
-                            img1.setImageResource(R.drawable.bokashi_1);
+                            img1.setImageResource(R.drawable.adubacao);
 
                             builder.setView(img1);
                             builder.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
@@ -746,13 +806,30 @@ public class ResponderForm extends AppCompatActivity {
                                     builder2.setTitle("Informação Importante");
 
                                     ImageView img2 = new ImageView(v.getContext());
-                                    img2.setImageResource(R.drawable.bokashi__2);
+                                    img2.setImageResource(R.drawable.bokashi_1);
 
                                     builder2.setView(img2);
-                                    builder2.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
+                                    builder2.setPositiveButton("Seguinte", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
+
+                                            // Third AlertDialog
+                                            AlertDialog.Builder builder3 = new AlertDialog.Builder(v.getContext());
+                                            builder3.setTitle("Informação Importante");
+
+                                            ImageView img3 = new ImageView(v.getContext());
+                                            img3.setImageResource(R.drawable.bokashi__2);
+
+                                            builder3.setView(img3);
+                                            builder3.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                            AlertDialog alertDialog3 = builder3.create();
+                                            alertDialog3.show();
                                         }
                                     });
                                     AlertDialog alertDialog2 = builder2.create();
@@ -1040,7 +1117,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "1";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_SHORT).show();
                                 OfflineDBModelForm m = new OfflineDBModelForm();
                                 nextQuestionGroup();
                             }
@@ -1053,7 +1130,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "2";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_SHORT).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1065,7 +1142,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "3";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_SHORT).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1077,7 +1154,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "4";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_SHORT).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1097,7 +1174,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "1";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_SHORT).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1110,7 +1187,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "2";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_SHORT).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1123,7 +1200,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "3";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_SHORT).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1135,7 +1212,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "4";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_SHORT).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1147,7 +1224,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "5";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 5", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 5", Toast.LENGTH_SHORT).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1159,7 +1236,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "6";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 6", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 6", Toast.LENGTH_SHORT).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1184,7 +1261,7 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             resposta = "1";
-                            Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_SHORT).show();
                             nextQuestionGroup();
                         }
                     });
@@ -1196,7 +1273,7 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             resposta = "2";
-                            Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_SHORT).show();
                             nextQuestionGroup();
                         }
                     });
@@ -1208,7 +1285,7 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             resposta = "3";
-                            Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_SHORT).show();
                             nextQuestionGroup();
                         }
                     });
@@ -1220,7 +1297,7 @@ public class ResponderForm extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             resposta = "4";
-                            Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_SHORT).show();
                             nextQuestionGroup();
                         }
                     });
@@ -1252,7 +1329,7 @@ public class ResponderForm extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 resposta = "1";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_SHORT).show();
                                 nextQuestionGroup();
                             }
                         });
@@ -1265,7 +1342,7 @@ public class ResponderForm extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     resposta = "2";
-                                    Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_SHORT).show();
                                     nextQuestionGroup();
                                 }
                             });
@@ -1278,7 +1355,7 @@ public class ResponderForm extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     resposta = "3";
-                                    Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_SHORT).show();
                                     nextQuestionGroup();
                                 }
                             });

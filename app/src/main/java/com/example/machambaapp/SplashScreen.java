@@ -16,7 +16,7 @@ import com.example.machambaapp.ui.admin.forms.ResponderForm;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SplashScreen extends AppCompatActivity {
+public class  SplashScreen extends AppCompatActivity {
 
     public static ArrayList<String> distritos = DatabaseHelper.getLocation("distritos");
     public static ArrayList<Cliente.UserPl> users = DatabaseHelper.getUsers();
@@ -28,7 +28,7 @@ public class SplashScreen extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     public static int selectedCulturesIndex = 0;
-    public static int indexForm = 0;
+    public static int indexForm = 6;
     public static boolean showingConditional = false;
     public static int indexCondicional = 0;
 
@@ -55,6 +55,7 @@ public class SplashScreen extends AppCompatActivity {
         postosAdministrativos = DatabaseHelper.getLocation("postosAdministrativos");
     }
     public static ArrayList<String> selectedCultures = new ArrayList<>();
+    public static ArrayList<String> selectedPlantas = new ArrayList<>();
     public static void UpdateDataFromOnlineDatabase(){
         try{
             etnia = DatabaseHelper.getEtnia("etnias");
@@ -83,11 +84,11 @@ public class SplashScreen extends AppCompatActivity {
         provincias.add("Cabo Delgado");
         provincias.add("Niassa");
 
+        selectedCultures.add("Couve");
         formulario =  new Formulario();
         ArrayList<Pergunta> ps = new ArrayList<>();
 
         /*Adding questions to the dictionary*/
-
         ArrayList<String> generos = new ArrayList<>();
         generos.add("Masculino");
         generos.add("Femenino");
@@ -110,7 +111,6 @@ public class SplashScreen extends AppCompatActivity {
         p = new Pergunta();
         p.setNomeDaPergunta("Registar coordenadas geograficas");
         p.setTipoPergunta("EditText");
-
         ps.add(p);
 */
         p = new Pergunta();
@@ -174,11 +174,14 @@ public class SplashScreen extends AppCompatActivity {
         ps.add(p);
 
         p = new Pergunta();
-        p.setNomeDaPergunta("Foi aplicado Bokashi neste canteiro?" );
+//        p.setNomeDaPergunta("Foi aplicado Bokashi neste canteiro?" );
+        p.setNomeDaPergunta("O produtor esta a aplicar adubo natural neste canteiro?" );
+
 
         opcoes = new ArrayList<>();
-        opcoes.add("Sim");
         opcoes.add("Não");
+        opcoes.add("Estrume");
+        opcoes.add("Bokashi");
 
         p.setTipoPergunta("RadioGroup");
         p.setOpcoes(opcoes);
@@ -221,6 +224,8 @@ public class SplashScreen extends AppCompatActivity {
         plantas.add("Tabaco");
         plantas.add("Nthavaka");
         plantas.add("Newawi");
+        plantas.add("Piri Piri");
+        plantas.add("Sabão");
 
         condicional.setOpcoes(plantas);
 
@@ -255,7 +260,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, ActivityPageStart.class);
+                Intent intent = new Intent(SplashScreen.this, ResponderForm.class);
 //                Intent intent = new Intent(SplashScreen.this, ResponderForm.class);
                 Bundle b = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this).toBundle();
                 startActivity(intent, b);
@@ -333,8 +338,8 @@ public class SplashScreen extends AppCompatActivity {
 
             opcoes = new ArrayList<>();
 
-            opcoes.add("Sim");
-            opcoes.add("Não");
+            opcoes.add("É Grave, Esta a matar muitas plantas");
+            opcoes.add("Não é grave, esta baixo controle");
             p.setOpcoes(opcoes);
             perguntasCondicionais.add(p);
             p.setPerguntasCondicionais(perguntasCondicionais);
