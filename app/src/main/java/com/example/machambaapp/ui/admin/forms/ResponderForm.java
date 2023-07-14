@@ -120,6 +120,10 @@ public class ResponderForm extends AppCompatActivity {
         if(SplashScreen.runGroup){
             SplashScreen.groupIndex--;
         }
+//        if (SplashScreen.showingConditional==true && SplashScreen.indexCondicional==0){
+//            SplashScreen.indexCondicional=3;
+//        }
+
         if (SplashScreen.showingConditional) {
             backConditionalQuestion();
         } else {
@@ -270,15 +274,15 @@ public class ResponderForm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        try{
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_responder_form);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_responder_form);
 
-            txtPergunta = findViewById(R.id.nomePergunta);
-            container = findViewById(R.id.container);
-            btnResponder = findViewById(R.id.btnNext);
-            btnResponder.setVisibility(View.INVISIBLE);
+        txtPergunta = findViewById(R.id.nomePergunta);
+        container = findViewById(R.id.container);
+        btnResponder = findViewById(R.id.btnNext);
+        btnResponder.setVisibility(View.INVISIBLE);
 
-            progressViewContainer = findViewById(R.id.circularProgressContainer);
+        progressViewContainer = findViewById(R.id.circularProgressContainer);
 
         //Aqui é feiate a solicitação para usar a câmera
         int MY_PERMISSIONS_REQUEST_CAMERA=0;
@@ -298,234 +302,241 @@ public class ResponderForm extends AppCompatActivity {
             }
         }
 
-            if (SplashScreen.runGroup){
+        if (SplashScreen.runGroup){
 
-                if (SplashScreen.finishGroup){
-                    finishForm();
-                    return ;
-                }
+            if (SplashScreen.finishGroup){
+                finishForm();
+                return ;
+            }
 
-                int indexGroup = SplashScreen.groupIndex;
-                int groupQuestionSize = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
-                        get(SplashScreen.selectedCulturesIndex)).size();
+            int indexGroup = SplashScreen.groupIndex;
+            int groupQuestionSize = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
+                    get(SplashScreen.selectedCulturesIndex)).size();
 
-                if (indexGroup < groupQuestionSize ){
-                    String culture = SplashScreen.selectedCultures.get(SplashScreen.selectedCulturesIndex);
+            if (indexGroup < groupQuestionSize ){
+                String culture = SplashScreen.selectedCultures.get(SplashScreen.selectedCulturesIndex);
 
-                    ArrayList<Pergunta> ps = SplashScreen.groupQuestions.get(culture);
+                ArrayList<Pergunta> ps = SplashScreen.groupQuestions.get(culture);
 
-                    pergunta = ps.get(SplashScreen.groupIndex);
+                pergunta = ps.get(SplashScreen.groupIndex);
 
-                }else{
-                    SplashScreen.groupIndex = 0;
-                    SplashScreen.selectedCulturesIndex++;
-
-                    if (SplashScreen.selectedCulturesIndex < SplashScreen.selectedCultures.size()){
-                        pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
-                                get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
-                    }
-                }
-
-                if (pergunta == null){
-                    finishForm();
-                    return ;
-                }
-                mostrarCampo(pergunta);
             }else{
-                if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size()) {
-                    pergunta = SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm);
-                } else if (SplashScreen.finishGroup){
-                    finishForm();
-                    return;
-                }
+                SplashScreen.groupIndex = 0;
+                SplashScreen.selectedCulturesIndex++;
 
-                if (!SplashScreen.showingConditional) {
-                    if (pergunta != null){
-                        mostrarCampo(pergunta);
-                    }
-                    else{
-                        SplashScreen.runGroup = true;
-                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
-                        return ;
-                    }
-                }
-                else
-                {
-                    if (SplashScreen.indexForm > 8){
-                        SplashScreen.indexForm = 8;
-                        pergunta = SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm);
-                    }
-                    pergunta = pergunta.getPerguntasCondicionais().get(SplashScreen.indexCondicional);
-
-                    mostrarCampo(pergunta);
+                if (SplashScreen.selectedCulturesIndex < SplashScreen.selectedCultures.size()){
+                    pergunta = SplashScreen.groupQuestions.get(SplashScreen.selectedCultures.
+                            get(SplashScreen.selectedCulturesIndex)).get(SplashScreen.groupIndex);
                 }
             }
 
-            txtPergunta.setText(pergunta.getNomeDaPergunta());
+            if (pergunta == null){
+                finishForm();
+                return ;
+            }
+            mostrarCampo(pergunta);
+        }else{
+            if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size()) {
+                pergunta = SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm);
+            } else if (SplashScreen.finishGroup){
+                finishForm();
+                return;
+            }
 
-            btnResponder.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onClick(View v) {
+            if (!SplashScreen.showingConditional) {
+                if (pergunta != null){
+                    mostrarCampo(pergunta);
+                }
+                else{
+                    SplashScreen.runGroup = true;
+                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                    return ;
+                }
+            }
+            else
+            {
+                if (SplashScreen.indexForm > 8){
+                    SplashScreen.indexForm = 8;
+                    pergunta = SplashScreen.formulario.getPerguntas().get(SplashScreen.indexForm);
+                }
+                pergunta = pergunta.getPerguntasCondicionais().get(SplashScreen.indexCondicional);
 
-                    collectAnswers(pergunta.getTipoPergunta());
+                mostrarCampo(pergunta);
+            }
+        }
 
-                    String a = "";
+        txtPergunta.setText(pergunta.getNomeDaPergunta());
 
-                    a = getIntent().getStringExtra("fullName");
+        btnResponder.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
 
-                    //  Collecting data to perist on SQLite Database
-                    SelecionarCanteiroAlfobre.offlineDB.add(new OfflineDBModelForm(SelecionarCanteiroAlfobre.formKey,pergunta.getNomeDaPergunta(),resposta));
+                collectAnswers(pergunta.getTipoPergunta());
 
-                    getIntent().putExtra("fullName", a);
-                    if (SplashScreen.runGroup){
-                        if (SplashScreen.selectedCulturesIndex < SplashScreen.selectedCultures.size()){
-                            nextQuestionGroup();
-                        }else{
-                            SplashScreen.runGroup = false;
-                            SplashScreen.finishGroup = true;
-                            startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                String a = "";
+
+                a = getIntent().getStringExtra("fullName");
+
+                if (pergunta.getNomeDaPergunta().toLowerCase().contains("incidência de praga")) {
+                    if (resposta.contains("Sim")) {
+                        displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                    }else{
+                        SplashScreen.showingConditional = true;
+                        SplashScreen.indexCondicional = 3;
+                        SplashScreen.runGroup =false;
+                        nextConditionalQuestion();
+                    }
+                    return;
+                }
+
+                //  Collecting data to perist on SQLite Database
+                SelecionarCanteiroAlfobre.offlineDB.add(new OfflineDBModelForm(SelecionarCanteiroAlfobre.formKey,pergunta.getNomeDaPergunta(),resposta));
+
+                getIntent().putExtra("fullName", a);
+                if (SplashScreen.runGroup){
+                    if (SplashScreen.selectedCulturesIndex < SplashScreen.selectedCultures.size()){
+                        nextQuestionGroup();
+                    }else{
+                        SplashScreen.runGroup = false;
+                        SplashScreen.finishGroup = true;
+                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                    }
+                    return;
+                }
+
+
+                if (SplashScreen.showingConditional) {
+
+                    if (resposta.isEmpty()){
+                        Toast.makeText(ResponderForm.this, "Por favor, preencha o campo de resposta", Toast.LENGTH_LONG).show();
+                        return ;
+                    }
+
+
+                    if (pergunta.getNomeDaPergunta().contains("Quantos dias deixou mergulhar o pesticida")){
+
+                        // se os dias de mergulho do pesticids forem menores que 7 entao o app mostra um popup
+                        int res = Integer.parseInt(resposta);
+                        if (res < 7){
+                            displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                            return ;
                         }
+                    }
+                    if (pergunta.getNomeDaPergunta().contains("plantas usa")){
+
+                        // se mergulhou menos de 5 plantas mostra o pop-Up
+                        if (contar < 5){
+                            displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                            return ;
+                        }
+                    }
+                    if (pergunta.getNomeDaPergunta().contains("Tire uma foto")){
+
+                            SplashScreen.showingConditional = false;
+                            SplashScreen.groupIndex+=3;
+                            SplashScreen.indexCondicional = 0;
+                            nextQuestion();
+                    }
+
+
+                    if (SplashScreen.indexCondicional == 3) {
+                        SplashScreen.showingConditional = false;
+                        //nextQuestion();
+                        SplashScreen.runGroup = true;
+                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                         return;
                     }
 
-                    if (SplashScreen.showingConditional) {
 
-                        if (resposta.isEmpty()){
-                            Toast.makeText(ResponderForm.this, "Por favor, preencha o campo de resposta", Toast.LENGTH_LONG).show();
-                            return ;
-                        }
+                    nextConditionalQuestion();
 
-                        if (pergunta.getNomeDaPergunta().contains("Quantos dias deixou mergulhar o pesticida")){
-
-                            // se os dias de mergulho do pesticids forem menores que 7 entao o app mostra um popup
-                            int res = Integer.parseInt(resposta);
-                            if (res < 7){
-                                displayConditionalPopUp(pergunta.getNomeDaPergunta());
-                                return ;
-                            }
-                        }
-                        if (pergunta.getNomeDaPergunta().contains("plantas usa")){
-
-                            // se mergulhou menos de 5 plantas mostra o pop-Up
-
-                            if (contar < 5){
-                                displayConditionalPopUp(pergunta.getNomeDaPergunta());
-                                return ;
+                } else {
+                    // So here the question do not have conditions
+                    if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size()){
+                        if (pergunta.perguntasCondicionais != null) {
+                            if (SplashScreen.indexCondicional >= pergunta.perguntasCondicionais.size()) {
+                                SplashScreen.indexCondicional = 0;
+                                SplashScreen.showingConditional = false;
+                                nextQuestion();
+                                return;
                             }
                         }
 
+                        // se a pergunta for sobre culturas do canteiro a app capta todas as culturas seleciondas e armazena em selected cultures
+                        if (pergunta.getNomeDaPergunta().toLowerCase().contains("culturas do canteiro")){
+                            catchSelectedCultures(resposta);
+                        }
+                        //  app capta todas as plantas seleciondas e armazena em selectedPlantas
+                        if (pergunta.getNomeDaPergunta().toLowerCase().contains("plantas usa ")){
+                            catchSelectedPlantas(resposta);
+                        }
 
-                        if (SplashScreen.indexCondicional == 3) {
-                            SplashScreen.showingConditional = false;
-                            SplashScreen.indexCondicional = 0;
-                            //nextQuestion();
-                            SplashScreen.runGroup = true;
-                            startActivity(new Intent(ResponderForm.this, ResponderForm.class));
+                        if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botânico")){
+                            if (resposta.contains("Não")){
+                                displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                            }else{
+                                SplashScreen.showingConditional = true;
+                                nextQuestion();
+                            }
                             return;
                         }
 
-                        nextConditionalQuestion();
+                        if (pergunta.getNomeDaPergunta().toLowerCase().contains("aplicar adubo natural neste")){
 
-                    } else {
-                        // So here the question do not have conditions
-                        if (SplashScreen.indexForm < SplashScreen.formulario.getPerguntas().size()){
-                            if (pergunta.perguntasCondicionais != null) {
-                                if (SplashScreen.indexCondicional >= pergunta.perguntasCondicionais.size()) {
-                                    SplashScreen.indexCondicional = 0;
-                                    SplashScreen.showingConditional = false;
-                                    nextQuestion();
-                                    return;
-                                }
-                            }
-
-                            // se a pergunta for sobre culturas do canteiro a app capta todas as culturas seleciondas e armazena em selected cultures
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("culturas do canteiro")){
-                                catchSelectedCultures(resposta);
-                            }
-                            //  app capta todas as plantas seleciondas e armazena em selectedPlantas
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("plantas usa ")){
-                                catchSelectedPlantas(resposta);
-                            }
-
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botânico")){
-                                if (resposta.contains("Não")){
-                                    displayConditionalPopUp(pergunta.getNomeDaPergunta());
-                                }else{
-                                    SplashScreen.showingConditional = true;
-                                    nextQuestion();
-                                }
+                            if (resposta.contains("Não") || resposta.contains("Estrume") || resposta.contains("Bokashi")){
+                                displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                                return ;
+                            }else{
+                                nextQuestion();
                                 return;
                             }
+                        }
 
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("aplicar adubo natural neste")){
+                        if (pergunta.getNomeDaPergunta().toLowerCase().contains("mergulhar o pesticida")){
+                            Toast.makeText(ResponderForm.this,"dias de mergulho", Toast.LENGTH_LONG).show();
+                        }
 
-                                if (resposta.contains("Não") || resposta.contains("Estrume") || resposta.contains("Bokashi")){
-                                    displayConditionalPopUp(pergunta.getNomeDaPergunta());
-                                    return ;
-                                }else{
-                                    nextQuestion();
-                                    return;
-                                }
-                            }
-
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("incidência de praga")) {
-                                if (resposta.contains("Sim")) {
-                                    SplashScreen.showingConditional = true;
-                                    displayConditionalPopUp(pergunta.getNomeDaPergunta());
-                                    nextQuestion();
-                                    //startActivity(new Intent(ResponderForm.this, ResponderForm.class));
-                                }else{
-                                    nextQuestion();
-                                }
+                        if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botânico")) {
+                            // Show conditional question
+                            if (resposta.contains("Sim")) {
+                                SplashScreen.showingConditional = true;
+                                nextQuestion();
                                 return;
                             }
+                        }
+                        if (pergunta.getNomeDaPergunta().toLowerCase().contains("cobertura morta")) {
+                            // Show conditional question
+                            if (resposta.contains("Nenhuma") || resposta.contains("Camada de Cobertura Morta") || resposta.contains("Camada de Estrume")){
 
-
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("mergulhar o pesticida")){
-                                Toast.makeText(ResponderForm.this,"dias de mergulho", Toast.LENGTH_LONG).show();
+                                displayConditionalPopUp(pergunta.getNomeDaPergunta());
+                                return ;
+                            }else{
+                                nextQuestion();
+                                return;
                             }
+                        }
 
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("pesticida botânico")) {
-                                // Show conditional question
-                                if (resposta.contains("Sim")) {
-                                    SplashScreen.showingConditional = true;
-                                    nextQuestion();
-                                    return;
-                                }
-                            }
-                            if (pergunta.getNomeDaPergunta().toLowerCase().contains("cobertura morta")) {
-                                // Show conditional question
-                                if (resposta.contains("Nenhuma") || resposta.contains("Camada de Cobertura Morta") || resposta.contains("Camada de Estrume")){
+                        // User did not respond form and pressed next buttom
+                        if (resposta.equals("")) {
+                            Toast.makeText(getApplicationContext(), "Por favor, preencha o campo de respostas ", Toast.LENGTH_LONG).show();
+                        } else {
 
-                                    displayConditionalPopUp(pergunta.getNomeDaPergunta());
-                                    return ;
-                                }else{
-                                    nextQuestion();
-                                    return;
-                                }
-                            }
+                            if (!enteredConditional && !SplashScreen.showingConditional) {
+                                // See if this question have a conditional flow
+                                if (pergunta.conditionalQuestion == null) {
 
-                            // User did not respond form and pressed next buttom
-                            if (resposta.equals("")) {
-                                Toast.makeText(getApplicationContext(), "Por favor, preencha o campo de respostas ", Toast.LENGTH_LONG).show();
-                            } else {
+                                    // Then Follow the Flow Normaly
+                                    SplashScreen.indexForm++;
 
-                                if (!enteredConditional && !SplashScreen.showingConditional) {
-                                    // See if this question have a conditional flow
-                                    if (pergunta.conditionalQuestion == null) {
-
-                                        // Then Follow the Flow Normaly
-                                        SplashScreen.indexForm++;
-
-                                        startActivity(new Intent(ResponderForm.this, ResponderForm.class));
-                                    }
+                                    startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                                 }
                             }
                         }
                     }
                 }
-            });
+            }
+        });
 //        }catch (Exception e){
 //            System.out.println(e.getMessage());
 //        }
@@ -629,8 +640,8 @@ public class ResponderForm extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(ResponderForm.this);
             builder.setTitle("Informação Importante");
             builder.setMessage("\n \n É muito importante proteger a própria machamba com pesticida natural.\n" +
-                            " O produtor sabe que tem muitas plantas disponíveis e vale a pena investir num pulverizador?\n" +
-                            " VEJA O MANUAL DA IDE SOBRE PESTICIDAS NATURAIS \n\n"
+                    " O produtor sabe que tem muitas plantas disponíveis e vale a pena investir num pulverizador?\n" +
+                    " VEJA O MANUAL DA IDE SOBRE PESTICIDAS NATURAIS \n\n"
             );
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
@@ -703,7 +714,8 @@ public class ResponderForm extends AppCompatActivity {
             builder.setPositiveButton("Compreendi", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    nextConditionalQuestion();
+//
+                    nextQuestionGroup();
                 }
             });
             AlertDialog alertDialog = builder.create();
@@ -1107,150 +1119,150 @@ public class ResponderForm extends AppCompatActivity {
                 lpr.gravity = Gravity.CENTER; // Adicione esta linha para centralizar
 
                 if (pergunta.getNomeDaPergunta().contains("Alface")){
-                        ImageView img1 = new ImageView(ResponderForm.this);
+                    ImageView img1 = new ImageView(ResponderForm.this);
 
 //                        img1.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        img1.setLayoutParams(lpr);
-                        img1.setImageResource(R.drawable.alface_stage_1);
+                    img1.setLayoutParams(lpr);
+                    img1.setImageResource(R.drawable.alface_stage_1);
 
-                        img1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "1";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_SHORT).show();
-                                OfflineDBModelForm m = new OfflineDBModelForm();
-                                nextQuestionGroup();
-                            }
-                        });
+                    img1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "1";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_SHORT).show();
+                            OfflineDBModelForm m = new OfflineDBModelForm();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        ImageView img2 = new ImageView(ResponderForm.this);
-                        img2.setImageResource(R.drawable.alface_stage_2);
-                        img2.setLayoutParams(lpr);
-                        img2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "2";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_SHORT).show();
-                                nextQuestionGroup();
-                            }
-                        });
+                    ImageView img2 = new ImageView(ResponderForm.this);
+                    img2.setImageResource(R.drawable.alface_stage_2);
+                    img2.setLayoutParams(lpr);
+                    img2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "2";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        ImageView img3 = new ImageView(ResponderForm.this);
-                        img3.setLayoutParams(lpr);
-                        img3.setImageResource(R.drawable.alface_stage_3);
-                        img3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "3";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_SHORT).show();
-                                nextQuestionGroup();
-                            }
-                        });
+                    ImageView img3 = new ImageView(ResponderForm.this);
+                    img3.setLayoutParams(lpr);
+                    img3.setImageResource(R.drawable.alface_stage_3);
+                    img3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "3";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        ImageView img4 = new ImageView(ResponderForm.this);
-                        img4.setImageResource(R.drawable.alface_stage_4);
-                        img4.setLayoutParams(lpr);
-                        img4.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "4";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_SHORT).show();
-                                nextQuestionGroup();
-                            }
-                        });
+                    ImageView img4 = new ImageView(ResponderForm.this);
+                    img4.setImageResource(R.drawable.alface_stage_4);
+                    img4.setLayoutParams(lpr);
+                    img4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "4";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        container.addView(img1);
-                        container.addView(img2);
-                        container.addView(img3);
-                        container.addView(img4);
+                    container.addView(img1);
+                    container.addView(img2);
+                    container.addView(img3);
+                    container.addView(img4);
                 }
 
-                 if (pergunta.getNomeDaPergunta().contains("Cebola")){
-                        ImageView img1 = new ImageView(ResponderForm.this);
-                        img1.setImageResource(R.drawable.cebola_stage_1);
-                        img1.setLayoutParams(lpr);
+                if (pergunta.getNomeDaPergunta().contains("Cebola")){
+                    ImageView img1 = new ImageView(ResponderForm.this);
+                    img1.setImageResource(R.drawable.cebola_stage_1);
+                    img1.setLayoutParams(lpr);
 
-                        img1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "1";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_SHORT).show();
-                                nextQuestionGroup();
-                            }
-                        });
+                    img1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "1";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        ImageView img2 = new ImageView(ResponderForm.this);
-                        img2.setImageResource(R.drawable.cebola_stage_2);
-                        img2.setLayoutParams(lpr);
+                    ImageView img2 = new ImageView(ResponderForm.this);
+                    img2.setImageResource(R.drawable.cebola_stage_2);
+                    img2.setLayoutParams(lpr);
 
-                        img2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "2";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_SHORT).show();
-                                nextQuestionGroup();
-                            }
-                        });
+                    img2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "2";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        ImageView img3 = new ImageView(ResponderForm.this);
-                        img3.setImageResource(R.drawable.cebola_stage_3);
-                        img3.setLayoutParams(lpr);
+                    ImageView img3 = new ImageView(ResponderForm.this);
+                    img3.setImageResource(R.drawable.cebola_stage_3);
+                    img3.setLayoutParams(lpr);
 
-                        img3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "3";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_SHORT).show();
-                                nextQuestionGroup();
-                            }
-                        });
+                    img3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "3";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        ImageView img4 = new ImageView(ResponderForm.this);
-                        img4.setImageResource(R.drawable.cebola_stage_4);
-                        img4.setLayoutParams(lpr);
-                        img4.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "4";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_SHORT).show();
-                                nextQuestionGroup();
-                            }
-                        });
+                    ImageView img4 = new ImageView(ResponderForm.this);
+                    img4.setImageResource(R.drawable.cebola_stage_4);
+                    img4.setLayoutParams(lpr);
+                    img4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "4";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 4", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        ImageView img5 = new ImageView(ResponderForm.this);
-                        img5.setImageResource(R.drawable.cebola_stage_5);
-                        img5.setLayoutParams(lpr);
-                        img5.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "5";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 5", Toast.LENGTH_SHORT).show();
-                                nextQuestionGroup();
-                            }
-                        });
+                    ImageView img5 = new ImageView(ResponderForm.this);
+                    img5.setImageResource(R.drawable.cebola_stage_5);
+                    img5.setLayoutParams(lpr);
+                    img5.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "5";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 5", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        ImageView img6 = new ImageView(ResponderForm.this);
-                        img6.setImageResource(R.drawable.cebola_stage_6);
-                        img6.setLayoutParams(lpr);
-                        img6.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "6";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 6", Toast.LENGTH_SHORT).show();
-                                nextQuestionGroup();
-                            }
-                        });
+                    ImageView img6 = new ImageView(ResponderForm.this);
+                    img6.setImageResource(R.drawable.cebola_stage_6);
+                    img6.setLayoutParams(lpr);
+                    img6.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "6";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 6", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        container.addView(img1);
-                        container.addView(img2);
-                        container.addView(img3);
-                        container.addView(img4);
-                        container.addView(img5);
-                        container.addView(img6);
+                    container.addView(img1);
+                    container.addView(img2);
+                    container.addView(img3);
+                    container.addView(img4);
+                    container.addView(img5);
+                    container.addView(img6);
 
-                 }
+                }
 
-                 if (pergunta.getNomeDaPergunta().contains("Tomate")){
+                if (pergunta.getNomeDaPergunta().contains("Tomate")){
                     ImageView img1 = new ImageView(ResponderForm.this);
 
                     img1.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -1319,49 +1331,49 @@ public class ResponderForm extends AppCompatActivity {
                     container.addView(img4);
                     container.addView(img5);
 
-                 }
+                }
 
-                 if (pergunta.getNomeDaPergunta().contains("Couve")){
-                        ImageView img1 = new ImageView(ResponderForm.this);
-                        img1.setLayoutParams(lpr);
-                        img1.setImageResource(R.drawable.couve_stage_1);
-                        img1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                resposta = "1";
-                                Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_SHORT).show();
-                                nextQuestionGroup();
-                            }
-                        });
+                if (pergunta.getNomeDaPergunta().contains("Couve")){
+                    ImageView img1 = new ImageView(ResponderForm.this);
+                    img1.setLayoutParams(lpr);
+                    img1.setImageResource(R.drawable.couve_stage_1);
+                    img1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "1";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 1", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        ImageView img2 = new ImageView(ResponderForm.this);
-                         img2.setLayoutParams(lpr);
+                    ImageView img2 = new ImageView(ResponderForm.this);
+                    img2.setLayoutParams(lpr);
 
-                         img2.setImageResource(R.drawable.couve_stage_2);
-                            img2.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    resposta = "2";
-                                    Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_SHORT).show();
-                                    nextQuestionGroup();
-                                }
-                            });
+                    img2.setImageResource(R.drawable.couve_stage_2);
+                    img2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "2";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 2", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
 
-                        ImageView img3 = new ImageView(ResponderForm.this);
-                         img3.setLayoutParams(lpr);
+                    ImageView img3 = new ImageView(ResponderForm.this);
+                    img3.setLayoutParams(lpr);
 
-                         img3.setImageResource(R.drawable.couve_stage_3);
-                            img3.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    resposta = "3";
-                                    Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_SHORT).show();
-                                    nextQuestionGroup();
-                                }
-                            });
-                        container.addView(img1);
-                        container.addView(img2);
-                        container.addView(img3);
+                    img3.setImageResource(R.drawable.couve_stage_3);
+                    img3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            resposta = "3";
+                            Toast.makeText(ResponderForm.this, "Selecionou fase 3", Toast.LENGTH_SHORT).show();
+                            nextQuestionGroup();
+                        }
+                    });
+                    container.addView(img1);
+                    container.addView(img2);
+                    container.addView(img3);
                 }
 
                 break;
@@ -1462,4 +1474,3 @@ public class ResponderForm extends AppCompatActivity {
         }
     }
 }
-

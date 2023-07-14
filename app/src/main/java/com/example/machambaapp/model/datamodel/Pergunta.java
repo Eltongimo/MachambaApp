@@ -21,6 +21,20 @@ public class Pergunta {
     }
 
     public ArrayList<Pergunta> perguntasCondicionais;
+    public ArrayList<Pergunta> perguntasP;
+
+    public Pergunta(ArrayList<Pergunta> perguntasP) {
+        this.perguntasP = perguntasP;
+    }
+
+    public ArrayList<Pergunta> getPerguntasP() {
+        return perguntasP;
+    }
+
+    public void setPerguntasP(ArrayList<Pergunta> perguntasP) {
+        this.perguntasP = perguntasP;
+    }
+
     public void setOpcoes(ArrayList<String> opcoes) {
         this.opcoes = opcoes;
     }

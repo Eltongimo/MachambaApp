@@ -28,7 +28,7 @@ public class  SplashScreen extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     public static int selectedCulturesIndex = 0;
-    public static int indexForm = 6;
+    public static int indexForm = 0;
     public static boolean showingConditional = false;
     public static int indexCondicional = 0;
 
@@ -84,7 +84,7 @@ public class  SplashScreen extends AppCompatActivity {
         provincias.add("Cabo Delgado");
         provincias.add("Niassa");
 
-        selectedCultures.add("Couve");
+//        selectedCultures.add("Couve");
         formulario =  new Formulario();
         ArrayList<Pergunta> ps = new ArrayList<>();
 
@@ -200,7 +200,7 @@ public class  SplashScreen extends AppCompatActivity {
         p.setOpcoes(opcoes);
 
         p.setTipoPergunta("RadioGroup");
-      //  ps.add(p);
+        //  ps.add(p);
 
         // ******************************
 
@@ -251,6 +251,12 @@ public class  SplashScreen extends AppCompatActivity {
 
         p.perguntasCondicionais.add(condicional);
 
+        condicional = new Pergunta();
+        condicional.setNomeDaPergunta("Tire uma foto");
+        condicional.setTipoPergunta("ImageView");
+
+        p.perguntasCondicionais.add(condicional);
+
         ps.add(p);
 
         assignQuestionsToCultures();
@@ -260,7 +266,7 @@ public class  SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, ResponderForm.class);
+                Intent intent = new Intent(SplashScreen.this, ActivityPageStart.class);
 //                Intent intent = new Intent(SplashScreen.this, ResponderForm.class);
                 Bundle b = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this).toBundle();
                 startActivity(intent, b);
