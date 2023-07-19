@@ -26,7 +26,6 @@ public class  SplashScreen extends AppCompatActivity {
     public static boolean runGroup = false;
     public static int groupIndex = 0;
 
-    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     public static int selectedCulturesIndex = 0;
     public static int indexForm = 0;
     public static boolean showingConditional = false;

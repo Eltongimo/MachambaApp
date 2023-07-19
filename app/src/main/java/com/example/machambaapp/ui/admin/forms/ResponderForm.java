@@ -3,6 +3,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -64,8 +65,10 @@ import com.example.machambaapp.ui.clientes.SelecionarCanteiroAlfobre;
 import com.google.android.gms.location.LocationListener;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Random;
 
 public class ResponderForm extends AppCompatActivity {
@@ -83,6 +86,7 @@ public class ResponderForm extends AppCompatActivity {
 
     private String data = "";
     int contar;
+    String dataTrans;
 
     private boolean displayedPopup = false;
     Button cancel;
@@ -585,14 +589,14 @@ public class ResponderForm extends AppCompatActivity {
         else if (typeOfQuestion.contains("Slider")) {
             resposta = "  ";
 
-        } else if (typeOfQuestion.contains("DatePicker")) {
+        }
+        else if (typeOfQuestion.contains("DatePicker")) {
 
-            Calendar calendar = Calendar.getInstance();
+            resposta = dataTrans;
+            Toast.makeText(getApplicationContext(), "A data selecionada foi: "+resposta, Toast.LENGTH_SHORT).show();
 
-            datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), null);
-
-            resposta += "";
-        } else if (typeOfQuestion.contains("Radio")) {
+        }
+        else if (typeOfQuestion.contains("Radio")) {
 
             RadioGroup r = (RadioGroup) container.getChildAt(0);
 
@@ -1414,15 +1418,22 @@ public class ResponderForm extends AppCompatActivity {
 
                 datePicker = new DatePicker(getApplicationContext());
                 datePicker.startAnimation(getAlphaAnimation());
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     datePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
                         @Override
                         public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            resposta = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                        }
-                    });
-                }
+                            // Utilizando a classe Calendar para formatar corretamente o mês
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(year, monthOfYear, dayOfMonth);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                            dataTrans = dateFormat.format(calendar.getTime());
 
+                        }
+
+                    });
+
+                }
                 container.addView(datePicker, layoutParams);
                 break;
 
