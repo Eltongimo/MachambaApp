@@ -440,7 +440,6 @@ public class OfflineDB extends  SQLiteOpenHelper{
 
         db.execSQL(createTableClientes);
 
-
         long rowId = 0;
 
         ContentValues values = null;

@@ -300,9 +300,6 @@ public class ResponderForm extends AppCompatActivity {
             else
             {
                 ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA );
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
         }
 
@@ -377,12 +374,13 @@ public class ResponderForm extends AppCompatActivity {
             public void onClick(View v) {
 
                 collectAnswers(pergunta.getTipoPergunta());
-
+                SelecionarCanteiroAlfobre.offlineDB.add(new OfflineDBModelForm(SelecionarCanteiroAlfobre.formKey,pergunta.getNomeDaPergunta(),resposta));
                 String a = "";
 
                 a = getIntent().getStringExtra("fullName");
 
                 if (pergunta.getNomeDaPergunta().toLowerCase().contains("incidência de praga")) {
+
                     if (resposta.contains("Sim")) {
                         displayConditionalPopUp(pergunta.getNomeDaPergunta());
                     }else{
@@ -395,7 +393,6 @@ public class ResponderForm extends AppCompatActivity {
                 }
 
                 //  Collecting data to perist on SQLite Database
-                SelecionarCanteiroAlfobre.offlineDB.add(new OfflineDBModelForm(SelecionarCanteiroAlfobre.formKey,pergunta.getNomeDaPergunta(),resposta));
 
                 getIntent().putExtra("fullName", a);
                 if (SplashScreen.runGroup){
@@ -451,7 +448,6 @@ public class ResponderForm extends AppCompatActivity {
                         startActivity(new Intent(ResponderForm.this, ResponderForm.class));
                         return;
                     }
-
 
                     nextConditionalQuestion();
 
@@ -593,8 +589,6 @@ public class ResponderForm extends AppCompatActivity {
         else if (typeOfQuestion.contains("DatePicker")) {
 
             resposta = dataTrans;
-            Toast.makeText(getApplicationContext(), "A data selecionada foi: "+resposta, Toast.LENGTH_SHORT).show();
-
         }
         else if (typeOfQuestion.contains("Radio")) {
 

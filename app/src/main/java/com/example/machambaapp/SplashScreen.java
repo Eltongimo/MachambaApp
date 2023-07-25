@@ -83,7 +83,6 @@ public class  SplashScreen extends AppCompatActivity {
         provincias.add("Cabo Delgado");
         provincias.add("Niassa");
 
-//        selectedCultures.add("Couve");
         formulario =  new Formulario();
         ArrayList<Pergunta> ps = new ArrayList<>();
 
