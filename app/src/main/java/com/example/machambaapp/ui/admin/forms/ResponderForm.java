@@ -120,6 +120,12 @@ public class ResponderForm extends AppCompatActivity {
                 SplashScreen.runGroup = false;
             }
         }
+        if (pergunta != null){
+            if (pergunta.getNomeDaPergunta().contains("tem incidência de pragas")){
+                SplashScreen.groupIndex--;
+                SplashScreen.indexCondicional = 3;
+            }
+        }
 
         if(SplashScreen.runGroup){
             SplashScreen.groupIndex--;
